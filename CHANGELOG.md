@@ -1,5 +1,67 @@
 # Changelog
 
+## 0.1.0-alpha.19 (2025-05-20)
+
+Full Changelog: [v0.1.0-alpha.18...v0.1.0-alpha.19](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.18...v0.1.0-alpha.19)
+
+### Features
+
+* **api:** update via SDK Studio ([fcd5e93](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fcd5e9344e3e6fd8038310beb2fdea87f04f0c6a))
+* **api:** update via SDK Studio ([200e8ec](https://github.com/gumnut-ai/photos-sdk-typescript/commit/200e8ec1cad685345dc6d96d6d947a9c047fba25))
+* **api:** update via SDK Studio ([972a488](https://github.com/gumnut-ai/photos-sdk-typescript/commit/972a488cb3a570ae1c4ac0956915d64efd183488))
+* **api:** update via SDK Studio ([3d2b8eb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3d2b8ebd26a27108403397417ab09786be816c82))
+* **api:** update via SDK Studio ([35dd583](https://github.com/gumnut-ai/photos-sdk-typescript/commit/35dd583961eb32919578051b3b8362d8466ab403))
+* **api:** update via SDK Studio ([322bace](https://github.com/gumnut-ai/photos-sdk-typescript/commit/322bace2457b27f13ddb9860c4d06d5d8f6932c0))
+* **api:** update via SDK Studio ([e687dd0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e687dd0dcae140441192d453d2f0b74a6cfee5b0))
+* **api:** update via SDK Studio ([dbd31c5](https://github.com/gumnut-ai/photos-sdk-typescript/commit/dbd31c577d0b906efbd05299c7ccd84ac9d89695))
+* **api:** update via SDK Studio ([3fe8a4a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3fe8a4a5016355e2a476f54a80a9c751492fe68e))
+* **api:** update via SDK Studio ([a2d1be9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a2d1be9a8fc81d4482836ad5bde9da68da527c8e))
+* **api:** update via SDK Studio ([b00ae4a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b00ae4a7832bbb16e6c5bbdee59ae3b76598e928))
+* **api:** update via SDK Studio ([84d7c48](https://github.com/gumnut-ai/photos-sdk-typescript/commit/84d7c48dca590455441d441778c8ddb7e95f5eea))
+* **api:** update via SDK Studio ([289e390](https://github.com/gumnut-ai/photos-sdk-typescript/commit/289e3903c154e709ebb407d3a1383b9daa1aca62))
+* **api:** update via SDK Studio ([e303b63](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e303b63380e01bae5ce93fe0b2e91301c2c6ad10))
+* **api:** update via SDK Studio ([fbe7f36](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fbe7f367059d7a28ea72a1a413846d74bfcf6868))
+* **api:** update via SDK Studio ([e656a7e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e656a7ed3f4b0c428ca830cdf87cb3081de8813b))
+* **api:** update via SDK Studio ([c5b02c2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c5b02c20d12b1b2a365249a95f823a23c43bf682))
+* **api:** update via SDK Studio ([07b87d5](https://github.com/gumnut-ai/photos-sdk-typescript/commit/07b87d57238cbcf3f2e2a2a6ecc3ba3db689d544))
+* **api:** update via SDK Studio ([8fd0d9c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8fd0d9c5b97913640e06e0dcd8e7053cb56d167f))
+* **client:** add withOptions helper ([e29ac9d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e29ac9d128a37ab18cdc8f91c257692893dd7bbd))
+* **mcp:** support dynamically discovering and invoking tools for APIs with many endpoints ([fd1c194](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fd1c194f5757907b324a176c5f2138e7405fa402))
+* more gracefully handle $refs and work around schema limitations ([2650708](https://github.com/gumnut-ai/photos-sdk-typescript/commit/26507086ebaefe60d7945351bf6699bd1aa76217))
+
+
+### Bug Fixes
+
+* **client:** always overwrite when merging headers ([ada2da9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ada2da9272572062eb52ac59029102e0af8b58dd))
+* **mcp:** explicitly include zod and zod-to-json-schema in package.json ([cdf2d93](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cdf2d93a112e81e7b8660b742c556722ccdbb155))
+* **mcp:** remove ajv dependency so MCP servers are more compatible with Cloudflare Workers ([e59e837](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e59e8374e2c4d5c8d98d644c58a8e446af6c1673))
+
+
+### Chores
+
+* **build:** automatically build subpackages if present ([36b1a07](https://github.com/gumnut-ai/photos-sdk-typescript/commit/36b1a07b04b83a3f13edb5ab675bcfb3acb63ae7))
+* **ci:** add timeout thresholds for CI jobs ([740cd5c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/740cd5c1f229268d8820b32aba993cd92f8ce7c5))
+* **ci:** only use depot for staging repos ([64a5b22](https://github.com/gumnut-ai/photos-sdk-typescript/commit/64a5b227cc7447b890d7cf66f68449d9951e509a))
+* **client:** drop support for EOL node versions ([a91fb8c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a91fb8c9bfccfb94e00ceead9b322f171d9e2518))
+* configure new SDK language ([a611fc4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a611fc435fbe8324ab89b54d464f23dc2f010174))
+* configure new SDK language ([0a29520](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0a2952068afabc91d8b53c7ee79b140a8ba6eece))
+* go live ([f27f9b4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f27f9b4a913083f5c654ea877c2cb7b079a271da))
+* **internal:** codegen related update ([dd348d2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/dd348d290fc30e09080bb1512d279367816adc46))
+* **internal:** codegen related update ([a6e589e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a6e589e1659d5f13cac6f18d3a60e06cb086d2ef))
+* **internal:** codegen related update ([ccb6cdd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ccb6cdd8dfdcca366a967ef9aaff119a35cdb5bc))
+* **internal:** refactor utils ([6546597](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6546597932ab87b5305443a7b984aa782e29395e))
+* **internal:** share typescript helpers ([8ce6b89](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8ce6b890800426f80b21410aa0864ed4c1f10c76))
+* **package:** remove engines ([a3bdc5a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a3bdc5a4b16783e5716b060e17eb888af6d4c5c7))
+* **perf:** faster base64 decoding ([b48320c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b48320c0954c830233cd4030967d115ee5b0cfef))
+* **tests:** use node 22 for CI tests ([eafd5ea](https://github.com/gumnut-ai/photos-sdk-typescript/commit/eafd5eaa63e6156671ec8f107c857c3489bdbc52))
+* update SDK settings ([125e48a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/125e48afc660ef4826aaec30909ce61effbd62ec))
+* update SDK settings ([8c7c3a9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8c7c3a924ce516865ff68d2fa77f5ae9af58e1f4))
+
+
+### Documentation
+
+* **readme:** fix typo ([7ef6cca](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7ef6ccada7b7ab469affb361640aaf0e96116393))
+
 ## 0.1.0-alpha.18 (2025-05-20)
 
 Full Changelog: [v0.1.0-alpha.17...v0.1.0-alpha.18](https://github.com/ternarybits/photos-sdk-typescript/compare/v0.1.0-alpha.17...v0.1.0-alpha.18)
