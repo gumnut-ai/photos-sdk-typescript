@@ -42,14 +42,14 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:ternarybits/photos-sdk-typescript.git
+$ npm install git+ssh://git@github.com:gumnut-ai/photos-sdk-typescript.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/ternarybits/photos-sdk-typescript
+$ git clone https://www.github.com/gumnut-ai/photos-sdk-typescript
 $ cd photos-sdk-typescript
 
 # With yarn
