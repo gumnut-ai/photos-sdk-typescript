@@ -8,10 +8,10 @@
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ternarybits/photos-sdk-typescript.git",
+    "url": "git+https://github.com/gumnut-ai/photos-sdk-typescript.git",
     "directory": "packages/mcp-server"
   },
-  "homepage": "https://github.com/ternarybits/photos-sdk-typescript/tree/main/packages/mcp-server#readme",
+  "homepage": "https://github.com/gumnut-ai/photos-sdk-typescript/tree/main/packages/mcp-server#readme",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.22",
   "private": false,

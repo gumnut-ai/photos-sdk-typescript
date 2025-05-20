@@ -9,7 +9,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 Because it's not published yet, clone the repo and build it:
 
 ```sh
-git clone git@github.com:ternarybits/photos-sdk-typescript.git
+git clone git@github.com:gumnut-ai/photos-sdk-typescript.git
 cd photos-sdk-typescript
 ./scripts/bootstrap
 ./scripts/build
