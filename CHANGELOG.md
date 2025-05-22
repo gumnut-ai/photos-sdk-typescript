@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.20 (2025-05-22)
+
+Full Changelog: [v0.1.0-alpha.19...v0.1.0-alpha.20](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.19...v0.1.0-alpha.20)
+
+### Chores
+
+* **docs:** grammar improvements ([1360cd6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/1360cd6fcaf67779828f15f9eabacc04dd320b63))
+
 ## 0.1.0-alpha.19 (2025-05-20)
 
 Full Changelog: [v0.1.0-alpha.18...v0.1.0-alpha.19](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.18...v0.1.0-alpha.19)
