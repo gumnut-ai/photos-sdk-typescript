@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.21 (2025-05-24)
+
+Full Changelog: [v0.1.0-alpha.20...v0.1.0-alpha.21](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.20...v0.1.0-alpha.21)
+
+### Bug Fixes
+
+* **mcp:** fix cursor schema transformation issue with recursive references ([fcdf936](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fcdf936f3881b151bc184387db218db0ee392ee7))
+
+
+### Chores
+
+* **internal:** codegen related update ([7ad348e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7ad348ead588a6ca3882ad704228a077e4d79b3d))
+
 ## 0.1.0-alpha.20 (2025-05-22)
 
 Full Changelog: [v0.1.0-alpha.19...v0.1.0-alpha.20](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.19...v0.1.0-alpha.20)
