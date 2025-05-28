@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.22 (2025-05-28)
+
+Full Changelog: [v0.1.0-alpha.21...v0.1.0-alpha.22](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.21...v0.1.0-alpha.22)
+
+### Bug Fixes
+
+* **mcp:** include description in dynamic tool search ([8330da6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8330da60988a6c3b72a0fc63142a6e709fd35f6b))
+
 ## 0.1.0-alpha.21 (2025-05-24)
 
 Full Changelog: [v0.1.0-alpha.20...v0.1.0-alpha.21](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.20...v0.1.0-alpha.21)
