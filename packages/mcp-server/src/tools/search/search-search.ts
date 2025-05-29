@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'search',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/api/search',
+  operationId: 'search_assets_api_search_get',
 };
 
 export const tool: Tool = {

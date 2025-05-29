@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'albums',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/api/albums',
+  operationId: 'create_album_api_albums_post',
 };
 
 export const tool: Tool = {
