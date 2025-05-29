@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'faces',
   operation: 'write',
   tags: [],
+  httpMethod: 'delete',
+  httpPath: '/api/faces/{face_id}',
+  operationId: 'delete_face_api_faces__face_id__delete',
 };
 
 export const tool: Tool = {
