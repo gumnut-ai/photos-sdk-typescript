@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'faces',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/api/faces',
+  operationId: 'list_faces_api_faces_get',
 };
 
 export const tool: Tool = {

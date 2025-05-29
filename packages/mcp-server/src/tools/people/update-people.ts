@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'people',
   operation: 'write',
   tags: [],
+  httpMethod: 'patch',
+  httpPath: '/api/people/{person_id}',
+  operationId: 'update_person_api_people__person_id__patch',
 };
 
 export const tool: Tool = {

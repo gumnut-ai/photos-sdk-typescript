@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'albums',
   operation: 'write',
   tags: [],
+  httpMethod: 'patch',
+  httpPath: '/api/albums/{album_id}',
+  operationId: 'update_album_api_albums__album_id__patch',
 };
 
 export const tool: Tool = {
