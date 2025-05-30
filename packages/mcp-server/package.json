@@ -1,6 +1,6 @@
 {
   "name": "photos-mcp",
-  "version": "0.1.0-alpha.22",
+  "version": "0.1.0-alpha.23",
   "description": "The official MCP Server for the Photos API",
   "author": "Photos <tedmao@gmail.com>",
   "types": "dist/index.d.ts",

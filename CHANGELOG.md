@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0-alpha.23 (2025-05-30)
+
+Full Changelog: [v0.1.0-alpha.22...v0.1.0-alpha.23](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.22...v0.1.0-alpha.23)
+
+### Features
+
+* **mcp:** include http information in tools ([c8faca1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c8faca18ac01d1aec0b6447a217444693ac54ce0))
+
+
+### Bug Fixes
+
+* compat with more runtimes ([787ac39](https://github.com/gumnut-ai/photos-sdk-typescript/commit/787ac39d5c0b642b5936e30015abd305ee36dd43))
+
+
+### Chores
+
+* improve publish-npm script --latest tag logic ([5cacac9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5cacac9df9a1ba202a45d64d04ec5033829f665a))
+* **mcp:** remove duplicate assignment ([5dffd35](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5dffd35e289e9fae5aa2875887e27bd3028d309e))
+
 ## 0.1.0-alpha.22 (2025-05-28)
 
 Full Changelog: [v0.1.0-alpha.21...v0.1.0-alpha.22](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.21...v0.1.0-alpha.22)
