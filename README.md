@@ -203,13 +203,13 @@ List methods in the Photos API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllAssets(params) {
-  const allAssets = [];
+async function fetchAllAssetResponses(params) {
+  const allAssetResponses = [];
   // Automatically fetches more pages as needed.
   for await (const assetResponse of client.assets.list({ starting_after_id: 'asset_abc123' })) {
-    allAssets.push(assetResponse);
+    allAssetResponses.push(assetResponse);
   }
-  return allAssets;
+  return allAssetResponses;
 }
 ```
 
