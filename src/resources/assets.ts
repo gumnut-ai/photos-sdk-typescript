@@ -47,6 +47,34 @@ export class Assets extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Downloads the original file for a specific asset.
+   */
+  download(assetID: string, options?: RequestOptions): APIPromise<Response> {
+    return this._client.get(path`/api/assets/${assetID}/download`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'image/*' }, options?.headers]),
+      __binaryResponse: true,
+    });
+  }
+
+  /**
+   * Downloads a thumbnail for a specific asset. The exact thumbnail returned depends
+   * on availability and the optional `size` parameter.
+   */
+  downloadThumbnail(
+    assetID: string,
+    query: AssetDownloadThumbnailParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Response> {
+    return this._client.get(path`/api/assets/${assetID}/thumbnail`, {
+      query,
+      ...options,
+      headers: buildHeaders([{ Accept: 'image/*' }, options?.headers]),
+      __binaryResponse: true,
+    });
+  }
 }
 
 export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
@@ -161,11 +189,19 @@ export interface AssetListParams extends CursorPageParams {
   person_id?: string | null;
 }
 
+export interface AssetDownloadThumbnailParams {
+  /**
+   * Desired thumbnail size (e.g., thumbnail, preview)
+   */
+  size?: string | null;
+}
+
 export declare namespace Assets {
   export {
     type AssetResponse as AssetResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
+    type AssetDownloadThumbnailParams as AssetDownloadThumbnailParams,
   };
 }

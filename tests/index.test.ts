@@ -302,13 +302,13 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['PHOTOS_BASE_URL'] = ''; // empty
       const client = new Photos({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://photos-api-a5uw.onrender.com');
+      expect(client.baseURL).toEqual('https://api.gumnut.ai');
     });
 
     test('blank env variable', () => {
       process.env['PHOTOS_BASE_URL'] = '  '; // blank
       const client = new Photos({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://photos-api-a5uw.onrender.com');
+      expect(client.baseURL).toEqual('https://api.gumnut.ai');
     });
   });
 

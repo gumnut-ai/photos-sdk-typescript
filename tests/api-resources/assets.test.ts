@@ -83,4 +83,12 @@ describe('resource assets', () => {
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
   });
+
+  // skipped: tests are disabled for the time being
+  test.skip('downloadThumbnail: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.assets.downloadThumbnail('asset_id', { size: 'size' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Photos.NotFoundError);
+  });
 });
