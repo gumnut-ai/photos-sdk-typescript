@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0-alpha.24 (2025-06-02)
+
+Full Changelog: [v0.1.0-alpha.23...v0.1.0-alpha.24](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.23...v0.1.0-alpha.24)
+
+### Features
+
+* **api:** update via SDK Studio ([ae307b3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ae307b321c3ec7d28caf5c71bf2098c0716641a8))
+
+
+### Chores
+
+* **deps:** bump eslint-plugin-prettier ([493cdb4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/493cdb45f8244727e71e70d51fb69da2c8ff8bc3))
+* **internal:** update jest config ([a147d3b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a147d3bcdbbaa4699efab3ad29684eb5e1b70176))
+
+
+### Documentation
+
+* **pagination:** improve naming ([34d9439](https://github.com/gumnut-ai/photos-sdk-typescript/commit/34d94393a2713546a0fe52d3af0c8c96f39fa04a))
+
 ## 0.1.0-alpha.23 (2025-05-30)
 
 Full Changelog: [v0.1.0-alpha.22...v0.1.0-alpha.23](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.22...v0.1.0-alpha.23)
