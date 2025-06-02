@@ -44,6 +44,17 @@ export class Faces extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Retrieves a thumbnail for a specific face.
+   */
+  downloadThumbnail(faceID: string, options?: RequestOptions): APIPromise<Response> {
+    return this._client.get(path`/api/faces/${faceID}/thumbnail`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'image/*' }, options?.headers]),
+      __binaryResponse: true,
+    });
+  }
 }
 
 export type FaceResponsesCursorPage = CursorPage<FaceResponse>;
