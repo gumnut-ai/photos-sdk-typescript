@@ -10,6 +10,8 @@ Methods:
 - <code title="get /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">retrieve</a>(assetID) -> AssetResponse</code>
 - <code title="get /api/assets">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetResponsesCursorPage</code>
 - <code title="delete /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">delete</a>(assetID) -> void</code>
+- <code title="get /api/assets/{asset_id}/download">client.assets.<a href="./src/resources/assets.ts">download</a>(assetID) -> Response</code>
+- <code title="get /api/assets/{asset_id}/thumbnail">client.assets.<a href="./src/resources/assets.ts">downloadThumbnail</a>(assetID, { ...params }) -> Response</code>
 
 # Albums
 
@@ -50,6 +52,7 @@ Methods:
 - <code title="patch /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">update</a>(faceID, { ...params }) -> FaceResponse</code>
 - <code title="get /api/faces">client.faces.<a href="./src/resources/faces.ts">list</a>({ ...params }) -> FaceResponsesCursorPage</code>
 - <code title="delete /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">delete</a>(faceID) -> void</code>
+- <code title="get /api/faces/{face_id}/thumbnail">client.faces.<a href="./src/resources/faces.ts">downloadThumbnail</a>(faceID) -> Response</code>
 
 # People
 

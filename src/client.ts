@@ -24,6 +24,7 @@ import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import {
   AssetCreateParams,
+  AssetDownloadThumbnailParams,
   AssetListParams,
   AssetResponse,
   AssetResponsesCursorPage,
@@ -152,7 +153,7 @@ export class Photos {
    * API Client for interfacing with the Photos API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['PHOTOS_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['PHOTOS_BASE_URL'] ?? https://photos-api-a5uw.onrender.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['PHOTOS_BASE_URL'] ?? https://api.gumnut.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -168,7 +169,7 @@ export class Photos {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://photos-api-a5uw.onrender.com`,
+      baseURL: baseURL || `https://api.gumnut.ai`,
     };
 
     this.baseURL = options.baseURL!;
@@ -771,6 +772,7 @@ export declare namespace Photos {
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
+    type AssetDownloadThumbnailParams as AssetDownloadThumbnailParams,
   };
 
   export {

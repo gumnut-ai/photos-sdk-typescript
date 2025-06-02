@@ -190,6 +190,8 @@ The following tools are available in this MCP server.
 - `retrieve_assets` (`read`): Retrieves detailed metadata for a specific asset, including EXIF information and asset metrics.
 - `list_assets` (`read`): Retrieves a paginated list of assets, optionally filtered by album. Assets are ordered by local creation time, descending.
 - `delete_assets` (`write`): Deletes a specific asset and its associated data (including the file from storage).
+- `download_assets` (`read`): Downloads the original file for a specific asset.
+- `download_thumbnail_assets` (`read`): Downloads a thumbnail for a specific asset. The exact thumbnail returned depends on availability and the optional `size` parameter.
 
 ### Resource `albums`:
 
@@ -211,6 +213,7 @@ The following tools are available in this MCP server.
 - `update_faces` (`write`): Updates the details of a specific face, currently only supporting associating/disassociating with a person.
 - `list_faces` (`read`): Retrieves a paginated list of faces, optionally filtered by asset or person, ordered by creation time, descending.
 - `delete_faces` (`write`): Deletes a specific face entry. This does not delete the associated asset or person.
+- `download_thumbnail_faces` (`read`): Retrieves a thumbnail for a specific face.
 
 ### Resource `people`:
 

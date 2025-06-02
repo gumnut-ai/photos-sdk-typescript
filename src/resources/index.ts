@@ -13,6 +13,7 @@ export {
   type AssetResponse,
   type AssetCreateParams,
   type AssetListParams,
+  type AssetDownloadThumbnailParams,
   type AssetResponsesCursorPage,
 } from './assets';
 export {
