@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
-const client = new Photos({
+const client = new Gumnut({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -52,7 +52,7 @@ describe('resource faces', () => {
         { asset_id: 'asset_id', limit: 1, person_id: 'person_id', starting_after_id: 'starting_after_id' },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Photos.NotFoundError);
+    ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
   // skipped: tests are disabled for the time being
