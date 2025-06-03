@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Photos } from 'photos';
+import { Photos } from 'gumnut-sdk';
 
 const { stringifyQuery } = Photos.prototype as any;
 

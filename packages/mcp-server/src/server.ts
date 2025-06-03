@@ -4,7 +4,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { Endpoint, endpoints, HandlerFunction, query } from './tools';
 import { CallToolRequestSchema, ListToolsRequestSchema, Tool } from '@modelcontextprotocol/sdk/types.js';
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 import {
   applyCompatibilityTransformations,
   ClientCapabilities,
@@ -18,7 +18,7 @@ export { endpoints } from './tools';
 // Create server instance
 export const server = new McpServer(
   {
-    name: 'photos_api',
+    name: 'gumnut_sdk_api',
     version: '0.1.0-alpha.25',
   },
   {

@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^photos$': '<rootDir>/src/index.ts',
-    '^photos/(.*)$': '<rootDir>/src/$1',
+    '^gumnut-sdk$': '<rootDir>/src/index.ts',
+    '^gumnut-sdk/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

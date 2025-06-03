@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^photos(/.*)?',
+              regex: '^gumnut-sdk(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

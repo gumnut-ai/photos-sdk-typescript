@@ -27,7 +27,7 @@
     "fix": "eslint --fix --ext ts,js ."
   },
   "dependencies": {
-    "photos": "file:../../dist/",
+    "gumnut-sdk": "file:../../dist/",
     "@modelcontextprotocol/sdk": "^1.6.1",
     "yargs": "^17.7.2",
     "@cloudflare/cabidela": "^0.2.4",
