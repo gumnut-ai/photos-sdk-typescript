@@ -32,10 +32,42 @@ export class APIKeys extends APIResource {
   }
 }
 
-export type APIKeyCreateResponse = Record<string, unknown>;
+export interface APIKeyResponse {
+  id: string;
 
-export type APIKeyListResponse = Array<Record<string, unknown>>;
+  created_at: string;
+
+  is_active: boolean;
+
+  last_used_at: string | null;
+
+  name: string | null;
+}
+
+/**
+ * The only difference between this and APIKeyResponse is that it includes the full
+ * API key.
+ */
+export interface APIKeyCreateResponse {
+  id: string;
+
+  api_key: string;
+
+  created_at: string;
+
+  is_active: boolean;
+
+  last_used_at: string | null;
+
+  name: string | null;
+}
+
+export type APIKeyListResponse = Array<APIKeyResponse>;
 
 export declare namespace APIKeys {
-  export { type APIKeyCreateResponse as APIKeyCreateResponse, type APIKeyListResponse as APIKeyListResponse };
+  export {
+    type APIKeyResponse as APIKeyResponse,
+    type APIKeyCreateResponse as APIKeyCreateResponse,
+    type APIKeyListResponse as APIKeyListResponse,
+  };
 }
