@@ -152,7 +152,7 @@ over time, you can manually enable or disable certain capabilities:
 import { server, endpoints, init } from "photos-mcp/server";
 
 // import a specific tool
-import createAssets from "photos-mcp/tools/assets/create-assets";
+import createAPIKeys from "photos-mcp/tools/api-keys/create-api-keys";
 
 // initialize the server and all endpoints
 init({ server, endpoints });
@@ -177,12 +177,18 @@ const myCustomEndpoint = {
 };
 
 // initialize the server with your custom endpoints
-init({ server: myServer, endpoints: [createAssets, myCustomEndpoint] });
+init({ server: myServer, endpoints: [createAPIKeys, myCustomEndpoint] });
 ```
 
 ## Available Tools
 
 The following tools are available in this MCP server.
+
+### Resource `api-keys`:
+
+- `create_api_keys` (`write`): Creates a new API key for the current user
+- `list_api_keys` (`read`): Retrieves a list of all API keys for the current user
+- `delete_api_keys` (`write`): Deletes a specific API key
 
 ### Resource `assets`:
 

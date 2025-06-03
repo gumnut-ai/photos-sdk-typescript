@@ -3,6 +3,9 @@
 import Photos from 'photos';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
+import create_api_keys from './api-keys/create-api-keys';
+import list_api_keys from './api-keys/list-api-keys';
+import delete_api_keys from './api-keys/delete-api-keys';
 import create_assets from './assets/create-assets';
 import retrieve_assets from './assets/retrieve-assets';
 import list_assets from './assets/list-assets';
@@ -53,6 +56,9 @@ function addEndpoint(endpoint: Endpoint) {
   endpoints.push(endpoint);
 }
 
+addEndpoint(create_api_keys);
+addEndpoint(list_api_keys);
+addEndpoint(delete_api_keys);
 addEndpoint(create_assets);
 addEndpoint(retrieve_assets);
 addEndpoint(list_assets);

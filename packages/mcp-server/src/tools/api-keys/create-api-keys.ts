@@ -1,0 +1,29 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { Tool } from '@modelcontextprotocol/sdk/types.js';
+import type { Metadata } from '../';
+import Photos from 'photos';
+
+export const metadata: Metadata = {
+  resource: 'api-keys',
+  operation: 'write',
+  tags: [],
+  httpMethod: 'post',
+  httpPath: '/api-keys/',
+  operationId: 'create_api_key_api_keys__post',
+};
+
+export const tool: Tool = {
+  name: 'create_api_keys',
+  description: 'Creates a new API key for the current user',
+  inputSchema: {
+    type: 'object',
+    properties: {},
+  },
+};
+
+export const handler = (client: Photos, args: Record<string, unknown> | undefined) => {
+  return client.apiKeys.create();
+};
+
+export default { metadata, tool, handler };

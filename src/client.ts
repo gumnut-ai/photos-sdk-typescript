@@ -22,6 +22,7 @@ import { APIPromise } from './core/api-promise';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
+import { APIKeyCreateResponse, APIKeyListResponse, APIKeyResponse, APIKeys } from './resources/api-keys';
 import {
   AssetCreateParams,
   AssetDownloadThumbnailParams,
@@ -749,12 +750,14 @@ export class Photos {
 
   static toFile = Uploads.toFile;
 
+  apiKeys: API.APIKeys = new API.APIKeys(this);
   assets: API.Assets = new API.Assets(this);
   albums: API.Albums = new API.Albums(this);
   faces: API.Faces = new API.Faces(this);
   people: API.People = new API.People(this);
   search: API.Search = new API.Search(this);
 }
+Photos.APIKeys = APIKeys;
 Photos.Assets = Assets;
 Photos.Albums = Albums;
 Photos.Faces = Faces;
@@ -765,6 +768,13 @@ export declare namespace Photos {
 
   export import CursorPage = Pagination.CursorPage;
   export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
+
+  export {
+    APIKeys as APIKeys,
+    type APIKeyResponse as APIKeyResponse,
+    type APIKeyCreateResponse as APIKeyCreateResponse,
+    type APIKeyListResponse as APIKeyListResponse,
+  };
 
   export {
     Assets as Assets,
