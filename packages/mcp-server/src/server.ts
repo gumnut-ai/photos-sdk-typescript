@@ -19,7 +19,7 @@ export { endpoints } from './tools';
 export const server = new McpServer(
   {
     name: 'gumnut_sdk_api',
-    version: '0.1.0-alpha.25',
+    version: '0.1.0',
   },
   {
     capabilities: {
