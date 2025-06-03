@@ -2,6 +2,7 @@
 
 Types:
 
+- <code><a href="./src/resources/api-keys.ts">APIKeyResponse</a></code>
 - <code><a href="./src/resources/api-keys.ts">APIKeyCreateResponse</a></code>
 - <code><a href="./src/resources/api-keys.ts">APIKeyListResponse</a></code>
 
