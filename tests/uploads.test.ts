@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'photos/internal/to-file';
-import { toFile } from 'photos/core/uploads';
+import type { ResponseLike } from 'gumnut-sdk/internal/to-file';
+import { toFile } from 'gumnut-sdk/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('photos/core/uploads');
+    const uploads = await import('gumnut-sdk/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

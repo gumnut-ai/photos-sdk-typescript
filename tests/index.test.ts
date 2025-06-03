@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'photos/core/api-promise';
+import { APIPromise } from 'gumnut-sdk/core/api-promise';
 
 import util from 'node:util';
-import Photos from 'photos';
-import { APIUserAbortError } from 'photos';
+import Photos from 'gumnut-sdk';
+import { APIUserAbortError } from 'gumnut-sdk';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

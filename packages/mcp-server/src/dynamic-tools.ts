@@ -1,4 +1,4 @@
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 import { Endpoint } from './tools';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { z } from 'zod';

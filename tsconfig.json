@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "photos/*": ["src/*"],
-      "photos": ["src/index.ts"]
+      "gumnut-sdk/*": ["src/*"],
+      "gumnut-sdk": ["src/index.ts"]
     },
     "noEmit": true,
 
