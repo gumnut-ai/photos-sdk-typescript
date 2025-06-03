@@ -2,7 +2,7 @@
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { Metadata } from '../../';
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
 export const metadata: Metadata = {
   resource: 'albums.assets',
@@ -34,7 +34,7 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Photos, args: Record<string, unknown> | undefined) => {
+export const handler = (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { album_id, ...body } = args as any;
   return client.albums.assets.add(album_id, body);
 };

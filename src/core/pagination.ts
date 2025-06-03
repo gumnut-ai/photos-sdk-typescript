@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { PhotosError } from './error';
+import { GumnutError } from './error';
 import { FinalRequestOptions } from '../internal/request-options';
 import { defaultParseResponse } from '../internal/parse';
-import { type Photos } from '../client';
+import { type Gumnut } from '../client';
 import { APIPromise } from './api-promise';
 import { type APIResponseProps } from '../internal/parse';
 import { maybeObj } from '../internal/utils/values';
@@ -11,13 +11,13 @@ import { maybeObj } from '../internal/utils/values';
 export type PageRequestOptions = Pick<FinalRequestOptions, 'query' | 'headers' | 'body' | 'path' | 'method'>;
 
 export abstract class AbstractPage<Item> implements AsyncIterable<Item> {
-  #client: Photos;
+  #client: Gumnut;
   protected options: FinalRequestOptions;
 
   protected response: Response;
   protected body: unknown;
 
-  constructor(client: Photos, response: Response, body: unknown, options: FinalRequestOptions) {
+  constructor(client: Gumnut, response: Response, body: unknown, options: FinalRequestOptions) {
     this.#client = client;
     this.options = options;
     this.response = response;
@@ -37,7 +37,7 @@ export abstract class AbstractPage<Item> implements AsyncIterable<Item> {
   async getNextPage(): Promise<this> {
     const nextOptions = this.nextPageRequestOptions();
     if (!nextOptions) {
-      throw new PhotosError(
+      throw new GumnutError(
         'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.',
       );
     }
@@ -80,7 +80,7 @@ export class PagePromise<
   implements AsyncIterable<Item>
 {
   constructor(
-    client: Photos,
+    client: Gumnut,
     request: Promise<APIResponseProps>,
     Page: new (...args: ConstructorParameters<typeof AbstractPage>) => PageClass,
   ) {
@@ -128,7 +128,7 @@ export class CursorPage<Item extends { id: string }>
   has_more: boolean;
 
   constructor(
-    client: Photos,
+    client: Gumnut,
     response: Response,
     body: CursorPageResponse<Item>,
     options: FinalRequestOptions,

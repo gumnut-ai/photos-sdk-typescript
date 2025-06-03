@@ -61,14 +61,14 @@ import {
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['PHOTOS_API_KEY'].
+   * Defaults to process.env['GUMNUT_API_KEY'].
    */
   apiKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['PHOTOS_BASE_URL'].
+   * Defaults to process.env['GUMNUT_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -120,7 +120,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['PHOTOS_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['GUMNUT_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -133,9 +133,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Photos API.
+ * API Client for interfacing with the Gumnut API.
  */
-export class Photos {
+export class Gumnut {
   apiKey: string | null;
 
   baseURL: string;
@@ -151,10 +151,10 @@ export class Photos {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Photos API.
+   * API Client for interfacing with the Gumnut API.
    *
-   * @param {string | null | undefined} [opts.apiKey=process.env['PHOTOS_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['PHOTOS_BASE_URL'] ?? https://api.gumnut.ai] - Override the default base URL for the API.
+   * @param {string | null | undefined} [opts.apiKey=process.env['GUMNUT_API_KEY'] ?? null]
+   * @param {string} [opts.baseURL=process.env['GUMNUT_BASE_URL'] ?? https://api.gumnut.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -163,8 +163,8 @@ export class Photos {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('PHOTOS_BASE_URL'),
-    apiKey = readEnv('PHOTOS_API_KEY') ?? null,
+    baseURL = readEnv('GUMNUT_BASE_URL'),
+    apiKey = readEnv('GUMNUT_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
@@ -174,14 +174,14 @@ export class Photos {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Photos.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Gumnut.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('PHOTOS_LOG'), "process.env['PHOTOS_LOG']", this) ??
+      parseLogLevel(readEnv('GUMNUT_LOG'), "process.env['GUMNUT_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -247,7 +247,7 @@ export class Photos {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.PhotosError(
+        throw new Errors.GumnutError(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -515,7 +515,7 @@ export class Photos {
     options: FinalRequestOptions,
   ): Pagination.PagePromise<PageClass, Item> {
     const request = this.makeRequest(options, null, undefined);
-    return new Pagination.PagePromise<PageClass, Item>(this as any as Photos, request, Page);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Gumnut, request, Page);
   }
 
   async fetchWithTimeout(
@@ -731,10 +731,10 @@ export class Photos {
     }
   }
 
-  static Photos = this;
+  static Gumnut = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static PhotosError = Errors.PhotosError;
+  static GumnutError = Errors.GumnutError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -757,13 +757,13 @@ export class Photos {
   people: API.People = new API.People(this);
   search: API.Search = new API.Search(this);
 }
-Photos.APIKeys = APIKeys;
-Photos.Assets = Assets;
-Photos.Albums = Albums;
-Photos.Faces = Faces;
-Photos.People = People;
-Photos.Search = Search;
-export declare namespace Photos {
+Gumnut.APIKeys = APIKeys;
+Gumnut.Assets = Assets;
+Gumnut.Albums = Albums;
+Gumnut.Faces = Faces;
+Gumnut.People = People;
+Gumnut.Search = Search;
+export declare namespace Gumnut {
   export type RequestOptions = Opts.RequestOptions;
 
   export import CursorPage = Pagination.CursorPage;

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 import create_api_keys from './api-keys/create-api-keys';
@@ -32,7 +32,7 @@ import list_people from './people/list-people';
 import delete_people from './people/delete-people';
 import search_search from './search/search-search';
 
-export type HandlerFunction = (client: Photos, args: Record<string, unknown> | undefined) => Promise<any>;
+export type HandlerFunction = (client: Gumnut, args: Record<string, unknown> | undefined) => Promise<any>;
 
 export type Metadata = {
   resource: string;

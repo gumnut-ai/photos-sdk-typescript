@@ -1,4 +1,4 @@
-# Photos TypeScript MCP Server
+# Gumnut TypeScript MCP Server
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -9,8 +9,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 You can run the MCP Server directly via `npx`:
 
 ```sh
-export PHOTOS_API_KEY="My API Key"
-npx -y photos-mcp@latest
+export GUMNUT_API_KEY="My API Key"
+npx -y gumnut-mcp@latest
 ```
 
 ### Via MCP Client
@@ -25,9 +25,9 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "gumnut_sdk_api": {
       "command": "npx",
-      "args": ["-y", "photos-mcp", "--client=claude", "--tools=dynamic"],
+      "args": ["-y", "gumnut-mcp", "--client=claude", "--tools=dynamic"],
       "env": {
-        "PHOTOS_API_KEY": "My API Key"
+        "GUMNUT_API_KEY": "My API Key"
       }
     }
   }
@@ -130,10 +130,10 @@ over time, you can manually enable or disable certain capabilities:
 
 ```js
 // Import the server, generated endpoints, or the init function
-import { server, endpoints, init } from "photos-mcp/server";
+import { server, endpoints, init } from "gumnut-mcp/server";
 
 // import a specific tool
-import createAPIKeys from "photos-mcp/tools/api-keys/create-api-keys";
+import createAPIKeys from "gumnut-mcp/tools/api-keys/create-api-keys";
 
 // initialize the server and all endpoints
 init({ server, endpoints });
