@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.25 (2025-06-03)
+
+Full Changelog: [v0.1.0-alpha.24...v0.1.0-alpha.25](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.24...v0.1.0-alpha.25)
+
+### Features
+
+* **api:** update via SDK Studio ([00e2f06](https://github.com/gumnut-ai/photos-sdk-typescript/commit/00e2f068c395ba33a4fd3d80d81cc7d6a9c47063))
+
+
+### Chores
+
+* adjust eslint.config.mjs ignore pattern ([2991d37](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2991d3719732f69f8290f706a5b366d496b0a57e))
+
 ## 0.1.0-alpha.24 (2025-06-02)
 
 Full Changelog: [v0.1.0-alpha.23...v0.1.0-alpha.24](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0-alpha.23...v0.1.0-alpha.24)
