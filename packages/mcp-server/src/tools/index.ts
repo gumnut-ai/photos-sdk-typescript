@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 import create_api_keys from './api-keys/create-api-keys';

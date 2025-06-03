@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'photos/internal/uploads';
-import { toFile } from 'photos/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'gumnut-sdk/internal/uploads';
+import { toFile } from 'gumnut-sdk/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

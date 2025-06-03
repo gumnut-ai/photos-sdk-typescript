@@ -2,7 +2,7 @@
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { Metadata } from '../';
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 
 export const metadata: Metadata = {
   resource: 'search',

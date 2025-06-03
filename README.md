@@ -1,6 +1,6 @@
 # Photos TypeScript API Library
 
-[![NPM version](https://img.shields.io/npm/v/photos.svg)](https://npmjs.org/package/photos) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/photos)
+[![NPM version](https://img.shields.io/npm/v/gumnut-sdk.svg)](https://npmjs.org/package/gumnut-sdk) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/gumnut-sdk)
 
 This library provides convenient access to the Photos REST API from server-side TypeScript or JavaScript.
 
@@ -11,11 +11,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:gumnut-ai/photos-sdk-typescript.git
+npm install gumnut-sdk
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://app.stainless.com/docs/guides/publish), this will become: `npm install photos`
 
 ## Usage
 
@@ -23,7 +20,7 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 
 const client = new Photos({
   apiKey: process.env['PHOTOS_API_KEY'], // This is the default and can be omitted
@@ -44,7 +41,7 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 
 const client = new Photos({
   apiKey: process.env['PHOTOS_API_KEY'], // This is the default and can be omitted
@@ -71,7 +68,7 @@ Request parameters that correspond to file uploads can be passed in many differe
 
 ```ts
 import fs from 'fs';
-import Photos, { toFile } from 'photos';
+import Photos, { toFile } from 'gumnut-sdk';
 
 const client = new Photos();
 
@@ -265,7 +262,7 @@ The log level can be configured in two ways:
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 
 const client = new Photos({
   logLevel: 'debug', // Show all log messages
@@ -293,7 +290,7 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 import pino from 'pino';
 
 const logger = pino();
@@ -363,7 +360,7 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 import fetch from 'my-fetch';
 
 const client = new Photos({ fetch });
@@ -374,7 +371,7 @@ const client = new Photos({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 
 const client = new Photos({
   fetchOptions: {
@@ -391,7 +388,7 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
@@ -405,7 +402,7 @@ const client = new Photos({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Photos from 'photos';
+import Photos from 'gumnut-sdk';
 
 const client = new Photos({
   fetchOptions: {
@@ -417,7 +414,7 @@ const client = new Photos({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Photos from 'npm:photos';
+import Photos from 'npm:gumnut-sdk';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
 const client = new Photos({
