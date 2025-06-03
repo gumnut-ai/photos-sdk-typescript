@@ -1,6 +1,6 @@
 {
   "name": "photos",
-  "version": "0.1.0-alpha.24",
+  "version": "0.1.0-alpha.25",
   "description": "The official TypeScript library for the Photos API",
   "author": "Photos <tedmao@gmail.com>",
   "types": "dist/index.d.ts",
