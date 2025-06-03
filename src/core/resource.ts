@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { Photos } from '../client';
+import type { Gumnut } from '../client';
 
 export class APIResource {
-  protected _client: Photos;
+  protected _client: Gumnut;
 
-  constructor(client: Photos) {
+  constructor(client: Gumnut) {
     this._client = client;
   }
 }

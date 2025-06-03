@@ -4,7 +4,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { Endpoint, endpoints, HandlerFunction, query } from './tools';
 import { CallToolRequestSchema, ListToolsRequestSchema, Tool } from '@modelcontextprotocol/sdk/types.js';
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 import {
   applyCompatibilityTransformations,
   ClientCapabilities,
@@ -34,7 +34,7 @@ export const server = new McpServer(
  */
 export function init(params: {
   server: Server | McpServer;
-  client?: Photos;
+  client?: Gumnut;
   endpoints?: { tool: Tool; handler: HandlerFunction }[];
   capabilities?: Partial<ClientCapabilities>;
 }) {
@@ -43,7 +43,7 @@ export function init(params: {
 
   const endpointMap = Object.fromEntries(providedEndpoints.map((endpoint) => [endpoint.tool.name, endpoint]));
 
-  const client = params.client || new Photos({});
+  const client = params.client || new Gumnut({});
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
@@ -91,7 +91,7 @@ export function selectTools(endpoints: Endpoint[], options: ParsedOptions) {
 export async function executeHandler(
   tool: Tool,
   handler: HandlerFunction,
-  client: Photos,
+  client: Gumnut,
   args: Record<string, unknown> | undefined,
   compatibilityOptions?: Partial<ClientCapabilities>,
 ) {

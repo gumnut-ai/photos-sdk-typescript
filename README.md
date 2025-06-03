@@ -1,8 +1,8 @@
-# Photos TypeScript API Library
+# Gumnut TypeScript API Library
 
 [![NPM version](https://img.shields.io/npm/v/gumnut-sdk.svg)](https://npmjs.org/package/gumnut-sdk) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/gumnut-sdk)
 
-This library provides convenient access to the Photos REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Gumnut REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [api.gumnut.ai](https://api.gumnut.ai/redoc). The full API of this library can be found in [api.md](api.md).
 
@@ -20,10 +20,10 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
-const client = new Photos({
-  apiKey: process.env['PHOTOS_API_KEY'], // This is the default and can be omitted
+const client = new Gumnut({
+  apiKey: process.env['GUMNUT_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
@@ -41,15 +41,15 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
-const client = new Photos({
-  apiKey: process.env['PHOTOS_API_KEY'], // This is the default and can be omitted
+const client = new Gumnut({
+  apiKey: process.env['GUMNUT_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
-  const params: Photos.AlbumCreateParams = { name: 'name' };
-  const albumResponse: Photos.AlbumResponse = await client.albums.create(params);
+  const params: Gumnut.AlbumCreateParams = { name: 'name' };
+  const albumResponse: Gumnut.AlbumResponse = await client.albums.create(params);
 }
 
 main();
@@ -68,9 +68,9 @@ Request parameters that correspond to file uploads can be passed in many differe
 
 ```ts
 import fs from 'fs';
-import Photos, { toFile } from 'gumnut-sdk';
+import Gumnut, { toFile } from 'gumnut-sdk';
 
-const client = new Photos();
+const client = new Gumnut();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
 await client.assets.create({
@@ -126,7 +126,7 @@ a subclass of `APIError` will be thrown:
 ```ts
 async function main() {
   const albumResponse = await client.albums.create({ name: 'name' }).catch(async (err) => {
-    if (err instanceof Photos.APIError) {
+    if (err instanceof Gumnut.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
       console.log(err.headers); // {server: 'nginx', ...}
@@ -163,7 +163,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new Photos({
+const client = new Gumnut({
   maxRetries: 0, // default is 2
 });
 
@@ -180,7 +180,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new Photos({
+const client = new Gumnut({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -196,7 +196,7 @@ Note that requests which time out will be [retried twice by default](#retries).
 
 ## Auto-pagination
 
-List methods in the Photos API are paginated.
+List methods in the Gumnut API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
@@ -237,7 +237,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new Photos();
+const client = new Gumnut();
 
 const response = await client.albums.create({ name: 'name' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -258,13 +258,13 @@ console.log(albumResponse.id);
 
 The log level can be configured in two ways:
 
-1. Via the `PHOTOS_LOG` environment variable
+1. Via the `GUMNUT_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
-const client = new Photos({
+const client = new Gumnut({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -290,13 +290,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new Photos({
-  logger: logger.child({ name: 'Photos' }),
+const client = new Gumnut({
+  logger: logger.child({ name: 'Gumnut' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -360,10 +360,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 import fetch from 'my-fetch';
 
-const client = new Photos({ fetch });
+const client = new Gumnut({ fetch });
 ```
 
 ### Fetch options
@@ -371,9 +371,9 @@ const client = new Photos({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
-const client = new Photos({
+const client = new Gumnut({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -388,11 +388,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new Photos({
+const client = new Gumnut({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -402,9 +402,9 @@ const client = new Photos({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Photos from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
-const client = new Photos({
+const client = new Gumnut({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -414,10 +414,10 @@ const client = new Photos({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Photos from 'npm:gumnut-sdk';
+import Gumnut from 'npm:gumnut-sdk';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new Photos({
+const client = new Gumnut({
   fetchOptions: {
     client: httpClient,
   },

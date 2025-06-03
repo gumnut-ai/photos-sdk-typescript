@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "photos-mcp/*": ["src/*"],
-      "photos-mcp": ["src/index.ts"]
+      "gumnut-mcp/*": ["src/*"],
+      "gumnut-mcp": ["src/index.ts"]
     },
     "noEmit": true,
 
