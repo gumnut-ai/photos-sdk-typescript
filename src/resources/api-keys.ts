@@ -10,8 +10,8 @@ export class APIKeys extends APIResource {
   /**
    * Creates a new API key for the current user
    */
-  create(options?: RequestOptions): APIPromise<APIKeyCreateResponse> {
-    return this._client.post('/api-keys/', options);
+  create(body: APIKeyCreateParams, options?: RequestOptions): APIPromise<APIKeyCreateResponse> {
+    return this._client.post('/api-keys/', { body, ...options });
   }
 
   /**
@@ -64,10 +64,15 @@ export interface APIKeyCreateResponse {
 
 export type APIKeyListResponse = Array<APIKeyResponse>;
 
+export interface APIKeyCreateParams {
+  name: string;
+}
+
 export declare namespace APIKeys {
   export {
     type APIKeyResponse as APIKeyResponse,
     type APIKeyCreateResponse as APIKeyCreateResponse,
     type APIKeyListResponse as APIKeyListResponse,
+    type APIKeyCreateParams as APIKeyCreateParams,
   };
 }
