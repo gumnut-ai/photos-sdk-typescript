@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1 (2025-06-04)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.2.0...v0.2.1)
+
+### Chores
+
+* **docs:** use top-level-await in example snippets ([9389dde](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9389ddec5f55901456fa4e15cab0fc35f35de86b))
+* **internal:** fix readablestream types in node 20 ([9ea2c61](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9ea2c61cc7191f88f9411a5fc8a4ced2cf4be8a2))
+
 ## 0.2.0 (2025-06-04)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.1.0...v0.2.0)
