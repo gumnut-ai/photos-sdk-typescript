@@ -4,6 +4,7 @@ import Gumnut from 'gumnut-sdk';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 import create_api_keys from './api-keys/create-api-keys';
+import update_api_keys from './api-keys/update-api-keys';
 import list_api_keys from './api-keys/list-api-keys';
 import delete_api_keys from './api-keys/delete-api-keys';
 import create_assets from './assets/create-assets';
@@ -57,6 +58,7 @@ function addEndpoint(endpoint: Endpoint) {
 }
 
 addEndpoint(create_api_keys);
+addEndpoint(update_api_keys);
 addEndpoint(list_api_keys);
 addEndpoint(delete_api_keys);
 addEndpoint(create_assets);

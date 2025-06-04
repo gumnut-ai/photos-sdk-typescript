@@ -6,6 +6,7 @@ export {
   type APIKeyCreateResponse,
   type APIKeyListResponse,
   type APIKeyCreateParams,
+  type APIKeyUpdateParams,
 } from './api-keys';
 export {
   Albums,

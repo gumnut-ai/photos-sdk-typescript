@@ -15,6 +15,13 @@ export class APIKeys extends APIResource {
   }
 
   /**
+   * Updates the name of a specific API key
+   */
+  update(keyID: string, body: APIKeyUpdateParams, options?: RequestOptions): APIPromise<APIKeyResponse> {
+    return this._client.patch(path`/api-keys/${keyID}`, { body, ...options });
+  }
+
+  /**
    * Retrieves a list of all API keys for the current user
    */
   list(options?: RequestOptions): APIPromise<APIKeyListResponse> {
@@ -68,11 +75,16 @@ export interface APIKeyCreateParams {
   name: string;
 }
 
+export interface APIKeyUpdateParams {
+  name: string;
+}
+
 export declare namespace APIKeys {
   export {
     type APIKeyResponse as APIKeyResponse,
     type APIKeyCreateResponse as APIKeyCreateResponse,
     type APIKeyListResponse as APIKeyListResponse,
     type APIKeyCreateParams as APIKeyCreateParams,
+    type APIKeyUpdateParams as APIKeyUpdateParams,
   };
 }

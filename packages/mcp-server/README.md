@@ -168,6 +168,7 @@ The following tools are available in this MCP server.
 ### Resource `api-keys`:
 
 - `create_api_keys` (`write`): Creates a new API key for the current user
+- `update_api_keys` (`write`): Updates the name of a specific API key
 - `list_api_keys` (`read`): Retrieves a list of all API keys for the current user
 - `delete_api_keys` (`write`): Deletes a specific API key
 
