@@ -9,8 +9,8 @@ const client = new Gumnut({
 
 describe('resource apiKeys', () => {
   // skipped: tests are disabled for the time being
-  test.skip('create', async () => {
-    const responsePromise = client.apiKeys.create();
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.apiKeys.create({ name: 'name' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,6 +18,11 @@ describe('resource apiKeys', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('create: required and optional params', async () => {
+    const response = await client.apiKeys.create({ name: 'name' });
   });
 
   // skipped: tests are disabled for the time being
