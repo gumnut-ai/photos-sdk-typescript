@@ -26,9 +26,13 @@ const client = new Gumnut({
   apiKey: process.env['GUMNUT_API_KEY'], // This is the default and can be omitted
 });
 
-const albumResponse = await client.albums.create({ name: 'name' });
+async function main() {
+  const albumResponse = await client.albums.create({ name: 'name' });
 
-console.log(albumResponse.id);
+  console.log(albumResponse.id);
+}
+
+main();
 ```
 
 ### Request & Response types
@@ -43,8 +47,12 @@ const client = new Gumnut({
   apiKey: process.env['GUMNUT_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Gumnut.AlbumCreateParams = { name: 'name' };
-const albumResponse: Gumnut.AlbumResponse = await client.albums.create(params);
+async function main() {
+  const params: Gumnut.AlbumCreateParams = { name: 'name' };
+  const albumResponse: Gumnut.AlbumResponse = await client.albums.create(params);
+}
+
+main();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -116,15 +124,19 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const albumResponse = await client.albums.create({ name: 'name' }).catch(async (err) => {
-  if (err instanceof Gumnut.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+async function main() {
+  const albumResponse = await client.albums.create({ name: 'name' }).catch(async (err) => {
+    if (err instanceof Gumnut.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
+}
+
+main();
 ```
 
 Error codes are as follows:

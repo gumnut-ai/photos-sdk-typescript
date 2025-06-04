@@ -99,7 +99,7 @@ export class PagePromise<
    *      console.log(item)
    *    }
    */
-  async *[Symbol.asyncIterator](): AsyncGenerator<Item> {
+  async *[Symbol.asyncIterator]() {
     const page = await this;
     for await (const item of page) {
       yield item;

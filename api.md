@@ -9,6 +9,7 @@ Types:
 Methods:
 
 - <code title="post /api-keys/">client.apiKeys.<a href="./src/resources/api-keys.ts">create</a>({ ...params }) -> APIKeyCreateResponse</code>
+- <code title="patch /api-keys/{key_id}">client.apiKeys.<a href="./src/resources/api-keys.ts">update</a>(keyID, { ...params }) -> APIKeyResponse</code>
 - <code title="get /api-keys/">client.apiKeys.<a href="./src/resources/api-keys.ts">list</a>() -> APIKeyListResponse</code>
 - <code title="delete /api-keys/{key_id}">client.apiKeys.<a href="./src/resources/api-keys.ts">delete</a>(keyID) -> void</code>
 

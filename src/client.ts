@@ -27,6 +27,7 @@ import {
   APIKeyCreateResponse,
   APIKeyListResponse,
   APIKeyResponse,
+  APIKeyUpdateParams,
   APIKeys,
 } from './resources/api-keys';
 import {
@@ -781,6 +782,7 @@ export declare namespace Gumnut {
     type APIKeyCreateResponse as APIKeyCreateResponse,
     type APIKeyListResponse as APIKeyListResponse,
     type APIKeyCreateParams as APIKeyCreateParams,
+    type APIKeyUpdateParams as APIKeyUpdateParams,
   };
 
   export {
