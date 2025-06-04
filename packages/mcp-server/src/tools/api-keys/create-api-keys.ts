@@ -18,12 +18,18 @@ export const tool: Tool = {
   description: 'Creates a new API key for the current user',
   inputSchema: {
     type: 'object',
-    properties: {},
+    properties: {
+      name: {
+        type: 'string',
+        title: 'Name',
+      },
+    },
   },
 };
 
 export const handler = (client: Gumnut, args: Record<string, unknown> | undefined) => {
-  return client.apiKeys.create();
+  const body = args as any;
+  return client.apiKeys.create(body);
 };
 
 export default { metadata, tool, handler };
