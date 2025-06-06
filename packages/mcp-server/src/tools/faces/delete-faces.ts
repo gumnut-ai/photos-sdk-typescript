@@ -1,5 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { asTextContentResult } from 'gumnut-mcp/tools/types';
+
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { Metadata } from '../';
 import Gumnut from 'gumnut-sdk';
@@ -27,9 +29,10 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Gumnut, args: Record<string, unknown> | undefined) => {
+export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { face_id, ...body } = args as any;
-  return client.faces.delete(face_id);
+  await client.faces.delete(face_id);
+  return asTextContentResult('Successful tool call');
 };
 
 export default { metadata, tool, handler };
