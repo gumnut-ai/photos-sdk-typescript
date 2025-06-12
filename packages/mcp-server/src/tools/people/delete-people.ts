@@ -1,5 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { asTextContentResult } from 'gumnut-mcp/tools/types';
+
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { Metadata } from '../';
 import Gumnut from 'gumnut-sdk';
@@ -15,7 +17,8 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'delete_people',
-  description: 'Deletes a specific person. Associated faces will have their person_id set to NULL.',
+  description:
+    'Deletes a specific person. Associated faces will have their person_id set to the closest matching person, or null if no one matches.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -27,9 +30,10 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Gumnut, args: Record<string, unknown> | undefined) => {
+export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { person_id, ...body } = args as any;
-  return client.people.delete(person_id);
+  await client.people.delete(person_id);
+  return asTextContentResult('Successful tool call');
 };
 
 export default { metadata, tool, handler };

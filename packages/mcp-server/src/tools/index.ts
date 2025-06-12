@@ -1,7 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Gumnut from 'gumnut-sdk';
-import { Tool } from '@modelcontextprotocol/sdk/types.js';
+import { Metadata, Endpoint, HandlerFunction } from './types';
+
+export { Metadata, Endpoint, HandlerFunction };
 
 import create_api_keys from './api-keys/create-api-keys';
 import update_api_keys from './api-keys/update-api-keys';
@@ -32,24 +33,6 @@ import update_people from './people/update-people';
 import list_people from './people/list-people';
 import delete_people from './people/delete-people';
 import search_search from './search/search-search';
-
-export type HandlerFunction = (client: Gumnut, args: Record<string, unknown> | undefined) => Promise<any>;
-
-export type Metadata = {
-  resource: string;
-  operation: 'read' | 'write';
-  tags: string[];
-
-  httpMethod?: string;
-  httpPath?: string;
-  operationId?: string;
-};
-
-export type Endpoint = {
-  metadata: Metadata;
-  tool: Tool;
-  handler: HandlerFunction;
-};
 
 export const endpoints: Endpoint[] = [];
 
@@ -111,9 +94,10 @@ export function query(filters: Filter[], endpoints: Endpoint[]): Endpoint[] {
   });
 
   // Check if any filters didn't match
-  if (unmatchedFilters.size > 0) {
+  const unmatched = Array.from(unmatchedFilters).filter((f) => f.type === 'tool' || f.type === 'resource');
+  if (unmatched.length > 0) {
     throw new Error(
-      `The following filters did not match any endpoints: ${[...unmatchedFilters]
+      `The following filters did not match any endpoints: ${unmatched
         .map((f) => `${f.type}=${f.value}`)
         .join(', ')}`,
     );
