@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'delete_people',
-  description: 'Deletes a specific person. Associated faces will have their person_id set to NULL.',
+  description:
+    'Deletes a specific person. Associated faces will have their person_id set to the closest matching person, or null if no one matches.',
   inputSchema: {
     type: 'object',
     properties: {

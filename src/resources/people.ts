@@ -40,8 +40,8 @@ export class People extends APIResource {
   }
 
   /**
-   * Deletes a specific person. Associated faces will have their person_id set to
-   * NULL.
+   * Deletes a specific person. Associated faces will have their person_id set to the
+   * closest matching person, or null if no one matches.
    */
   delete(personID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/people/${personID}`, {
