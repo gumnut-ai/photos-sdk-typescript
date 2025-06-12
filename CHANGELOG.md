@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.0 (2025-06-12)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** api update ([4887978](https://github.com/gumnut-ai/photos-sdk-typescript/commit/4887978cd740a75f432d7d373cabe4fbcede101a))
+* **mcp:** implement support for binary responses ([3f5d414](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3f5d4141452392a8c0a8fe3ba6db102e34e8e395))
+
+
+### Chores
+
+* avoid type error in certain environments ([ed815b2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ed815b298406030f30f85ae4513f51341116e356))
+* **internal:** codegen related update ([b3212d8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b3212d89759c6a17ff0e5786f41b21d26d139a70))
+* **mcp:** provides high-level initMcpServer function and exports known clients ([dac6afb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/dac6afb30ae25f6e6d417dbf48aaedac01bbbdc9))
+
 ## 0.3.0 (2025-06-04)
 
 Full Changelog: [v0.2.1...v0.3.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.2.1...v0.3.0)
