@@ -209,7 +209,7 @@ The following tools are available in this MCP server.
 - `retrieve_people` (`read`): Retrieves details for a specific person.
 - `update_people` (`write`): Updates the details of a specific person.
 - `list_people` (`read`): Retrieves a paginated list of people, ordered by creation time, descending.
-- `delete_people` (`write`): Deletes a specific person. Associated faces will have their person_id set to NULL.
+- `delete_people` (`write`): Deletes a specific person. Associated faces will have their person_id set to the closest matching person, or null if no one matches.
 
 ### Resource `search`:
 
