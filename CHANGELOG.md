@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2025-06-14)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.4.0...v0.4.1)
+
+### Bug Fixes
+
+* publish script — handle NPM errors correctly ([6121207](https://github.com/gumnut-ai/photos-sdk-typescript/commit/612120736c6131e9baa4cc7faf8871a5804379bb))
+
 ## 0.4.0 (2025-06-12)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.3.0...v0.4.0)
