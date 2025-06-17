@@ -222,6 +222,13 @@ export class Gumnut {
     });
   }
 
+  /**
+   * Check whether the base URL is set to its default.
+   */
+  #baseURLOverridden(): boolean {
+    return this.baseURL !== 'https://api.gumnut.ai';
+  }
+
   protected defaultQuery(): Record<string, string | undefined> | undefined {
     return this._options.defaultQuery;
   }
@@ -283,11 +290,16 @@ export class Gumnut {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(path: string, query: Record<string, unknown> | null | undefined): string {
+  buildURL(
+    path: string,
+    query: Record<string, unknown> | null | undefined,
+    defaultBaseURL?: string | undefined,
+  ): string {
+    const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
         new URL(path)
-      : new URL(this.baseURL + (this.baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
+      : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
     if (!isEmptyObj(defaultQuery)) {
@@ -647,9 +659,9 @@ export class Gumnut {
     { retryCount = 0 }: { retryCount?: number } = {},
   ): { req: FinalizedRequestInit; url: string; timeout: number } {
     const options = { ...inputOptions };
-    const { method, path, query } = options;
+    const { method, path, query, defaultBaseURL } = options;
 
-    const url = this.buildURL(path!, query as Record<string, unknown>);
+    const url = this.buildURL(path!, query as Record<string, unknown>, defaultBaseURL);
     if ('timeout' in options) validatePositiveInteger('timeout', options.timeout);
     options.timeout = options.timeout ?? this.timeout;
     const { bodyHeaders, body } = this.buildBody({ options });
