@@ -17,14 +17,22 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'search_search',
-  description: 'Searches for assets based on a text query using semantic similarity.',
+  description:
+    'Searches for assets using semantic similarity and/or metadata filters. At least one search criterion must be provided.',
   inputSchema: {
     type: 'object',
     properties: {
-      query: {
+      captured_after: {
         type: 'string',
-        title: 'Query',
-        description: 'The text query to search for',
+        title: 'Captured After',
+        description: 'Filter to only include assets captured after this date (ISO format).',
+        format: 'date-time',
+      },
+      captured_before: {
+        type: 'string',
+        title: 'Captured Before',
+        description: 'Filter to only include assets captured before this date (ISO format).',
+        format: 'date-time',
       },
       limit: {
         type: 'integer',
@@ -35,6 +43,19 @@ export const tool: Tool = {
         type: 'integer',
         title: 'Page',
         description: 'Page number',
+      },
+      person_ids: {
+        type: 'array',
+        title: 'Person Ids',
+        description: 'Filter to only include assets containing ALL of these person IDs',
+        items: {
+          type: 'string',
+        },
+      },
+      query: {
+        type: 'string',
+        title: 'Query',
+        description: 'The text query to search for',
       },
       threshold: {
         type: 'number',

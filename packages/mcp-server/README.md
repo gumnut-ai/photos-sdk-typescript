@@ -213,4 +213,4 @@ The following tools are available in this MCP server.
 
 ### Resource `search`:
 
-- `search_search` (`read`): Searches for assets based on a text query using semantic similarity.
+- `search_search` (`read`): Searches for assets using semantic similarity and/or metadata filters. At least one search criterion must be provided.
