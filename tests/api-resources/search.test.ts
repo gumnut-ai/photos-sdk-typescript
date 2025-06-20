@@ -9,8 +9,8 @@ const client = new Gumnut({
 
 describe('resource search', () => {
   // skipped: tests are disabled for the time being
-  test.skip('search: only required params', async () => {
-    const responsePromise = client.search.search({ query: 'query' });
+  test.skip('search', async () => {
+    const responsePromise = client.search.search();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,7 +21,21 @@ describe('resource search', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('search: required and optional params', async () => {
-    const response = await client.search.search({ query: 'query', limit: 1, page: 1, threshold: 0 });
+  test.skip('search: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.search.search(
+        {
+          captured_after: '2019-12-27T18:11:19.117Z',
+          captured_before: '2019-12-27T18:11:19.117Z',
+          limit: 1,
+          page: 1,
+          person_ids: ['string'],
+          query: 'query',
+          threshold: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Gumnut.NotFoundError);
   });
 });
