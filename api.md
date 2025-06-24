@@ -48,11 +48,12 @@ Types:
 
 - <code><a href="./src/resources/albums/assets.ts">AlbumAssetAssociation</a></code>
 - <code><a href="./src/resources/albums/assets.ts">AssetListResponse</a></code>
+- <code><a href="./src/resources/albums/assets.ts">AssetAddResponse</a></code>
 
 Methods:
 
 - <code title="get /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">list</a>(albumID) -> AssetListResponse</code>
-- <code title="post /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">add</a>(albumID, { ...params }) -> void</code>
+- <code title="post /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">add</a>(albumID, { ...params }) -> AssetAddResponse</code>
 - <code title="delete /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">remove</a>(albumID, { ...params }) -> void</code>
 
 # Faces

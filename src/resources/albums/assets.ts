@@ -16,14 +16,12 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Adds one or more existing assets to a specific album.
+   * Adds one or more existing assets to a specific album. Duplicate assets are
+   * ignored. Returns the IDs of the assets that were added and the IDs of the assets
+   * that were already in the album.
    */
-  add(albumID: string, body: AssetAddParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/api/albums/${albumID}/assets`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  add(albumID: string, body: AssetAddParams, options?: RequestOptions): APIPromise<AssetAddResponse> {
+    return this._client.post(path`/api/albums/${albumID}/assets`, { body, ...options });
   }
 
   /**
@@ -45,6 +43,12 @@ export interface AlbumAssetAssociation {
 
 export type AssetListResponse = Array<AssetsAPI.AssetResponse>;
 
+export interface AssetAddResponse {
+  added_assets: Array<string>;
+
+  duplicate_assets: Array<string>;
+}
+
 export interface AssetAddParams {
   asset_ids: Array<string>;
 }
@@ -57,6 +61,7 @@ export declare namespace Assets {
   export {
     type AlbumAssetAssociation as AlbumAssetAssociation,
     type AssetListResponse as AssetListResponse,
+    type AssetAddResponse as AssetAddResponse,
     type AssetAddParams as AssetAddParams,
     type AssetRemoveParams as AssetRemoveParams,
   };
