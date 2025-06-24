@@ -192,7 +192,7 @@ The following tools are available in this MCP server.
 ### Resource `albums.assets`:
 
 - `list_albums_assets` (`read`): Retrieves a list of all assets contained within a specific album.
-- `add_albums_assets` (`write`): Adds one or more existing assets to a specific album.
+- `add_albums_assets` (`write`): Adds one or more existing assets to a specific album. Duplicate assets are ignored. Returns the IDs of the assets that were added and the IDs of the assets that were already in the album.
 - `remove_albums_assets` (`write`): Removes one or more assets from a specific album. Note: This does not delete the assets themselves.
 
 ### Resource `faces`:
