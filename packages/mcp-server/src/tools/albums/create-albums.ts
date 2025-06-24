@@ -17,17 +17,18 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'create_albums',
-  description: 'Creates a new, empty album with a given name and optional description.',
+  description:
+    'Creates a new, empty album with a optional name and description. If no name is provided, the album will be given a default name.',
   inputSchema: {
     type: 'object',
     properties: {
-      name: {
-        type: 'string',
-        title: 'Name',
-      },
       description: {
         type: 'string',
         title: 'Description',
+      },
+      name: {
+        type: 'string',
+        title: 'Name',
       },
     },
   },

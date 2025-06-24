@@ -20,7 +20,8 @@ export class Albums extends APIResource {
   assets: AssetsAPI.Assets = new AssetsAPI.Assets(this._client);
 
   /**
-   * Creates a new, empty album with a given name and optional description.
+   * Creates a new, empty album with a optional name and description. If no name is
+   * provided, the album will be given a default name.
    */
   create(body: AlbumCreateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.post('/api/albums', { body, ...options });
@@ -77,9 +78,9 @@ export interface AlbumResponse {
 }
 
 export interface AlbumCreateParams {
-  name: string;
-
   description?: string | null;
+
+  name?: string | null;
 }
 
 export interface AlbumUpdateParams {
