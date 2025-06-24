@@ -5,6 +5,7 @@ import * as AssetsAPI from './assets';
 import {
   AlbumAssetAssociation,
   AssetAddParams,
+  AssetAddResponse,
   AssetListResponse,
   AssetRemoveParams,
   Assets,
@@ -104,6 +105,7 @@ export declare namespace Albums {
     Assets as Assets,
     type AlbumAssetAssociation as AlbumAssetAssociation,
     type AssetListResponse as AssetListResponse,
+    type AssetAddResponse as AssetAddResponse,
     type AssetAddParams as AssetAddParams,
     type AssetRemoveParams as AssetRemoveParams,
   };

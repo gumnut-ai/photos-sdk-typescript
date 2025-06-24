@@ -12,6 +12,7 @@ export {
   Assets,
   type AlbumAssetAssociation,
   type AssetListResponse,
+  type AssetAddResponse,
   type AssetAddParams,
   type AssetRemoveParams,
 } from './assets';

@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'add_albums_assets',
-  description: 'Adds one or more existing assets to a specific album.',
+  description:
+    'Adds one or more existing assets to a specific album. Duplicate assets are ignored. Returns the IDs of the assets that were added and the IDs of the assets that were already in the album.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -38,8 +39,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { album_id, ...body } = args as any;
-  await client.albums.assets.add(album_id, body);
-  return asTextContentResult('Successful tool call');
+  return asTextContentResult(await client.albums.assets.add(album_id, body));
 };
 
 export default { metadata, tool, handler };
