@@ -64,7 +64,7 @@ export interface FaceResponse {
 
   asset_id: string;
 
-  bounding_box: Record<string, number>;
+  bounding_box: { [key: string]: number };
 
   created_at: string;
 

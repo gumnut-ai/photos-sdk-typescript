@@ -106,7 +106,7 @@ export interface AssetResponse {
 
   exif?: AssetResponse.Exif | null;
 
-  metrics?: Record<string, number | null> | null;
+  metrics?: { [key: string]: number | null } | null;
 
   thumbnail_url?: string | null;
 }
