@@ -183,7 +183,7 @@ The following tools are available in this MCP server.
 
 ### Resource `albums`:
 
-- `create_albums` (`write`): Creates a new, empty album with a given name and optional description.
+- `create_albums` (`write`): Creates a new, empty album with a optional name and description. If no name is provided, the album will be given a default name.
 - `retrieve_albums` (`read`): Retrieves details for a specific album.
 - `update_albums` (`write`): Updates the name and/or description of a specific album.
 - `list_albums` (`read`): Retrieves a paginated list of albums, ordered by creation time, descending.
