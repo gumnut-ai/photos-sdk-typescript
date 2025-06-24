@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.5.0 (2025-06-24)
+
+Full Changelog: [v0.4.1...v0.5.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.4.1...v0.5.0)
+
+### Features
+
+* **api:** api update ([fdadc67](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fdadc6760426e4ef5f7fc3d5fa35070c23de59cf))
+* **api:** api update ([121eabb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/121eabb4519d14af3524775977d41965f5f326cb))
+* **client:** add support for endpoint-specific base URLs ([73db20a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/73db20aae0f8aa47fbadb371214ba6ce59f5f845))
+* **mcp:** set X-Stainless-MCP header ([8b3cfe8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8b3cfe8d462f79f6338d40cd57336b8dd45743fd))
+
+
+### Bug Fixes
+
+* **client:** explicitly copy fetch in withOptions ([f7b43e7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f7b43e75906a7ee9cc948318c97df8c05621de99))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([c2b6439](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c2b6439093d603e7a356a70d4c3e6ca3b1dad198))
+* **client:** refactor imports ([48e72d0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/48e72d0eae8f41530e1050797e787ebee2ab6084))
+* **internal:** add pure annotations, make base APIResource abstract ([d664096](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d664096621ea8cbb9063a7784c0ae5f89c63e91b))
+* **readme:** update badges ([2148fa2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2148fa24705526d826f9c2bb824149c1e1fc41a2))
+* **readme:** use better example snippet for undocumented params ([a2112da](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a2112da1f8c6a2fb6446fbc217ca4e729721bc88))
+
 ## 0.4.1 (2025-06-14)
 
 Full Changelog: [v0.4.0...v0.4.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.4.0...v0.4.1)
