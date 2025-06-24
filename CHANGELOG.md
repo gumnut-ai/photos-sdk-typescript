@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1 (2025-06-24)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.5.0...v0.5.1)
+
+### Refactors
+
+* **types:** replace Record with mapped types ([bf8b731](https://github.com/gumnut-ai/photos-sdk-typescript/commit/bf8b7318e6d9563cbddec1271202cc208702a82e))
+
 ## 0.5.0 (2025-06-24)
 
 Full Changelog: [v0.4.1...v0.5.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.4.1...v0.5.0)
