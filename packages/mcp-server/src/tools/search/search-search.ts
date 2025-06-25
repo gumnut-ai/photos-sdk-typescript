@@ -47,7 +47,8 @@ export const tool: Tool = {
       person_ids: {
         type: 'array',
         title: 'Person Ids',
-        description: 'Filter to only include assets containing ALL of these person IDs',
+        description:
+          "Filter to only include assets containing ALL of these person IDs. Can be comma-delimited string (e.g., 'person_123,person_abc') or multiple query parameters.",
         items: {
           type: 'string',
         },

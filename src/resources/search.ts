@@ -52,7 +52,9 @@ export interface SearchSearchParams {
   page?: number;
 
   /**
-   * Filter to only include assets containing ALL of these person IDs
+   * Filter to only include assets containing ALL of these person IDs. Can be
+   * comma-delimited string (e.g., 'person_123,person_abc') or multiple query
+   * parameters.
    */
   person_ids?: Array<string>;
 
