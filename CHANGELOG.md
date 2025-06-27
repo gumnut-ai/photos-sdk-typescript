@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.2 (2025-06-27)
+
+Full Changelog: [v0.8.1...v0.8.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.8.1...v0.8.2)
+
+### Bug Fixes
+
+* **client:** get fetchOptions type more reliably ([17631af](https://github.com/gumnut-ai/photos-sdk-typescript/commit/17631affa00eac69584b15ec388925faff82f1c4))
+
 ## 0.8.1 (2025-06-27)
 
 Full Changelog: [v0.8.0...v0.8.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.8.0...v0.8.1)
