@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1 (2025-06-27)
+
+Full Changelog: [v0.8.0...v0.8.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.8.0...v0.8.1)
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([3751598](https://github.com/gumnut-ai/photos-sdk-typescript/commit/375159811d6d5ffd544252f673da09a53b673217))
+
 ## 0.8.0 (2025-06-25)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.7.0...v0.8.0)
