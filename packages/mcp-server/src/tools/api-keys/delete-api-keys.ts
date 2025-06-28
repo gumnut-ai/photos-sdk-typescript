@@ -31,8 +31,8 @@ export const tool: Tool = {
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { key_id, ...body } = args as any;
-  await client.apiKeys.delete(key_id);
-  return asTextContentResult('Successful tool call');
+  const response = await client.apiKeys.delete(key_id).asResponse();
+  return asTextContentResult(await response.text());
 };
 
 export default { metadata, tool, handler };
