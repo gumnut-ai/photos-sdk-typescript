@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.9.0 (2025-07-03)
+
+Full Changelog: [v0.8.2...v0.9.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.8.2...v0.9.0)
+
+### Features
+
+* **mcp:** fallback for void-typed methods ([e1b5db9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e1b5db9ef5dfe1fd7df9986849c6d533a1b73548))
+
+
+### Bug Fixes
+
+* **mcp:** define `.well-known/oauth-protected-resource` ([a05c2a1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a05c2a13b2e49fb12f314316a40cc228328597a2))
+
+
+### Chores
+
+* add docs to RequestOptions type ([8710745](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8710745f37d3d357eb718583ab66b81d031a7a4e))
+* **ci:** only run for pushes and fork pull requests ([027ebbf](https://github.com/gumnut-ai/photos-sdk-typescript/commit/027ebbf5305f503e754cde2cbe644f32f236fcfd))
+* **client:** improve path param validation ([afaaf52](https://github.com/gumnut-ai/photos-sdk-typescript/commit/afaaf5296de23e7c749fe00c2dfa090ddf33b041))
+
 ## 0.8.2 (2025-06-27)
 
 Full Changelog: [v0.8.1...v0.8.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.8.1...v0.8.2)
