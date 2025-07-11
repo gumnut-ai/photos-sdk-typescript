@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.10.0 (2025-07-11)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* **mcp:** support filtering tool results by a jq expression ([db414e7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/db414e7f324b917e278b0723e6fda85220eefe10))
+
+
+### Bug Fixes
+
+* **mcp:** relax input type for asTextContextResult ([47c9993](https://github.com/gumnut-ai/photos-sdk-typescript/commit/47c9993af7fd81633c234c6cb3b7d8e3c96d460d))
+
+
+### Chores
+
+* make some internal functions async ([5225f2e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5225f2e34175590c4d6fe37d104ef0d574ee092d))
+
 ## 0.9.0 (2025-07-03)
 
 Full Changelog: [v0.8.2...v0.9.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.8.2...v0.9.0)
