@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.1 (2025-07-16)
+
+Full Changelog: [v0.10.0...v0.10.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.10.0...v0.10.1)
+
+### Bug Fixes
+
+* **mcp:** support jq filtering on cloudflare workers ([cfd2a7e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cfd2a7e9ca40988d868380be07f12d440435e571))
+
+
+### Documentation
+
+* **mcp:** correct instructions for adding to claude web ([e332eba](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e332ebaf72557f6c4b15ee8b5c48205113902005))
+
 ## 0.10.0 (2025-07-11)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.9.0...v0.10.0)
