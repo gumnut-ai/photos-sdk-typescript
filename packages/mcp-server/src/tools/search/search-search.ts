@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { maybeFilter } from 'gumnut-mcp/filtering';
-import { asTextContentResult } from 'gumnut-mcp/tools/types';
+import { Metadata, asTextContentResult } from 'gumnut-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { Metadata } from '../';
 import Gumnut from 'gumnut-sdk';
 
 export const metadata: Metadata = {
