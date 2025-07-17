@@ -59,21 +59,48 @@ export class Faces extends APIResource {
 
 export type FaceResponsesCursorPage = CursorPage<FaceResponse>;
 
+/**
+ * Represents a detected face in an asset with facial recognition data.
+ */
 export interface FaceResponse {
+  /**
+   * Unique face identifier with 'face\_' prefix
+   */
   id: string;
 
+  /**
+   * ID of the asset containing this face
+   */
   asset_id: string;
 
+  /**
+   * Face location as {x, y, w, h} coordinates in pixels
+   */
   bounding_box: { [key: string]: number };
 
+  /**
+   * When this face was detected and recorded
+   */
   created_at: string;
 
+  /**
+   * When this face record was last updated
+   */
   updated_at: string;
 
+  /**
+   * ID of the person this face belongs to (if identified)
+   */
   person_id?: string | null;
 
+  /**
+   * URL to get a cropped thumbnail of just this face
+   */
   thumbnail_url?: string | null;
 
+  /**
+   * For video files, timestamp in milliseconds when face appears
+   */
   timestamp_ms?: number | null;
 }
 

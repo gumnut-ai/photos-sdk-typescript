@@ -79,88 +79,218 @@ export class Assets extends APIResource {
 
 export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
 
+/**
+ * Represents a photo or video asset with metadata and access URLs.
+ */
 export interface AssetResponse {
+  /**
+   * Unique asset identifier with 'asset\_' prefix
+   */
   id: string;
 
+  /**
+   * Base64-encoded hash of the asset contents for duplicate detection and integrity
+   */
   checksum: string;
 
+  /**
+   * When this asset record was created in the database
+   */
   created_at: string;
 
+  /**
+   * Original asset identifier from the device that uploaded this asset
+   */
   device_asset_id: string;
 
+  /**
+   * Identifier of the device that uploaded this asset
+   */
   device_id: string;
 
+  /**
+   * When the file was created on the uploading device
+   */
   file_created_at: string;
 
+  /**
+   * When the file was last modified on the uploading device
+   */
   file_modified_at: string;
 
+  /**
+   * When the photo/video was taken, in the device's local timezone
+   */
   local_datetime: string;
 
+  /**
+   * MIME type of the file (e.g., 'image/jpeg', 'video/mp4')
+   */
   mime_type: string;
 
+  /**
+   * Original filename when the asset was uploaded
+   */
   original_file_name: string;
 
+  /**
+   * When this asset record was last updated
+   */
   updated_at: string;
 
+  /**
+   * If you need to download the full asset, use this URL. Otherwise, use the
+   * thumbnail_url.
+   */
   download_url?: string | null;
 
+  /**
+   * EXIF metadata extracted from image and video files.
+   */
   exif?: AssetResponse.Exif | null;
 
+  /**
+   * ML-generated quality scores and other metrics
+   */
   metrics?: { [key: string]: number | null } | null;
 
+  /**
+   * Use this URL to display the asset. Never download the full asset unless you
+   * absolutely have to; prefer the thumbnail instead.
+   */
   thumbnail_url?: string | null;
 }
 
 export namespace AssetResponse {
+  /**
+   * EXIF metadata extracted from image and video files.
+   */
   export interface Exif {
+    /**
+     * GPS altitude in meters
+     */
     altitude?: number | null;
 
+    /**
+     * Identifier for automatic photo stacking
+     */
     auto_stack_id?: string | null;
 
+    /**
+     * City name from GPS/location data
+     */
     city?: string | null;
 
+    /**
+     * Country name from GPS/location data
+     */
     country?: string | null;
 
+    /**
+     * Image description or caption
+     */
     description?: string | null;
 
+    /**
+     * When the photo was digitized, with timezone info
+     */
     digitized_datetime?: string | null;
 
+    /**
+     * Exposure compensation in EV (e.g., -1.0, +0.5)
+     */
     exposure_bias?: number | null;
 
+    /**
+     * Shutter speed in seconds (e.g., 0.001 for 1/1000s)
+     */
     exposure_time?: number | null;
 
+    /**
+     * Aperture f-stop value (e.g., 2.8, 5.6)
+     */
     f_number?: number | null;
 
+    /**
+     * Focal length in millimeters
+     */
     focal_length?: number | null;
 
+    /**
+     * Frame rate for video files
+     */
     fps?: number | null;
 
+    /**
+     * ISO sensitivity value (e.g., 100, 800, 3200)
+     */
     iso?: number | null;
 
+    /**
+     * GPS latitude in decimal degrees
+     */
     latitude?: number | null;
 
+    /**
+     * Lens model used (e.g., 'EF 24-70mm f/2.8L II USM')
+     */
     lens_model?: string | null;
 
+    /**
+     * Live photo content identifier
+     */
     live_photo_cid?: string | null;
 
+    /**
+     * GPS longitude in decimal degrees
+     */
     longitude?: number | null;
 
+    /**
+     * Camera manufacturer (e.g., 'Canon', 'Nikon')
+     */
     make?: string | null;
 
+    /**
+     * Camera model (e.g., 'EOS 5D Mark IV')
+     */
     model?: string | null;
 
+    /**
+     * When the file was last modified, with timezone info
+     */
     modified_datetime?: string | null;
 
+    /**
+     * Image orientation value (1-8) indicating rotation/flip: 1=normal, 2=mirror
+     * horizontal, 3=rotate 180°, 4=mirror vertical, 5=mirror horizontal+rotate 90° CW,
+     * 6=rotate 90° CW, 7=mirror horizontal+rotate 90° CCW, 8=rotate 90° CCW
+     */
     orientation?: number | null;
 
+    /**
+     * When the photo was originally taken, with timezone info
+     */
     original_datetime?: string | null;
 
+    /**
+     * Color profile description
+     */
     profile_description?: string | null;
 
+    /**
+     * Projection type (e.g., for 360° photos)
+     */
     projection_type?: string | null;
 
+    /**
+     * User or camera rating (typically 1-5 stars)
+     */
     rating?: number | null;
 
+    /**
+     * State/province name from GPS/location data
+     */
     state?: string | null;
   }
 }
