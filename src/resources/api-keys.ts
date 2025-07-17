@@ -39,34 +39,72 @@ export class APIKeys extends APIResource {
   }
 }
 
+/**
+ * Represents an API key for authentication (without exposing the actual key).
+ */
 export interface APIKeyResponse {
+  /**
+   * Unique API key identifier with 'apikey\_' prefix
+   */
   id: string;
 
+  /**
+   * When this API key was created
+   */
   created_at: string;
 
+  /**
+   * Whether this API key is currently valid and can be used
+   */
   is_active: boolean;
 
-  last_used_at: string | null;
+  /**
+   * When this API key was last used for authentication
+   */
+  last_used_at?: string | null;
 
-  name: string | null;
+  /**
+   * Optional descriptive name for this API key
+   */
+  name?: string | null;
 }
 
 /**
- * The only difference between this and APIKeyResponse is that it includes the full
- * API key.
+ * Response when creating a new API key - includes the actual key value.
+ *
+ * This is the only time the raw API key is exposed. After creation, only the
+ * hashed version is stored and the raw key cannot be retrieved.
  */
 export interface APIKeyCreateResponse {
+  /**
+   * Unique API key identifier with 'apikey\_' prefix
+   */
   id: string;
 
+  /**
+   * The actual API key value - store this securely as it cannot be retrieved later
+   */
   api_key: string;
 
+  /**
+   * When this API key was created
+   */
   created_at: string;
 
+  /**
+   * Whether this API key is currently valid and can be used
+   */
   is_active: boolean;
 
-  last_used_at: string | null;
+  /**
+   * When this API key was last used for authentication
+   */
+  last_used_at?: string | null;
 
-  name: string | null;
+  /**
+   * Optional descriptive name for this API key
+   */
+  name?: string | null;
 }
 
 export type APIKeyListResponse = Array<APIKeyResponse>;

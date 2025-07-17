@@ -65,15 +65,33 @@ export class Albums extends APIResource {
 
 export type AlbumResponsesCursorPage = CursorPage<AlbumResponse>;
 
+/**
+ * Represents a collection of assets organized by the user.
+ */
 export interface AlbumResponse {
+  /**
+   * Unique album identifier with 'album\_' prefix
+   */
   id: string;
 
+  /**
+   * When this album was created
+   */
   created_at: string;
 
+  /**
+   * Display name of the album
+   */
   name: string;
 
+  /**
+   * When this album was last updated
+   */
   updated_at: string;
 
+  /**
+   * Optional description text for the album
+   */
   description?: string | null;
 }
 

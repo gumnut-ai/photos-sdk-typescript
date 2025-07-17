@@ -53,23 +53,53 @@ export class People extends APIResource {
 
 export type PersonResponsesCursorPage = CursorPage<PersonResponse>;
 
+/**
+ * Represents a person identified through face clustering and recognition.
+ */
 export interface PersonResponse {
+  /**
+   * Unique person identifier with 'person\_' prefix
+   */
   id: string;
 
+  /**
+   * When this person record was created
+   */
   created_at: string;
 
+  /**
+   * Whether this person is marked as a favorite
+   */
   is_favorite: boolean;
 
+  /**
+   * Whether this person should be hidden from the UI
+   */
   is_hidden: boolean;
 
+  /**
+   * When this person record was last updated
+   */
   updated_at: string;
 
+  /**
+   * Optional birth date of this person
+   */
   birth_date?: string | null;
 
+  /**
+   * Optional name assigned to this person
+   */
   name?: string | null;
 
+  /**
+   * ID of the face resource used as this person's thumbnail
+   */
   thumbnail_face_id?: string | null;
 
+  /**
+   * URL for this person's profile thumbnail image
+   */
   thumbnail_face_url?: string | null;
 }
 
