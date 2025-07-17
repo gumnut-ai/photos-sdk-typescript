@@ -24,6 +24,9 @@ export interface SearchResponse {
 
 export namespace SearchResponse {
   export interface Data {
+    /**
+     * Represents a photo or video asset with metadata and access URLs.
+     */
     asset: AssetsAPI.AssetResponse;
 
     distance: number | null;
