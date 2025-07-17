@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.11.0 (2025-07-17)
+
+Full Changelog: [v0.10.1...v0.11.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.10.1...v0.11.0)
+
+### Features
+
+* **api:** api update ([6f00cad](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6f00cad6085c13daac55749d071f9941204601c7))
+
+
+### Chores
+
+* **mcp:** formatting ([e024560](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e02456009aa6ab8616615c639a3fc61a7d014714))
+* **mcp:** rework imports in tools ([7617ac0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7617ac0244e4440dd0383d010668e4698491b913))
+* **ts:** reorder package.json imports ([e7d05d0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e7d05d05ce8effb9dcee80860c6f21abe9c4b8e8))
+
 ## 0.10.1 (2025-07-16)
 
 Full Changelog: [v0.10.0...v0.10.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.10.0...v0.10.1)
