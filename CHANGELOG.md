@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.1 (2025-07-18)
+
+Full Changelog: [v0.11.0...v0.11.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.11.0...v0.11.1)
+
+### Bug Fixes
+
+* **mcp:** include required section for top-level properties and support naming transformations ([42a5ea1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/42a5ea1c169c476442ace40b02c683e964fd0e98))
+
 ## 0.11.0 (2025-07-17)
 
 Full Changelog: [v0.10.1...v0.11.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.10.1...v0.11.0)
