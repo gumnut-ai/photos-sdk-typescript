@@ -63,6 +63,7 @@ export const tool: Tool = {
         description: 'Similarity threshold (lower means more similar)',
       },
     },
+    required: [],
   },
 };
 
