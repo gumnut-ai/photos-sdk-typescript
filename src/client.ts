@@ -45,7 +45,13 @@ import {
   FaceUpdateParams,
   Faces,
 } from './resources/faces';
-import { Libraries, LibraryListResponse, LibraryResponse, LibraryUpdateParams } from './resources/libraries';
+import {
+  Libraries,
+  LibraryCreateParams,
+  LibraryListResponse,
+  LibraryResponse,
+  LibraryUpdateParams,
+} from './resources/libraries';
 import {
   People,
   PersonCreateParams,
@@ -832,6 +838,7 @@ export declare namespace Gumnut {
     Libraries as Libraries,
     type LibraryResponse as LibraryResponse,
     type LibraryListResponse as LibraryListResponse,
+    type LibraryCreateParams as LibraryCreateParams,
     type LibraryUpdateParams as LibraryUpdateParams,
   };
 
