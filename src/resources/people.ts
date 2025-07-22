@@ -110,6 +110,8 @@ export interface PersonCreateParams {
 
   is_hidden?: boolean | null;
 
+  library_id?: string | null;
+
   name?: string | null;
 
   thumbnail_face_id?: string | null;
@@ -137,6 +139,11 @@ export interface PersonListParams extends CursorPageParams {
    * Include only people associated with this asset ID
    */
   asset_id?: string | null;
+
+  /**
+   * Library ID (required if user has multiple libraries)
+   */
+  library_id?: string | null;
 }
 
 export declare namespace People {

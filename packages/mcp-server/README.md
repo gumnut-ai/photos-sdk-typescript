@@ -174,25 +174,25 @@ The following tools are available in this MCP server.
 
 ### Resource `assets`:
 
-- `create_assets` (`write`): Uploads a new asset file (image or video) along with its metadata. If an asset with the same checksum already exists, returns the existing asset's metadata.
+- `create_assets` (`write`): Uploads a new asset file (image or video) along with its metadata to the specified library. If no library_id is provided and the user only has one library, uses that library. If the user has multiple libraries, library_id is required.
 - `retrieve_assets` (`read`): Retrieves detailed metadata for a specific asset, including EXIF information and asset metrics.
-- `list_assets` (`read`): Retrieves a paginated list of assets, optionally filtered by album. Assets are ordered by local creation time, descending.
+- `list_assets` (`read`): Retrieves a paginated list of assets from the specified library, optionally filtered by album or person. Assets are ordered by local creation time, descending.
 - `delete_assets` (`write`): Deletes a specific asset and its associated data (including the file from storage).
 - `download_assets` (`read`): Downloads the original file for a specific asset.
 - `download_thumbnail_assets` (`read`): Downloads a thumbnail for a specific asset. The exact thumbnail returned depends on availability and the optional `size` parameter.
 
 ### Resource `albums`:
 
-- `create_albums` (`write`): Creates a new, empty album with a optional name and description. If no name is provided, the album will be given a default name.
+- `create_albums` (`write`): Creates a new, empty album with optional name and description in the specified library.
 - `retrieve_albums` (`read`): Retrieves details for a specific album.
 - `update_albums` (`write`): Updates the name and/or description of a specific album.
-- `list_albums` (`read`): Retrieves a paginated list of albums, ordered by creation time, descending.
+- `list_albums` (`read`): Retrieves a paginated list of albums from the specified library, ordered by creation time, descending.
 - `delete_albums` (`write`): Deletes a specific album. Note: This does not delete the assets within the album.
 
 ### Resource `albums.assets`:
 
 - `list_albums_assets` (`read`): Retrieves a list of all assets contained within a specific album.
-- `add_albums_assets` (`write`): Adds one or more existing assets to a specific album. Duplicate assets are ignored. Returns the IDs of the assets that were added and the IDs of the assets that were already in the album.
+- `add_albums_assets` (`write`): Adds one or more existing assets to a specific album. Assets must be in the same library as the album. Duplicate assets are ignored.
 - `remove_albums_assets` (`write`): Removes one or more assets from a specific album. Note: This does not delete the assets themselves.
 
 ### Resource `faces`:
@@ -202,6 +202,13 @@ The following tools are available in this MCP server.
 - `list_faces` (`read`): Retrieves a paginated list of faces, optionally filtered by asset or person, ordered by creation time, descending.
 - `delete_faces` (`write`): Deletes a specific face entry. This does not delete the associated asset or person.
 - `download_thumbnail_faces` (`read`): Retrieves a thumbnail for a specific face.
+
+### Resource `libraries`:
+
+- `retrieve_libraries` (`read`): Returns details of a specific library owned by the authenticated user.
+- `update_libraries` (`write`): Updates the name and/or description of a library owned by the authenticated user.
+- `list_libraries` (`read`): Returns all libraries owned by the authenticated user.
+- `delete_libraries` (`write`): Deletes a library and all its associated data (assets, albums, people, faces). Cannot delete the user's only library.
 
 ### Resource `people`:
 

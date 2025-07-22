@@ -20,8 +20,8 @@ export class Albums extends APIResource {
   assets: AssetsAPI.Assets = new AssetsAPI.Assets(this._client);
 
   /**
-   * Creates a new, empty album with a optional name and description. If no name is
-   * provided, the album will be given a default name.
+   * Creates a new, empty album with optional name and description in the specified
+   * library.
    */
   create(body: AlbumCreateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.post('/api/albums', { body, ...options });
@@ -42,7 +42,8 @@ export class Albums extends APIResource {
   }
 
   /**
-   * Retrieves a paginated list of albums, ordered by creation time, descending.
+   * Retrieves a paginated list of albums from the specified library, ordered by
+   * creation time, descending.
    */
   list(
     query: AlbumListParams | null | undefined = {},
@@ -98,6 +99,8 @@ export interface AlbumResponse {
 export interface AlbumCreateParams {
   description?: string | null;
 
+  library_id?: string | null;
+
   name?: string | null;
 }
 
@@ -107,7 +110,12 @@ export interface AlbumUpdateParams {
   name?: string | null;
 }
 
-export interface AlbumListParams extends CursorPageParams {}
+export interface AlbumListParams extends CursorPageParams {
+  /**
+   * Library to list albums from (optional)
+   */
+  library_id?: string | null;
+}
 
 Albums.Assets = Assets;
 

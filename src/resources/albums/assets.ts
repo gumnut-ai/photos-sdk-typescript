@@ -16,9 +16,8 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Adds one or more existing assets to a specific album. Duplicate assets are
-   * ignored. Returns the IDs of the assets that were added and the IDs of the assets
-   * that were already in the album.
+   * Adds one or more existing assets to a specific album. Assets must be in the same
+   * library as the album. Duplicate assets are ignored.
    */
   add(albumID: string, body: AssetAddParams, options?: RequestOptions): APIPromise<AssetAddResponse> {
     return this._client.post(path`/api/albums/${albumID}/assets`, { body, ...options });

@@ -35,6 +35,10 @@ export const tool: Tool = {
         type: 'boolean',
         title: 'Is Hidden',
       },
+      library_id: {
+        type: 'string',
+        title: 'Library Id',
+      },
       name: {
         type: 'string',
         title: 'Name',
