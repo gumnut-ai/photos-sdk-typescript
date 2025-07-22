@@ -25,11 +25,6 @@ export const tool: Tool = {
         type: 'string',
         title: 'Face Id',
       },
-      library_id: {
-        type: 'string',
-        title: 'Library Id',
-        description: 'Library ID (required if user has multiple libraries)',
-      },
       jq_filter: {
         type: 'string',
         title: 'jq Filter',
@@ -43,7 +38,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { face_id, ...body } = args as any;
-  return asBinaryContentResult(await client.faces.downloadThumbnail(face_id, body));
+  return asBinaryContentResult(await client.faces.downloadThumbnail(face_id));
 };
 
 export default { metadata, tool, handler };

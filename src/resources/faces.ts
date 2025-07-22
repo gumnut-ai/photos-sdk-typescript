@@ -59,13 +59,8 @@ export class Faces extends APIResource {
   /**
    * Retrieves a thumbnail for a specific face.
    */
-  downloadThumbnail(
-    faceID: string,
-    query: FaceDownloadThumbnailParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<Response> {
+  downloadThumbnail(faceID: string, options?: RequestOptions): APIPromise<Response> {
     return this._client.get(path`/api/faces/${faceID}/thumbnail`, {
-      query,
       ...options,
       headers: buildHeaders([{ Accept: 'image/*' }, options?.headers]),
       __binaryResponse: true,
@@ -163,13 +158,6 @@ export interface FaceDeleteParams {
   library_id?: string | null;
 }
 
-export interface FaceDownloadThumbnailParams {
-  /**
-   * Library ID (required if user has multiple libraries)
-   */
-  library_id?: string | null;
-}
-
 export declare namespace Faces {
   export {
     type FaceResponse as FaceResponse,
@@ -178,6 +166,5 @@ export declare namespace Faces {
     type FaceUpdateParams as FaceUpdateParams,
     type FaceListParams as FaceListParams,
     type FaceDeleteParams as FaceDeleteParams,
-    type FaceDownloadThumbnailParams as FaceDownloadThumbnailParams,
   };
 }
