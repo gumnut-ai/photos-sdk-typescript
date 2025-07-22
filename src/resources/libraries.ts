@@ -8,6 +8,13 @@ import { path } from '../internal/utils/path';
 
 export class Libraries extends APIResource {
   /**
+   * Creates a new library for the authenticated user.
+   */
+  create(body: LibraryCreateParams, options?: RequestOptions): APIPromise<LibraryResponse> {
+    return this._client.post('/api/libraries', { body, ...options });
+  }
+
+  /**
    * Returns details of a specific library owned by the authenticated user.
    */
   retrieve(libraryID: string, options?: RequestOptions): APIPromise<LibraryResponse> {
@@ -82,6 +89,12 @@ export interface LibraryResponse {
 
 export type LibraryListResponse = Array<LibraryResponse>;
 
+export interface LibraryCreateParams {
+  name: string;
+
+  description?: string | null;
+}
+
 export interface LibraryUpdateParams {
   description?: string | null;
 
@@ -92,6 +105,7 @@ export declare namespace Libraries {
   export {
     type LibraryResponse as LibraryResponse,
     type LibraryListResponse as LibraryListResponse,
+    type LibraryCreateParams as LibraryCreateParams,
     type LibraryUpdateParams as LibraryUpdateParams,
   };
 }

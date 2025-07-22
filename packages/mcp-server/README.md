@@ -205,6 +205,7 @@ The following tools are available in this MCP server.
 
 ### Resource `libraries`:
 
+- `create_libraries` (`write`): Creates a new library for the authenticated user.
 - `retrieve_libraries` (`read`): Returns details of a specific library owned by the authenticated user.
 - `update_libraries` (`write`): Updates the name and/or description of a library owned by the authenticated user.
 - `list_libraries` (`read`): Returns all libraries owned by the authenticated user.
