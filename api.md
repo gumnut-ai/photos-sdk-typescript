@@ -70,6 +70,8 @@ Methods:
 - <code title="delete /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">delete</a>(faceID) -> void</code>
 - <code title="get /api/faces/{face_id}/thumbnail">client.faces.<a href="./src/resources/faces.ts">downloadThumbnail</a>(faceID) -> Response</code>
 
+# Libraries
+
 # People
 
 Types:
