@@ -34,6 +34,7 @@ describe('resource assets', () => {
       device_id: 'device_id',
       file_created_at: '2019-12-27T18:11:19.117Z',
       file_modified_at: '2019-12-27T18:11:19.117Z',
+      library_id: 'library_id',
     });
   });
 
@@ -66,7 +67,13 @@ describe('resource assets', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.assets.list(
-        { album_id: 'album_id', limit: 1, person_id: 'person_id', starting_after_id: 'starting_after_id' },
+        {
+          album_id: 'album_id',
+          library_id: 'library_id',
+          limit: 1,
+          person_id: 'person_id',
+          starting_after_id: 'starting_after_id',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Gumnut.NotFoundError);

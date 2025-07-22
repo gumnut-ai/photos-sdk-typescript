@@ -26,6 +26,11 @@ export const tool: Tool = {
         type: 'string',
         title: 'Face Id',
       },
+      library_id: {
+        type: 'string',
+        title: 'Library Id',
+        description: 'Library ID (required if user has multiple libraries)',
+      },
       jq_filter: {
         type: 'string',
         title: 'jq Filter',
@@ -39,7 +44,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { face_id, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.faces.retrieve(face_id)));
+  return asTextContentResult(await maybeFilter(args, await client.faces.retrieve(face_id, body)));
 };
 
 export default { metadata, tool, handler };

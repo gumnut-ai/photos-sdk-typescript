@@ -11,16 +11,21 @@ export class Faces extends APIResource {
   /**
    * Retrieves details for a specific face.
    */
-  retrieve(faceID: string, options?: RequestOptions): APIPromise<FaceResponse> {
-    return this._client.get(path`/api/faces/${faceID}`, options);
+  retrieve(
+    faceID: string,
+    query: FaceRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FaceResponse> {
+    return this._client.get(path`/api/faces/${faceID}`, { query, ...options });
   }
 
   /**
    * Updates the details of a specific face, currently only supporting
    * associating/disassociating with a person.
    */
-  update(faceID: string, body: FaceUpdateParams, options?: RequestOptions): APIPromise<FaceResponse> {
-    return this._client.patch(path`/api/faces/${faceID}`, { body, ...options });
+  update(faceID: string, params: FaceUpdateParams, options?: RequestOptions): APIPromise<FaceResponse> {
+    const { library_id, ...body } = params;
+    return this._client.patch(path`/api/faces/${faceID}`, { query: { library_id }, body, ...options });
   }
 
   /**
@@ -38,8 +43,14 @@ export class Faces extends APIResource {
    * Deletes a specific face entry. This does not delete the associated asset or
    * person.
    */
-  delete(faceID: string, options?: RequestOptions): APIPromise<void> {
+  delete(
+    faceID: string,
+    params: FaceDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { library_id } = params ?? {};
     return this._client.delete(path`/api/faces/${faceID}`, {
+      query: { library_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -48,8 +59,13 @@ export class Faces extends APIResource {
   /**
    * Retrieves a thumbnail for a specific face.
    */
-  downloadThumbnail(faceID: string, options?: RequestOptions): APIPromise<Response> {
+  downloadThumbnail(
+    faceID: string,
+    query: FaceDownloadThumbnailParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Response> {
     return this._client.get(path`/api/faces/${faceID}/thumbnail`, {
+      query,
       ...options,
       headers: buildHeaders([{ Accept: 'image/*' }, options?.headers]),
       __binaryResponse: true,
@@ -104,7 +120,22 @@ export interface FaceResponse {
   timestamp_ms?: number | null;
 }
 
+export interface FaceRetrieveParams {
+  /**
+   * Library ID (required if user has multiple libraries)
+   */
+  library_id?: string | null;
+}
+
 export interface FaceUpdateParams {
+  /**
+   * Query param: Library ID (required if user has multiple libraries)
+   */
+  library_id?: string | null;
+
+  /**
+   * Body param:
+   */
   person_id?: string | null;
 }
 
@@ -115,16 +146,38 @@ export interface FaceListParams extends CursorPageParams {
   asset_id?: string | null;
 
   /**
+   * Library ID (required if user has multiple libraries)
+   */
+  library_id?: string | null;
+
+  /**
    * Filter by faces associated with a specific person
    */
   person_id?: string | null;
+}
+
+export interface FaceDeleteParams {
+  /**
+   * Library ID (required if user has multiple libraries)
+   */
+  library_id?: string | null;
+}
+
+export interface FaceDownloadThumbnailParams {
+  /**
+   * Library ID (required if user has multiple libraries)
+   */
+  library_id?: string | null;
 }
 
 export declare namespace Faces {
   export {
     type FaceResponse as FaceResponse,
     type FaceResponsesCursorPage as FaceResponsesCursorPage,
+    type FaceRetrieveParams as FaceRetrieveParams,
     type FaceUpdateParams as FaceUpdateParams,
     type FaceListParams as FaceListParams,
+    type FaceDeleteParams as FaceDeleteParams,
+    type FaceDownloadThumbnailParams as FaceDownloadThumbnailParams,
   };
 }

@@ -64,13 +64,25 @@ Types:
 
 Methods:
 
-- <code title="get /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">retrieve</a>(faceID) -> FaceResponse</code>
+- <code title="get /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">retrieve</a>(faceID, { ...params }) -> FaceResponse</code>
 - <code title="patch /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">update</a>(faceID, { ...params }) -> FaceResponse</code>
 - <code title="get /api/faces">client.faces.<a href="./src/resources/faces.ts">list</a>({ ...params }) -> FaceResponsesCursorPage</code>
-- <code title="delete /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">delete</a>(faceID) -> void</code>
-- <code title="get /api/faces/{face_id}/thumbnail">client.faces.<a href="./src/resources/faces.ts">downloadThumbnail</a>(faceID) -> Response</code>
+- <code title="delete /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">delete</a>(faceID, { ...params }) -> void</code>
+- <code title="get /api/faces/{face_id}/thumbnail">client.faces.<a href="./src/resources/faces.ts">downloadThumbnail</a>(faceID, { ...params }) -> Response</code>
 
 # Libraries
+
+Types:
+
+- <code><a href="./src/resources/libraries.ts">LibraryResponse</a></code>
+- <code><a href="./src/resources/libraries.ts">LibraryListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">retrieve</a>(libraryID) -> LibraryResponse</code>
+- <code title="patch /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">update</a>(libraryID, { ...params }) -> LibraryResponse</code>
+- <code title="get /api/libraries">client.libraries.<a href="./src/resources/libraries.ts">list</a>() -> LibraryListResponse</code>
+- <code title="delete /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">delete</a>(libraryID) -> void</code>
 
 # People
 
