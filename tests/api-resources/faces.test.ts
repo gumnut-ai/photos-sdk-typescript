@@ -88,16 +88,4 @@ describe('resource faces', () => {
       client.faces.delete('face_id', { library_id: 'library_id' }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
-
-  // skipped: tests are disabled for the time being
-  test.skip('downloadThumbnail: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.faces.downloadThumbnail(
-        'face_id',
-        { library_id: 'library_id' },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Gumnut.NotFoundError);
-  });
 });

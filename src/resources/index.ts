@@ -31,7 +31,6 @@ export {
   type FaceUpdateParams,
   type FaceListParams,
   type FaceDeleteParams,
-  type FaceDownloadThumbnailParams,
   type FaceResponsesCursorPage,
 } from './faces';
 export {

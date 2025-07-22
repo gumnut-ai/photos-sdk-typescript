@@ -37,7 +37,6 @@ import {
 } from './resources/assets';
 import {
   FaceDeleteParams,
-  FaceDownloadThumbnailParams,
   FaceListParams,
   FaceResponse,
   FaceResponsesCursorPage,
@@ -831,7 +830,6 @@ export declare namespace Gumnut {
     type FaceUpdateParams as FaceUpdateParams,
     type FaceListParams as FaceListParams,
     type FaceDeleteParams as FaceDeleteParams,
-    type FaceDownloadThumbnailParams as FaceDownloadThumbnailParams,
   };
 
   export {
