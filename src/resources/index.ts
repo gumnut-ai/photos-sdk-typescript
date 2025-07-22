@@ -31,6 +31,7 @@ export {
   type FaceListParams,
   type FaceResponsesCursorPage,
 } from './faces';
+export { Libraries } from './libraries';
 export {
   People,
   type PersonResponse,
