@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2025-07-22)
+
+Full Changelog: [v0.11.1...v0.12.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.11.1...v0.12.0)
+
+### Features
+
+* **api:** add libraries endpoint ([f75375f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f75375fac0ef7ae40aba67a15ff5ed06601de221))
+
 ## 0.11.1 (2025-07-18)
 
 Full Changelog: [v0.11.0...v0.11.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.11.0...v0.11.1)
