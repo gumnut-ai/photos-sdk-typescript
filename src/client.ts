@@ -42,6 +42,7 @@ import {
   FaceUpdateParams,
   Faces,
 } from './resources/faces';
+import { Libraries } from './resources/libraries';
 import {
   People,
   PersonCreateParams,
@@ -769,6 +770,7 @@ export class Gumnut {
   assets: API.Assets = new API.Assets(this);
   albums: API.Albums = new API.Albums(this);
   faces: API.Faces = new API.Faces(this);
+  libraries: API.Libraries = new API.Libraries(this);
   people: API.People = new API.People(this);
   search: API.Search = new API.Search(this);
 }
@@ -776,6 +778,7 @@ Gumnut.APIKeys = APIKeys;
 Gumnut.Assets = Assets;
 Gumnut.Albums = Albums;
 Gumnut.Faces = Faces;
+Gumnut.Libraries = Libraries;
 Gumnut.People = People;
 Gumnut.Search = Search;
 export declare namespace Gumnut {
@@ -818,6 +821,8 @@ export declare namespace Gumnut {
     type FaceUpdateParams as FaceUpdateParams,
     type FaceListParams as FaceListParams,
   };
+
+  export { Libraries as Libraries };
 
   export {
     People as People,
