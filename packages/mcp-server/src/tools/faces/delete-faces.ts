@@ -25,6 +25,11 @@ export const tool: Tool = {
         type: 'string',
         title: 'Face Id',
       },
+      library_id: {
+        type: 'string',
+        title: 'Library Id',
+        description: 'Library ID (required if user has multiple libraries)',
+      },
       jq_filter: {
         type: 'string',
         title: 'jq Filter',
@@ -38,7 +43,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { face_id, ...body } = args as any;
-  const response = await client.faces.delete(face_id).asResponse();
+  const response = await client.faces.delete(face_id, body).asResponse();
   return asTextContentResult(await response.text());
 };
 

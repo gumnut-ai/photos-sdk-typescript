@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'add_albums_assets',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nAdds one or more existing assets to a specific album. Duplicate assets are ignored. Returns the IDs of the assets that were added and the IDs of the assets that were already in the album.\n\n# Response Schema\n```json\n{\n  type: 'object',\n  title: 'AddAssetsToAlbumResponse',\n  properties: {\n    added_assets: {\n      type: 'array',\n      title: 'Added Assets',\n      items: {\n        type: 'string'\n      }\n    },\n    duplicate_assets: {\n      type: 'array',\n      title: 'Duplicate Assets',\n      items: {\n        type: 'string'\n      }\n    }\n  },\n  required: [    'added_assets',\n    'duplicate_assets'\n  ]\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nAdds one or more existing assets to a specific album. Assets must be in the same library as the album. Duplicate assets are ignored.\n\n# Response Schema\n```json\n{\n  type: 'object',\n  title: 'AddAssetsToAlbumResponse',\n  properties: {\n    added_assets: {\n      type: 'array',\n      title: 'Added Assets',\n      items: {\n        type: 'string'\n      }\n    },\n    duplicate_assets: {\n      type: 'array',\n      title: 'Duplicate Assets',\n      items: {\n        type: 'string'\n      }\n    }\n  },\n  required: [    'added_assets',\n    'duplicate_assets'\n  ]\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {

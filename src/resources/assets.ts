@@ -11,8 +11,10 @@ import { path } from '../internal/utils/path';
 
 export class Assets extends APIResource {
   /**
-   * Uploads a new asset file (image or video) along with its metadata. If an asset
-   * with the same checksum already exists, returns the existing asset's metadata.
+   * Uploads a new asset file (image or video) along with its metadata to the
+   * specified library. If no library_id is provided and the user only has one
+   * library, uses that library. If the user has multiple libraries, library_id is
+   * required.
    */
   create(body: AssetCreateParams, options?: RequestOptions): APIPromise<AssetResponse> {
     return this._client.post('/api/assets', multipartFormRequestOptions({ body, ...options }, this._client));
@@ -27,8 +29,9 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Retrieves a paginated list of assets, optionally filtered by album. Assets are
-   * ordered by local creation time, descending.
+   * Retrieves a paginated list of assets from the specified library, optionally
+   * filtered by album or person. Assets are ordered by local creation time,
+   * descending.
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -305,6 +308,11 @@ export interface AssetCreateParams {
   file_created_at: string;
 
   file_modified_at: string;
+
+  /**
+   * Library to upload asset to (optional)
+   */
+  library_id?: string | null;
 }
 
 export interface AssetListParams extends CursorPageParams {
@@ -312,6 +320,11 @@ export interface AssetListParams extends CursorPageParams {
    * Filter by assets in a specific album
    */
   album_id?: string | null;
+
+  /**
+   * Library to list assets from (optional)
+   */
+  library_id?: string | null;
 
   /**
    * Filter by assets associated with a specific person ID

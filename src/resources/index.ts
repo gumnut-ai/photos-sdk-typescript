@@ -27,11 +27,19 @@ export {
 export {
   Faces,
   type FaceResponse,
+  type FaceRetrieveParams,
   type FaceUpdateParams,
   type FaceListParams,
+  type FaceDeleteParams,
+  type FaceDownloadThumbnailParams,
   type FaceResponsesCursorPage,
 } from './faces';
-export { Libraries } from './libraries';
+export {
+  Libraries,
+  type LibraryResponse,
+  type LibraryListResponse,
+  type LibraryUpdateParams,
+} from './libraries';
 export {
   People,
   type PersonResponse,

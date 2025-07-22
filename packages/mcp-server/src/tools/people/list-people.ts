@@ -32,6 +32,11 @@ export const tool: Tool = {
         title: 'Asset Id',
         description: 'Include only people associated with this asset ID',
       },
+      library_id: {
+        type: 'string',
+        title: 'Library Id',
+        description: 'Library ID (required if user has multiple libraries)',
+      },
       limit: {
         type: 'integer',
         title: 'Limit',

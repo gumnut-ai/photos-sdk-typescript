@@ -21,6 +21,14 @@ describe('resource faces', () => {
   });
 
   // skipped: tests are disabled for the time being
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.faces.retrieve('face_id', { library_id: 'library_id' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Gumnut.NotFoundError);
+  });
+
+  // skipped: tests are disabled for the time being
   test.skip('update', async () => {
     const responsePromise = client.faces.update('face_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -49,7 +57,13 @@ describe('resource faces', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.faces.list(
-        { asset_id: 'asset_id', limit: 1, person_id: 'person_id', starting_after_id: 'starting_after_id' },
+        {
+          asset_id: 'asset_id',
+          library_id: 'library_id',
+          limit: 1,
+          person_id: 'person_id',
+          starting_after_id: 'starting_after_id',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Gumnut.NotFoundError);
@@ -65,5 +79,25 @@ describe('resource faces', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.faces.delete('face_id', { library_id: 'library_id' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Gumnut.NotFoundError);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('downloadThumbnail: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.faces.downloadThumbnail(
+        'face_id',
+        { library_id: 'library_id' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Gumnut.NotFoundError);
   });
 });

@@ -26,6 +26,11 @@ export const tool: Tool = {
         type: 'string',
         title: 'Face Id',
       },
+      library_id: {
+        type: 'string',
+        title: 'Library Id',
+        description: 'Library ID (required if user has multiple libraries)',
+      },
       person_id: {
         type: 'string',
         title: 'Person Id',

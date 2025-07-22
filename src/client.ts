@@ -36,13 +36,16 @@ import {
   Assets,
 } from './resources/assets';
 import {
+  FaceDeleteParams,
+  FaceDownloadThumbnailParams,
   FaceListParams,
   FaceResponse,
   FaceResponsesCursorPage,
+  FaceRetrieveParams,
   FaceUpdateParams,
   Faces,
 } from './resources/faces';
-import { Libraries } from './resources/libraries';
+import { Libraries, LibraryListResponse, LibraryResponse, LibraryUpdateParams } from './resources/libraries';
 import {
   People,
   PersonCreateParams,
@@ -818,11 +821,19 @@ export declare namespace Gumnut {
     Faces as Faces,
     type FaceResponse as FaceResponse,
     type FaceResponsesCursorPage as FaceResponsesCursorPage,
+    type FaceRetrieveParams as FaceRetrieveParams,
     type FaceUpdateParams as FaceUpdateParams,
     type FaceListParams as FaceListParams,
+    type FaceDeleteParams as FaceDeleteParams,
+    type FaceDownloadThumbnailParams as FaceDownloadThumbnailParams,
   };
 
-  export { Libraries as Libraries };
+  export {
+    Libraries as Libraries,
+    type LibraryResponse as LibraryResponse,
+    type LibraryListResponse as LibraryListResponse,
+    type LibraryUpdateParams as LibraryUpdateParams,
+  };
 
   export {
     People as People,
