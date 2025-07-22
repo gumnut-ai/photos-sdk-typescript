@@ -38,6 +38,7 @@ export {
   Libraries,
   type LibraryResponse,
   type LibraryListResponse,
+  type LibraryCreateParams,
   type LibraryUpdateParams,
 } from './libraries';
 export {
