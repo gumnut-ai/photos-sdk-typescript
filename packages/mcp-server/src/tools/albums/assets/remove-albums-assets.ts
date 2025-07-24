@@ -41,6 +41,9 @@ export const tool: Tool = {
     },
     required: ['album_id', 'asset_ids'],
   },
+  annotations: {
+    idempotentHint: true,
+  },
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
