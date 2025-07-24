@@ -35,6 +35,7 @@ export const tool: Tool = {
     },
     required: ['name'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {

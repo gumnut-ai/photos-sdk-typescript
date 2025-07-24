@@ -58,6 +58,7 @@ export const tool: Tool = {
     },
     required: ['asset_data', 'device_asset_id', 'device_id', 'file_created_at', 'file_modified_at'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {

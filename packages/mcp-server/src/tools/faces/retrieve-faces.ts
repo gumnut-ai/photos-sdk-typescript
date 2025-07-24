@@ -40,6 +40,9 @@ export const tool: Tool = {
     },
     required: ['face_id'],
   },
+  annotations: {
+    readOnlyHint: true,
+  },
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
