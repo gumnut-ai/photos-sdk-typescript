@@ -34,6 +34,9 @@ export const tool: Tool = {
     },
     required: ['key_id'],
   },
+  annotations: {
+    idempotentHint: true,
+  },
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {

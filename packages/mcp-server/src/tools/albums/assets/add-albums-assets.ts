@@ -42,6 +42,7 @@ export const tool: Tool = {
     },
     required: ['album_id', 'asset_ids'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {

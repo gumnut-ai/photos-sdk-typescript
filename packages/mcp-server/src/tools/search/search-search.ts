@@ -65,6 +65,9 @@ export const tool: Tool = {
     },
     required: [],
   },
+  annotations: {
+    readOnlyHint: true,
+  },
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
