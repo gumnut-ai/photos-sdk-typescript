@@ -9,7 +9,8 @@ import { path } from '../../internal/utils/path';
 
 export class Assets extends APIResource {
   /**
-   * Retrieves a list of all assets contained within a specific album.
+   * Retrieves a list of all assets contained within a specific album, along with
+   * their associated metrics, EXIF data, faces, and people.
    */
   list(albumID: string, options?: RequestOptions): APIPromise<AssetListResponse> {
     return this._client.get(path`/api/albums/${albumID}/assets`, options);

@@ -7,8 +7,9 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Search extends APIResource {
   /**
-   * Searches for assets using semantic similarity and/or metadata filters. At least
-   * one search criterion must be provided.
+   * Searches for assets using semantic similarity and/or metadata filters. Results
+   * include asset metadata, faces, and people. At least one search criterion must be
+   * provided.
    */
   search(
     query: SearchSearchParams | null | undefined = {},

@@ -175,8 +175,8 @@ The following tools are available in this MCP server.
 ### Resource `assets`:
 
 - `create_assets` (`write`): Uploads a new asset file (image or video) along with its metadata to the specified library. If no library_id is provided and the user only has one library, uses that library. If the user has multiple libraries, library_id is required.
-- `retrieve_assets` (`read`): Retrieves detailed metadata for a specific asset, including EXIF information and asset metrics.
-- `list_assets` (`read`): Retrieves a paginated list of assets from the specified library, optionally filtered by album or person. Assets are ordered by local creation time, descending.
+- `retrieve_assets` (`read`): Retrieves detailed metadata for a specific asset, including EXIF information, asset metrics, faces, and people.
+- `list_assets` (`read`): Retrieves a paginated list of assets from the specified library, optionally filtered by album or person. Asset data includes metrics, EXIF data, faces, and people. Assets are ordered by local creation time, descending.
 - `delete_assets` (`write`): Deletes a specific asset and its associated data (including the file from storage).
 - `download_assets` (`read`): Downloads the original file for a specific asset.
 - `download_thumbnail_assets` (`read`): Downloads a thumbnail for a specific asset. The exact thumbnail returned depends on availability and the optional `size` parameter.
@@ -191,7 +191,7 @@ The following tools are available in this MCP server.
 
 ### Resource `albums.assets`:
 
-- `list_albums_assets` (`read`): Retrieves a list of all assets contained within a specific album.
+- `list_albums_assets` (`read`): Retrieves a list of all assets contained within a specific album, along with their associated metrics, EXIF data, faces, and people.
 - `add_albums_assets` (`write`): Adds one or more existing assets to a specific album. Assets must be in the same library as the album. Duplicate assets are ignored.
 - `remove_albums_assets` (`write`): Removes one or more assets from a specific album. Note: This does not delete the assets themselves.
 
@@ -221,4 +221,4 @@ The following tools are available in this MCP server.
 
 ### Resource `search`:
 
-- `search_search` (`read`): Searches for assets using semantic similarity and/or metadata filters. At least one search criterion must be provided.
+- `search_search` (`read`): Searches for assets using semantic similarity and/or metadata filters. Results include asset metadata, faces, and people. At least one search criterion must be provided.

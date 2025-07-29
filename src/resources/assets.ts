@@ -1,6 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as FacesAPI from './faces';
+import * as PeopleAPI from './people';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { type Uploadable } from '../core/uploads';
@@ -21,8 +23,8 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Retrieves detailed metadata for a specific asset, including EXIF information and
-   * asset metrics.
+   * Retrieves detailed metadata for a specific asset, including EXIF information,
+   * asset metrics, faces, and people.
    */
   retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetResponse> {
     return this._client.get(path`/api/assets/${assetID}`, options);
@@ -30,8 +32,8 @@ export class Assets extends APIResource {
 
   /**
    * Retrieves a paginated list of assets from the specified library, optionally
-   * filtered by album or person. Assets are ordered by local creation time,
-   * descending.
+   * filtered by album or person. Asset data includes metrics, EXIF data, faces, and
+   * people. Assets are ordered by local creation time, descending.
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -153,9 +155,19 @@ export interface AssetResponse {
   exif?: AssetResponse.Exif | null;
 
   /**
+   * All faces detected in this asset
+   */
+  faces?: Array<FacesAPI.FaceResponse>;
+
+  /**
    * ML-generated quality scores and other metrics
    */
   metrics?: { [key: string]: number | null } | null;
+
+  /**
+   * All unique people identified in this asset (deduplicated from faces)
+   */
+  people?: Array<PeopleAPI.PersonResponse>;
 
   /**
    * Use this URL to display the asset. Never download the full asset unless you
