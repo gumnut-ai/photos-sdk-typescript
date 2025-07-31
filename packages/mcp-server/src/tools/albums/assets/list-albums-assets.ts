@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'list_albums_assets',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nRetrieves a list of all assets contained within a specific album, along with their associated metrics, EXIF data, faces, and people.",
+    'Retrieves a list of all assets contained within a specific album, along with their associated metrics, EXIF data, faces, and people.',
   inputSchema: {
     type: 'object',
     properties: {
