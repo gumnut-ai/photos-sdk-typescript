@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'create_assets',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nUploads a new asset file (image or video) along with its metadata to the specified library. If no library_id is provided and the user only has one library, uses that library.  If the user has multiple libraries, library_id is required.",
+    'Uploads a new asset file (image or video) along with its metadata to the specified library. If no library_id is provided and the user only has one library, uses that library.  If the user has multiple libraries, library_id is required.',
   inputSchema: {
     type: 'object',
     properties: {
