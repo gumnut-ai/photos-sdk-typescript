@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'search_search',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nSearches for assets using semantic similarity and/or metadata filters. Results include asset metadata, faces, and people. At least one search criterion must be provided.",
+    'Searches for assets using semantic similarity and/or metadata filters. Results include asset metadata, faces, and people. At least one search criterion must be provided.',
   inputSchema: {
     type: 'object',
     properties: {
