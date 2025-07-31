@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.15.0 (2025-07-31)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **api:** api update ([5c81c72](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5c81c721fa7a2d522e03f3a3c0c6dcfeffc1e6c1))
+
+
+### Bug Fixes
+
+* **mcp:** fix tool description of jq_filter ([01bd2a7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/01bd2a741fdbdbea540cb7d98692b3fef1e6bc11))
+
+
+### Chores
+
+* **internal:** codegen related update ([89c7df8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/89c7df872728b2d8634c1b12e14ea61a97b1bb89))
+* **internal:** remove redundant imports config ([93536ce](https://github.com/gumnut-ai/photos-sdk-typescript/commit/93536cee462015a695bc34f09bcb66f7c4c45da4))
+
 ## 0.14.0 (2025-07-22)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.13.0...v0.14.0)
