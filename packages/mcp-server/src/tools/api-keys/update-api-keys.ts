@@ -43,8 +43,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
-  const { key_id, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.apiKeys.update(key_id, body)));
+  const { key_id, jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.apiKeys.update(key_id, body)));
 };
 
 export default { metadata, tool, handler };

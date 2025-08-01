@@ -41,8 +41,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
-  const { library_id, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.libraries.retrieve(library_id)));
+  const { library_id, jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.libraries.retrieve(library_id)));
 };
 
 export default { metadata, tool, handler };
