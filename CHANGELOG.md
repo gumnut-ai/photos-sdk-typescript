@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.15.1 (2025-08-01)
+
+Full Changelog: [v0.15.0...v0.15.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.15.0...v0.15.1)
+
+### Bug Fixes
+
+* **mcp:** avoid sending `jq_filter` to base API ([a8ad381](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a8ad381426a404027dc990cb0010c2d05f7d93ea))
+* **mcp:** reverse validJson capability option and limit scope ([b45328b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b45328b0dfd366f941bfe7c97782b275cdf2962d))
+
 ## 0.15.0 (2025-07-31)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.14.0...v0.15.0)
