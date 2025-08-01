@@ -60,8 +60,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
-  const { person_id, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.people.update(person_id, body)));
+  const { person_id, jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.people.update(person_id, body)));
 };
 
 export default { metadata, tool, handler };
