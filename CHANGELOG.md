@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.16.0 (2025-08-06)
+
+Full Changelog: [v0.15.1...v0.16.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.15.1...v0.16.0)
+
+### Features
+
+* **mcp:** add logging when environment variable is set ([6abb4ce](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6abb4ce3a738507cd5e58382a875558cbfeb69c6))
+* **mcp:** remote server with passthru auth ([831c5ae](https://github.com/gumnut-ai/photos-sdk-typescript/commit/831c5ae3f6f1c0fcb88098f3e12de6701738b604))
+
+
+### Bug Fixes
+
+* **mcp:** fix bug in header handling ([d3e7f79](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d3e7f790205e827cfaba07f3a8c313332a727d47))
+
 ## 0.15.1 (2025-08-01)
 
 Full Changelog: [v0.15.0...v0.15.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.15.0...v0.15.1)
