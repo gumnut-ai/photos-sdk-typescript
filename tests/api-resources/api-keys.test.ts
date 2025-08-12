@@ -8,7 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource apiKeys', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.apiKeys.create({ name: 'name' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource apiKeys', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.apiKeys.create({ name: 'name' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.apiKeys.update('key_id', { name: 'name' });
     const rawResponse = await responsePromise.asResponse();
@@ -37,12 +37,12 @@ describe('resource apiKeys', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.apiKeys.update('key_id', { name: 'name' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.apiKeys.list();
     const rawResponse = await responsePromise.asResponse();
@@ -54,7 +54,7 @@ describe('resource apiKeys', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.apiKeys.delete('key_id');
     const rawResponse = await responsePromise.asResponse();
