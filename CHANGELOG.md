@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.16.1 (2025-08-12)
+
+Full Changelog: [v0.16.0...v0.16.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.16.0...v0.16.1)
+
+### Features
+
+* **mcp:** add unix socket option for remote MCP ([871ca00](https://github.com/gumnut-ai/photos-sdk-typescript/commit/871ca0082b640a23c77e25c050183df83bad9b8b))
+
+
+### Chores
+
+* **internal:** codegen related update ([820bf7d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/820bf7dd3b4deaaed69f1a8f8e9431fec1dfe3fa))
+* **internal:** move publish config ([f5ba40d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f5ba40df1810dd300ae3541b0d3c5d20a6ccc8ce))
+* **internal:** update comment in script ([c5c3e50](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c5c3e50618e386f2405e8fd8d8064ccd5f93f8ab))
+* **mcp:** refactor streamable http transport ([2dd8a4b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2dd8a4bd2477069d519a78de6b2e0d8d0b62ea57))
+* update @stainless-api/prism-cli to v5.15.0 ([232a29f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/232a29ff89850481a73f09915a95e67a7654f96a))
+
 ## 0.16.0 (2025-08-06)
 
 Full Changelog: [v0.15.1...v0.16.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.15.1...v0.16.0)
