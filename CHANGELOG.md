@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.16.2 (2025-08-15)
+
+Full Changelog: [v0.16.1...v0.16.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.16.1...v0.16.2)
+
+### Bug Fixes
+
+* **mcp:** generate additionalProperties=true for map schemas to avoid validation issues ([0163356](https://github.com/gumnut-ai/photos-sdk-typescript/commit/01633564e4f00684d5c8f532c8221dc1d6fc1947))
+
+
+### Chores
+
+* **mcp:** minor cleanup of types and package.json ([552a538](https://github.com/gumnut-ai/photos-sdk-typescript/commit/552a538bbd09f6860907ae8eb87b905157083c38))
+
 ## 0.16.1 (2025-08-12)
 
 Full Changelog: [v0.16.0...v0.16.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.16.0...v0.16.1)
