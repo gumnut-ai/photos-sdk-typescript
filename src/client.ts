@@ -782,6 +782,7 @@ export class Gumnut {
   people: API.People = new API.People(this);
   search: API.Search = new API.Search(this);
 }
+
 Gumnut.APIKeys = APIKeys;
 Gumnut.Assets = Assets;
 Gumnut.Albums = Albums;
@@ -789,6 +790,7 @@ Gumnut.Faces = Faces;
 Gumnut.Libraries = Libraries;
 Gumnut.People = People;
 Gumnut.Search = Search;
+
 export declare namespace Gumnut {
   export type RequestOptions = Opts.RequestOptions;
 
