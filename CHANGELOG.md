@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.16.3 (2025-08-16)
+
+Full Changelog: [v0.16.2...v0.16.3](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.16.2...v0.16.3)
+
+### Chores
+
+* **deps:** update dependency @types/node to v20.17.58 ([62ea3d8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/62ea3d8441e28f66bfdcb4549021434740b0eba0))
+* **internal:** formatting change ([7447f61](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7447f61844bff808dfcff18c8e079e1a859fca03))
+* **mcp:** document remote server in README.md ([1cde93c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/1cde93ca646bbce6d843da51559df4ed1ab080ae))
+* **mcp:** update README ([e1671a2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e1671a22a123268366e72d4c39db5114815faf3b))
+
 ## 0.16.2 (2025-08-15)
 
 Full Changelog: [v0.16.1...v0.16.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.16.1...v0.16.2)
