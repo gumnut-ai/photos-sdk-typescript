@@ -17,7 +17,7 @@ export const parseAuthHeaders = (req: IncomingMessage): Partial<ClientOptions> =
   }
 
   const apiKey =
-    req.headers['x-gumnut-api-key'] instanceof Array ?
+    Array.isArray(req.headers['x-gumnut-api-key']) ?
       req.headers['x-gumnut-api-key'][0]
     : req.headers['x-gumnut-api-key'];
   return { apiKey };
