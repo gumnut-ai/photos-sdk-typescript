@@ -47,7 +47,7 @@ export const tool: Tool = {
         type: 'array',
         title: 'Person Ids',
         description:
-          "Filter to only include assets containing ALL of these person IDs. Can be comma-delimited string (e.g., 'person_123,person_abc') or multiple query parameters.",
+          "Filter to only include assets containing ALL of these person IDs. Can be comma-delimited string (e.g. 'person_123,person_abc') or multiple query parameters.",
         items: {
           type: 'string',
         },
@@ -55,7 +55,8 @@ export const tool: Tool = {
       query: {
         type: 'string',
         title: 'Query',
-        description: 'The text query to search for',
+        description:
+          'The text query to search for. If you want to search for a specific person or set of people, use the person_ids parameter instead.If you want to search for a photos taken during a specific date range, use the captured_before and captured_after parameters instead.',
       },
       threshold: {
         type: 'number',
