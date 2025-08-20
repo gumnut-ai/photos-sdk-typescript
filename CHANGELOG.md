@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.17.0 (2025-08-20)
+
+Full Changelog: [v0.16.3...v0.17.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.16.3...v0.17.0)
+
+### Features
+
+* **api:** api update ([2446175](https://github.com/gumnut-ai/photos-sdk-typescript/commit/244617583efdbe133596fc13f71241274ab62e78))
+* **mcp:** add code execution tool ([9c3755a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9c3755aac7258f5c0069e70945b889218126001e))
+* **mcp:** parse query string as mcp client options in mcp server ([a163d0a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a163d0a45eacf1290dddc1c24ccfbca63a001568))
+
+
+### Chores
+
+* **internal:** refactor array check ([7869489](https://github.com/gumnut-ai/photos-sdk-typescript/commit/78694892c9df5430aa70b196a757940fdf725d77))
+* **mcp:** add cors to oauth metadata route ([cac5eaf](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cac5eafec1eba6852ea0acdd9baf5acec363fb20))
+
 ## 0.16.3 (2025-08-16)
 
 Full Changelog: [v0.16.2...v0.16.3](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.16.2...v0.16.3)
