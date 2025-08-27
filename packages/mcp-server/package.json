@@ -1,5 +1,5 @@
 {
-  "name": "gumnut-mcp",
+  "name": "gumnut-sdk-mcp",
   "version": "0.17.0",
   "description": "The official MCP Server for the Gumnut API",
   "author": "Gumnut <tedmao@gmail.com>",
@@ -67,8 +67,8 @@
     "typescript": "5.8.3"
   },
   "imports": {
-    "gumnut-mcp": ".",
-    "gumnut-mcp/*": "./src/*"
+    "gumnut-sdk-mcp": ".",
+    "gumnut-sdk-mcp/*": "./src/*"
   },
   "exports": {
     ".": {

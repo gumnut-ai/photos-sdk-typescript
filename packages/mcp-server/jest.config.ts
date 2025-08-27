@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^gumnut-mcp$': '<rootDir>/src/index.ts',
-    '^gumnut-mcp/(.*)$': '<rootDir>/src/$1',
+    '^gumnut-sdk-mcp$': '<rootDir>/src/index.ts',
+    '^gumnut-sdk-mcp/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testPathIgnorePatterns: ['scripts'],

@@ -10,7 +10,7 @@ You can run the MCP Server directly via `npx`:
 
 ```sh
 export GUMNUT_API_KEY="My API Key"
-npx -y gumnut-mcp@latest
+npx -y gumnut-sdk-mcp@latest
 ```
 
 ### Via MCP Client
@@ -25,7 +25,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "gumnut_sdk_api": {
       "command": "npx",
-      "args": ["-y", "gumnut-mcp", "--client=claude", "--tools=dynamic"],
+      "args": ["-y", "gumnut-sdk-mcp", "--client=claude", "--tools=dynamic"],
       "env": {
         "GUMNUT_API_KEY": "My API Key"
       }
@@ -169,10 +169,10 @@ http://localhost:3000?client=cursor&capability=tool-name-length%3D40
 
 ```js
 // Import the server, generated endpoints, or the init function
-import { server, endpoints, init } from "gumnut-mcp/server";
+import { server, endpoints, init } from "gumnut-sdk-mcp/server";
 
 // import a specific tool
-import createAPIKeys from "gumnut-mcp/tools/api-keys/create-api-keys";
+import createAPIKeys from "gumnut-sdk-mcp/tools/api-keys/create-api-keys";
 
 // initialize the server and all endpoints
 init({ server, endpoints });
