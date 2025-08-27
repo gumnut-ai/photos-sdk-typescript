@@ -1,7 +1,7 @@
 import { makeOAuthConsent } from './app';
 import { McpAgent } from 'agents/mcp';
 import OAuthProvider from '@cloudflare/workers-oauth-provider';
-import { McpOptions, initMcpServer, server, ClientOptions } from 'gumnut-mcp/server';
+import { McpOptions, initMcpServer, server, ClientOptions } from 'gumnut-sdk-mcp/server';
 
 type MCPProps = {
   clientProps: ClientOptions;
