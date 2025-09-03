@@ -46,6 +46,11 @@ export interface SearchSearchParams {
   captured_before?: string | null;
 
   /**
+   * Library to search assets from (optional)
+   */
+  library_id?: string | null;
+
+  /**
    * Number of results per page
    */
   limit?: number;
