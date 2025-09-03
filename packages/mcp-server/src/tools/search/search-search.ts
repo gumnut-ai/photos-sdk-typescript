@@ -33,6 +33,11 @@ export const tool: Tool = {
         description: 'Filter to only include assets captured before this date (ISO format).',
         format: 'date-time',
       },
+      library_id: {
+        type: 'string',
+        title: 'Library Id',
+        description: 'Library to search assets from (optional)',
+      },
       limit: {
         type: 'integer',
         title: 'Limit',
