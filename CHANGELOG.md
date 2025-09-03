@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.18.0 (2025-09-03)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **api:** api update ([100a722](https://github.com/gumnut-ai/photos-sdk-typescript/commit/100a722d4dcafa0eee818191e8b77a1e841f4ac8))
+* **mcp:** add client infer to cloudflare oauth screen ([b474c51](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b474c51484566e45c3842401fb87f5a6003b6415))
+* **mcp:** add option to infer mcp client ([3a2d3b7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3a2d3b737f8f44e953bf86c20da6a75c527c8128))
+* **mcp:** allow setting logging level ([f283750](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f283750581b60156c1caac09b007d2e8050ea51d))
+* **mcp:** change remote server query option parsing logic ([a4df22c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a4df22c9f53a71923a0e95efe25a893a4e655bbf))
+* **mcp:** expose client options in `streamableHTTPApp` ([5ffa993](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5ffa99328f34b8d240d7039ddc3a8872ab3f50fb))
+
+
+### Chores
+
+* add package to package.json ([082877f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/082877f0bc8b5fdef203efa0d325c233f09c9c8f))
+* **client:** qualify global Blob ([8ea3f76](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8ea3f76ef2edcd78a99991c7b14a4d134da4abbd))
+* configure new SDK language ([8155c00](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8155c00e0c488148bcd282d90e50a4f9322bd92b))
+* **internal:** codegen related update ([909681a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/909681ac11d785805cea43db796c15e57b3cbaf7))
+* **internal:** codegen related update ([05b25d7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/05b25d7dbd4073cb9b861a59129c36c9e5e36a49))
+* **internal:** make mcp-server publishing public by defaut ([b458195](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b458195423a8dd35182f68628dd788a250750e49))
+* **internal:** update global Error reference ([42cc6a1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/42cc6a10a7aecf137ae9583cfbf25dad7c7bced8))
+* **mcp:** update package.json ([e4d06eb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e4d06eb37a0eb7c4a01434a3fa9c0305b71e636d))
+* **mcp:** update types ([5041a63](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5041a6372c90c2d19b3e3a52accf19db452f1c2e))
+* update CI script ([a69ea4d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a69ea4d4f64e614345fc682931b0f96c6a907092))
+
 ## 0.17.0 (2025-08-20)
 
 Full Changelog: [v0.16.3...v0.17.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.16.3...v0.17.0)
