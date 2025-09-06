@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.18.1 (2025-09-06)
+
+Full Changelog: [v0.18.0...v0.18.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.18.0...v0.18.1)
+
+### Bug Fixes
+
+* **mcp:** fix query options parsing ([ac55a8a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ac55a8a128dd7c92cc8f0b38f6d3aebe1fba1af9))
+
+
+### Chores
+
+* ci build action ([3360d81](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3360d81fcad88c15013cea20a224f6acaee52f2d))
+* **internal:** codegen related update ([f63e995](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f63e995c065cede05ea11ec296d7424b7d2a730e))
+
 ## 0.18.0 (2025-09-03)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.17.0...v0.18.0)
