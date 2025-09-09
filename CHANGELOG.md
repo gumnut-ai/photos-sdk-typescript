@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.2 (2025-09-09)
+
+Full Changelog: [v0.18.1...v0.18.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.18.1...v0.18.2)
+
+### Bug Fixes
+
+* coerce nullable values to undefined ([ad7326a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ad7326a5ab30b216223f58cd229fd431a616742e))
+
 ## 0.18.1 (2025-09-06)
 
 Full Changelog: [v0.18.0...v0.18.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.18.0...v0.18.1)
