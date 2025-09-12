@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.18.3 (2025-09-12)
+
+Full Changelog: [v0.18.2...v0.18.3](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.18.2...v0.18.3)
+
+### Bug Fixes
+
+* **mcp:** fix uploading dxt release assets ([8d5ca5e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8d5ca5ed75c190ce00c9a3ccfbeac571fd25969e))
+
+
+### Chores
+
+* **mcp:** upload dxt as release asset ([9262f12](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9262f12cd9a5c32f6accc156cacd70d203ac749e))
+
 ## 0.18.2 (2025-09-09)
 
 Full Changelog: [v0.18.1...v0.18.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.18.1...v0.18.2)
