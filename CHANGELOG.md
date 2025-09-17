@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.4 (2025-09-17)
+
+Full Changelog: [v0.18.3...v0.18.4](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.18.3...v0.18.4)
+
+### Bug Fixes
+
+* **ci:** set permissions for DXT publish action ([461cc27](https://github.com/gumnut-ai/photos-sdk-typescript/commit/461cc27e42d1d540dd4650793dbfe825d2525193))
+
 ## 0.18.3 (2025-09-12)
 
 Full Changelog: [v0.18.2...v0.18.3](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.18.2...v0.18.3)
