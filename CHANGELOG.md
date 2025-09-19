@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.0 (2025-09-19)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* **api:** add POST endpoint for /api/search ([a919582](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a919582976207a9ffb729b147abec03b6ae626cb))
+
 ## 0.20.0 (2025-09-19)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.19.0...v0.20.0)
