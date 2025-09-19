@@ -10,6 +10,8 @@ export class Search extends APIResource {
    * Searches for assets using semantic similarity and/or metadata filters. Results
    * include asset metadata, faces, and people. At least one search criterion must be
    * provided.
+   *
+   * @deprecated
    */
   search(
     query: SearchSearchParams | null | undefined = {},
@@ -65,7 +67,7 @@ export interface SearchSearchParams {
    * comma-delimited string (e.g. 'person_123,person_abc') or multiple query
    * parameters.
    */
-  person_ids?: Array<string>;
+  person_ids?: Array<string> | null;
 
   /**
    * The text query to search for. If you want to search for a specific person or set
