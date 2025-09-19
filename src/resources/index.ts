@@ -48,4 +48,9 @@ export {
   type PersonListParams,
   type PersonResponsesCursorPage,
 } from './people';
-export { Search, type SearchResponse, type SearchSearchParams } from './search';
+export {
+  Search,
+  type SearchResponse,
+  type SearchSearchParams,
+  type SearchSearchAssetsParams,
+} from './search';
