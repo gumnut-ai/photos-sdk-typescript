@@ -38,6 +38,7 @@ import update_people from './people/update-people';
 import list_people from './people/list-people';
 import delete_people from './people/delete-people';
 import search_search from './search/search-search';
+import search_assets_search from './search/search-assets-search';
 
 export const endpoints: Endpoint[] = [];
 
@@ -79,6 +80,7 @@ addEndpoint(update_people);
 addEndpoint(list_people);
 addEndpoint(delete_people);
 addEndpoint(search_search);
+addEndpoint(search_assets_search);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

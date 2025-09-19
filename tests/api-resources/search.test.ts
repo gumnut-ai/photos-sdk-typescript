@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Gumnut from 'gumnut-sdk';
+import Gumnut, { toFile } from 'gumnut-sdk';
 
 const client = new Gumnut({
   apiKey: 'My API Key',
@@ -28,6 +28,39 @@ describe('resource search', () => {
         {
           captured_after: '2019-12-27T18:11:19.117Z',
           captured_before: '2019-12-27T18:11:19.117Z',
+          library_id: 'library_id',
+          limit: 1,
+          page: 1,
+          person_ids: ['string'],
+          query: 'query',
+          threshold: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Gumnut.NotFoundError);
+  });
+
+  // Prism tests are disabled
+  test.skip('searchAssets', async () => {
+    const responsePromise = client.search.searchAssets();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('searchAssets: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.search.searchAssets(
+        {
+          captured_after: '2019-12-27T18:11:19.117Z',
+          captured_before: '2019-12-27T18:11:19.117Z',
+          image: await toFile(Buffer.from('# my file contents'), 'README.md'),
           library_id: 'library_id',
           limit: 1,
           page: 1,
