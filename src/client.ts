@@ -59,7 +59,7 @@ import {
   PersonResponsesCursorPage,
   PersonUpdateParams,
 } from './resources/people';
-import { Search, SearchResponse, SearchSearchParams } from './resources/search';
+import { Search, SearchResponse, SearchSearchAssetsParams, SearchSearchParams } from './resources/search';
 import {
   AlbumCreateParams,
   AlbumListParams,
@@ -855,5 +855,6 @@ export declare namespace Gumnut {
     Search as Search,
     type SearchResponse as SearchResponse,
     type SearchSearchParams as SearchSearchParams,
+    type SearchSearchAssetsParams as SearchSearchAssetsParams,
   };
 }
