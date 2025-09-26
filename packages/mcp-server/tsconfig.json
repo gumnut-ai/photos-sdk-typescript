@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "gumnut-sdk-mcp/*": ["src/*"],
-      "gumnut-sdk-mcp": ["src/index.ts"]
+      "gumnut-sdk-mcp/*": ["./src/*"],
+      "gumnut-sdk-mcp": ["./src/index.ts"]
     },
     "noEmit": true,
 

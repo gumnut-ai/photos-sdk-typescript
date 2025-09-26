@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "gumnut-sdk/*": ["dist/src/*"],
-      "gumnut-sdk": ["dist/src/index.ts"]
+      "gumnut-sdk/*": ["./dist/src/*"],
+      "gumnut-sdk": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
