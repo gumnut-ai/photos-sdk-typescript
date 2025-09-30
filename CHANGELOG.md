@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.22.0 (2025-09-30)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **mcp:** add option for including docs tools ([d21914b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d21914baaddf152a6434d66b168c2fd037ba7488))
+* **mcp:** enable experimental docs search tool ([867c858](https://github.com/gumnut-ai/photos-sdk-typescript/commit/867c858af783f42a034cfb83a48f7de03e653c0d))
+
+
+### Bug Fixes
+
+* **mcp:** fix cli argument parsing logic ([ba0fc37](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ba0fc37e425af3eaf5d379a2165c44d207ac507d))
+* **mcp:** resolve a linting issue in server code ([a8eaf00](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a8eaf009115bc5bd8fb142844c07a08f64594a21))
+
+
+### Performance Improvements
+
+* faster formatting ([bc1a776](https://github.com/gumnut-ai/photos-sdk-typescript/commit/bc1a776d03bb80c7c45bcae14ce806ae14dd06a1))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([23648ed](https://github.com/gumnut-ai/photos-sdk-typescript/commit/23648eda4f5c40e81e9cdaff2ab4a457c62597bf))
+* **internal:** codegen related update ([dec4bd8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/dec4bd87a837b9192f8e1bdf7aa7b219b597a5e2))
+* **internal:** fix incremental formatting in some cases ([d3b07b4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d3b07b418f0018d362b0957937a962fec1e28ad7))
+* **internal:** ignore .eslintcache ([6e2fe8f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6e2fe8f79155962d542a84bdd2e94d429fbc95bc))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([3fb35b6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3fb35b6a3380b416a83722733971e5e329b14844))
+* **mcp:** allow pointing `docs_search` tool at other URLs ([00f5c3f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/00f5c3f1948c452affb42db68e55baad290878a5))
+* update lockfile ([a088e49](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a088e495e9772e443f3a545baafe780a1e1abe1c))
+
 ## 0.21.0 (2025-09-19)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.20.0...v0.21.0)
