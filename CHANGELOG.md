@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.23.0 (2025-10-10)
+
+Full Changelog: [v0.22.0...v0.23.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.22.0...v0.23.0)
+
+### Features
+
+* **api:** api update ([0d2c018](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0d2c0185e790b3c3fddf5ec59d53da94b8dcccdd))
+
+
+### Chores
+
+* extract some types in mcp docs ([7808738](https://github.com/gumnut-ai/photos-sdk-typescript/commit/78087387fa079d3d9656c775f1dce1f25b9e4f05))
+* **internal:** remove .eslintcache ([b436951](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b4369516a353751de16f91d561190143a7018c14))
+* **internal:** use npm pack for build uploads ([3b24fc0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3b24fc0c6111de99b46e9e1472d91cec8dec841b))
+* **jsdoc:** fix [@link](https://github.com/link) annotations to refer only to parts of the package‘s public interface ([ca8f043](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ca8f043622b107e86c2e88f486a6fa4e3c97f9b1))
+
 ## 0.22.0 (2025-09-30)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.21.0...v0.22.0)
