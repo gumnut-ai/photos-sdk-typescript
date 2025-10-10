@@ -160,6 +160,16 @@ export interface AssetResponse {
   faces?: Array<FacesAPI.FaceResponse>;
 
   /**
+   * File size of the asset in bytes
+   */
+  file_size_bytes?: number;
+
+  /**
+   * Height of the asset in pixels
+   */
+  height?: number;
+
+  /**
    * ML-generated quality scores and other metrics
    */
   metrics?: { [key: string]: number | null } | null;
@@ -174,6 +184,11 @@ export interface AssetResponse {
    * absolutely have to; prefer the thumbnail instead.
    */
   thumbnail_url?: string | null;
+
+  /**
+   * Width of the asset in pixels
+   */
+  width?: number;
 }
 
 export namespace AssetResponse {
