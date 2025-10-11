@@ -76,6 +76,11 @@ export interface AlbumResponse {
   id: string;
 
   /**
+   * Total number of assets in this album
+   */
+  asset_count: number;
+
+  /**
    * When this album was created
    */
   created_at: string;
