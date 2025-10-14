@@ -225,7 +225,7 @@ The following tools are available in this MCP server.
 - `create_albums` (`write`): Creates a new, empty album with optional name and description in the specified library.
 - `retrieve_albums` (`read`): Retrieves details for a specific album.
 - `update_albums` (`write`): Updates the name and/or description of a specific album.
-- `list_albums` (`read`): Retrieves a paginated list of albums from the specified library, ordered by creation time, descending.
+- `list_albums` (`read`): Retrieves a paginated list of albums from the specified library, ordered by creation time, descending. Can be filtered by asset_id.
 - `delete_albums` (`write`): Deletes a specific album. Note: This does not delete the assets within the album.
 
 ### Resource `albums.assets`:
