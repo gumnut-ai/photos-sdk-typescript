@@ -61,7 +61,7 @@ describe('resource albums', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.albums.list(
-        { library_id: 'library_id', limit: 1, starting_after_id: 'starting_after_id' },
+        { asset_id: 'asset_id', library_id: 'library_id', limit: 1, starting_after_id: 'starting_after_id' },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Gumnut.NotFoundError);

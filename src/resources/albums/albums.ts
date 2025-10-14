@@ -43,7 +43,7 @@ export class Albums extends APIResource {
 
   /**
    * Retrieves a paginated list of albums from the specified library, ordered by
-   * creation time, descending.
+   * creation time, descending. Can be filtered by asset_id.
    */
   list(
     query: AlbumListParams | null | undefined = {},
@@ -116,6 +116,11 @@ export interface AlbumUpdateParams {
 }
 
 export interface AlbumListParams extends CursorPageParams {
+  /**
+   * Filter albums containing this asset ID (optional)
+   */
+  asset_id?: string | null;
+
   /**
    * Library to list albums from (optional)
    */
