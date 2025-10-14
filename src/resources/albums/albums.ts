@@ -96,6 +96,11 @@ export interface AlbumResponse {
   updated_at: string;
 
   /**
+   * ID of the asset used as the album cover
+   */
+  album_cover_asset_id?: string | null;
+
+  /**
    * Optional description text for the album
    */
   description?: string | null;
