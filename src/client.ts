@@ -52,6 +52,13 @@ import {
   LibraryUpdateParams,
 } from './resources/libraries';
 import {
+  AuthURLResponse,
+  ExhchangeResponse,
+  OAuth,
+  OAuthAuthURLParams,
+  OAuthExhangeParams,
+} from './resources/oauth';
+import {
   People,
   PersonCreateParams,
   PersonListParams,
@@ -779,6 +786,7 @@ export class Gumnut {
   albums: API.Albums = new API.Albums(this);
   faces: API.Faces = new API.Faces(this);
   libraries: API.Libraries = new API.Libraries(this);
+  oauth: API.OAuth = new API.OAuth(this);
   people: API.People = new API.People(this);
   search: API.Search = new API.Search(this);
 }
@@ -788,6 +796,7 @@ Gumnut.Assets = Assets;
 Gumnut.Albums = Albums;
 Gumnut.Faces = Faces;
 Gumnut.Libraries = Libraries;
+Gumnut.OAuth = OAuth;
 Gumnut.People = People;
 Gumnut.Search = Search;
 
@@ -840,6 +849,14 @@ export declare namespace Gumnut {
     type LibraryListResponse as LibraryListResponse,
     type LibraryCreateParams as LibraryCreateParams,
     type LibraryUpdateParams as LibraryUpdateParams,
+  };
+
+  export {
+    OAuth as OAuth,
+    type AuthURLResponse as AuthURLResponse,
+    type ExhchangeResponse as ExhchangeResponse,
+    type OAuthAuthURLParams as OAuthAuthURLParams,
+    type OAuthExhangeParams as OAuthExhangeParams,
   };
 
   export {
