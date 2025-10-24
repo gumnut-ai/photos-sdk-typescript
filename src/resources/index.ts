@@ -41,6 +41,13 @@ export {
   type LibraryUpdateParams,
 } from './libraries';
 export {
+  OAuth,
+  type AuthURLResponse,
+  type ExhchangeResponse,
+  type OAuthAuthURLParams,
+  type OAuthExhangeParams,
+} from './oauth';
+export {
   People,
   type PersonResponse,
   type PersonCreateParams,

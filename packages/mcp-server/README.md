@@ -250,6 +250,11 @@ The following tools are available in this MCP server.
 - `list_libraries` (`read`): Returns all libraries owned by the authenticated user.
 - `delete_libraries` (`write`): Deletes a library and all its associated data (assets, albums, people, faces). Cannot delete the user's only library.
 
+### Resource `oauth`:
+
+- `auth_url_oauth` (`read`): Generate OAuth authorization URL with state and nonce for CSRF and replay attack protection. State is stored with TTL for validation.
+- `exhange_oauth` (`write`): Exchange OAuth authorization code for application JWT after validating state, nonce, and ID token signature. User is retrieved from or created in the database and details added to the JWT.
+
 ### Resource `people`:
 
 - `create_people` (`write`): Creates a new person entry.

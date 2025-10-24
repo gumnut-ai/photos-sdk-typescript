@@ -85,6 +85,18 @@ Methods:
 - <code title="get /api/libraries">client.libraries.<a href="./src/resources/libraries.ts">list</a>() -> LibraryListResponse</code>
 - <code title="delete /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">delete</a>(libraryID) -> void</code>
 
+# OAuth
+
+Types:
+
+- <code><a href="./src/resources/oauth.ts">AuthURLResponse</a></code>
+- <code><a href="./src/resources/oauth.ts">ExhchangeResponse</a></code>
+
+Methods:
+
+- <code title="get /api/oauth/auth-url">client.oauth.<a href="./src/resources/oauth.ts">authURL</a>({ ...params }) -> AuthURLResponse</code>
+- <code title="post /api/oauth/exchange">client.oauth.<a href="./src/resources/oauth.ts">exhange</a>({ ...params }) -> ExhchangeResponse</code>
+
 # People
 
 Types:
