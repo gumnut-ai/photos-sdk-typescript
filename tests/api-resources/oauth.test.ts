@@ -30,8 +30,8 @@ describe('resource oauth', () => {
   });
 
   // Prism tests are disabled
-  test.skip('exhange', async () => {
-    const responsePromise = client.oauth.exhange({});
+  test.skip('exchange', async () => {
+    const responsePromise = client.oauth.exchange({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

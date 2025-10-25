@@ -45,7 +45,7 @@ export {
   type AuthURLResponse,
   type ExchangeResponse,
   type OAuthAuthURLParams,
-  type OAuthExhangeParams,
+  type OAuthExchangeParams,
 } from './oauth';
 export {
   People,
