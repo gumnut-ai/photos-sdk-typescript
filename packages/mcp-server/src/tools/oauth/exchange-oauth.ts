@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export const tool: Tool = {
-  name: 'exhange_oauth',
+  name: 'exchange_oauth',
   description:
     "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nExchange OAuth authorization code for application JWT after validating state, nonce, and ID token signature. User is retrieved from or created in the database and details added to the JWT.\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/exchange_response',\n  $defs: {\n    exchange_response: {\n      type: 'object',\n      title: 'TokenExchangeResponse',\n      description: 'Response containing JWT and user info',\n      properties: {\n        access_token: {\n          type: 'string',\n          title: 'Access Token'\n        },\n        user: {\n          type: 'object',\n          title: 'UserInfo',\n          description: 'User information in token exchange response',\n          properties: {\n            id: {\n              type: 'string',\n              title: 'Id'\n            },\n            clerk_user_id: {\n              type: 'string',\n              title: 'Clerk User Id'\n            },\n            email: {\n              type: 'string',\n              title: 'Email'\n            },\n            first_name: {\n              type: 'string',\n              title: 'First Name'\n            },\n            is_active: {\n              type: 'boolean',\n              title: 'Is Active'\n            },\n            is_verified: {\n              type: 'boolean',\n              title: 'Is Verified'\n            },\n            last_name: {\n              type: 'string',\n              title: 'Last Name'\n            }\n          },\n          required: [            'id',\n            'clerk_user_id',\n            'email',\n            'first_name',\n            'is_active',\n            'is_verified',\n            'last_name'\n          ]\n        }\n      },\n      required: [        'access_token',\n        'user'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
@@ -57,7 +57,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.oauth.exhange(body)));
+  return asTextContentResult(await maybeFilter(jq_filter, await client.oauth.exchange(body)));
 };
 
 export default { metadata, tool, handler };

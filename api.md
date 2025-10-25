@@ -95,7 +95,7 @@ Types:
 Methods:
 
 - <code title="get /api/oauth/auth-url">client.oauth.<a href="./src/resources/oauth.ts">authURL</a>({ ...params }) -> AuthURLResponse</code>
-- <code title="post /api/oauth/exchange">client.oauth.<a href="./src/resources/oauth.ts">exhange</a>({ ...params }) -> ExchangeResponse</code>
+- <code title="post /api/oauth/exchange">client.oauth.<a href="./src/resources/oauth.ts">exchange</a>({ ...params }) -> ExchangeResponse</code>
 
 # People
 
