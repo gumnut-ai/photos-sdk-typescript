@@ -43,7 +43,7 @@ export {
 export {
   OAuth,
   type AuthURLResponse,
-  type ExhchangeResponse,
+  type ExchangeResponse,
   type OAuthAuthURLParams,
   type OAuthExhangeParams,
 } from './oauth';

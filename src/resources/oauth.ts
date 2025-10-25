@@ -18,7 +18,7 @@ export class OAuth extends APIResource {
    * nonce, and ID token signature. User is retrieved from or created in the database
    * and details added to the JWT.
    */
-  exhange(body: OAuthExhangeParams, options?: RequestOptions): APIPromise<ExhchangeResponse> {
+  exhange(body: OAuthExhangeParams, options?: RequestOptions): APIPromise<ExchangeResponse> {
     return this._client.post('/api/oauth/exchange', { body, ...options });
   }
 }
@@ -33,16 +33,16 @@ export interface AuthURLResponse {
 /**
  * Response containing JWT and user info
  */
-export interface ExhchangeResponse {
+export interface ExchangeResponse {
   access_token: string;
 
   /**
    * User information in token exchange response
    */
-  user: ExhchangeResponse.User;
+  user: ExchangeResponse.User;
 }
 
-export namespace ExhchangeResponse {
+export namespace ExchangeResponse {
   /**
    * User information in token exchange response
    */
@@ -109,7 +109,7 @@ export interface OAuthExhangeParams {
 export declare namespace OAuth {
   export {
     type AuthURLResponse as AuthURLResponse,
-    type ExhchangeResponse as ExhchangeResponse,
+    type ExchangeResponse as ExchangeResponse,
     type OAuthAuthURLParams as OAuthAuthURLParams,
     type OAuthExhangeParams as OAuthExhangeParams,
   };
