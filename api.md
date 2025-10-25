@@ -90,12 +90,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/oauth.ts">AuthURLResponse</a></code>
-- <code><a href="./src/resources/oauth.ts">ExhchangeResponse</a></code>
+- <code><a href="./src/resources/oauth.ts">ExchangeResponse</a></code>
 
 Methods:
 
 - <code title="get /api/oauth/auth-url">client.oauth.<a href="./src/resources/oauth.ts">authURL</a>({ ...params }) -> AuthURLResponse</code>
-- <code title="post /api/oauth/exchange">client.oauth.<a href="./src/resources/oauth.ts">exhange</a>({ ...params }) -> ExhchangeResponse</code>
+- <code title="post /api/oauth/exchange">client.oauth.<a href="./src/resources/oauth.ts">exhange</a>({ ...params }) -> ExchangeResponse</code>
 
 # People
 

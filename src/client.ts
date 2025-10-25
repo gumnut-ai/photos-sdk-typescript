@@ -53,7 +53,7 @@ import {
 } from './resources/libraries';
 import {
   AuthURLResponse,
-  ExhchangeResponse,
+  ExchangeResponse,
   OAuth,
   OAuthAuthURLParams,
   OAuthExhangeParams,
@@ -854,7 +854,7 @@ export declare namespace Gumnut {
   export {
     OAuth as OAuth,
     type AuthURLResponse as AuthURLResponse,
-    type ExhchangeResponse as ExhchangeResponse,
+    type ExchangeResponse as ExchangeResponse,
     type OAuthAuthURLParams as OAuthAuthURLParams,
     type OAuthExhangeParams as OAuthExhangeParams,
   };
