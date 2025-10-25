@@ -253,7 +253,7 @@ The following tools are available in this MCP server.
 ### Resource `oauth`:
 
 - `auth_url_oauth` (`read`): Generate OAuth authorization URL with state and nonce for CSRF and replay attack protection. State is stored with TTL for validation.
-- `exhange_oauth` (`write`): Exchange OAuth authorization code for application JWT after validating state, nonce, and ID token signature. User is retrieved from or created in the database and details added to the JWT.
+- `exchange_oauth` (`write`): Exchange OAuth authorization code for application JWT after validating state, nonce, and ID token signature. User is retrieved from or created in the database and details added to the JWT.
 
 ### Resource `people`:
 

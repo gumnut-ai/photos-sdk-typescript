@@ -56,7 +56,7 @@ import {
   ExchangeResponse,
   OAuth,
   OAuthAuthURLParams,
-  OAuthExhangeParams,
+  OAuthExchangeParams,
 } from './resources/oauth';
 import {
   People,
@@ -856,7 +856,7 @@ export declare namespace Gumnut {
     type AuthURLResponse as AuthURLResponse,
     type ExchangeResponse as ExchangeResponse,
     type OAuthAuthURLParams as OAuthAuthURLParams,
-    type OAuthExhangeParams as OAuthExhangeParams,
+    type OAuthExchangeParams as OAuthExchangeParams,
   };
 
   export {
