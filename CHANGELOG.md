@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.0 (2025-10-25)
+
+Full Changelog: [v0.28.0...v0.29.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.28.0...v0.29.0)
+
+### Features
+
+* **api:** manual updates ([beadadf](https://github.com/gumnut-ai/photos-sdk-typescript/commit/beadadf0590b3b48759147195cf1f94bc4ce189b))
+
 ## 0.28.0 (2025-10-25)
 
 Full Changelog: [v0.27.0...v0.28.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.27.0...v0.28.0)
