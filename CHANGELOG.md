@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.1 (2025-10-31)
+
+Full Changelog: [v0.29.0...v0.29.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.29.0...v0.29.1)
+
+### Bug Fixes
+
+* **mcpb:** pin @anthropic-ai/mcpb version ([3363a19](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3363a19a4082b3db0bd419bb6ab35ce5508805e6))
+
 ## 0.29.0 (2025-10-25)
 
 Full Changelog: [v0.28.0...v0.29.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.28.0...v0.29.0)
