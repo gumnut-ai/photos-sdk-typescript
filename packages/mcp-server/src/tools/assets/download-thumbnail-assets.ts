@@ -40,7 +40,7 @@ export const tool: Tool = {
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { asset_id, ...body } = args as any;
-  return asBinaryContentResult(await client.assets.downloadThumbnail(asset_id, body));
+  return asBinaryContentResult(await client.assets.downloadThumbnail(asset_id, body).asResponse());
 };
 
 export default { metadata, tool, handler };
