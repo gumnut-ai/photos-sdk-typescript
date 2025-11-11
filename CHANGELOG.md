@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.30.0 (2025-11-11)
+
+Full Changelog: [v0.29.1...v0.30.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.29.1...v0.30.0)
+
+### Features
+
+* **mcp:** enable optional code execution tool on http mcp servers ([4d68b81](https://github.com/gumnut-ai/photos-sdk-typescript/commit/4d68b81ee5e56d6e98d7743ba0389963dbcb1c67))
+
+
+### Bug Fixes
+
+* **mcp:** use raw responses for binary content ([cb5b82c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cb5b82ca7c84b041637b1e61a882005a2fd40f89))
+
+
+### Chores
+
+* **internal:** codegen related update ([fe20198](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fe20198d44a653cc0518d9dadf8a41b9433f7aec))
+* **internal:** codegen related update ([2856d99](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2856d9945aff2d1aed3acff9e205310044455ed0))
+* **internal:** grammar fix (it's -&gt; its) ([5b60196](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5b60196dcdd7e690a3ecb778a9b2726a5cb5507f))
+* mcp code tool explicit error message when missing a run function ([68ca8b0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/68ca8b0ae27a7f0288300284c6c169060db6a564))
+* **mcp:** add friendlier MCP code tool errors on incorrect method invocations ([34876f2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/34876f259372af8c7621f9d570af2a05b9b9e66e))
+* **mcp:** add line numbers to code tool errors ([b5d0865](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b5d0865567bbd0b480d45888680addbbe04e0cb0))
+* **mcp:** clarify http auth error ([8da5659](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8da565988384c850bf51cd55b05101c062c6ad18))
+* use structured error when code execution tool errors ([ce84449](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ce84449873b0bf20b39bcc408f2046fb11e3aa35))
+
+
+### Documentation
+
+* **mcp:** add a README button for one-click add to Cursor ([b29045f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b29045fe159bef7d4b868bdc3cc2419555b3c442))
+* **mcp:** add a README link to add server to VS Code or Claude Code ([ae22782](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ae2278295edfbb6ba6caff8404694745b6abee3d))
+
 ## 0.29.1 (2025-10-31)
 
 Full Changelog: [v0.29.0...v0.29.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.29.0...v0.29.1)
