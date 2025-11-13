@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'gumnut-sdk-mcp/filtering';
-import { Metadata, asTextContentResult } from 'gumnut-sdk-mcp/tools/types';
+import { isJqError, maybeFilter } from 'gumnut-sdk-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'gumnut-sdk-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import Gumnut from 'gumnut-sdk';
@@ -38,7 +38,14 @@ export const tool: Tool = {
 
 export const handler = async (client: Gumnut, args: Record<string, unknown> | undefined) => {
   const { jq_filter } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.apiKeys.list()));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.apiKeys.list()));
+  } catch (error) {
+    if (isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
