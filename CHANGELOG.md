@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.30.1 (2025-11-13)
+
+Full Changelog: [v0.30.0...v0.30.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.30.0...v0.30.1)
+
+### Bug Fixes
+
+* **mcp:** return tool execution error on jq failure ([545c70b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/545c70bd05059284e5b2c17d39e07483d5912ba6))
+
 ## 0.30.0 (2025-11-11)
 
 Full Changelog: [v0.29.1...v0.30.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.29.1...v0.30.0)
