@@ -303,3 +303,7 @@ The following tools are available in this MCP server.
 
 - `search_search` (`read`): Searches for assets using semantic similarity and/or metadata filters. Results include asset metadata, faces, and people. At least one search criterion must be provided.
 - `search_assets_search` (`write`): Searches for assets using semantic similarity and/or metadata filters. Results include asset metadata, faces, and people. At least one search criterion must be provided. Can search by text query, uploaded image, or both combined.
+
+### Resource `users`:
+
+- `me_users` (`read`): Returns information about the authenticated user making the request.

@@ -121,3 +121,13 @@ Methods:
 
 - <code title="get /api/search">client.search.<a href="./src/resources/search.ts">search</a>({ ...params }) -> SearchResponse</code>
 - <code title="post /api/search">client.search.<a href="./src/resources/search.ts">searchAssets</a>({ ...params }) -> SearchResponse</code>
+
+# Users
+
+Types:
+
+- <code><a href="./src/resources/users.ts">UserResponse</a></code>
+
+Methods:
+
+- <code title="get /api/users/me">client.users.<a href="./src/resources/users.ts">me</a>() -> UserResponse</code>

@@ -61,3 +61,4 @@ export {
   type SearchSearchParams,
   type SearchSearchAssetsParams,
 } from './search';
+export { Users, type UserResponse } from './users';
