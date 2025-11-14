@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.31.0 (2025-11-14)
+
+Full Changelog: [v0.30.1...v0.31.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.30.1...v0.31.0)
+
+### Features
+
+* **api:** manual updates ([c5fb624](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c5fb6249549438047823e0ef22160784889abb14))
+
+
+### Chores
+
+* **mcp:** upgrade jq-web ([a0e4371](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a0e4371303972a259e55c174652421984bab22e6))
+
 ## 0.30.1 (2025-11-13)
 
 Full Changelog: [v0.30.0...v0.30.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.30.0...v0.30.1)
