@@ -1,0 +1,68 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { RequestOptions } from '../internal/request-options';
+
+export class Users extends APIResource {
+  /**
+   * Returns information about the authenticated user making the request.
+   */
+  me(options?: RequestOptions): APIPromise<UserResponse> {
+    return this._client.get('/api/users/me', options);
+  }
+}
+
+/**
+ * Represents a user account with profile information.
+ */
+export interface UserResponse {
+  /**
+   * Unique user identifier with 'intuser\_' prefix
+   */
+  id: string;
+
+  /**
+   * When this user account was created
+   */
+  created_at: string;
+
+  /**
+   * Whether this user account is currently active
+   */
+  is_active: boolean;
+
+  /**
+   * Whether this user has superuser/admin privileges
+   */
+  is_superuser: boolean;
+
+  /**
+   * Whether this user's email is verified
+   */
+  is_verified: boolean;
+
+  /**
+   * When this user account was last updated
+   */
+  updated_at: string;
+
+  /**
+   * User's email address
+   */
+  email?: string | null;
+
+  /**
+   * User's first name
+   */
+  first_name?: string | null;
+
+  /**
+   * User's last name
+   */
+  last_name?: string | null;
+}
+
+export declare namespace Users {
+  export { type UserResponse as UserResponse };
+}

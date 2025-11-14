@@ -67,6 +67,7 @@ import {
   PersonUpdateParams,
 } from './resources/people';
 import { Search, SearchResponse, SearchSearchAssetsParams, SearchSearchParams } from './resources/search';
+import { UserResponse, Users } from './resources/users';
 import {
   AlbumCreateParams,
   AlbumListParams,
@@ -789,6 +790,7 @@ export class Gumnut {
   oauth: API.OAuth = new API.OAuth(this);
   people: API.People = new API.People(this);
   search: API.Search = new API.Search(this);
+  users: API.Users = new API.Users(this);
 }
 
 Gumnut.APIKeys = APIKeys;
@@ -799,6 +801,7 @@ Gumnut.Libraries = Libraries;
 Gumnut.OAuth = OAuth;
 Gumnut.People = People;
 Gumnut.Search = Search;
+Gumnut.Users = Users;
 
 export declare namespace Gumnut {
   export type RequestOptions = Opts.RequestOptions;
@@ -874,4 +877,6 @@ export declare namespace Gumnut {
     type SearchSearchParams as SearchSearchParams,
     type SearchSearchAssetsParams as SearchSearchAssetsParams,
   };
+
+  export { Users as Users, type UserResponse as UserResponse };
 }

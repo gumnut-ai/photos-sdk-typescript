@@ -79,6 +79,7 @@ const fuse = new Fuse(
     'client.people.update',
     'client.search.search',
     'client.search.searchAssets',
+    'client.users.me',
   ],
   { threshold: 1, shouldSort: true },
 );
