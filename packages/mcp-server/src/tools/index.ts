@@ -41,6 +41,7 @@ import list_people from './people/list-people';
 import delete_people from './people/delete-people';
 import search_search from './search/search-search';
 import search_assets_search from './search/search-assets-search';
+import me_users from './users/me-users';
 
 export const endpoints: Endpoint[] = [];
 
@@ -85,6 +86,7 @@ addEndpoint(list_people);
 addEndpoint(delete_people);
 addEndpoint(search_search);
 addEndpoint(search_assets_search);
+addEndpoint(me_users);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';
