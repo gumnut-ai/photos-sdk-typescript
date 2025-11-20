@@ -290,6 +290,7 @@ The following tools are available in this MCP server.
 
 - `auth_url_oauth` (`read`): Generate OAuth authorization URL with state and nonce for CSRF and replay attack protection. State is stored with TTL for validation.
 - `exchange_oauth` (`write`): Exchange OAuth authorization code for application JWT after validating state, nonce, and ID token signature. User is retrieved from or created in the database and details added to the JWT.
+- `logout_endpoint_oauth` (`read`): Returns the OAuth provider's logout endpoint URL from OIDC discovery. This can be used to redirect users to logout from the OAuth provider after logging out locally.
 
 ### Resource `people`:
 
