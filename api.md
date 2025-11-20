@@ -91,11 +91,13 @@ Types:
 
 - <code><a href="./src/resources/oauth.ts">AuthURLResponse</a></code>
 - <code><a href="./src/resources/oauth.ts">ExchangeResponse</a></code>
+- <code><a href="./src/resources/oauth.ts">LogoutEndpointResponse</a></code>
 
 Methods:
 
 - <code title="get /api/oauth/auth-url">client.oauth.<a href="./src/resources/oauth.ts">authURL</a>({ ...params }) -> AuthURLResponse</code>
 - <code title="post /api/oauth/exchange">client.oauth.<a href="./src/resources/oauth.ts">exchange</a>({ ...params }) -> ExchangeResponse</code>
+- <code title="get /api/oauth/logout-endpoint">client.oauth.<a href="./src/resources/oauth.ts">logoutEndpoint</a>() -> LogoutEndpointResponse</code>
 
 # People
 

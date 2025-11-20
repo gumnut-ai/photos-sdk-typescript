@@ -44,6 +44,7 @@ export {
   OAuth,
   type AuthURLResponse,
   type ExchangeResponse,
+  type LogoutEndpointResponse,
   type OAuthAuthURLParams,
   type OAuthExchangeParams,
 } from './oauth';
