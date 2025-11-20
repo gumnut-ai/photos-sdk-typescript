@@ -54,6 +54,7 @@ import {
 import {
   AuthURLResponse,
   ExchangeResponse,
+  LogoutEndpointResponse,
   OAuth,
   OAuthAuthURLParams,
   OAuthExchangeParams,
@@ -858,6 +859,7 @@ export declare namespace Gumnut {
     OAuth as OAuth,
     type AuthURLResponse as AuthURLResponse,
     type ExchangeResponse as ExchangeResponse,
+    type LogoutEndpointResponse as LogoutEndpointResponse,
     type OAuthAuthURLParams as OAuthAuthURLParams,
     type OAuthExchangeParams as OAuthExchangeParams,
   };

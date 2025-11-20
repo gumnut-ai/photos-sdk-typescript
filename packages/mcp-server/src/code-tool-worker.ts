@@ -72,6 +72,7 @@ const fuse = new Fuse(
     'client.libraries.update',
     'client.oauth.authURL',
     'client.oauth.exchange',
+    'client.oauth.logoutEndpoint',
     'client.people.create',
     'client.people.delete',
     'client.people.list',

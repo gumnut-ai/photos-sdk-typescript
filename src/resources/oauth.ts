@@ -21,6 +21,15 @@ export class OAuth extends APIResource {
   exchange(body: OAuthExchangeParams, options?: RequestOptions): APIPromise<ExchangeResponse> {
     return this._client.post('/api/oauth/exchange', { body, ...options });
   }
+
+  /**
+   * Returns the OAuth provider's logout endpoint URL from OIDC discovery. This can
+   * be used to redirect users to logout from the OAuth provider after logging out
+   * locally.
+   */
+  logoutEndpoint(options?: RequestOptions): APIPromise<LogoutEndpointResponse> {
+    return this._client.get('/api/oauth/logout-endpoint', options);
+  }
 }
 
 /**
@@ -61,6 +70,13 @@ export namespace ExchangeResponse {
 
     last_name: string | null;
   }
+}
+
+/**
+ * Response containing OAuth provider logout endpoint
+ */
+export interface LogoutEndpointResponse {
+  logout_endpoint: string;
 }
 
 export interface OAuthAuthURLParams {
@@ -110,6 +126,7 @@ export declare namespace OAuth {
   export {
     type AuthURLResponse as AuthURLResponse,
     type ExchangeResponse as ExchangeResponse,
+    type LogoutEndpointResponse as LogoutEndpointResponse,
     type OAuthAuthURLParams as OAuthAuthURLParams,
     type OAuthExchangeParams as OAuthExchangeParams,
   };
