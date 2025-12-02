@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.33.0 (2025-12-02)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **mcp:** add detail field to docs search tool ([94b1254](https://github.com/gumnut-ai/photos-sdk-typescript/commit/94b1254a2b47fbc220af5d3cc8377d1e0c12168b))
+
+
+### Bug Fixes
+
+* **mcp:** return tool execution error on api error ([db594bc](https://github.com/gumnut-ai/photos-sdk-typescript/commit/db594bc54a737bd7cf43a56a90b9eebe2fff02e2))
+
+
+### Chores
+
+* **client:** fix logger property type ([9b7a7ae](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9b7a7ae9b1cab1564cf11aa9f6cc7f172a68d151))
+
 ## 0.32.0 (2025-11-20)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.31.0...v0.32.0)
