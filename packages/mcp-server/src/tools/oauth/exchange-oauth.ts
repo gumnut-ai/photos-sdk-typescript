@@ -60,7 +60,7 @@ export const handler = async (client: Gumnut, args: Record<string, unknown> | un
   try {
     return asTextContentResult(await maybeFilter(jq_filter, await client.oauth.exchange(body)));
   } catch (error) {
-    if (isJqError(error)) {
+    if (error instanceof Gumnut.APIError || isJqError(error)) {
       return asErrorResult(error.message);
     }
     throw error;
