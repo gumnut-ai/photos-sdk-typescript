@@ -94,7 +94,8 @@ export interface AssetResponse {
   id: string;
 
   /**
-   * Base64-encoded hash of the asset contents for duplicate detection and integrity
+   * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
+   * integrity
    */
   checksum: string;
 
@@ -142,6 +143,12 @@ export interface AssetResponse {
    * When this asset record was last updated
    */
   updated_at: string;
+
+  /**
+   * Base64-encoded SHA-1 hash for Immich client compatibility. May be null for older
+   * assets.
+   */
+  checksum_sha1?: string | null;
 
   /**
    * If you need to download the full asset, use this URL. Otherwise, use the
