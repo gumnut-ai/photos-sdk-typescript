@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.34.0 (2025-12-04)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** api update ([c5dd542](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c5dd5426d58434fedeb7e1b3abdfcf7d4a4b94c5))
+* **mcp:** return logs on code tool errors ([c795fdb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c795fdbc25ce9da8a3270f7a95ac4c7242f54d3f))
+
+
+### Chores
+
+* **internal:** upgrade eslint ([bc050d7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/bc050d7610230f2e733e15c038bb0f089bdb78fe))
+
 ## 0.33.0 (2025-12-02)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.32.0...v0.33.0)
