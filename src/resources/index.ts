@@ -18,9 +18,11 @@ export {
 } from './albums/albums';
 export {
   Assets,
+  type AssetExistenceResponse,
   type AssetResponse,
   type AssetCreateParams,
   type AssetListParams,
+  type AssetCheckExistenceParams,
   type AssetDownloadThumbnailParams,
   type AssetResponsesCursorPage,
 } from './assets';

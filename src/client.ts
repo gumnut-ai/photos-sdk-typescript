@@ -28,8 +28,10 @@ import {
   APIKeys,
 } from './resources/api-keys';
 import {
+  AssetCheckExistenceParams,
   AssetCreateParams,
   AssetDownloadThumbnailParams,
+  AssetExistenceResponse,
   AssetListParams,
   AssetResponse,
   AssetResponsesCursorPage,
@@ -821,10 +823,12 @@ export declare namespace Gumnut {
 
   export {
     Assets as Assets,
+    type AssetExistenceResponse as AssetExistenceResponse,
     type AssetResponse as AssetResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
+    type AssetCheckExistenceParams as AssetCheckExistenceParams,
     type AssetDownloadThumbnailParams as AssetDownloadThumbnailParams,
   };
 

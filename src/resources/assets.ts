@@ -54,6 +54,19 @@ export class Assets extends APIResource {
   }
 
   /**
+   * Checks which assets exist in the user's library based on checksums or device
+   * identifiers. Provide exactly one of: checksums, checksum_sha1s, or (deviceId AND
+   * deviceAssetIds). List parameters are limited to 5000 items.
+   */
+  checkExistence(
+    params: AssetCheckExistenceParams,
+    options?: RequestOptions,
+  ): APIPromise<AssetExistenceResponse> {
+    const { library_id, ...body } = params;
+    return this._client.post('/api/assets/exist', { query: { library_id }, body, ...options });
+  }
+
+  /**
    * Downloads the original file for a specific asset.
    */
   download(assetID: string, options?: RequestOptions): APIPromise<Response> {
@@ -83,6 +96,50 @@ export class Assets extends APIResource {
 }
 
 export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
+
+/**
+ * Response for asset existence check endpoint.
+ */
+export interface AssetExistenceResponse {
+  /**
+   * List of assets matching the query criteria
+   */
+  assets: Array<AssetExistenceResponse.Asset>;
+}
+
+export namespace AssetExistenceResponse {
+  /**
+   * Lightweight asset response for existence checks.
+   */
+  export interface Asset {
+    /**
+     * Unique asset identifier with 'asset\_' prefix
+     */
+    id: string;
+
+    /**
+     * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
+     * integrity
+     */
+    checksum: string;
+
+    /**
+     * Original asset identifier from the device that uploaded this asset
+     */
+    device_asset_id: string;
+
+    /**
+     * Identifier of the device that uploaded this asset
+     */
+    device_id: string;
+
+    /**
+     * Base64-encoded SHA-1 hash for Immich client compatibility. May be null for older
+     * assets.
+     */
+    checksum_sha1?: string | null;
+  }
+}
 
 /**
  * Represents a photo or video asset with metadata and access URLs.
@@ -366,6 +423,34 @@ export interface AssetListParams extends CursorPageParams {
   person_id?: string | null;
 }
 
+export interface AssetCheckExistenceParams {
+  /**
+   * Query param: Library to check assets in (optional)
+   */
+  library_id?: string | null;
+
+  /**
+   * Body param: List of base64-encoded SHA-1 checksums to check for existence (for
+   * Immich compatibility)
+   */
+  checksum_sha1s?: Array<string> | null;
+
+  /**
+   * Body param: List of base64-encoded SHA-256 checksums to check for existence
+   */
+  checksums?: Array<string> | null;
+
+  /**
+   * Body param: List of device asset IDs to check for existence (requires deviceId)
+   */
+  deviceAssetIds?: Array<string> | null;
+
+  /**
+   * Body param: Device ID to filter assets by (required with deviceAssetIds)
+   */
+  deviceId?: string | null;
+}
+
 export interface AssetDownloadThumbnailParams {
   /**
    * Desired thumbnail size (e.g., thumbnail, preview)
@@ -375,10 +460,12 @@ export interface AssetDownloadThumbnailParams {
 
 export declare namespace Assets {
   export {
+    type AssetExistenceResponse as AssetExistenceResponse,
     type AssetResponse as AssetResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
+    type AssetCheckExistenceParams as AssetCheckExistenceParams,
     type AssetDownloadThumbnailParams as AssetDownloadThumbnailParams,
   };
 }
