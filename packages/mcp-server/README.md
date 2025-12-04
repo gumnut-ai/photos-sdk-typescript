@@ -253,6 +253,7 @@ The following tools are available in this MCP server.
 - `retrieve_assets` (`read`): Retrieves detailed metadata for a specific asset, including EXIF information, asset metrics, faces, and people.
 - `list_assets` (`read`): Retrieves a paginated list of assets from the specified library, optionally filtered by album or person. Asset data includes metrics, EXIF data, faces, and people. Assets are ordered by local creation time, descending.
 - `delete_assets` (`write`): Deletes a specific asset and its associated data (including the file from storage).
+- `check_existence_assets` (`write`): Checks which assets exist in the user's library based on checksums or device identifiers. Provide exactly one of: checksums, checksum_sha1s, or (deviceId AND deviceAssetIds). List parameters are limited to 5000 items.
 - `download_assets` (`read`): Downloads the original file for a specific asset.
 - `download_thumbnail_assets` (`read`): Downloads a thumbnail for a specific asset. The exact thumbnail returned depends on availability and the optional `size` parameter.
 

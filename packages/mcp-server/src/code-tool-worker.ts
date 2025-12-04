@@ -46,6 +46,7 @@ const fuse = new Fuse(
     'client.apiKeys.delete',
     'client.apiKeys.list',
     'client.apiKeys.update',
+    'client.assets.checkExistence',
     'client.assets.create',
     'client.assets.delete',
     'client.assets.download',
