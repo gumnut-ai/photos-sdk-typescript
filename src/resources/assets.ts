@@ -104,41 +104,39 @@ export interface AssetExistenceResponse {
   /**
    * List of assets matching the query criteria
    */
-  assets: Array<AssetExistenceResponse.Asset>;
+  assets: Array<AssetLiteResponse>;
 }
 
-export namespace AssetExistenceResponse {
+/**
+ * Lightweight asset response for existence checks.
+ */
+export interface AssetLiteResponse {
   /**
-   * Lightweight asset response for existence checks.
+   * Unique asset identifier with 'asset\_' prefix
    */
-  export interface Asset {
-    /**
-     * Unique asset identifier with 'asset\_' prefix
-     */
-    id: string;
+  id: string;
 
-    /**
-     * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
-     * integrity
-     */
-    checksum: string;
+  /**
+   * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
+   * integrity
+   */
+  checksum: string;
 
-    /**
-     * Original asset identifier from the device that uploaded this asset
-     */
-    device_asset_id: string;
+  /**
+   * Original asset identifier from the device that uploaded this asset
+   */
+  device_asset_id: string;
 
-    /**
-     * Identifier of the device that uploaded this asset
-     */
-    device_id: string;
+  /**
+   * Identifier of the device that uploaded this asset
+   */
+  device_id: string;
 
-    /**
-     * Base64-encoded SHA-1 hash for Immich client compatibility. May be null for older
-     * assets.
-     */
-    checksum_sha1?: string | null;
-  }
+  /**
+   * Base64-encoded SHA-1 hash for Immich client compatibility. May be null for older
+   * assets.
+   */
+  checksum_sha1?: string | null;
 }
 
 /**
@@ -461,6 +459,7 @@ export interface AssetDownloadThumbnailParams {
 export declare namespace Assets {
   export {
     type AssetExistenceResponse as AssetExistenceResponse,
+    type AssetLiteResponse as AssetLiteResponse,
     type AssetResponse as AssetResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,

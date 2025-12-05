@@ -18,6 +18,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/assets.ts">AssetExistenceResponse</a></code>
+- <code><a href="./src/resources/assets.ts">AssetLiteResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetResponse</a></code>
 
 Methods:

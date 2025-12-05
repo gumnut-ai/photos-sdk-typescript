@@ -33,6 +33,7 @@ import {
   AssetDownloadThumbnailParams,
   AssetExistenceResponse,
   AssetListParams,
+  AssetLiteResponse,
   AssetResponse,
   AssetResponsesCursorPage,
   Assets,
@@ -824,6 +825,7 @@ export declare namespace Gumnut {
   export {
     Assets as Assets,
     type AssetExistenceResponse as AssetExistenceResponse,
+    type AssetLiteResponse as AssetLiteResponse,
     type AssetResponse as AssetResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
