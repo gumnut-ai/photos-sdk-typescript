@@ -19,6 +19,7 @@ export {
 export {
   Assets,
   type AssetExistenceResponse,
+  type AssetLiteResponse,
   type AssetResponse,
   type AssetCreateParams,
   type AssetListParams,
