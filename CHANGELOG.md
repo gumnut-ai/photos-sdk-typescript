@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.36.0 (2025-12-05)
+
+Full Changelog: [v0.35.0...v0.36.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.35.0...v0.36.0)
+
+### Features
+
+* **api:** manual updates ([6aacf6e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6aacf6edd3968fd190766e185bd23be4fdf088d4))
+* **mcp:** add typescript check to code execution tool ([73b6f87](https://github.com/gumnut-ai/photos-sdk-typescript/commit/73b6f876829616683fddeaf4de7db98dca182022))
+
+
+### Chores
+
+* use latest @modelcontextprotocol/sdk ([c7ea2f9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c7ea2f95b4f421ab6a5a0f45c0487c71ad322fe5))
+
 ## 0.35.0 (2025-12-04)
 
 Full Changelog: [v0.34.0...v0.35.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.34.0...v0.35.0)
