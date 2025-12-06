@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.37.0 (2025-12-06)
+
+Full Changelog: [v0.36.0...v0.37.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.36.0...v0.37.0)
+
+### Features
+
+* **mcp:** handle code mode calls in the Stainless API ([a8e1ed3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a8e1ed353875f448cdbb4a63f53da84654e95168))
+
+
+### Bug Fixes
+
+* **mcp:** return correct lines on typescript errors ([654eac3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/654eac3414f67617d34c0756aab09db18795988b))
+
 ## 0.36.0 (2025-12-05)
 
 Full Changelog: [v0.35.0...v0.36.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.35.0...v0.36.0)
