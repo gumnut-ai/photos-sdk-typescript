@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.37.2 (2025-12-11)
+
+Full Changelog: [v0.37.1...v0.37.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.37.1...v0.37.2)
+
+### Bug Fixes
+
+* **mcp:** add client instantiation options to code tool ([bc5996a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/bc5996a6e46823e71e35d1990e5b1ca0f417205f))
+
+
+### Chores
+
+* **internal:** codegen related update ([1d56c4c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/1d56c4c9d67d62dded446813396c698f462082b7))
+* **mcp:** update lockfile ([129c47d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/129c47d4725c6c06ddaf80c0da3531e0b71b7bcd))
+
 ## 0.37.1 (2025-12-06)
 
 Full Changelog: [v0.37.0...v0.37.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.37.0...v0.37.1)
