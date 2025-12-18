@@ -35,7 +35,10 @@ export async function codeTool() {
       headers: {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
-        client_envs: JSON.stringify({ GUMNUT_API_KEY: readEnv('GUMNUT_API_KEY') }),
+        client_envs: JSON.stringify({
+          GUMNUT_API_KEY: readEnv('GUMNUT_API_KEY'),
+          GUMNUT_BASE_URL: readEnv('GUMNUT_BASE_URL'),
+        }),
       },
       body: JSON.stringify({
         project_name: 'photos',
