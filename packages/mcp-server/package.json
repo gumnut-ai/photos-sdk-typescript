@@ -1,6 +1,6 @@
 {
   "name": "gumnut-sdk-mcp",
-  "version": "0.37.1",
+  "version": "0.37.3",
   "description": "The official MCP Server for the Gumnut API",
   "author": "Gumnut <tedmao@gmail.com>",
   "types": "dist/index.d.ts",
