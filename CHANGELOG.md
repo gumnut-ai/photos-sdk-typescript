@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.37.3 (2025-12-18)
+
+Full Changelog: [v0.37.2...v0.37.3](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.37.2...v0.37.3)
+
+### Bug Fixes
+
+* **mcp:** pass base url to code tool ([0b51181](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0b511817da61ebe28c38b8623c486398425e179c))
+
 ## 0.37.2 (2025-12-11)
 
 Full Changelog: [v0.37.1...v0.37.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.37.1...v0.37.2)
