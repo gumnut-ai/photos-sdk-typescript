@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.38.0 (2025-12-19)
+
+Full Changelog: [v0.37.3...v0.38.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.37.3...v0.38.0)
+
+### ⚠ BREAKING CHANGES
+
+* **mcp:** remove deprecated tool schemes
+* **mcp:** **Migration:** To migrate, simply modify the command used to invoke the MCP server. Currently, the only supported tool scheme is code mode. Now, starting the server with just `node /path/to/mcp/server` or `npx package-name` will invoke code tools: changing your command to one of these is likely all you will need to do.
+
+### Features
+
+* **api:** api update ([bdb0c6b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/bdb0c6b308e43a89c9e27a992397cf1007b5c473))
+
+
+### Chores
+
+* **mcp:** remove deprecated tool schemes ([ddc129d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ddc129d3010389c951d93907d43427d076170b9a))
+
 ## 0.37.3 (2025-12-18)
 
 Full Changelog: [v0.37.2...v0.37.3](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.37.2...v0.37.3)
