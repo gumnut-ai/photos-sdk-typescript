@@ -104,6 +104,16 @@ export interface AlbumResponse {
    * Optional description text for the album
    */
   description?: string | null;
+
+  /**
+   * The newest asset date (local_datetime) in the album, or null if empty
+   */
+  end_date?: string | null;
+
+  /**
+   * The oldest asset date (local_datetime) in the album, or null if empty
+   */
+  start_date?: string | null;
 }
 
 export interface AlbumCreateParams {
