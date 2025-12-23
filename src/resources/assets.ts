@@ -259,6 +259,21 @@ export namespace AssetResponse {
    */
   export interface Exif {
     /**
+     * ID of the asset this EXIF data belongs to
+     */
+    asset_id: string;
+
+    /**
+     * When this EXIF record was created
+     */
+    created_at: string;
+
+    /**
+     * When this EXIF record was last updated
+     */
+    updated_at: string;
+
+    /**
      * GPS altitude in meters
      */
     altitude?: number | null;
