@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.40.0 (2025-12-23)
+
+Full Changelog: [v0.39.0...v0.40.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.39.0...v0.40.0)
+
+### Features
+
+* **api:** add events endpoint ([c301a10](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c301a10ccab772a7dc1fcd8d0d9e5d29bd46ff2d))
+
 ## 0.39.0 (2025-12-23)
 
 Full Changelog: [v0.38.0...v0.39.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.38.0...v0.39.0)
