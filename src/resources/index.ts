@@ -27,6 +27,7 @@ export {
   type AssetDownloadThumbnailParams,
   type AssetResponsesCursorPage,
 } from './assets';
+export { Events, type EventsResponse, type EventGetParams } from './events';
 export {
   Faces,
   type FaceResponse,
