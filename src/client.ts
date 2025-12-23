@@ -38,6 +38,7 @@ import {
   AssetResponsesCursorPage,
   Assets,
 } from './resources/assets';
+import { EventGetParams, Events, EventsResponse } from './resources/events';
 import {
   FaceDeleteParams,
   FaceListParams,
@@ -789,6 +790,7 @@ export class Gumnut {
   apiKeys: API.APIKeys = new API.APIKeys(this);
   assets: API.Assets = new API.Assets(this);
   albums: API.Albums = new API.Albums(this);
+  events: API.Events = new API.Events(this);
   faces: API.Faces = new API.Faces(this);
   libraries: API.Libraries = new API.Libraries(this);
   oauth: API.OAuth = new API.OAuth(this);
@@ -800,6 +802,7 @@ export class Gumnut {
 Gumnut.APIKeys = APIKeys;
 Gumnut.Assets = Assets;
 Gumnut.Albums = Albums;
+Gumnut.Events = Events;
 Gumnut.Faces = Faces;
 Gumnut.Libraries = Libraries;
 Gumnut.OAuth = OAuth;
@@ -842,6 +845,8 @@ export declare namespace Gumnut {
     type AlbumUpdateParams as AlbumUpdateParams,
     type AlbumListParams as AlbumListParams,
   };
+
+  export { Events as Events, type EventsResponse as EventsResponse, type EventGetParams as EventGetParams };
 
   export {
     Faces as Faces,

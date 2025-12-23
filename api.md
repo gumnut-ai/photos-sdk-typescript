@@ -59,6 +59,16 @@ Methods:
 - <code title="post /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">add</a>(albumID, { ...params }) -> AssetAddResponse</code>
 - <code title="delete /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">remove</a>(albumID, { ...params }) -> void</code>
 
+# Events
+
+Types:
+
+- <code><a href="./src/resources/events.ts">EventsResponse</a></code>
+
+Methods:
+
+- <code title="get /api/events">client.events.<a href="./src/resources/events.ts">get</a>({ ...params }) -> EventsResponse</code>
+
 # Faces
 
 Types:
