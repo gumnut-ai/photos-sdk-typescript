@@ -39,6 +39,36 @@ export class Events extends APIResource {
 }
 
 /**
+ * Represents a link between an album and an asset.
+ */
+export interface AlbumAssetResponse {
+  /**
+   * Unique album*asset identifier with 'album_asset*' prefix
+   */
+  id: string;
+
+  /**
+   * ID of the album
+   */
+  album_id: string;
+
+  /**
+   * ID of the asset
+   */
+  asset_id: string;
+
+  /**
+   * When this link was created
+   */
+  created_at: string;
+
+  /**
+   * When this link was last updated
+   */
+  updated_at: string;
+}
+
+/**
  * Response containing events.
  */
 export interface EventsResponse {
@@ -111,41 +141,9 @@ export namespace EventsResponse {
     /**
      * Full album_asset data
      */
-    data: AlbumAssetEventPayload.Data;
+    data: EventsAPI.AlbumAssetResponse;
 
     entity_type?: 'album_asset';
-  }
-
-  export namespace AlbumAssetEventPayload {
-    /**
-     * Full album_asset data
-     */
-    export interface Data {
-      /**
-       * Unique album*asset identifier with 'album_asset*' prefix
-       */
-      id: string;
-
-      /**
-       * ID of the album
-       */
-      album_id: string;
-
-      /**
-       * ID of the asset
-       */
-      asset_id: string;
-
-      /**
-       * When this link was created
-       */
-      created_at: string;
-
-      /**
-       * When this link was last updated
-       */
-      updated_at: string;
-    }
   }
 
   /**
@@ -339,6 +337,7 @@ export interface EventGetParams {
 
 export declare namespace Events {
   export {
+    type AlbumAssetResponse as AlbumAssetResponse,
     type EventsResponse as EventsResponse,
     type ExifResponse as ExifResponse,
     type EventGetParams as EventGetParams,
