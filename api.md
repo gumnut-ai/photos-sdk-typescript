@@ -63,9 +63,15 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/events.ts">AlbumAssetEventPayload</a></code>
 - <code><a href="./src/resources/events.ts">AlbumAssetResponse</a></code>
+- <code><a href="./src/resources/events.ts">AlbumEventPayload</a></code>
+- <code><a href="./src/resources/events.ts">AssetEventPayload</a></code>
 - <code><a href="./src/resources/events.ts">EventsResponse</a></code>
+- <code><a href="./src/resources/events.ts">ExifEventPayload</a></code>
 - <code><a href="./src/resources/events.ts">ExifResponse</a></code>
+- <code><a href="./src/resources/events.ts">FaceEventPayload</a></code>
+- <code><a href="./src/resources/events.ts">PersonEventPayload</a></code>
 
 Methods:
 
