@@ -29,9 +29,15 @@ export {
 } from './assets';
 export {
   Events,
+  type AlbumAssetEventPayload,
   type AlbumAssetResponse,
+  type AlbumEventPayload,
+  type AssetEventPayload,
   type EventsResponse,
+  type ExifEventPayload,
   type ExifResponse,
+  type FaceEventPayload,
+  type PersonEventPayload,
   type EventGetParams,
 } from './events';
 export {
