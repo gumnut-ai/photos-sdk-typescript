@@ -38,7 +38,7 @@ import {
   AssetResponsesCursorPage,
   Assets,
 } from './resources/assets';
-import { EventGetParams, Events, EventsResponse } from './resources/events';
+import { EventGetParams, Events, EventsResponse, ExifResponse } from './resources/events';
 import {
   FaceDeleteParams,
   FaceListParams,
@@ -846,7 +846,12 @@ export declare namespace Gumnut {
     type AlbumListParams as AlbumListParams,
   };
 
-  export { Events as Events, type EventsResponse as EventsResponse, type EventGetParams as EventGetParams };
+  export {
+    Events as Events,
+    type EventsResponse as EventsResponse,
+    type ExifResponse as ExifResponse,
+    type EventGetParams as EventGetParams,
+  };
 
   export {
     Faces as Faces,
