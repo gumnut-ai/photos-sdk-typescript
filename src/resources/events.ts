@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as EventsAPI from './events';
 import * as AssetsAPI from './assets';
 import * as FacesAPI from './faces';
 import * as PeopleAPI from './people';
@@ -39,6 +38,18 @@ export class Events extends APIResource {
 }
 
 /**
+ * Event payload for album_asset entities.
+ */
+export interface AlbumAssetEventPayload {
+  /**
+   * Full album_asset data
+   */
+  data: AlbumAssetResponse;
+
+  entity_type?: 'album_asset';
+}
+
+/**
  * Represents a link between an album and an asset.
  */
 export interface AlbumAssetResponse {
@@ -69,6 +80,30 @@ export interface AlbumAssetResponse {
 }
 
 /**
+ * Event payload for album entities.
+ */
+export interface AlbumEventPayload {
+  /**
+   * Full album data
+   */
+  data: AlbumsAPI.AlbumResponse;
+
+  entity_type?: 'album';
+}
+
+/**
+ * Event payload for asset entities.
+ */
+export interface AssetEventPayload {
+  /**
+   * Full asset data
+   */
+  data: AssetsAPI.AssetResponse;
+
+  entity_type?: 'asset';
+}
+
+/**
  * Response containing events.
  */
 export interface EventsResponse {
@@ -76,87 +111,25 @@ export interface EventsResponse {
    * List of events, ordered by entity type priority, then updated_at, then entity_id
    */
   data: Array<
-    | EventsResponse.AssetEventPayload
-    | EventsResponse.AlbumEventPayload
-    | EventsResponse.PersonEventPayload
-    | EventsResponse.FaceEventPayload
-    | EventsResponse.AlbumAssetEventPayload
-    | EventsResponse.ExifEventPayload
+    | AssetEventPayload
+    | AlbumEventPayload
+    | PersonEventPayload
+    | FaceEventPayload
+    | AlbumAssetEventPayload
+    | ExifEventPayload
   >;
 }
 
-export namespace EventsResponse {
+/**
+ * Event payload for exif entities.
+ */
+export interface ExifEventPayload {
   /**
-   * Event payload for asset entities.
+   * Full exif data
    */
-  export interface AssetEventPayload {
-    /**
-     * Full asset data
-     */
-    data: AssetsAPI.AssetResponse;
+  data: ExifResponse;
 
-    entity_type?: 'asset';
-  }
-
-  /**
-   * Event payload for album entities.
-   */
-  export interface AlbumEventPayload {
-    /**
-     * Full album data
-     */
-    data: AlbumsAPI.AlbumResponse;
-
-    entity_type?: 'album';
-  }
-
-  /**
-   * Event payload for person entities.
-   */
-  export interface PersonEventPayload {
-    /**
-     * Full person data
-     */
-    data: PeopleAPI.PersonResponse;
-
-    entity_type?: 'person';
-  }
-
-  /**
-   * Event payload for face entities.
-   */
-  export interface FaceEventPayload {
-    /**
-     * Full face data
-     */
-    data: FacesAPI.FaceResponse;
-
-    entity_type?: 'face';
-  }
-
-  /**
-   * Event payload for album_asset entities.
-   */
-  export interface AlbumAssetEventPayload {
-    /**
-     * Full album_asset data
-     */
-    data: EventsAPI.AlbumAssetResponse;
-
-    entity_type?: 'album_asset';
-  }
-
-  /**
-   * Event payload for exif entities.
-   */
-  export interface ExifEventPayload {
-    /**
-     * Full exif data
-     */
-    data: EventsAPI.ExifResponse;
-
-    entity_type?: 'exif';
-  }
+  entity_type?: 'exif';
 }
 
 /**
@@ -306,6 +279,30 @@ export interface ExifResponse {
   state?: string | null;
 }
 
+/**
+ * Event payload for face entities.
+ */
+export interface FaceEventPayload {
+  /**
+   * Full face data
+   */
+  data: FacesAPI.FaceResponse;
+
+  entity_type?: 'face';
+}
+
+/**
+ * Event payload for person entities.
+ */
+export interface PersonEventPayload {
+  /**
+   * Full person data
+   */
+  data: PeopleAPI.PersonResponse;
+
+  entity_type?: 'person';
+}
+
 export interface EventGetParams {
   /**
    * Comma-separated list of entity types to include (e.g., 'asset,album'). Valid
@@ -337,9 +334,15 @@ export interface EventGetParams {
 
 export declare namespace Events {
   export {
+    type AlbumAssetEventPayload as AlbumAssetEventPayload,
     type AlbumAssetResponse as AlbumAssetResponse,
+    type AlbumEventPayload as AlbumEventPayload,
+    type AssetEventPayload as AssetEventPayload,
     type EventsResponse as EventsResponse,
+    type ExifEventPayload as ExifEventPayload,
     type ExifResponse as ExifResponse,
+    type FaceEventPayload as FaceEventPayload,
+    type PersonEventPayload as PersonEventPayload,
     type EventGetParams as EventGetParams,
   };
 }
