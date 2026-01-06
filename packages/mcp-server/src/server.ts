@@ -21,7 +21,7 @@ export const newMcpServer = () =>
   new McpServer(
     {
       name: 'gumnut_sdk_api',
-      version: '0.43.0',
+      version: '0.43.1',
     },
     { capabilities: { tools: {}, logging: {} } },
   );
