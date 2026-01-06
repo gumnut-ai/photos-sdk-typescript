@@ -54,7 +54,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add --transport stdio gumnut_sdk_api --env GUMNUT_API_KEY="Your GUMNUT_API_KEY here." -- npx -y gumnut-sdk-mcp
+claude mcp add gumnut_sdk_mcp_api --env GUMNUT_API_KEY="Your GUMNUT_API_KEY here." -- npx -y gumnut-sdk-mcp
 ```
 
 ## Code Mode
