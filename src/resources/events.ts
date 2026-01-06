@@ -17,20 +17,29 @@ export class Events extends APIResource {
    * for tie-breaking.
    *
    * **Pagination:** Use `updated_at_gte` with the timestamp of the last received
-   * event to fetch the next page. Use `updated_at_lt` to bound the sync window and
-   * prevent infinite loops when new events are created during sync.
+   * event to fetch the next page. When multiple entities share the same timestamp,
+   * also provide `starting_after_id` with the last entity's ID to avoid duplicates.
+   * Use `updated_at_lt` to bound the sync window and prevent infinite loops when new
+   * events are created during sync.
    *
-   * **Recommended sync pattern:**
+   * **Important:** When using `starting_after_id`, you must specify exactly one
+   * `entity_types` value. This ensures the cursor ID is unambiguous. To sync all
+   * entity types with cursor support, query each entity type separately.
+   *
+   * **Recommended sync pattern (per entity type):**
    *
    * 1. Capture current time as `sync_started_at`
-   * 2. Fetch events with `updated_at_lt=sync_started_at`
+   * 2. For each entity type, fetch events with
+   *    `entity_types={type}&updated_at_lt=sync_started_at`
    * 3. For subsequent pages, use
-   *    `updated_at_gte={last_event.updated_at}&updated_at_lt=sync_started_at`
+   *    `entity_types={type}&updated_at_gte={last.updated_at}&starting_after_id={last.id}&updated_at_lt=sync_started_at`
    * 4. Continue until an empty result set is returned
    * 5. Store `sync_started_at` as checkpoint for next sync
    *
-   * **Note:** Events with the same `updated_at` may be returned on multiple pages.
-   * Use entity IDs as keys when updating local state (upsert semantics).
+   * **Entity ID field by type:**
+   *
+   * - Most entities: use the `id` field from the response
+   * - Exif: use the `asset_id` field (exif has no separate id)
    */
   get(query: EventGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<EventsResponse> {
     return this._client.get('/api/events', { query, ...options });
@@ -319,6 +328,13 @@ export interface EventGetParams {
    * Maximum number of events to return (1-500)
    */
   limit?: number;
+
+  /**
+   * Entity ID to start after for tie-breaking when paginating. Used with
+   * updated_at_gte for composite keyset pagination. Requires exactly one
+   * entity_types value. For exif entities, use asset_id.
+   */
+  starting_after_id?: string | null;
 
   /**
    * Only return events with updated_at >= this timestamp (ISO 8601 format)
