@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.43.1 (2026-01-06)
+
+Full Changelog: [v0.43.0...v0.43.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.43.0...v0.43.1)
+
+### Bug Fixes
+
+* **mcp:** correct code tool api output types ([2a26905](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2a269053e27c8e2743088706c92be110a520c2a6))
+
+
+### Chores
+
+* **internal:** codegen related update ([f371ba0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f371ba0008d9047a3b5539e416cdee3f04048a27))
+
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([457eae8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/457eae857115126c0e5774641c896f263ef9b07b))
+
 ## 0.43.0 (2025-12-24)
 
 Full Changelog: [v0.42.0...v0.43.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.42.0...v0.43.0)
