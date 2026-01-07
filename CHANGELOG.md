@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.44.1 (2026-01-07)
+
+Full Changelog: [v0.44.0...v0.44.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.44.0...v0.44.1)
+
+### Bug Fixes
+
+* **mcp:** update cloudflare worker host page ([e625cf5](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e625cf5aa38fd671de36bc526507a079c96866d5))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([d00440c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d00440c8d997eabed35102f322c292aa0793b139))
+
 ## 0.44.0 (2026-01-06)
 
 Full Changelog: [v0.43.1...v0.44.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.43.1...v0.44.0)
