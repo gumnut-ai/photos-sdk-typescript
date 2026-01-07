@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.44.2 (2026-01-07)
+
+Full Changelog: [v0.44.1...v0.44.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.44.1...v0.44.2)
+
+### Bug Fixes
+
+* **mcp:** fix options parsing ([58c57ce](https://github.com/gumnut-ai/photos-sdk-typescript/commit/58c57ce23d90fc76495975ee0cb6b75ae2c2d0a3))
+
 ## 0.44.1 (2026-01-07)
 
 Full Changelog: [v0.44.0...v0.44.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.44.0...v0.44.1)
