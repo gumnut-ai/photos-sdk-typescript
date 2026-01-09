@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.44.3 (2026-01-09)
+
+Full Changelog: [v0.44.2...v0.44.3](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.44.2...v0.44.3)
+
+### Bug Fixes
+
+* **mcp:** update code tool prompt ([7769ec2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7769ec24229eda58578ad9466677cad6b083f4f8))
+
 ## 0.44.2 (2026-01-07)
 
 Full Changelog: [v0.44.1...v0.44.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.44.1...v0.44.2)
