@@ -129,7 +129,7 @@ export interface FaceUpdateParams {
   library_id?: string | null;
 
   /**
-   * Body param:
+   * Body param
    */
   person_id?: string | null;
 }
