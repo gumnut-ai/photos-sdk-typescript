@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.45.1 (2026-01-28)
+
+Full Changelog: [v0.45.0...v0.45.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.45.0...v0.45.1)
+
+### Bug Fixes
+
+* **mcp:** allow falling back for required env variables ([7e752e2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7e752e2e58689d10a1b07f7c86093aedc193a001))
+
+
+### Chores
+
+* **internal:** codegen related update ([c4877d8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c4877d82db2e75c3338bf11a1656dc329d83a949))
+
 ## 0.45.0 (2026-01-28)
 
 Full Changelog: [v0.44.3...v0.45.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.44.3...v0.45.0)
