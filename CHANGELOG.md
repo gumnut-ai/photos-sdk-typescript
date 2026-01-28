@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.45.0 (2026-01-28)
+
+Full Changelog: [v0.44.3...v0.45.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.44.3...v0.45.0)
+
+### Features
+
+* **api:** api update ([7f89ae5](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7f89ae516c65fcf87da9ac7d9218c64047c582f5))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([81aecd1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/81aecd1e7119a5dc81ecae0ffedeae5239227171))
+* fix typo in descriptions ([fa91b4a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fa91b4a8ace848bf2ed7e147263e3155dd9a4535))
+* **internal:** bump MCP dependencies ([0deb299](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0deb299823f9cd43e9d416b5fc6c91f00473a850))
+* **internal:** codegen related update ([2a614c6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2a614c6533cb9a56855f9d778d5695eeb0444527))
+* **internal:** codegen related update ([eb2cf02](https://github.com/gumnut-ai/photos-sdk-typescript/commit/eb2cf02f15929df343280ff1ee88a1741be85c13))
+* **internal:** codegen related update ([88223d1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/88223d1eff624369ab98943fe882cf2bdb903218))
+* **internal:** codegen related update ([28031bc](https://github.com/gumnut-ai/photos-sdk-typescript/commit/28031bc2f7b441cb327c5d63963c261cfd767d47))
+* **internal:** update `actions/checkout` version ([6b032fb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6b032fb20183f65896f009c02062bf5ebfd0a0c8))
+* **internal:** update lock file ([b9ec80c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b9ec80c2f0daf1039b2b283190f5a53faa48fb93))
+* **internal:** upgrade babel, qs, js-yaml ([d106484](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d1064846fed13c747c917f283d97c685059a844e))
+* **mcp:** add intent param to execute tool ([70701f3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/70701f38643d50e8912468586a91cacffe1b5818))
+* **mcp:** pass intent param to execute handler ([b155555](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b155555a3cf6e9670e56caea7bbc7a3034e86dc7))
+* **mcp:** upgrade dependencies ([2d5c0e2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2d5c0e2f8d21646aa187169c7c44f89b8d19d458))
+
 ## 0.44.3 (2026-01-09)
 
 Full Changelog: [v0.44.2...v0.44.3](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.44.2...v0.44.3)
