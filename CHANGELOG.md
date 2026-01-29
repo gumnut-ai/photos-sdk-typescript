@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.45.2 (2026-01-29)
+
+Full Changelog: [v0.45.1...v0.45.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.45.1...v0.45.2)
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([5d44087](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5d4408775c7f0b76496e16f70b3cfc88661fc35c))
+
+
+### Chores
+
+* **internal:** upgrade wrangler version ([89872b9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/89872b94b0a147738c1510c564f897b24772b3b0))
+
 ## 0.45.1 (2026-01-28)
 
 Full Changelog: [v0.45.0...v0.45.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.45.0...v0.45.1)
