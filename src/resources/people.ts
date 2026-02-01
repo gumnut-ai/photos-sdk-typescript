@@ -83,6 +83,11 @@ export interface PersonResponse {
   updated_at: string;
 
   /**
+   * Number of unique photos this person appears in, or null if not computed
+   */
+  asset_count?: number | null;
+
+  /**
    * Optional birth date of this person
    */
   birth_date?: string | null;
