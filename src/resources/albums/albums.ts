@@ -101,6 +101,11 @@ export interface AlbumResponse {
   album_cover_asset_id?: string | null;
 
   /**
+   * URL to get the album cover thumbnail image
+   */
+  album_cover_thumbnail_url?: string | null;
+
+  /**
    * Optional description text for the album
    */
   description?: string | null;
