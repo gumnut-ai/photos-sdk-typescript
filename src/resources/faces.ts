@@ -29,8 +29,8 @@ export class Faces extends APIResource {
   }
 
   /**
-   * Retrieves a paginated list of faces, optionally filtered by asset or person,
-   * ordered by creation time, descending.
+   * Retrieves a paginated list of faces, optionally filtered by asset, person, or
+   * specific face IDs, ordered by creation time, descending.
    */
   list(
     query: FaceListParams | null | undefined = {},
@@ -139,6 +139,11 @@ export interface FaceListParams extends CursorPageParams {
    * Filter by faces in a specific asset
    */
   asset_id?: string | null;
+
+  /**
+   * Filter by specific face IDs (max 100)
+   */
+  ids?: Array<string> | null;
 
   /**
    * Library ID (required if user has multiple libraries)
