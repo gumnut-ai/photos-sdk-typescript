@@ -33,8 +33,9 @@ export class Assets extends APIResource {
 
   /**
    * Retrieves a paginated list of assets from the specified library, optionally
-   * filtered by album or person. Asset data includes metrics, EXIF data, faces, and
-   * people. Assets are ordered by local creation time, descending.
+   * filtered by album, person, or specific asset IDs. Asset data includes metrics,
+   * EXIF data, faces, and people. Assets are ordered by local creation time,
+   * descending.
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -276,6 +277,11 @@ export interface AssetListParams extends CursorPageParams {
    * Filter by assets in a specific album
    */
   album_id?: string | null;
+
+  /**
+   * Filter by specific asset IDs (max 100)
+   */
+  ids?: Array<string> | null;
 
   /**
    * Library to list assets from (optional)

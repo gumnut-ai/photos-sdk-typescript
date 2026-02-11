@@ -30,7 +30,8 @@ export class People extends APIResource {
   }
 
   /**
-   * Retrieves a paginated list of people, ordered by creation time, descending.
+   * Retrieves a paginated list of people, ordered by creation time, descending. Can
+   * be filtered by specific person IDs.
    */
   list(
     query: PersonListParams | null | undefined = {},
@@ -144,6 +145,11 @@ export interface PersonListParams extends CursorPageParams {
    * Include only people associated with this asset ID
    */
   asset_id?: string | null;
+
+  /**
+   * Filter by specific person IDs (max 100)
+   */
+  ids?: Array<string> | null;
 
   /**
    * Library ID (required if user has multiple libraries)
