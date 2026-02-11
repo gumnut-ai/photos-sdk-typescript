@@ -83,6 +83,7 @@ import {
   PersonResponsesCursorPage,
   PersonUpdateParams,
 } from './resources/people';
+import { Ping, PingGetResponse } from './resources/ping';
 import { Search, SearchResponse, SearchSearchAssetsParams, SearchSearchParams } from './resources/search';
 import { UserResponse, Users } from './resources/users';
 import {
@@ -819,6 +820,7 @@ export class Gumnut {
   libraries: API.Libraries = new API.Libraries(this);
   oauth: API.OAuth = new API.OAuth(this);
   people: API.People = new API.People(this);
+  ping: API.Ping = new API.Ping(this);
   search: API.Search = new API.Search(this);
   users: API.Users = new API.Users(this);
 }
@@ -831,6 +833,7 @@ Gumnut.Faces = Faces;
 Gumnut.Libraries = Libraries;
 Gumnut.OAuth = OAuth;
 Gumnut.People = People;
+Gumnut.Ping = Ping;
 Gumnut.Search = Search;
 Gumnut.Users = Users;
 
@@ -919,6 +922,8 @@ export declare namespace Gumnut {
     type PersonUpdateParams as PersonUpdateParams,
     type PersonListParams as PersonListParams,
   };
+
+  export { Ping as Ping, type PingGetResponse as PingGetResponse };
 
   export {
     Search as Search,

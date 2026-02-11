@@ -72,6 +72,7 @@ export {
   type PersonListParams,
   type PersonResponsesCursorPage,
 } from './people';
+export { Ping, type PingGetResponse } from './ping';
 export {
   Search,
   type SearchResponse,
