@@ -77,6 +77,16 @@ Methods:
 
 - <code title="get /api/events">client.events.<a href="./src/resources/events.ts">get</a>({ ...params }) -> EventsResponse</code>
 
+# EventsV2
+
+Types:
+
+- <code><a href="./src/resources/events-v2.ts">EventsV2Response</a></code>
+
+Methods:
+
+- <code title="get /api/v2/events">client.eventsV2.<a href="./src/resources/events-v2.ts">get</a>({ ...params }) -> EventsV2Response</code>
+
 # Faces
 
 Types:

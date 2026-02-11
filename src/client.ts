@@ -51,6 +51,7 @@ import {
   FaceEventPayload,
   PersonEventPayload,
 } from './resources/events';
+import { EventsV2, EventsV2GetParams, EventsV2Response } from './resources/events-v2';
 import {
   FaceDeleteParams,
   FaceListParams,
@@ -816,6 +817,7 @@ export class Gumnut {
   assets: API.Assets = new API.Assets(this);
   albums: API.Albums = new API.Albums(this);
   events: API.Events = new API.Events(this);
+  eventsV2: API.EventsV2 = new API.EventsV2(this);
   faces: API.Faces = new API.Faces(this);
   libraries: API.Libraries = new API.Libraries(this);
   oauth: API.OAuth = new API.OAuth(this);
@@ -829,6 +831,7 @@ Gumnut.APIKeys = APIKeys;
 Gumnut.Assets = Assets;
 Gumnut.Albums = Albums;
 Gumnut.Events = Events;
+Gumnut.EventsV2 = EventsV2;
 Gumnut.Faces = Faces;
 Gumnut.Libraries = Libraries;
 Gumnut.OAuth = OAuth;
@@ -885,6 +888,12 @@ export declare namespace Gumnut {
     type FaceEventPayload as FaceEventPayload,
     type PersonEventPayload as PersonEventPayload,
     type EventGetParams as EventGetParams,
+  };
+
+  export {
+    EventsV2 as EventsV2,
+    type EventsV2Response as EventsV2Response,
+    type EventsV2GetParams as EventsV2GetParams,
   };
 
   export {
