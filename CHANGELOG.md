@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.46.0 (2026-02-11)
+
+Full Changelog: [v0.45.2...v0.46.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.45.2...v0.46.0)
+
+### Features
+
+* **api:** api update ([9ad859a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9ad859a4b494cd754a1b6aa678f2791f5595a1d0))
+* **api:** api update ([9c17b1f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9c17b1f668f6bb54092d8005a60bc4ed955486f6))
+* **api:** remove mcp server ([a4535dd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a4535dd981e8b3e1c6a90f7ebee37d85da0fc071))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([765d5eb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/765d5eb3a44186e01d303848f4b0669f0b5dbd3c))
+* **client:** avoid removing abort listener too early ([a5b8a5a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a5b8a5a6ff038bcf397a4f66ab5847e1f2870c3b))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([97247b4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/97247b49b0df7cf0e288f705b0236f78b5f275b1))
+* **client:** restructure abort controller binding ([29a0d13](https://github.com/gumnut-ai/photos-sdk-typescript/commit/29a0d1343dc5e099a69bc7054caf733009d6d517))
+* **internal:** fix pagination internals not accepting option promises ([7242f89](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7242f894fb8cb512c599097f7dc81f9c63579d76))
+* **mcp:** up tsconfig lib version to es2022 ([9f14bf0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9f14bf0f9aed7668fe2947b095fa0580a33dcc74))
+
 ## 0.45.2 (2026-01-29)
 
 Full Changelog: [v0.45.1...v0.45.2](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.45.1...v0.45.2)
