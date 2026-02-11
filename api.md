@@ -134,6 +134,16 @@ Methods:
 - <code title="get /api/people">client.people.<a href="./src/resources/people.ts">list</a>({ ...params }) -> PersonResponsesCursorPage</code>
 - <code title="delete /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">delete</a>(personID) -> void</code>
 
+# Ping
+
+Types:
+
+- <code><a href="./src/resources/ping.ts">PingGetResponse</a></code>
+
+Methods:
+
+- <code title="get /api/server/ping">client.ping.<a href="./src/resources/ping.ts">get</a>() -> string</code>
+
 # Search
 
 Types:
