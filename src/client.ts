@@ -20,6 +20,12 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  AlbumAssetListParams,
+  AlbumAssetResponse,
+  AlbumAssetResponsesCursorPage,
+  AlbumAssets,
+} from './resources/album-assets';
+import {
   APIKeyCreateParams,
   APIKeyCreateResponse,
   APIKeyListResponse,
@@ -40,7 +46,6 @@ import {
 } from './resources/assets';
 import {
   AlbumAssetEventPayload,
-  AlbumAssetResponse,
   AlbumEventPayload,
   AssetEventPayload,
   EventGetParams,
@@ -816,6 +821,7 @@ export class Gumnut {
   apiKeys: API.APIKeys = new API.APIKeys(this);
   assets: API.Assets = new API.Assets(this);
   albums: API.Albums = new API.Albums(this);
+  albumAssets: API.AlbumAssets = new API.AlbumAssets(this);
   events: API.Events = new API.Events(this);
   eventsV2: API.EventsV2 = new API.EventsV2(this);
   faces: API.Faces = new API.Faces(this);
@@ -830,6 +836,7 @@ export class Gumnut {
 Gumnut.APIKeys = APIKeys;
 Gumnut.Assets = Assets;
 Gumnut.Albums = Albums;
+Gumnut.AlbumAssets = AlbumAssets;
 Gumnut.Events = Events;
 Gumnut.EventsV2 = EventsV2;
 Gumnut.Faces = Faces;
@@ -877,9 +884,15 @@ export declare namespace Gumnut {
   };
 
   export {
+    AlbumAssets as AlbumAssets,
+    type AlbumAssetResponse as AlbumAssetResponse,
+    type AlbumAssetResponsesCursorPage as AlbumAssetResponsesCursorPage,
+    type AlbumAssetListParams as AlbumAssetListParams,
+  };
+
+  export {
     Events as Events,
     type AlbumAssetEventPayload as AlbumAssetEventPayload,
-    type AlbumAssetResponse as AlbumAssetResponse,
     type AlbumEventPayload as AlbumEventPayload,
     type AssetEventPayload as AssetEventPayload,
     type EventsResponse as EventsResponse,
