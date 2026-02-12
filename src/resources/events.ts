@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as AlbumAssetsAPI from './album-assets';
 import * as AssetsAPI from './assets';
 import * as FacesAPI from './faces';
 import * as PeopleAPI from './people';
@@ -53,39 +54,9 @@ export interface AlbumAssetEventPayload {
   /**
    * Full album_asset data
    */
-  data: AlbumAssetResponse;
+  data: AlbumAssetsAPI.AlbumAssetResponse;
 
   entity_type?: 'album_asset';
-}
-
-/**
- * Represents a link between an album and an asset.
- */
-export interface AlbumAssetResponse {
-  /**
-   * Unique album*asset identifier with 'album_asset*' prefix
-   */
-  id: string;
-
-  /**
-   * ID of the album
-   */
-  album_id: string;
-
-  /**
-   * ID of the asset
-   */
-  asset_id: string;
-
-  /**
-   * When this link was created
-   */
-  created_at: string;
-
-  /**
-   * When this link was last updated
-   */
-  updated_at: string;
 }
 
 /**
@@ -351,7 +322,6 @@ export interface EventGetParams {
 export declare namespace Events {
   export {
     type AlbumAssetEventPayload as AlbumAssetEventPayload,
-    type AlbumAssetResponse as AlbumAssetResponse,
     type AlbumEventPayload as AlbumEventPayload,
     type AssetEventPayload as AssetEventPayload,
     type EventsResponse as EventsResponse,
