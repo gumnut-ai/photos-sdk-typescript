@@ -9,6 +9,12 @@ export {
   type APIKeyUpdateParams,
 } from './api-keys';
 export {
+  AlbumAssets,
+  type AlbumAssetResponse,
+  type AlbumAssetListParams,
+  type AlbumAssetResponsesCursorPage,
+} from './album-assets';
+export {
   Albums,
   type AlbumResponse,
   type AlbumCreateParams,
@@ -30,7 +36,6 @@ export {
 export {
   Events,
   type AlbumAssetEventPayload,
-  type AlbumAssetResponse,
   type AlbumEventPayload,
   type AssetEventPayload,
   type EventsResponse,
