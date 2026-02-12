@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.50.0 (2026-02-12)
+
+Full Changelog: [v0.49.0...v0.50.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.49.0...v0.50.0)
+
+### Features
+
+* **api:** manual updates ([6d42732](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6d42732a523450634342b23cbc89851c3b8feab7))
+
+
+### Chores
+
+* **internal:** avoid type checking errors with ts-reset ([8a8ec32](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8a8ec32d659fb917cf28b603f9030bf7fe24548e))
+
 ## 0.49.0 (2026-02-11)
 
 Full Changelog: [v0.48.0...v0.49.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.48.0...v0.49.0)
