@@ -1,15 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as AssetsAPI from './assets';
+import * as AssetsAssociationsAPI from './assets-associations';
 import {
   AlbumAssetAssociation,
-  AssetAddParams,
-  AssetAddResponse,
-  AssetListResponse,
-  AssetRemoveParams,
-  Assets,
-} from './assets';
+  AssetsAssociationAddParams,
+  AssetsAssociationAddResponse,
+  AssetsAssociationListResponse,
+  AssetsAssociationRemoveParams,
+  AssetsAssociations,
+} from './assets-associations';
 import { APIPromise } from '../../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
@@ -17,7 +17,9 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Albums extends APIResource {
-  assets: AssetsAPI.Assets = new AssetsAPI.Assets(this._client);
+  assetsAssociations: AssetsAssociationsAPI.AssetsAssociations = new AssetsAssociationsAPI.AssetsAssociations(
+    this._client,
+  );
 
   /**
    * Creates a new, empty album with optional name and description in the specified
@@ -152,7 +154,7 @@ export interface AlbumListParams extends CursorPageParams {
   library_id?: string | null;
 }
 
-Albums.Assets = Assets;
+Albums.AssetsAssociations = AssetsAssociations;
 
 export declare namespace Albums {
   export {
@@ -164,11 +166,11 @@ export declare namespace Albums {
   };
 
   export {
-    Assets as Assets,
+    AssetsAssociations as AssetsAssociations,
     type AlbumAssetAssociation as AlbumAssetAssociation,
-    type AssetListResponse as AssetListResponse,
-    type AssetAddResponse as AssetAddResponse,
-    type AssetAddParams as AssetAddParams,
-    type AssetRemoveParams as AssetRemoveParams,
+    type AssetsAssociationListResponse as AssetsAssociationListResponse,
+    type AssetsAssociationAddResponse as AssetsAssociationAddResponse,
+    type AssetsAssociationAddParams as AssetsAssociationAddParams,
+    type AssetsAssociationRemoveParams as AssetsAssociationRemoveParams,
   };
 }

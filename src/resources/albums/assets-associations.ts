@@ -7,12 +7,12 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class Assets extends APIResource {
+export class AssetsAssociations extends APIResource {
   /**
    * Retrieves a list of all assets contained within a specific album, along with
    * their associated metrics, EXIF data, faces, and people.
    */
-  list(albumID: string, options?: RequestOptions): APIPromise<AssetListResponse> {
+  list(albumID: string, options?: RequestOptions): APIPromise<AssetsAssociationListResponse> {
     return this._client.get(path`/api/albums/${albumID}/assets`, options);
   }
 
@@ -20,7 +20,11 @@ export class Assets extends APIResource {
    * Adds one or more existing assets to a specific album. Assets must be in the same
    * library as the album. Duplicate assets are ignored.
    */
-  add(albumID: string, body: AssetAddParams, options?: RequestOptions): APIPromise<AssetAddResponse> {
+  add(
+    albumID: string,
+    body: AssetsAssociationAddParams,
+    options?: RequestOptions,
+  ): APIPromise<AssetsAssociationAddResponse> {
     return this._client.post(path`/api/albums/${albumID}/assets`, { body, ...options });
   }
 
@@ -28,7 +32,7 @@ export class Assets extends APIResource {
    * Removes one or more assets from a specific album. Note: This does not delete the
    * assets themselves.
    */
-  remove(albumID: string, body: AssetRemoveParams, options?: RequestOptions): APIPromise<void> {
+  remove(albumID: string, body: AssetsAssociationRemoveParams, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/albums/${albumID}/assets`, {
       body,
       ...options,
@@ -41,28 +45,28 @@ export interface AlbumAssetAssociation {
   asset_ids: Array<string>;
 }
 
-export type AssetListResponse = Array<AssetsAPI.AssetResponse>;
+export type AssetsAssociationListResponse = Array<AssetsAPI.AssetResponse>;
 
-export interface AssetAddResponse {
+export interface AssetsAssociationAddResponse {
   added_assets: Array<string>;
 
   duplicate_assets: Array<string>;
 }
 
-export interface AssetAddParams {
+export interface AssetsAssociationAddParams {
   asset_ids: Array<string>;
 }
 
-export interface AssetRemoveParams {
+export interface AssetsAssociationRemoveParams {
   asset_ids: Array<string>;
 }
 
-export declare namespace Assets {
+export declare namespace AssetsAssociations {
   export {
     type AlbumAssetAssociation as AlbumAssetAssociation,
-    type AssetListResponse as AssetListResponse,
-    type AssetAddResponse as AssetAddResponse,
-    type AssetAddParams as AssetAddParams,
-    type AssetRemoveParams as AssetRemoveParams,
+    type AssetsAssociationListResponse as AssetsAssociationListResponse,
+    type AssetsAssociationAddResponse as AssetsAssociationAddResponse,
+    type AssetsAssociationAddParams as AssetsAssociationAddParams,
+    type AssetsAssociationRemoveParams as AssetsAssociationRemoveParams,
   };
 }
