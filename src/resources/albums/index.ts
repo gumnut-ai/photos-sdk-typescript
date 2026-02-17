@@ -9,10 +9,10 @@ export {
   type AlbumResponsesCursorPage,
 } from './albums';
 export {
-  Assets,
+  AssetsAssociations,
   type AlbumAssetAssociation,
-  type AssetListResponse,
-  type AssetAddResponse,
-  type AssetAddParams,
-  type AssetRemoveParams,
-} from './assets';
+  type AssetsAssociationListResponse,
+  type AssetsAssociationAddResponse,
+  type AssetsAssociationAddParams,
+  type AssetsAssociationRemoveParams,
+} from './assets-associations';
