@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.51.0 (2026-02-17)
+
+Full Changelog: [v0.50.0...v0.51.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.50.0...v0.51.0)
+
+### Features
+
+* **api:** dedicated album_assets endpoint with pagination ([92138b5](https://github.com/gumnut-ai/photos-sdk-typescript/commit/92138b5fd0242cc079dc95f429a35ca5d400aee6))
+
 ## 0.50.0 (2026-02-12)
 
 Full Changelog: [v0.49.0...v0.50.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.49.0...v0.50.0)
