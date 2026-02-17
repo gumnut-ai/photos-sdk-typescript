@@ -45,19 +45,19 @@ Methods:
 - <code title="get /api/albums">client.albums.<a href="./src/resources/albums/albums.ts">list</a>({ ...params }) -> AlbumResponsesCursorPage</code>
 - <code title="delete /api/albums/{album_id}">client.albums.<a href="./src/resources/albums/albums.ts">delete</a>(albumID) -> void</code>
 
-## Assets
+## AssetsAssociations
 
 Types:
 
-- <code><a href="./src/resources/albums/assets.ts">AlbumAssetAssociation</a></code>
-- <code><a href="./src/resources/albums/assets.ts">AssetListResponse</a></code>
-- <code><a href="./src/resources/albums/assets.ts">AssetAddResponse</a></code>
+- <code><a href="./src/resources/albums/assets-associations.ts">AlbumAssetAssociation</a></code>
+- <code><a href="./src/resources/albums/assets-associations.ts">AssetsAssociationListResponse</a></code>
+- <code><a href="./src/resources/albums/assets-associations.ts">AssetsAssociationAddResponse</a></code>
 
 Methods:
 
-- <code title="get /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">list</a>(albumID) -> AssetListResponse</code>
-- <code title="post /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">add</a>(albumID, { ...params }) -> AssetAddResponse</code>
-- <code title="delete /api/albums/{album_id}/assets">client.albums.assets.<a href="./src/resources/albums/assets.ts">remove</a>(albumID, { ...params }) -> void</code>
+- <code title="get /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">list</a>(albumID) -> AssetsAssociationListResponse</code>
+- <code title="post /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">add</a>(albumID, { ...params }) -> AssetsAssociationAddResponse</code>
+- <code title="delete /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">remove</a>(albumID, { ...params }) -> void</code>
 
 # AlbumAssets
 
