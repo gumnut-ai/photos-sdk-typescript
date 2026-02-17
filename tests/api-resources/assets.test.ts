@@ -69,7 +69,7 @@ describe('resource assets', () => {
       client.assets.list(
         {
           album_id: 'album_id',
-          ids: ['string'],
+          ids: ['string', 'string'],
           library_id: 'library_id',
           limit: 1,
           person_id: 'person_id',

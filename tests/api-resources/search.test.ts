@@ -31,7 +31,7 @@ describe('resource search', () => {
           library_id: 'library_id',
           limit: 1,
           page: 1,
-          person_ids: ['string'],
+          person_ids: ['string', 'string'],
           query: 'query',
           threshold: 0,
         },

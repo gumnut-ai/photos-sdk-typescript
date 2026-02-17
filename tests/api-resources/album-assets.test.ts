@@ -28,7 +28,7 @@ describe('resource albumAssets', () => {
         {
           album_id: 'album_id',
           asset_id: 'asset_id',
-          ids: ['string'],
+          ids: ['string', 'string'],
           library_id: 'library_id',
           limit: 1,
           starting_after_id: 'starting_after_id',
