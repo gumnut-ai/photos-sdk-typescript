@@ -26,8 +26,11 @@ export class EventsV2 extends APIResource {
    * 5. For each event, fetch the entity data from the appropriate endpoint if needed
    * 6. Store `sync_end` as checkpoint for next sync
    *
-   * **Handling deletions:** When `event_type` ends with "\_deleted", the entity no
-   * longer exists. Remove it from your local cache/database.
+   * **Handling deletions:** When `event_type` ends with "\_deleted" or "\_removed",
+   * the entity no longer exists. Remove it from your local cache/database. Some
+   * deletion events include a `payload` field with additional context (e.g.,
+   * `album_asset_removed` includes `album_id` and `asset_id` since the junction
+   * record is deleted).
    *
    * **Event types:**
    *
@@ -91,6 +94,12 @@ export namespace EventsV2Response {
      * Semantic event type (e.g., 'asset_created', 'album_deleted')
      */
     event_type: string;
+
+    /**
+     * Optional extra context for the event (e.g., foreign keys for junction table
+     * deletions)
+     */
+    payload?: { [key: string]: unknown } | null;
   }
 }
 
