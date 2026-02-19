@@ -1,11 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as AlbumAssetsAPI from './album-assets';
-import * as AssetsAPI from './assets';
-import * as FacesAPI from './faces';
-import * as PeopleAPI from './people';
-import * as AlbumsAPI from './albums/albums';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -13,34 +8,38 @@ export class Events extends APIResource {
   /**
    * Retrieves a list of entity change events for syncing.
    *
-   * Events are returned in order of entity type priority (assets first, then exif,
-   * albums, etc.), then by `updated_at` timestamp (oldest first), then by entity ID
-   * for tie-breaking.
+   * Events are lightweight records indicating that entities have changed. Each event
+   * contains the entity type, entity ID, and event type (e.g., "asset_created",
+   * "album_deleted"). Clients should fetch full entity data from the appropriate
+   * endpoints if needed.
    *
-   * **Pagination:** Use `updated_at_gte` with the timestamp of the last received
-   * event to fetch the next page. When multiple entities share the same timestamp,
-   * also provide `starting_after_id` with the last entity's ID to avoid duplicates.
-   * Use `updated_at_lt` to bound the sync window and prevent infinite loops when new
-   * events are created during sync.
+   * **Pagination:** Use the `after_cursor` parameter with the `cursor` value from
+   * the last event to fetch the next page. The `has_more` field indicates if more
+   * events exist.
    *
-   * **Important:** When using `starting_after_id`, you must specify exactly one
-   * `entity_types` value. This ensures the cursor ID is unambiguous. To sync all
-   * entity types with cursor support, query each entity type separately.
+   * **Recommended sync pattern:**
    *
-   * **Recommended sync pattern (per entity type):**
+   * 1. Capture current time as `sync_end`
+   * 2. Fetch events with `created_at_lt=sync_end`
+   * 3. For subsequent pages, use `after_cursor={last.cursor}&created_at_lt=sync_end`
+   * 4. Continue until `has_more=false`
+   * 5. For each event, fetch the entity data from the appropriate endpoint if needed
+   * 6. Store `sync_end` as checkpoint for next sync
    *
-   * 1. Capture current time as `sync_started_at`
-   * 2. For each entity type, fetch events with
-   *    `entity_types={type}&updated_at_lt=sync_started_at`
-   * 3. For subsequent pages, use
-   *    `entity_types={type}&updated_at_gte={last.updated_at}&starting_after_id={last.id}&updated_at_lt=sync_started_at`
-   * 4. Continue until an empty result set is returned
-   * 5. Store `sync_started_at` as checkpoint for next sync
+   * **Handling deletions:** When `event_type` ends with "\_deleted" or "\_removed",
+   * the entity no longer exists. Remove it from your local cache/database. Some
+   * deletion events include a `payload` field with additional context (e.g.,
+   * `album_asset_removed` includes `album_id` and `asset_id` since the junction
+   * record is deleted).
    *
-   * **Entity ID field by type:**
+   * **Event types:**
    *
-   * - Most entities: use the `id` field from the response
-   * - Exif: use the `asset_id` field (exif has no separate id)
+   * - `asset_created`, `asset_updated`, `asset_deleted`
+   * - `album_created`, `album_updated`, `album_deleted`
+   * - `person_created`, `person_updated`, `person_deleted`
+   * - `face_created`, `face_updated`, `face_deleted`
+   * - `album_asset_added`, `album_asset_removed`
+   * - `exif_created`, `exif_updated`
    */
   get(query: EventGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<EventsResponse> {
     return this._client.get('/api/events', { query, ...options });
@@ -48,68 +47,57 @@ export class Events extends APIResource {
 }
 
 /**
- * Event payload for album_asset entities.
- */
-export interface AlbumAssetEventPayload {
-  /**
-   * Full album_asset data
-   */
-  data: AlbumAssetsAPI.AlbumAssetResponse;
-
-  entity_type?: 'album_asset';
-}
-
-/**
- * Event payload for album entities.
- */
-export interface AlbumEventPayload {
-  /**
-   * Full album data
-   */
-  data: AlbumsAPI.AlbumResponse;
-
-  entity_type?: 'album';
-}
-
-/**
- * Event payload for asset entities.
- */
-export interface AssetEventPayload {
-  /**
-   * Full asset data
-   */
-  data: AssetsAPI.AssetResponse;
-
-  entity_type?: 'asset';
-}
-
-/**
- * Response containing events.
+ * Response containing a page of events.
  */
 export interface EventsResponse {
   /**
-   * List of events, ordered by entity type priority, then updated_at, then entity_id
+   * List of events, ordered by event ID (monotonically increasing)
    */
-  data: Array<
-    | AssetEventPayload
-    | AlbumEventPayload
-    | PersonEventPayload
-    | FaceEventPayload
-    | AlbumAssetEventPayload
-    | ExifEventPayload
-  >;
+  data: Array<EventsResponse.Data>;
+
+  /**
+   * True if there are more events after this page. Use the last event's cursor to
+   * fetch the next page.
+   */
+  has_more: boolean;
 }
 
-/**
- * Event payload for exif entities.
- */
-export interface ExifEventPayload {
+export namespace EventsResponse {
   /**
-   * Full exif data
+   * Lightweight event record for sync endpoint.
    */
-  data: ExifResponse;
+  export interface Data {
+    /**
+     * When the event was recorded
+     */
+    created_at: string;
 
-  entity_type?: 'exif';
+    /**
+     * Opaque cursor for pagination. Pass as after_cursor to get the next page.
+     */
+    cursor: string;
+
+    /**
+     * ID of the entity that changed
+     */
+    entity_id: string;
+
+    /**
+     * Type of entity that changed (e.g., 'asset', 'album', 'person')
+     */
+    entity_type: string;
+
+    /**
+     * Semantic event type (e.g., 'asset_created', 'album_deleted')
+     */
+    event_type: string;
+
+    /**
+     * Optional extra context for the event (e.g., foreign keys for junction table
+     * deletions)
+     */
+    payload?: { [key: string]: unknown } | null;
+  }
 }
 
 /**
@@ -259,31 +247,24 @@ export interface ExifResponse {
   state?: string | null;
 }
 
-/**
- * Event payload for face entities.
- */
-export interface FaceEventPayload {
-  /**
-   * Full face data
-   */
-  data: FacesAPI.FaceResponse;
-
-  entity_type?: 'face';
-}
-
-/**
- * Event payload for person entities.
- */
-export interface PersonEventPayload {
-  /**
-   * Full person data
-   */
-  data: PeopleAPI.PersonResponse;
-
-  entity_type?: 'person';
-}
-
 export interface EventGetParams {
+  /**
+   * Cursor from the last event to paginate from. Pass the `cursor` field from the
+   * last event to get the next page.
+   */
+  after_cursor?: string | null;
+
+  /**
+   * Only return events created at or after this timestamp (ISO 8601 format)
+   */
+  created_at_gte?: string | null;
+
+  /**
+   * Only return events created before this timestamp (ISO 8601 format). Recommended
+   * for bounding sync operations.
+   */
+  created_at_lt?: string | null;
+
   /**
    * Comma-separated list of entity types to include (e.g., 'asset,album'). Valid
    * types: asset, album, person, face, album_asset, exif. Default: all types.
@@ -299,36 +280,12 @@ export interface EventGetParams {
    * Maximum number of events to return (1-500)
    */
   limit?: number;
-
-  /**
-   * Entity ID to start after for tie-breaking when paginating. Used with
-   * updated_at_gte for composite keyset pagination. Requires exactly one
-   * entity_types value. For exif entities, use asset_id.
-   */
-  starting_after_id?: string | null;
-
-  /**
-   * Only return events with updated_at >= this timestamp (ISO 8601 format)
-   */
-  updated_at_gte?: string | null;
-
-  /**
-   * Only return events with updated_at < this timestamp (ISO 8601 format).
-   * Recommended for bounding sync operations.
-   */
-  updated_at_lt?: string | null;
 }
 
 export declare namespace Events {
   export {
-    type AlbumAssetEventPayload as AlbumAssetEventPayload,
-    type AlbumEventPayload as AlbumEventPayload,
-    type AssetEventPayload as AssetEventPayload,
     type EventsResponse as EventsResponse,
-    type ExifEventPayload as ExifEventPayload,
     type ExifResponse as ExifResponse,
-    type FaceEventPayload as FaceEventPayload,
-    type PersonEventPayload as PersonEventPayload,
     type EventGetParams as EventGetParams,
   };
 }

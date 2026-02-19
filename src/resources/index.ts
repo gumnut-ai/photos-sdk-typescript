@@ -33,18 +33,7 @@ export {
   type AssetDownloadThumbnailParams,
   type AssetResponsesCursorPage,
 } from './assets';
-export {
-  Events,
-  type AlbumAssetEventPayload,
-  type AlbumEventPayload,
-  type AssetEventPayload,
-  type EventsResponse,
-  type ExifEventPayload,
-  type ExifResponse,
-  type FaceEventPayload,
-  type PersonEventPayload,
-  type EventGetParams,
-} from './events';
+export { Events, type EventsResponse, type ExifResponse, type EventGetParams } from './events';
 export { EventsV2, type EventsV2Response, type EventsV2GetParams } from './events-v2';
 export {
   Faces,
