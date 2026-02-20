@@ -8,7 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource assetsAssociations', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.albums.assetsAssociations.list('album_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource assetsAssociations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('add: only required params', async () => {
     const responsePromise = client.albums.assetsAssociations.add('album_id', { asset_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -32,12 +32,12 @@ describe('resource assetsAssociations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('add: required and optional params', async () => {
     const response = await client.albums.assetsAssociations.add('album_id', { asset_ids: ['string'] });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('remove: only required params', async () => {
     const responsePromise = client.albums.assetsAssociations.remove('album_id', { asset_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -49,7 +49,7 @@ describe('resource assetsAssociations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('remove: required and optional params', async () => {
     const response = await client.albums.assetsAssociations.remove('album_id', { asset_ids: ['string'] });
   });
