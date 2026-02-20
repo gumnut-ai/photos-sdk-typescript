@@ -8,7 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource users', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('me', async () => {
     const responsePromise = client.users.me();
     const rawResponse = await responsePromise.asResponse();
