@@ -8,7 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource search', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search', async () => {
     const responsePromise = client.search.search();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('search: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -40,7 +40,7 @@ describe('resource search', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('searchAssets', async () => {
     const responsePromise = client.search.searchAssets();
     const rawResponse = await responsePromise.asResponse();
@@ -52,7 +52,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('searchAssets: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

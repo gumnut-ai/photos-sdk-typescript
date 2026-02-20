@@ -8,7 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource oauth', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('authURL: only required params', async () => {
     const responsePromise = client.oauth.authURL({ redirect_uri: 'redirect_uri' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource oauth', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('authURL: required and optional params', async () => {
     const response = await client.oauth.authURL({
       redirect_uri: 'redirect_uri',
@@ -29,7 +29,7 @@ describe('resource oauth', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('exchange', async () => {
     const responsePromise = client.oauth.exchange({});
     const rawResponse = await responsePromise.asResponse();
@@ -41,7 +41,7 @@ describe('resource oauth', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('logoutEndpoint', async () => {
     const responsePromise = client.oauth.logoutEndpoint();
     const rawResponse = await responsePromise.asResponse();
