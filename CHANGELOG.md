@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.55.0 (2026-02-22)
+
+Full Changelog: [v0.54.0...v0.55.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.54.0...v0.55.0)
+
+### Features
+
+* **api:** add ExifResponse ([4e1a89b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/4e1a89b3757663f2f4cdbefedbccdabc7e772210))
+* **api:** new events ([d623958](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d623958bdda3ad99aa6dc0e4f67fb9a2431660f8))
+* **api:** remove events v2 ([368c9bc](https://github.com/gumnut-ai/photos-sdk-typescript/commit/368c9bc6c2344ff045773e06a754db6154dfae28))
+
+
+### Bug Fixes
+
+* **internal:** skip tests that depend on mock server ([13f8355](https://github.com/gumnut-ai/photos-sdk-typescript/commit/13f8355b792c76c1e7f2a07141a2c7a546283aef))
+
+
+### Chores
+
+* **internal:** remove mock server code ([1fe47b9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/1fe47b956e1503536d08709751bf1ae1bc1100c8))
+* update mock server docs ([c01b15a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c01b15a00a4ca7bd74c7e0cc98f25eab3167ca05))
+
 ## 0.54.0 (2026-02-19)
 
 Full Changelog: [v0.53.0...v0.54.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.53.0...v0.54.0)
