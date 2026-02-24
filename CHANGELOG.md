@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.55.1 (2026-02-24)
+
+Full Changelog: [v0.55.0...v0.55.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.55.0...v0.55.1)
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([6a85b12](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6a85b12895ba91ca727a060aa6902e61ae1eb89f))
+
 ## 0.55.0 (2026-02-22)
 
 Full Changelog: [v0.54.0...v0.55.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.54.0...v0.55.0)
