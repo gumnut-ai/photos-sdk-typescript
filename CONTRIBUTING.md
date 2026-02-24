@@ -60,7 +60,7 @@ $ yarn link gumnut-sdk
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global gumnut-sdk
+$ pnpm link --global gumnut-sdk
 ```
 
 ## Running tests
