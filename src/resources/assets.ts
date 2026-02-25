@@ -289,6 +289,22 @@ export interface AssetListParams extends CursorPageParams {
   library_id?: string | null;
 
   /**
+   * Only include assets with local_datetime after this value (ISO 8601). Naive
+   * values compare directly against local_datetime; timezone-aware values are
+   * converted to UTC and compared against local_datetime adjusted by its stored
+   * offset.
+   */
+  local_datetime_after?: string | null;
+
+  /**
+   * Only include assets with local_datetime before this value (ISO 8601). Naive
+   * values compare directly against local_datetime; timezone-aware values are
+   * converted to UTC and compared against local_datetime adjusted by its stored
+   * offset.
+   */
+  local_datetime_before?: string | null;
+
+  /**
    * Filter by assets associated with a specific person ID
    */
   person_id?: string | null;
