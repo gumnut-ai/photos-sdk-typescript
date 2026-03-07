@@ -60,7 +60,7 @@ describe('resource search', () => {
         {
           captured_after: '2019-12-27T18:11:19.117Z',
           captured_before: '2019-12-27T18:11:19.117Z',
-          image: await toFile(Buffer.from('# my file contents'), 'README.md'),
+          image: await toFile(Buffer.from('Example data'), 'README.md'),
           library_id: 'library_id',
           limit: 1,
           page: 1,
