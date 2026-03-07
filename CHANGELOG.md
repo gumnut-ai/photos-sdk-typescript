@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.56.1 (2026-03-07)
+
+Full Changelog: [v0.56.0...v0.56.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.56.0...v0.56.1)
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([51f8832](https://github.com/gumnut-ai/photos-sdk-typescript/commit/51f8832c7698e0d4ed0d55fa3be4d605b4c4336e))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([797adcb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/797adcb9a3eb0cb44ef22c8b8a0e24974280ce07))
+* **internal:** codegen related update ([a849888](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a8498887b5ef4bbc705dcdd6af0f03e879bb1025))
+* **internal:** move stringifyQuery implementation to internal function ([4aa818d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/4aa818d23813c0105dcc9a66189f45815dda4101))
+* update placeholder string ([08112c9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/08112c97eed13d9b547b75aeec78199e7443bfce))
+
 ## 0.56.0 (2026-02-25)
 
 Full Changelog: [v0.55.1...v0.56.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.55.1...v0.56.0)
