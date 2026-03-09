@@ -69,6 +69,17 @@ export class Assets extends APIResource {
   }
 
   /**
+   * Returns asset counts grouped by time period. Supports optional filtering by
+   * album, person, or date range. Results are ordered by time bucket descending.
+   */
+  counts(
+    query: AssetCountsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AssetCountResponse> {
+    return this._client.get('/api/assets/counts', { query, ...options });
+  }
+
+  /**
    * Downloads the original file for a specific asset.
    */
   download(assetID: string, options?: RequestOptions): APIPromise<Response> {
@@ -98,6 +109,26 @@ export class Assets extends APIResource {
 }
 
 export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
+
+export interface AssetCountResponse {
+  data: Array<AssetCountResponse.Data>;
+
+  has_more: boolean;
+}
+
+export namespace AssetCountResponse {
+  export interface Data {
+    /**
+     * Number of assets in this time period
+     */
+    count: number;
+
+    /**
+     * Start of the time period
+     */
+    time_bucket: string;
+  }
+}
 
 /**
  * Response for asset existence check endpoint.
@@ -338,6 +369,49 @@ export interface AssetCheckExistenceParams {
   deviceId?: string | null;
 }
 
+export interface AssetCountsParams {
+  /**
+   * Filter by assets in a specific album
+   */
+  album_id?: string | null;
+
+  /**
+   * Time period to group counts by. Currently only 'month' is supported.
+   */
+  group_by?: string;
+
+  /**
+   * Library to count assets in (optional)
+   */
+  library_id?: string | null;
+
+  /**
+   * Maximum number of time buckets to return
+   */
+  limit?: number;
+
+  /**
+   * Only include assets with local_datetime after this value (ISO 8601). Naive
+   * values compare directly against local_datetime; timezone-aware values are
+   * converted to UTC and compared against local_datetime adjusted by its stored
+   * offset.
+   */
+  local_datetime_after?: string | null;
+
+  /**
+   * Only include assets with local_datetime before this value (ISO 8601). Naive
+   * values compare directly against local_datetime; timezone-aware values are
+   * converted to UTC and compared against local_datetime adjusted by its stored
+   * offset. Use the last time_bucket from a previous response to paginate.
+   */
+  local_datetime_before?: string | null;
+
+  /**
+   * Filter by assets associated with a specific person ID
+   */
+  person_id?: string | null;
+}
+
 export interface AssetDownloadThumbnailParams {
   /**
    * Desired thumbnail size (e.g., thumbnail, preview)
@@ -347,6 +421,7 @@ export interface AssetDownloadThumbnailParams {
 
 export declare namespace Assets {
   export {
+    type AssetCountResponse as AssetCountResponse,
     type AssetExistenceResponse as AssetExistenceResponse,
     type AssetLiteResponse as AssetLiteResponse,
     type AssetResponse as AssetResponse,
@@ -354,6 +429,7 @@ export declare namespace Assets {
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
+    type AssetCountsParams as AssetCountsParams,
     type AssetDownloadThumbnailParams as AssetDownloadThumbnailParams,
   };
 }
