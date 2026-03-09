@@ -24,12 +24,14 @@ export {
 } from './albums/albums';
 export {
   Assets,
+  type AssetCountResponse,
   type AssetExistenceResponse,
   type AssetLiteResponse,
   type AssetResponse,
   type AssetCreateParams,
   type AssetListParams,
   type AssetCheckExistenceParams,
+  type AssetCountsParams,
   type AssetDownloadThumbnailParams,
   type AssetResponsesCursorPage,
 } from './assets';
