@@ -35,6 +35,8 @@ import {
 } from './resources/api-keys';
 import {
   AssetCheckExistenceParams,
+  AssetCountResponse,
+  AssetCountsParams,
   AssetCreateParams,
   AssetDownloadThumbnailParams,
   AssetExistenceResponse,
@@ -859,6 +861,7 @@ export declare namespace Gumnut {
 
   export {
     Assets as Assets,
+    type AssetCountResponse as AssetCountResponse,
     type AssetExistenceResponse as AssetExistenceResponse,
     type AssetLiteResponse as AssetLiteResponse,
     type AssetResponse as AssetResponse,
@@ -866,6 +869,7 @@ export declare namespace Gumnut {
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
+    type AssetCountsParams as AssetCountsParams,
     type AssetDownloadThumbnailParams as AssetDownloadThumbnailParams,
   };
 
