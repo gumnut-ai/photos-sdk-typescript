@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.58.0 (2026-03-13)
+
+Full Changelog: [v0.57.0...v0.58.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.57.0...v0.58.0)
+
+### Features
+
+* **api:** suggested addition to models ([2aea169](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2aea16991949eef12386c6a6d91db9cd041b24b0))
+
+
+### Chores
+
+* **internal:** update dependencies to address dependabot vulnerabilities ([2a70c45](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2a70c451d701ddbe94b446512e9596ad86eafbe0))
+
 ## 0.57.0 (2026-03-09)
 
 Full Changelog: [v0.56.1...v0.57.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.56.1...v0.57.0)
