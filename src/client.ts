@@ -80,7 +80,13 @@ import {
   PersonUpdateParams,
 } from './resources/people';
 import { Ping, PingGetResponse } from './resources/ping';
-import { Search, SearchResponse, SearchSearchAssetsParams, SearchSearchParams } from './resources/search';
+import {
+  Search,
+  SearchResponse,
+  SearchResultItem,
+  SearchSearchAssetsParams,
+  SearchSearchParams,
+} from './resources/search';
 import { UserResponse, Users } from './resources/users';
 import {
   AlbumCreateParams,
@@ -937,6 +943,7 @@ export declare namespace Gumnut {
   export {
     Search as Search,
     type SearchResponse as SearchResponse,
+    type SearchResultItem as SearchResultItem,
     type SearchSearchParams as SearchSearchParams,
     type SearchSearchAssetsParams as SearchSearchAssetsParams,
   };
