@@ -34,18 +34,16 @@ export class Search extends APIResource {
 }
 
 export interface SearchResponse {
-  data: Array<SearchResponse.Data>;
+  data: Array<SearchResultItem>;
 }
 
-export namespace SearchResponse {
-  export interface Data {
-    /**
-     * Represents a photo or video asset with metadata and access URLs.
-     */
-    asset: AssetsAPI.AssetResponse;
+export interface SearchResultItem {
+  /**
+   * Represents a photo or video asset with metadata and access URLs.
+   */
+  asset: AssetsAPI.AssetResponse;
 
-    distance: number | null;
-  }
+  distance: number | null;
 }
 
 export interface SearchSearchParams {
@@ -150,6 +148,7 @@ export interface SearchSearchAssetsParams {
 export declare namespace Search {
   export {
     type SearchResponse as SearchResponse,
+    type SearchResultItem as SearchResultItem,
     type SearchSearchParams as SearchSearchParams,
     type SearchSearchAssetsParams as SearchSearchAssetsParams,
   };

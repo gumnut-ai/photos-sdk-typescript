@@ -155,6 +155,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/search.ts">SearchResponse</a></code>
+- <code><a href="./src/resources/search.ts">SearchResultItem</a></code>
 
 Methods:
 

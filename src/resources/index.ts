@@ -72,6 +72,7 @@ export { Ping, type PingGetResponse } from './ping';
 export {
   Search,
   type SearchResponse,
+  type SearchResultItem,
   type SearchSearchParams,
   type SearchSearchAssetsParams,
 } from './search';
