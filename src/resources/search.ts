@@ -63,7 +63,7 @@ export interface SearchSearchParams {
   library_id?: string | null;
 
   /**
-   * Number of results per page
+   * Number of results per page (1-200)
    */
   limit?: number;
 
@@ -115,7 +115,7 @@ export interface SearchSearchAssetsParams {
   library_id?: string | null;
 
   /**
-   * Number of results per page
+   * Number of results per page (1-200)
    */
   limit?: number;
 
