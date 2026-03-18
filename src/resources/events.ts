@@ -145,7 +145,7 @@ export interface ExifResponse {
   description?: string | null;
 
   /**
-   * When the photo was digitized, with timezone info
+   * When the photo was digitized, with timezone offset if available in EXIF metadata
    */
   digitized_datetime?: string | null;
 
@@ -210,7 +210,8 @@ export interface ExifResponse {
   model?: string | null;
 
   /**
-   * When the file was last modified, with timezone info
+   * When the file was last modified, with timezone offset if available in EXIF
+   * metadata
    */
   modified_datetime?: string | null;
 
@@ -222,7 +223,8 @@ export interface ExifResponse {
   orientation?: number | null;
 
   /**
-   * When the photo was originally taken, with timezone info
+   * When the photo was originally taken, with timezone offset if available in EXIF
+   * metadata
    */
   original_datetime?: string | null;
 
