@@ -62,6 +62,11 @@ export interface LibraryResponse {
   id: string;
 
   /**
+   * Total number of assets in this library
+   */
+  asset_count: number;
+
+  /**
    * When this library was created
    */
   created_at: string;
