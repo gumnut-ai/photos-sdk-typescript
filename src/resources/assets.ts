@@ -386,7 +386,7 @@ export interface AssetCountsParams {
   library_id?: string | null;
 
   /**
-   * Maximum number of time buckets to return
+   * Maximum number of time buckets to return (1-200)
    */
   limit?: number;
 

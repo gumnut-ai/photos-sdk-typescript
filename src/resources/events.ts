@@ -279,7 +279,7 @@ export interface EventGetParams {
   library_id?: string | null;
 
   /**
-   * Maximum number of events to return (1-500)
+   * Maximum number of events to return (1-200)
    */
   limit?: number;
 }
