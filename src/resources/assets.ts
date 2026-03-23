@@ -233,6 +233,12 @@ export interface AssetResponse {
   updated_at: string;
 
   /**
+   * Named asset variants: 'original', 'thumbnail', 'preview', 'fullsize' for images;
+   * 'original' only for videos
+   */
+  asset_urls?: { [key: string]: AssetResponse.AssetURLs } | null;
+
+  /**
    * Base64-encoded SHA-1 hash for Immich client compatibility. May be null for older
    * assets.
    */
@@ -284,6 +290,28 @@ export interface AssetResponse {
    * Width of the asset in pixels
    */
   width?: number;
+}
+
+export namespace AssetResponse {
+  /**
+   * A single image variant with its URL, MIME type, and target width.
+   */
+  export interface AssetURLs {
+    /**
+     * MIME type of the served image
+     */
+    mimetype: string;
+
+    /**
+     * URL to fetch this image variant
+     */
+    url: string;
+
+    /**
+     * Target width in pixels (null if unknown)
+     */
+    width?: number | null;
+  }
 }
 
 export interface AssetCreateParams {
