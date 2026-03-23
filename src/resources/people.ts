@@ -31,7 +31,7 @@ export class People extends APIResource {
 
   /**
    * Retrieves a paginated list of people, ordered by creation time, descending. Can
-   * be filtered by specific person IDs.
+   * be filtered by specific person IDs, name, or whether the person has been named.
    */
   list(
     query: PersonListParams | null | undefined = {},
@@ -147,6 +147,12 @@ export interface PersonListParams extends CursorPageParams {
   asset_id?: string | null;
 
   /**
+   * Filter by whether the person has a name assigned (true = named only, false =
+   * unnamed only)
+   */
+  has_name?: boolean | null;
+
+  /**
    * Filter by specific person IDs (max 100)
    */
   ids?: Array<string> | null;
@@ -155,6 +161,11 @@ export interface PersonListParams extends CursorPageParams {
    * Library ID (required if user has multiple libraries)
    */
   library_id?: string | null;
+
+  /**
+   * Filter by name using case-insensitive substring matching
+   */
+  name?: string | null;
 }
 
 export declare namespace People {
