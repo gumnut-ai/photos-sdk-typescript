@@ -245,6 +245,14 @@ export interface AssetResponse {
   checksum_sha1?: string | null;
 
   /**
+   * AI-generated description of the asset's content, quality, and composition. null
+   * means description generation has not yet run; empty string means the model
+   * refused to describe the asset. Distinct from exif.description (camera-embedded
+   * EXIF metadata).
+   */
+  description?: string | null;
+
+  /**
    * If you need to download the full asset, use this URL. Otherwise, use the
    * thumbnail_url.
    */
