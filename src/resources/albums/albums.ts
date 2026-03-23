@@ -108,6 +108,11 @@ export interface AlbumResponse {
   album_cover_thumbnail_url?: string | null;
 
   /**
+   * Asset variants for the album cover: 'thumbnail'
+   */
+  asset_urls?: { [key: string]: AlbumResponse.AssetURLs } | null;
+
+  /**
    * Optional description text for the album
    */
   description?: string | null;
@@ -121,6 +126,28 @@ export interface AlbumResponse {
    * The oldest asset date (local_datetime) in the album, or null if empty
    */
   start_date?: string | null;
+}
+
+export namespace AlbumResponse {
+  /**
+   * A single image variant with its URL, MIME type, and target width.
+   */
+  export interface AssetURLs {
+    /**
+     * MIME type of the served image
+     */
+    mimetype: string;
+
+    /**
+     * URL to fetch this image variant
+     */
+    url: string;
+
+    /**
+     * Target width in pixels (null if unknown)
+     */
+    width?: number | null;
+  }
 }
 
 export interface AlbumCreateParams {

@@ -89,6 +89,12 @@ export interface PersonResponse {
   asset_count?: number | null;
 
   /**
+   * Asset variants from this person's thumbnail face. May be null when embedded in
+   * an AssetResponse; use /api/people endpoints for full person data.
+   */
+  asset_urls?: { [key: string]: PersonResponse.AssetURLs } | null;
+
+  /**
    * Optional birth date of this person
    */
   birth_date?: string | null;
@@ -107,6 +113,28 @@ export interface PersonResponse {
    * URL for this person's profile thumbnail image
    */
   thumbnail_face_url?: string | null;
+}
+
+export namespace PersonResponse {
+  /**
+   * A single image variant with its URL, MIME type, and target width.
+   */
+  export interface AssetURLs {
+    /**
+     * MIME type of the served image
+     */
+    mimetype: string;
+
+    /**
+     * URL to fetch this image variant
+     */
+    url: string;
+
+    /**
+     * Target width in pixels (null if unknown)
+     */
+    width?: number | null;
+  }
 }
 
 export interface PersonCreateParams {
