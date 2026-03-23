@@ -100,6 +100,11 @@ export interface FaceResponse {
   updated_at: string;
 
   /**
+   * Asset variants for this face: 'thumbnail' with face crop
+   */
+  asset_urls?: { [key: string]: FaceResponse.AssetURLs } | null;
+
+  /**
    * ID of the person this face belongs to (if identified)
    */
   person_id?: string | null;
@@ -113,6 +118,28 @@ export interface FaceResponse {
    * For video files, timestamp in milliseconds when face appears
    */
   timestamp_ms?: number | null;
+}
+
+export namespace FaceResponse {
+  /**
+   * A single image variant with its URL, MIME type, and target width.
+   */
+  export interface AssetURLs {
+    /**
+     * MIME type of the served image
+     */
+    mimetype: string;
+
+    /**
+     * URL to fetch this image variant
+     */
+    url: string;
+
+    /**
+     * Target width in pixels (null if unknown)
+     */
+    width?: number | null;
+  }
 }
 
 export interface FaceRetrieveParams {
