@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.65.0 (2026-03-25)
+
+Full Changelog: [v0.64.0...v0.65.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.64.0...v0.65.0)
+
+### Features
+
+* **api:** api update ([9726e20](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9726e207f5a38eaa6e7667a94df3a17845db13c6))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([25577f4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/25577f44bd7c1a8da174684b1344bee2c894792a))
+* **internal:** update gitignore ([49602f0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/49602f0fbf94a8b688823fb925ad1395effadc50))
+
 ## 0.64.0 (2026-03-23)
 
 Full Changelog: [v0.63.0...v0.64.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.63.0...v0.64.0)
