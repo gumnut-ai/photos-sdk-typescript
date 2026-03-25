@@ -6,7 +6,6 @@ import * as FacesAPI from './faces';
 import * as PeopleAPI from './people';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
-import { type Uploadable } from '../core/uploads';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
@@ -323,7 +322,7 @@ export namespace AssetResponse {
 }
 
 export interface AssetCreateParams {
-  asset_data: Uploadable;
+  asset_data: string;
 
   device_asset_id: string;
 

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Gumnut, { toFile } from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
 const client = new Gumnut({
   apiKey: 'My API Key',
@@ -60,7 +60,7 @@ describe('resource search', () => {
         {
           captured_after: '2019-12-27T18:11:19.117Z',
           captured_before: '2019-12-27T18:11:19.117Z',
-          image: await toFile(Buffer.from('Example data'), 'README.md'),
+          image: 'image',
           library_id: 'library_id',
           limit: 1,
           page: 1,
