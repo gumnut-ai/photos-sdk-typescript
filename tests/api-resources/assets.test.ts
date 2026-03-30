@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Gumnut from 'gumnut-sdk';
+import Gumnut, { toFile } from 'gumnut-sdk';
 
 const client = new Gumnut({
   apiKey: 'My API Key',
@@ -11,7 +11,7 @@ describe('resource assets', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.assets.create({
-      asset_data: 'asset_data',
+      asset_data: await toFile(Buffer.from('Example data'), 'README.md'),
       device_asset_id: 'device_asset_id',
       device_id: 'device_id',
       file_created_at: '2019-12-27T18:11:19.117Z',
@@ -29,7 +29,7 @@ describe('resource assets', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.assets.create({
-      asset_data: 'asset_data',
+      asset_data: await toFile(Buffer.from('Example data'), 'README.md'),
       device_asset_id: 'device_asset_id',
       device_id: 'device_id',
       file_created_at: '2019-12-27T18:11:19.117Z',
