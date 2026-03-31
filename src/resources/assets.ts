@@ -323,6 +323,9 @@ export namespace AssetResponse {
 }
 
 export interface AssetCreateParams {
+  /**
+   * The asset file to upload
+   */
   asset_data: Uploadable;
 
   device_asset_id: string;
