@@ -41,8 +41,8 @@ export class People extends APIResource {
   }
 
   /**
-   * Deletes a specific person. Associated faces will have their person_id set to the
-   * closest matching person, or null if no one matches.
+   * Deletes a specific person. Orphaned faces will be re-clustered in the next
+   * clustering pass.
    */
   delete(personID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/people/${personID}`, {
