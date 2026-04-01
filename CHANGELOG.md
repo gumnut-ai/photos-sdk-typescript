@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.67.1 (2026-04-01)
+
+Full Changelog: [v0.67.0...v0.67.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.67.0...v0.67.1)
+
+### Bug Fixes
+
+* **internal:** gitignore generated `oidc` dir ([ae632a9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ae632a998caeedebeae5e4a1b02d814576b961f6))
+
 ## 0.67.0 (2026-03-31)
 
 Full Changelog: [v0.66.0...v0.67.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.66.0...v0.67.0)
