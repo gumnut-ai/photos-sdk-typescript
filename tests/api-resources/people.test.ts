@@ -64,11 +64,11 @@ describe('resource people', () => {
         {
           album_id: 'album_id',
           asset_id: 'asset_id',
-          has_name: true,
           ids: ['string', 'string'],
           library_id: 'library_id',
           limit: 1,
           name: 'name',
+          name_filter: 'named',
           starting_after_id: 'starting_after_id',
         },
         { path: '/_stainless_unknown_path' },
