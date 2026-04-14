@@ -55,17 +55,6 @@ export class Faces extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
-
-  /**
-   * Retrieves a thumbnail for a specific face.
-   */
-  downloadThumbnail(faceID: string, options?: RequestOptions): APIPromise<Response> {
-    return this._client.get(path`/api/faces/${faceID}/thumbnail`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'image/*' }, options?.headers]),
-      __binaryResponse: true,
-    });
-  }
 }
 
 export type FaceResponsesCursorPage = CursorPage<FaceResponse>;
@@ -108,11 +97,6 @@ export interface FaceResponse {
    * ID of the person this face belongs to (if identified)
    */
   person_id?: string | null;
-
-  /**
-   * URL to get a cropped thumbnail of just this face
-   */
-  thumbnail_url?: string | null;
 
   /**
    * For video files, timestamp in milliseconds when face appears
