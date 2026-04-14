@@ -107,11 +107,6 @@ export interface PersonResponse {
    * ID of the face resource used as this person's thumbnail
    */
   thumbnail_face_id?: string | null;
-
-  /**
-   * URL for this person's profile thumbnail image
-   */
-  thumbnail_face_url?: string | null;
 }
 
 export namespace PersonResponse {

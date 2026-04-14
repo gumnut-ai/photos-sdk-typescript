@@ -78,34 +78,6 @@ export class Assets extends APIResource {
   ): APIPromise<AssetCountResponse> {
     return this._client.get('/api/assets/counts', { query, ...options });
   }
-
-  /**
-   * Downloads the original file for a specific asset.
-   */
-  download(assetID: string, options?: RequestOptions): APIPromise<Response> {
-    return this._client.get(path`/api/assets/${assetID}/download`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'image/*' }, options?.headers]),
-      __binaryResponse: true,
-    });
-  }
-
-  /**
-   * Downloads a thumbnail for a specific asset. The exact thumbnail returned depends
-   * on availability and the optional `size` parameter.
-   */
-  downloadThumbnail(
-    assetID: string,
-    query: AssetDownloadThumbnailParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<Response> {
-    return this._client.get(path`/api/assets/${assetID}/thumbnail`, {
-      query,
-      ...options,
-      headers: buildHeaders([{ Accept: 'image/*' }, options?.headers]),
-      __binaryResponse: true,
-    });
-  }
 }
 
 export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
@@ -253,12 +225,6 @@ export interface AssetResponse {
   description?: string | null;
 
   /**
-   * If you need to download the full asset, use this URL. Otherwise, use the
-   * thumbnail_url.
-   */
-  download_url?: string | null;
-
-  /**
    * EXIF metadata extracted from image and video files.
    */
   exif?: EventsAPI.ExifResponse | null;
@@ -287,12 +253,6 @@ export interface AssetResponse {
    * All unique people identified in this asset (deduplicated from faces)
    */
   people?: Array<PeopleAPI.PersonResponse>;
-
-  /**
-   * Use this URL to display the asset. Never download the full asset unless you
-   * absolutely have to; prefer the thumbnail instead.
-   */
-  thumbnail_url?: string | null;
 
   /**
    * Width of the asset in pixels
@@ -451,13 +411,6 @@ export interface AssetCountsParams {
   person_id?: string | null;
 }
 
-export interface AssetDownloadThumbnailParams {
-  /**
-   * Desired thumbnail size (e.g., thumbnail, preview)
-   */
-  size?: string | null;
-}
-
 export declare namespace Assets {
   export {
     type AssetCountResponse as AssetCountResponse,
@@ -469,6 +422,5 @@ export declare namespace Assets {
     type AssetListParams as AssetListParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
     type AssetCountsParams as AssetCountsParams,
-    type AssetDownloadThumbnailParams as AssetDownloadThumbnailParams,
   };
 }

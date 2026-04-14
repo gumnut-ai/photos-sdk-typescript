@@ -38,7 +38,6 @@ import {
   AssetCountResponse,
   AssetCountsParams,
   AssetCreateParams,
-  AssetDownloadThumbnailParams,
   AssetExistenceResponse,
   AssetListParams,
   AssetLiteResponse,
@@ -876,7 +875,6 @@ export declare namespace Gumnut {
     type AssetListParams as AssetListParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
     type AssetCountsParams as AssetCountsParams,
-    type AssetDownloadThumbnailParams as AssetDownloadThumbnailParams,
   };
 
   export {
