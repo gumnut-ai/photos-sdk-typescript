@@ -32,7 +32,6 @@ export {
   type AssetListParams,
   type AssetCheckExistenceParams,
   type AssetCountsParams,
-  type AssetDownloadThumbnailParams,
   type AssetResponsesCursorPage,
 } from './assets';
 export { Events, type EventsResponse, type ExifResponse, type EventGetParams } from './events';
