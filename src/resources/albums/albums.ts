@@ -6,7 +6,6 @@ import {
   AlbumAssetAssociation,
   AssetsAssociationAddParams,
   AssetsAssociationAddResponse,
-  AssetsAssociationListResponse,
   AssetsAssociationRemoveParams,
   AssetsAssociations,
 } from './assets-associations';
@@ -190,7 +189,6 @@ export declare namespace Albums {
   export {
     AssetsAssociations as AssetsAssociations,
     type AlbumAssetAssociation as AlbumAssetAssociation,
-    type AssetsAssociationListResponse as AssetsAssociationListResponse,
     type AssetsAssociationAddResponse as AssetsAssociationAddResponse,
     type AssetsAssociationAddParams as AssetsAssociationAddParams,
     type AssetsAssociationRemoveParams as AssetsAssociationRemoveParams,
