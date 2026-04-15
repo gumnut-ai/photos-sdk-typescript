@@ -31,6 +31,9 @@ export class People extends APIResource {
 
   /**
    * Retrieves a paginated list of people, ordered by creation time, descending.
+   *
+   * **Pagination:** When `has_more` is true, pass the `id` of the last person in
+   * `data` as `starting_after_id` to fetch the next page.
    */
   list(
     query: PersonListParams | null | undefined = {},
