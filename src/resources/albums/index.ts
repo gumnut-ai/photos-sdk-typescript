@@ -11,7 +11,6 @@ export {
 export {
   AssetsAssociations,
   type AlbumAssetAssociation,
-  type AssetsAssociationListResponse,
   type AssetsAssociationAddResponse,
   type AssetsAssociationAddParams,
   type AssetsAssociationRemoveParams,

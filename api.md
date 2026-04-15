@@ -50,12 +50,10 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/albums/assets-associations.ts">AlbumAssetAssociation</a></code>
-- <code><a href="./src/resources/albums/assets-associations.ts">AssetsAssociationListResponse</a></code>
 - <code><a href="./src/resources/albums/assets-associations.ts">AssetsAssociationAddResponse</a></code>
 
 Methods:
 
-- <code title="get /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">list</a>(albumID) -> AssetsAssociationListResponse</code>
 - <code title="post /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">add</a>(albumID, { ...params }) -> AssetsAssociationAddResponse</code>
 - <code title="delete /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">remove</a>(albumID, { ...params }) -> void</code>
 
