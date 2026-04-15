@@ -36,6 +36,9 @@ export class Assets extends APIResource {
    * filtered by album, person, or specific asset IDs. Asset data includes metrics,
    * EXIF data, faces, and people. Assets are ordered by local creation time,
    * descending.
+   *
+   * **Pagination:** When `has_more` is true, pass the `id` of the last asset in
+   * `data` as `starting_after_id` to fetch the next page.
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -71,6 +74,9 @@ export class Assets extends APIResource {
   /**
    * Returns asset counts grouped by time period. Supports optional filtering by
    * album, person, or date range. Results are ordered by time bucket descending.
+   *
+   * **Pagination:** When `has_more` is true, pass the last `time_bucket` value from
+   * `data` as `local_datetime_before` to fetch the next page.
    */
   counts(
     query: AssetCountsParams | null | undefined = {},
@@ -83,8 +89,16 @@ export class Assets extends APIResource {
 export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
 
 export interface AssetCountResponse {
+  /**
+   * Time bucket and count pairs, ordered by time bucket descending
+   */
   data: Array<AssetCountResponse.Data>;
 
+  /**
+   * True if there are more time buckets. To fetch the next page, pass the last
+   * `time_bucket` value as `local_datetime_before` (exclusive — buckets starting
+   * before that value are returned).
+   */
   has_more: boolean;
 }
 
