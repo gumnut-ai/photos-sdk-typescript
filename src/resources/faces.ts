@@ -31,6 +31,9 @@ export class Faces extends APIResource {
   /**
    * Retrieves a paginated list of faces, optionally filtered by asset, person, or
    * specific face IDs, ordered by creation time, descending.
+   *
+   * **Pagination:** When `has_more` is true, pass the `id` of the last face in
+   * `data` as `starting_after_id` to fetch the next page.
    */
   list(
     query: FaceListParams | null | undefined = {},

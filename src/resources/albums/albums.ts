@@ -45,6 +45,9 @@ export class Albums extends APIResource {
   /**
    * Retrieves a paginated list of albums from the specified library, ordered by
    * creation time, descending. Can be filtered by asset_id or specific album IDs.
+   *
+   * **Pagination:** When `has_more` is true, pass the `id` of the last album in
+   * `data` as `starting_after_id` to fetch the next page.
    */
   list(
     query: AlbumListParams | null | undefined = {},
