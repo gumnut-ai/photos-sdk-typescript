@@ -1,21 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as AssetsAPI from '../assets';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class AssetsAssociations extends APIResource {
-  /**
-   * Retrieves a list of all assets contained within a specific album, along with
-   * their associated metrics, EXIF data, faces, and people.
-   */
-  list(albumID: string, options?: RequestOptions): APIPromise<AssetsAssociationListResponse> {
-    return this._client.get(path`/api/albums/${albumID}/assets`, options);
-  }
-
   /**
    * Adds one or more existing assets to a specific album. Assets must be in the same
    * library as the album. Duplicate assets are ignored.
@@ -45,8 +36,6 @@ export interface AlbumAssetAssociation {
   asset_ids: Array<string>;
 }
 
-export type AssetsAssociationListResponse = Array<AssetsAPI.AssetResponse>;
-
 export interface AssetsAssociationAddResponse {
   added_assets: Array<string>;
 
@@ -64,7 +53,6 @@ export interface AssetsAssociationRemoveParams {
 export declare namespace AssetsAssociations {
   export {
     type AlbumAssetAssociation as AlbumAssetAssociation,
-    type AssetsAssociationListResponse as AssetsAssociationListResponse,
     type AssetsAssociationAddResponse as AssetsAssociationAddResponse,
     type AssetsAssociationAddParams as AssetsAssociationAddParams,
     type AssetsAssociationRemoveParams as AssetsAssociationRemoveParams,
