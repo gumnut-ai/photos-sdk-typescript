@@ -334,17 +334,17 @@ export interface AssetListParams extends CursorPageParams {
 
   /**
    * Only include assets with local_datetime after this value (ISO 8601). Naive
-   * values compare directly against local_datetime; timezone-aware values are
-   * converted to UTC and compared against local_datetime adjusted by its stored
-   * offset.
+   * values compare directly against local_datetime. Timezone-aware values: assets
+   * with a known offset are compared in UTC (local_datetime - offset); assets
+   * without an offset fall back to wall-clock comparison against local_datetime.
    */
   local_datetime_after?: string | null;
 
   /**
    * Only include assets with local_datetime before this value (ISO 8601). Naive
-   * values compare directly against local_datetime; timezone-aware values are
-   * converted to UTC and compared against local_datetime adjusted by its stored
-   * offset.
+   * values compare directly against local_datetime. Timezone-aware values: assets
+   * with a known offset are compared in UTC (local_datetime - offset); assets
+   * without an offset fall back to wall-clock comparison against local_datetime.
    */
   local_datetime_before?: string | null;
 
@@ -405,17 +405,18 @@ export interface AssetCountsParams {
 
   /**
    * Only include assets with local_datetime after this value (ISO 8601). Naive
-   * values compare directly against local_datetime; timezone-aware values are
-   * converted to UTC and compared against local_datetime adjusted by its stored
-   * offset.
+   * values compare directly against local_datetime. Timezone-aware values: assets
+   * with a known offset are compared in UTC (local_datetime - offset); assets
+   * without an offset fall back to wall-clock comparison against local_datetime.
    */
   local_datetime_after?: string | null;
 
   /**
    * Only include assets with local_datetime before this value (ISO 8601). Naive
-   * values compare directly against local_datetime; timezone-aware values are
-   * converted to UTC and compared against local_datetime adjusted by its stored
-   * offset. Use the last time_bucket from a previous response to paginate.
+   * values compare directly against local_datetime. Timezone-aware values: assets
+   * with a known offset are compared in UTC (local_datetime - offset); assets
+   * without an offset fall back to wall-clock comparison against local_datetime. Use
+   * the last time_bucket from a previous response to paginate.
    */
   local_datetime_before?: string | null;
 
