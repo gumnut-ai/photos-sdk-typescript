@@ -24,21 +24,29 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Retrieves detailed metadata for a specific asset, including EXIF information,
-   * asset metrics, faces, and people.
+   * Fetches one asset and its associated metadata. Use this when you already have a
+   * specific asset ID (e.g., from `list_assets`, `search_assets`, or
+   * `list_album_assets`) and need its full details. For bulk fetch of multiple known
+   * IDs, prefer `list_assets` with the `ids` parameter to avoid N round trips.
    */
   retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetResponse> {
     return this._client.get(path`/api/assets/${assetID}`, options);
   }
 
   /**
-   * Retrieves a paginated list of assets from the specified library, optionally
-   * filtered by album, person, or specific asset IDs. Asset data includes metrics,
-   * EXIF data, faces, and people. Assets are ordered by local creation time,
-   * descending.
+   * Returns a paginated list of assets ordered by local capture time (newest first).
+   * Use this tool for structured browsing and filtering — when the request can be
+   * expressed as exact filters on album membership, people, date range, or specific
+   * asset IDs.
    *
-   * **Pagination:** When `has_more` is true, pass the `id` of the last asset in
-   * `data` as `starting_after_id` to fetch the next page.
+   * **Use `search_assets` instead** when the request involves natural-language image
+   * content ('photos of sunsets', 'pictures with my dog'), location or place
+   * ('photos from Japan'), or any concept requiring semantic understanding of what's
+   * in the image. `list_assets` does not filter by image content, location, or
+   * caption text.
+   *
+   * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
+   * last asset in `data` as `starting_after_id` to fetch the next page.
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -48,8 +56,12 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Deletes a specific asset and its associated data (including the file from
-   * storage).
+   * Deletes the asset entirely — the database record, the stored file, and all
+   * associated data (faces, album links, etc.). This is irreversible.
+   *
+   * **Use `remove_assets_from_album` instead** when the user only wants to remove an
+   * asset from a specific album but keep the file in their library. Use
+   * `delete_album` to remove an album without deleting its assets.
    */
   delete(assetID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/assets/${assetID}`, {
@@ -318,38 +330,48 @@ export interface AssetCreateParams {
 
 export interface AssetListParams extends CursorPageParams {
   /**
-   * Filter by assets in a specific album
+   * Return only assets that are in the album with this ID. Equivalent to calling
+   * `list_album_assets` with `album_id` and then fetching each asset — prefer this
+   * param when you need the full asset metadata in one call.
    */
   album_id?: string | null;
 
   /**
-   * Filter by specific asset IDs (max 100)
+   * Look up specific assets by ID (max 100; each ID has the `asset_` prefix). Use
+   * this for bulk fetch when you already have asset IDs. Combines with other filters
+   * (album_id, person_id, datetime range) using AND logic — the result is the
+   * intersection.
    */
   ids?: Array<string> | null;
 
   /**
-   * Library to list assets from (optional)
+   * Library to list assets from. Optional if the user has a single library; required
+   * when they have multiple. Use `list_libraries` to enumerate available libraries.
    */
   library_id?: string | null;
 
   /**
-   * Only include assets with local_datetime after this value (ISO 8601). Naive
-   * values compare directly against local_datetime. Timezone-aware values: assets
-   * with a known offset are compared in UTC (local_datetime - offset); assets
-   * without an offset fall back to wall-clock comparison against local_datetime.
+   * Only include assets captured strictly after this instant (ISO 8601; exclusive).
+   * `local_datetime` is the photo's wall-clock time in the device's own timezone.
+   * Naive values compare directly against `local_datetime`. Timezone-aware values:
+   * assets with a known offset are compared in UTC (`local_datetime - offset`);
+   * assets without an offset fall back to wall-clock comparison against
+   * `local_datetime`. Equivalent in purpose to `captured_after` on `search_assets`
+   * (naming inconsistency is tracked as a follow-up).
    */
   local_datetime_after?: string | null;
 
   /**
-   * Only include assets with local_datetime before this value (ISO 8601). Naive
-   * values compare directly against local_datetime. Timezone-aware values: assets
-   * with a known offset are compared in UTC (local_datetime - offset); assets
-   * without an offset fall back to wall-clock comparison against local_datetime.
+   * Only include assets captured strictly before this instant (ISO 8601; exclusive).
+   * Same awareness/offset semantics as `local_datetime_after`. Equivalent in purpose
+   * to `captured_before` on `search_assets` (naming inconsistency is tracked as a
+   * follow-up).
    */
   local_datetime_before?: string | null;
 
   /**
-   * Filter by assets associated with a specific person ID
+   * Return only assets containing a face belonging to this person. Singular on this
+   * tool; the sibling `search_assets` uses `person_ids` (plural, ALL-of).
    */
   person_id?: string | null;
 }
