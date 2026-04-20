@@ -21,33 +21,43 @@ export class Albums extends APIResource {
   );
 
   /**
-   * Creates a new, empty album with optional name and description in the specified
-   * library.
+   * Creates an album (with optional name and description) and returns it. The album
+   * starts empty — follow up with `add_assets_to_album` to populate it. To rename an
+   * existing album, use `update_album` instead of creating a new one.
    */
   create(body: AlbumCreateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.post('/api/albums', { body, ...options });
   }
 
   /**
-   * Retrieves details for a specific album.
+   * Fetches one album's metadata (name, description, cover, counts). Use when you
+   * already have an album ID. Does not include the album's assets — use
+   * `list_album_assets` or `list_assets` with `album_id` for that.
    */
   retrieve(albumID: string, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.get(path`/api/albums/${albumID}`, options);
   }
 
   /**
-   * Updates the name and/or description of a specific album.
+   * Updates the `name` and/or `description` of an existing album. Only the fields
+   * included in the request body are changed. To modify the contents of an album,
+   * use `add_assets_to_album` / `remove_assets_from_album` instead — this tool only
+   * changes album metadata.
    */
   update(albumID: string, body: AlbumUpdateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.patch(path`/api/albums/${albumID}`, { body, ...options });
   }
 
   /**
-   * Retrieves a paginated list of albums from the specified library, ordered by
-   * creation time, descending. Can be filtered by asset_id or specific album IDs.
+   * Returns a paginated list of albums ordered by creation time (newest first). Use
+   * this to enumerate a user's albums or to find which albums contain a specific
+   * asset (via `asset_id`).
    *
-   * **Pagination:** When `has_more` is true, pass the `id` of the last album in
-   * `data` as `starting_after_id` to fetch the next page.
+   * `list_albums` returns album metadata only — to list the assets inside a
+   * particular album, use `list_album_assets` or `list_assets` with `album_id`.
+   *
+   * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
+   * last album in `data` as `starting_after_id` to fetch the next page.
    */
   list(
     query: AlbumListParams | null | undefined = {},
@@ -57,8 +67,10 @@ export class Albums extends APIResource {
   }
 
   /**
-   * Deletes a specific album. Note: This does not delete the assets within the
-   * album.
+   * Deletes the album itself. Assets that were in the album remain in the library —
+   * only the album and its asset-links are removed. Use `delete_asset` to delete the
+   * underlying assets, or `remove_assets_from_album` to detach specific assets from
+   * an album you want to keep.
    */
   delete(albumID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/albums/${albumID}`, {
@@ -148,32 +160,52 @@ export namespace AlbumResponse {
 }
 
 export interface AlbumCreateParams {
+  /**
+   * Optional free-form description shown alongside the album name.
+   */
   description?: string | null;
 
+  /**
+   * Library to create the album in. Optional if the user has a single library;
+   * required when they have multiple. Use `list_libraries` to enumerate.
+   */
   library_id?: string | null;
 
+  /**
+   * Display name for the new album. Optional; callers that need to name an album can
+   * set it here or via `update_album` after creation.
+   */
   name?: string | null;
 }
 
 export interface AlbumUpdateParams {
+  /**
+   * New free-form description for the album. Omit to leave unchanged.
+   */
   description?: string | null;
 
+  /**
+   * New display name for the album. Omit to leave unchanged.
+   */
   name?: string | null;
 }
 
 export interface AlbumListParams extends CursorPageParams {
   /**
-   * Filter albums containing this asset ID (optional)
+   * Return only albums that contain this asset. Useful for answering 'which albums
+   * is this photo in?' without calling `list_album_assets`.
    */
   asset_id?: string | null;
 
   /**
-   * Filter by specific album IDs (max 100)
+   * Look up specific albums by ID (max 100; each ID has the `album_` prefix). Use
+   * for bulk fetch when IDs are already known.
    */
   ids?: Array<string> | null;
 
   /**
-   * Library to list albums from (optional)
+   * Library to list albums from. Optional if the user has a single library; required
+   * when they have multiple. Use `list_libraries` to enumerate.
    */
   library_id?: string | null;
 }
