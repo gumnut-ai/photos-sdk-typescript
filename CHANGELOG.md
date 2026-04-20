@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.74.0 (2026-04-20)
+
+Full Changelog: [v0.73.0...v0.74.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.73.0...v0.74.0)
+
+### Features
+
+* **api:** api update ([28ddbde](https://github.com/gumnut-ai/photos-sdk-typescript/commit/28ddbde251fff858fe84d59233d94ae4b4f95de9))
+
 ## 0.73.0 (2026-04-17)
 
 Full Changelog: [v0.72.0...v0.73.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.72.0...v0.73.0)
