@@ -44,6 +44,9 @@ export class Events extends APIResource {
    * - `face_created`, `face_updated`, `face_deleted`
    * - `album_asset_added`, `album_asset_removed`
    * - `exif_created`, `exif_updated`, `exif_deleted`
+   * - `metadata_updated` (emitted alongside `exif_updated` during the asset*metadata
+   *   migration window; `exif*\*` events are deprecated and will be removed in a
+   *   future release)
    */
   get(query: EventGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<EventsResponse> {
     return this._client.get('/api/events', { query, ...options });
@@ -276,8 +279,8 @@ export interface EventGetParams {
 
   /**
    * Comma-separated list of entity types to include (e.g., `asset,album`). Valid
-   * values: `asset`, `album`, `person`, `face`, `album_asset`, `exif`. Omit to
-   * receive events for all types.
+   * values: `asset`, `album`, `person`, `face`, `album_asset`, `exif`, `metadata`.
+   * Omit to receive events for all types.
    */
   entity_types?: string | null;
 
