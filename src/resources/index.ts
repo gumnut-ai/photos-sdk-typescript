@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export * from './shared';
 export {
   APIKeys,
   type APIKeyResponse,
@@ -28,6 +29,7 @@ export {
   type AssetExistenceResponse,
   type AssetLiteResponse,
   type AssetResponse,
+  type MetadataResponse,
   type AssetCreateParams,
   type AssetListParams,
   type AssetCheckExistenceParams,
@@ -65,6 +67,7 @@ export {
   type PersonCreateParams,
   type PersonUpdateParams,
   type PersonListParams,
+  type PersonMergeParams,
   type PersonResponsesCursorPage,
 } from './people';
 export { Ping, type PingGetResponse } from './ping';

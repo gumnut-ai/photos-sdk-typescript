@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import * as AssetsAssociationsAPI from './assets-associations';
 import {
   AlbumAssetAssociation,
@@ -119,7 +120,7 @@ export interface AlbumResponse {
   /**
    * Asset variants for the album cover: 'thumbnail'
    */
-  asset_urls?: { [key: string]: AlbumResponse.AssetURLs } | null;
+  asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
    * Optional description text for the album
@@ -135,28 +136,6 @@ export interface AlbumResponse {
    * The oldest asset date (local_datetime) in the album, or null if empty
    */
   start_date?: string | null;
-}
-
-export namespace AlbumResponse {
-  /**
-   * A single image variant with its URL, MIME type, and target width.
-   */
-  export interface AssetURLs {
-    /**
-     * MIME type of the served image
-     */
-    mimetype: string;
-
-    /**
-     * URL to fetch this image variant
-     */
-    url: string;
-
-    /**
-     * Target width in pixels (null if unknown)
-     */
-    width?: number | null;
-  }
 }
 
 export interface AlbumCreateParams {
