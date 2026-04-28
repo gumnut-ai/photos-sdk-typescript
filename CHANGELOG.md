@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.79.0 (2026-04-28)
+
+Full Changelog: [v0.78.0...v0.79.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.78.0...v0.79.0)
+
+### Features
+
+* **api:** add people merge endpoint ([674b2a1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/674b2a1bf2761915337ab802d2b0caad97ee4eec))
+
 ## 0.78.0 (2026-04-28)
 
 Full Changelog: [v0.77.0...v0.78.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.77.0...v0.78.0)
