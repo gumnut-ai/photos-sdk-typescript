@@ -44,6 +44,7 @@ import {
   AssetResponse,
   AssetResponsesCursorPage,
   Assets,
+  MetadataResponse,
 } from './resources/assets';
 import { EventGetParams, Events, EventsResponse, ExifResponse } from './resources/events';
 import {
@@ -74,6 +75,7 @@ import {
   People,
   PersonCreateParams,
   PersonListParams,
+  PersonMergeParams,
   PersonResponse,
   PersonResponsesCursorPage,
   PersonUpdateParams,
@@ -882,6 +884,7 @@ export declare namespace Gumnut {
     type AssetExistenceResponse as AssetExistenceResponse,
     type AssetLiteResponse as AssetLiteResponse,
     type AssetResponse as AssetResponse,
+    type MetadataResponse as MetadataResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
@@ -946,6 +949,7 @@ export declare namespace Gumnut {
     type PersonCreateParams as PersonCreateParams,
     type PersonUpdateParams as PersonUpdateParams,
     type PersonListParams as PersonListParams,
+    type PersonMergeParams as PersonMergeParams,
   };
 
   export { Ping as Ping, type PingGetResponse as PingGetResponse };
@@ -959,4 +963,6 @@ export declare namespace Gumnut {
   };
 
   export { Users as Users, type UserResponse as UserResponse };
+
+  export type AssetVariant = API.AssetVariant;
 }

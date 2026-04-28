@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -77,6 +78,16 @@ export class People extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Merges one or more source people into the primary person identified by the URL.
+   * All faces from source people are reassigned to the primary person. Source people
+   * are permanently deleted (this cannot be undone). The primary person's centroid
+   * embedding is recalculated.
+   */
+  merge(personID: string, body: PersonMergeParams, options?: RequestOptions): APIPromise<PersonResponse> {
+    return this._client.post(path`/api/people/${personID}/merge`, { body, ...options });
+  }
 }
 
 export type PersonResponsesCursorPage = CursorPage<PersonResponse>;
@@ -119,7 +130,7 @@ export interface PersonResponse {
    * Asset variants from this person's thumbnail face. May be null when embedded in
    * an AssetResponse; use /api/people endpoints for full person data.
    */
-  asset_urls?: { [key: string]: PersonResponse.AssetURLs } | null;
+  asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
    * Optional birth date of this person
@@ -135,28 +146,6 @@ export interface PersonResponse {
    * ID of the face resource used as this person's thumbnail
    */
   thumbnail_face_id?: string | null;
-}
-
-export namespace PersonResponse {
-  /**
-   * A single image variant with its URL, MIME type, and target width.
-   */
-  export interface AssetURLs {
-    /**
-     * MIME type of the served image
-     */
-    mimetype: string;
-
-    /**
-     * URL to fetch this image variant
-     */
-    url: string;
-
-    /**
-     * Target width in pixels (null if unknown)
-     */
-    width?: number | null;
-  }
 }
 
 export interface PersonCreateParams {
@@ -264,6 +253,14 @@ export interface PersonListParams extends CursorPageParams {
   name_filter?: 'named' | 'unnamed' | 'all' | null;
 }
 
+export interface PersonMergeParams {
+  /**
+   * IDs of the people to merge into the primary person. These people will be deleted
+   * after their faces are moved.
+   */
+  source_person_ids: Array<string>;
+}
+
 export declare namespace People {
   export {
     type PersonResponse as PersonResponse,
@@ -271,5 +268,6 @@ export declare namespace People {
     type PersonCreateParams as PersonCreateParams,
     type PersonUpdateParams as PersonUpdateParams,
     type PersonListParams as PersonListParams,
+    type PersonMergeParams as PersonMergeParams,
   };
 }

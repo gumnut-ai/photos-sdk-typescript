@@ -1,3 +1,9 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">AssetVariant</a></code>
+
 # APIKeys
 
 Types:
@@ -21,6 +27,7 @@ Types:
 - <code><a href="./src/resources/assets.ts">AssetExistenceResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetLiteResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetResponse</a></code>
+- <code><a href="./src/resources/assets.ts">MetadataResponse</a></code>
 
 Methods:
 
@@ -134,6 +141,7 @@ Methods:
 - <code title="patch /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">update</a>(personID, { ...params }) -> PersonResponse</code>
 - <code title="get /api/people">client.people.<a href="./src/resources/people.ts">list</a>({ ...params }) -> PersonResponsesCursorPage</code>
 - <code title="delete /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">delete</a>(personID) -> void</code>
+- <code title="post /api/people/{person_id}/merge">client.people.<a href="./src/resources/people.ts">merge</a>(personID, { ...params }) -> PersonResponse</code>
 
 # Ping
 
