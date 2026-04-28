@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
@@ -111,7 +112,7 @@ export interface FaceResponse {
   /**
    * Asset variants for this face: 'thumbnail' with face crop
    */
-  asset_urls?: { [key: string]: FaceResponse.AssetURLs } | null;
+  asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
    * ID of the person this face belongs to (if identified)
@@ -122,28 +123,6 @@ export interface FaceResponse {
    * For video files, timestamp in milliseconds when face appears
    */
   timestamp_ms?: number | null;
-}
-
-export namespace FaceResponse {
-  /**
-   * A single image variant with its URL, MIME type, and target width.
-   */
-  export interface AssetURLs {
-    /**
-     * MIME type of the served image
-     */
-    mimetype: string;
-
-    /**
-     * URL to fetch this image variant
-     */
-    url: string;
-
-    /**
-     * Target width in pixels (null if unknown)
-     */
-    width?: number | null;
-  }
 }
 
 export interface FaceRetrieveParams {

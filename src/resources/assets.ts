@@ -4,6 +4,7 @@ import { APIResource } from '../core/resource';
 import * as EventsAPI from './events';
 import * as FacesAPI from './faces';
 import * as PeopleAPI from './people';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { type Uploadable } from '../core/uploads';
@@ -239,7 +240,7 @@ export interface AssetResponse {
    * Named asset variants: 'original', 'thumbnail', 'preview', 'fullsize' for images;
    * 'original' only for videos
    */
-  asset_urls?: { [key: string]: AssetResponse.AssetURLs } | null;
+  asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
    * Base64-encoded SHA-1 hash for Immich client compatibility. May be null for older
@@ -278,7 +279,7 @@ export interface AssetResponse {
   /**
    * Metadata for an asset — camera/EXIF fields, GPS, and location names.
    */
-  metadata?: AssetResponse.Metadata | null;
+  metadata?: MetadataResponse | null;
 
   /**
    * ML-generated quality scores and other metrics
@@ -296,188 +297,166 @@ export interface AssetResponse {
   width?: number;
 }
 
-export namespace AssetResponse {
+/**
+ * Metadata for an asset — camera/EXIF fields, GPS, and location names.
+ */
+export interface MetadataResponse {
   /**
-   * A single image variant with its URL, MIME type, and target width.
+   * ID of the asset this metadata belongs to
    */
-  export interface AssetURLs {
-    /**
-     * MIME type of the served image
-     */
-    mimetype: string;
-
-    /**
-     * URL to fetch this image variant
-     */
-    url: string;
-
-    /**
-     * Target width in pixels (null if unknown)
-     */
-    width?: number | null;
-  }
+  asset_id: string;
 
   /**
-   * Metadata for an asset — camera/EXIF fields, GPS, and location names.
+   * When this metadata record was created
    */
-  export interface Metadata {
-    /**
-     * ID of the asset this metadata belongs to
-     */
-    asset_id: string;
+  created_at: string;
 
-    /**
-     * When this metadata record was created
-     */
-    created_at: string;
+  /**
+   * When this metadata record was last updated
+   */
+  updated_at: string;
 
-    /**
-     * When this metadata record was last updated
-     */
-    updated_at: string;
+  /**
+   * GPS altitude in meters
+   */
+  altitude?: number | null;
 
-    /**
-     * GPS altitude in meters
-     */
-    altitude?: number | null;
+  /**
+   * Identifier for automatic photo stacking
+   */
+  auto_stack_id?: string | null;
 
-    /**
-     * Identifier for automatic photo stacking
-     */
-    auto_stack_id?: string | null;
+  /**
+   * City name
+   */
+  city?: string | null;
 
-    /**
-     * City name
-     */
-    city?: string | null;
+  /**
+   * Country name
+   */
+  country?: string | null;
 
-    /**
-     * Country name
-     */
-    country?: string | null;
+  /**
+   * ISO 3166-1 alpha-2 country code (e.g., 'US', 'JP')
+   */
+  country_code?: string | null;
 
-    /**
-     * ISO 3166-1 alpha-2 country code (e.g., 'US', 'JP')
-     */
-    country_code?: string | null;
+  /**
+   * Image description or caption
+   */
+  description?: string | null;
 
-    /**
-     * Image description or caption
-     */
-    description?: string | null;
+  /**
+   * When the photo was digitized, with timezone offset if available
+   */
+  digitized_datetime?: string | null;
 
-    /**
-     * When the photo was digitized, with timezone offset if available
-     */
-    digitized_datetime?: string | null;
+  /**
+   * Exposure compensation in EV (e.g., -1.0, +0.5)
+   */
+  exposure_bias?: number | null;
 
-    /**
-     * Exposure compensation in EV (e.g., -1.0, +0.5)
-     */
-    exposure_bias?: number | null;
+  /**
+   * Shutter speed in seconds (e.g., 0.001 for 1/1000s)
+   */
+  exposure_time?: number | null;
 
-    /**
-     * Shutter speed in seconds (e.g., 0.001 for 1/1000s)
-     */
-    exposure_time?: number | null;
+  /**
+   * Aperture f-stop value (e.g., 2.8, 5.6)
+   */
+  f_number?: number | null;
 
-    /**
-     * Aperture f-stop value (e.g., 2.8, 5.6)
-     */
-    f_number?: number | null;
+  /**
+   * Focal length in millimeters
+   */
+  focal_length?: number | null;
 
-    /**
-     * Focal length in millimeters
-     */
-    focal_length?: number | null;
+  /**
+   * Frame rate for video files
+   */
+  fps?: number | null;
 
-    /**
-     * Frame rate for video files
-     */
-    fps?: number | null;
+  /**
+   * ISO sensitivity value (e.g., 100, 800, 3200)
+   */
+  iso?: number | null;
 
-    /**
-     * ISO sensitivity value (e.g., 100, 800, 3200)
-     */
-    iso?: number | null;
+  /**
+   * GPS latitude in decimal degrees
+   */
+  latitude?: number | null;
 
-    /**
-     * GPS latitude in decimal degrees
-     */
-    latitude?: number | null;
+  /**
+   * Lens model used (e.g., 'EF 24-70mm f/2.8L II USM')
+   */
+  lens_model?: string | null;
 
-    /**
-     * Lens model used (e.g., 'EF 24-70mm f/2.8L II USM')
-     */
-    lens_model?: string | null;
+  /**
+   * Live photo content identifier
+   */
+  live_photo_cid?: string | null;
 
-    /**
-     * Live photo content identifier
-     */
-    live_photo_cid?: string | null;
+  /**
+   * GPS longitude in decimal degrees
+   */
+  longitude?: number | null;
 
-    /**
-     * GPS longitude in decimal degrees
-     */
-    longitude?: number | null;
+  /**
+   * Camera manufacturer (e.g., 'Canon', 'Nikon')
+   */
+  make?: string | null;
 
-    /**
-     * Camera manufacturer (e.g., 'Canon', 'Nikon')
-     */
-    make?: string | null;
+  /**
+   * Camera model (e.g., 'EOS 5D Mark IV')
+   */
+  model?: string | null;
 
-    /**
-     * Camera model (e.g., 'EOS 5D Mark IV')
-     */
-    model?: string | null;
+  /**
+   * When the file was last modified, with timezone offset if available
+   */
+  modified_datetime?: string | null;
 
-    /**
-     * When the file was last modified, with timezone offset if available
-     */
-    modified_datetime?: string | null;
+  /**
+   * Image orientation value (1-8) indicating rotation/flip: 1=normal, 2=mirror
+   * horizontal, 3=rotate 180°, 4=mirror vertical, 5=mirror horizontal+rotate 90° CW,
+   * 6=rotate 90° CW, 7=mirror horizontal+rotate 90° CCW, 8=rotate 90° CCW
+   */
+  orientation?: number | null;
 
-    /**
-     * Image orientation value (1-8) indicating rotation/flip: 1=normal, 2=mirror
-     * horizontal, 3=rotate 180°, 4=mirror vertical, 5=mirror horizontal+rotate 90° CW,
-     * 6=rotate 90° CW, 7=mirror horizontal+rotate 90° CCW, 8=rotate 90° CCW
-     */
-    orientation?: number | null;
+  /**
+   * When the photo was originally taken, with timezone offset if available
+   */
+  original_datetime?: string | null;
 
-    /**
-     * When the photo was originally taken, with timezone offset if available
-     */
-    original_datetime?: string | null;
+  /**
+   * Landmark or point-of-interest name
+   */
+  place_name?: string | null;
 
-    /**
-     * Landmark or point-of-interest name
-     */
-    place_name?: string | null;
+  /**
+   * Projection type (e.g., for 360° photos)
+   */
+  projection_type?: string | null;
 
-    /**
-     * Projection type (e.g., for 360° photos)
-     */
-    projection_type?: string | null;
+  /**
+   * User or camera rating (typically 1-5 stars)
+   */
+  rating?: number | null;
 
-    /**
-     * User or camera rating (typically 1-5 stars)
-     */
-    rating?: number | null;
+  /**
+   * State/province name
+   */
+  state?: string | null;
 
-    /**
-     * State/province name
-     */
-    state?: string | null;
+  /**
+   * Neighborhood or district
+   */
+  sublocation?: string | null;
 
-    /**
-     * Neighborhood or district
-     */
-    sublocation?: string | null;
-
-    /**
-     * IANA timezone identifier (e.g., 'America/Los_Angeles')
-     */
-    timezone?: string | null;
-  }
+  /**
+   * IANA timezone identifier (e.g., 'America/Los_Angeles')
+   */
+  timezone?: string | null;
 }
 
 export interface AssetCreateParams {
@@ -626,6 +605,7 @@ export declare namespace Assets {
     type AssetExistenceResponse as AssetExistenceResponse,
     type AssetLiteResponse as AssetLiteResponse,
     type AssetResponse as AssetResponse,
+    type MetadataResponse as MetadataResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
