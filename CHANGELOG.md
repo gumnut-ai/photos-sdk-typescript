@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.78.0 (2026-04-28)
+
+Full Changelog: [v0.77.0...v0.78.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.77.0...v0.78.0)
+
+### Features
+
+* support setting headers via env ([08bb563](https://github.com/gumnut-ai/photos-sdk-typescript/commit/08bb563b41d60ae40aaec59c44c3f658a203266c))
+
+
+### Chores
+
+* **internal:** codegen related update ([7e2b6b7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7e2b6b74ab601ffac9c242093827787a9b9c1a6d))
+
 ## 0.77.0 (2026-04-24)
 
 Full Changelog: [v0.76.0...v0.77.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.76.0...v0.77.0)
