@@ -63,7 +63,9 @@ export class Assets extends APIResource {
 
   /**
    * Deletes the asset entirely — the database record, the stored file, and all
-   * associated data (faces, album links, etc.). This is irreversible.
+   * associated data (faces, album links, etc.). **Irreversible.** Prefer
+   * `trash_assets` for the user's standard delete action so accidents can be
+   * recovered.
    *
    * **Use `remove_assets_from_album` instead** when the user only wants to remove an
    * asset from a specific album but keep the file in their library. Use
@@ -290,6 +292,13 @@ export interface AssetResponse {
    * All unique people identified in this asset (deduplicated from faces)
    */
   people?: Array<PeopleAPI.PersonResponse>;
+
+  /**
+   * When this asset was moved to trash (ISO 8601, UTC). `null` for live assets.
+   * Trashed assets are excluded from default list/search results and are purged
+   * after the configured retention window.
+   */
+  trashed_at?: string | null;
 
   /**
    * Width of the asset in pixels
@@ -533,6 +542,13 @@ export interface AssetListParams extends CursorPageParams {
    * tool; the sibling `search_assets` uses `person_ids` (plural, ALL-of).
    */
   person_id?: string | null;
+
+  /**
+   * Which set of assets to read from: `live` (default — only assets that are not
+   * trashed), `trashed` (only trashed assets, ordered by most recently trashed), or
+   * `all` (both live and trashed, ordered by capture time like `live`).
+   */
+  state?: 'live' | 'trashed' | 'all';
 }
 
 export interface AssetCheckExistenceParams {
@@ -605,6 +621,12 @@ export interface AssetCountsParams {
    * Filter by assets associated with a specific person ID
    */
   person_id?: string | null;
+
+  /**
+   * Which set of assets to count: `live` (default — excludes trashed assets),
+   * `trashed` (only trashed assets), or `all` (both live and trashed).
+   */
+  state?: 'live' | 'trashed' | 'all';
 }
 
 export declare namespace Assets {
