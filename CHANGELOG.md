@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.80.0 (2026-04-29)
+
+Full Changelog: [v0.79.0...v0.80.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.79.0...v0.80.0)
+
+### Features
+
+* **api:** api update ([ea7b3d8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ea7b3d8b39b2cffec9dc5d3d52b253a081eaaf1b))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([fadaf0a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fadaf0ad3d284ddbeaccdee5397ddb6aaa39110d))
+
 ## 0.79.0 (2026-04-28)
 
 Full Changelog: [v0.78.0...v0.79.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.78.0...v0.79.0)
