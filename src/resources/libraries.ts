@@ -56,8 +56,8 @@ export class Libraries extends APIResource {
    *
    * **Does not delete asset files from object storage.** The library's underlying
    * asset files will be orphaned in storage. To purge files as well, call
-   * `delete_asset` on each asset first (that endpoint removes both the database
-   * record and the stored file), then delete the library.
+   * `permanently_delete_assets` on the library's assets first (that tool removes
+   * both the database record and the stored file), then delete the library.
    */
   delete(libraryID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/libraries/${libraryID}`, {
