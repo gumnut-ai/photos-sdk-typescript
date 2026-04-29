@@ -352,6 +352,14 @@ export interface MetadataResponse {
   digitized_datetime?: string | null;
 
   /**
+   * Human-readable location label. Picks the most specific available identifier
+   * (place_name > sublocation > city > country) and appends broader context (city,
+   * then state-or-country). Example: 'Golden Gate Bridge, San Francisco,
+   * California'. Null when no location fields are populated.
+   */
+  display_label?: string | null;
+
+  /**
    * Exposure compensation in EV (e.g., -1.0, +0.5)
    */
   exposure_bias?: number | null;
