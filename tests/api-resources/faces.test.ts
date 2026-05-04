@@ -24,7 +24,11 @@ describe('resource faces', () => {
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.faces.retrieve('face_id', { library_id: 'library_id' }, { path: '/_stainless_unknown_path' }),
+      client.faces.retrieve(
+        'face_id',
+        { include: 'include', library_id: 'library_id' },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
@@ -60,6 +64,7 @@ describe('resource faces', () => {
         {
           asset_id: 'asset_id',
           ids: ['string', 'string'],
+          include: 'include',
           library_id: 'library_id',
           limit: 1,
           person_id: 'person_id',
