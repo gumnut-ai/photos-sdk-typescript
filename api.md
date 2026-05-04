@@ -137,7 +137,7 @@ Types:
 Methods:
 
 - <code title="post /api/people">client.people.<a href="./src/resources/people.ts">create</a>({ ...params }) -> PersonResponse</code>
-- <code title="get /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">retrieve</a>(personID) -> PersonResponse</code>
+- <code title="get /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">retrieve</a>(personID, { ...params }) -> PersonResponse</code>
 - <code title="patch /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">update</a>(personID, { ...params }) -> PersonResponse</code>
 - <code title="get /api/people">client.people.<a href="./src/resources/people.ts">list</a>({ ...params }) -> PersonResponsesCursorPage</code>
 - <code title="delete /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">delete</a>(personID) -> void</code>

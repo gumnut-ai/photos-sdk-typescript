@@ -65,6 +65,7 @@ export {
   People,
   type PersonResponse,
   type PersonCreateParams,
+  type PersonRetrieveParams,
   type PersonUpdateParams,
   type PersonListParams,
   type PersonMergeParams,

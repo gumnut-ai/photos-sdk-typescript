@@ -78,6 +78,7 @@ import {
   PersonMergeParams,
   PersonResponse,
   PersonResponsesCursorPage,
+  PersonRetrieveParams,
   PersonUpdateParams,
 } from './resources/people';
 import { Ping, PingGetResponse } from './resources/ping';
@@ -947,6 +948,7 @@ export declare namespace Gumnut {
     type PersonResponse as PersonResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,
+    type PersonRetrieveParams as PersonRetrieveParams,
     type PersonUpdateParams as PersonUpdateParams,
     type PersonListParams as PersonListParams,
     type PersonMergeParams as PersonMergeParams,

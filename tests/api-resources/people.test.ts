@@ -33,6 +33,14 @@ describe('resource people', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.people.retrieve('person_id', { include: 'include' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Gumnut.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.people.update('person_id', {});
     const rawResponse = await responsePromise.asResponse();
@@ -65,6 +73,7 @@ describe('resource people', () => {
           album_id: 'album_id',
           asset_id: 'asset_id',
           ids: ['string', 'string'],
+          include: 'include',
           library_id: 'library_id',
           limit: 1,
           name: 'name',
