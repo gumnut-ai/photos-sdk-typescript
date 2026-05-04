@@ -26,8 +26,12 @@ export class People extends APIResource {
    * when you already have a `person_id`. To find photos that contain this person,
    * use `search_assets` with `person_ids` or `list_assets` with `person_id`.
    */
-  retrieve(personID: string, options?: RequestOptions): APIPromise<PersonResponse> {
-    return this._client.get(path`/api/people/${personID}`, options);
+  retrieve(
+    personID: string,
+    query: PersonRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PersonResponse> {
+    return this._client.get(path`/api/people/${personID}`, { query, ...options });
   }
 
   /**
@@ -142,6 +146,15 @@ export interface PersonResponse {
   birth_date?: string | null;
 
   /**
+   * Cohesion metrics for a Person's face cluster — surfaced via
+   * `include=cluster_metrics` on the people endpoints. These describe how tight the
+   * cluster is in embedding space (lower = more cohesive) and drive both the
+   * production face-assignment cohesion gate and the operator-facing face cleanup
+   * dashboard.
+   */
+  cluster_metrics?: PersonResponse.ClusterMetrics | null;
+
+  /**
    * Optional name assigned to this person
    */
   name?: string | null;
@@ -150,6 +163,37 @@ export interface PersonResponse {
    * ID of the face resource used as this person's thumbnail
    */
   thumbnail_face_id?: string | null;
+}
+
+export namespace PersonResponse {
+  /**
+   * Cohesion metrics for a Person's face cluster — surfaced via
+   * `include=cluster_metrics` on the people endpoints. These describe how tight the
+   * cluster is in embedding space (lower = more cohesive) and drive both the
+   * production face-assignment cohesion gate and the operator-facing face cleanup
+   * dashboard.
+   */
+  export interface ClusterMetrics {
+    /**
+     * Number of faces that fed into the centroid and pairwise metrics. This is the
+     * cluster-membership count, **not** the same as `asset_count` — `face_count`
+     * counts every face row, while `asset_count` counts distinct assets (one asset can
+     * contribute multiple faces of the same person).
+     */
+    face_count: number;
+
+    /**
+     * Mean pairwise cosine distance between faces in this person's cluster.
+     */
+    pairwise_mean: number;
+
+    /**
+     * 90th-percentile pairwise cosine distance between faces in this person's cluster.
+     * Lower = more cohesive cluster; loose clusters (higher pairwise_p90) are gated
+     * out of the face-assignment path to prevent further drift.
+     */
+    pairwise_p90: number;
+  }
 }
 
 export interface PersonCreateParams {
@@ -186,6 +230,14 @@ export interface PersonCreateParams {
    * from `list_faces`.
    */
   thumbnail_face_id?: string | null;
+}
+
+export interface PersonRetrieveParams {
+  /**
+   * Comma-separated list of opt-in expansion fields. See `list_people` for supported
+   * values.
+   */
+  include?: string | null;
 }
 
 export interface PersonUpdateParams {
@@ -237,6 +289,14 @@ export interface PersonListParams extends CursorPageParams {
   ids?: Array<string> | null;
 
   /**
+   * Comma-separated list of opt-in expansion fields. Supported values:
+   * `cluster_metrics` (adds the nested `cluster_metrics` object — `pairwise_p90`,
+   * `pairwise_mean`, `face_count` — for each Person with a populated centroid).
+   * Unknown values return 422.
+   */
+  include?: string | null;
+
+  /**
    * Library to list from. Optional if the user has a single library; required when
    * they have multiple.
    */
@@ -270,6 +330,7 @@ export declare namespace People {
     type PersonResponse as PersonResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,
+    type PersonRetrieveParams as PersonRetrieveParams,
     type PersonUpdateParams as PersonUpdateParams,
     type PersonListParams as PersonListParams,
     type PersonMergeParams as PersonMergeParams,

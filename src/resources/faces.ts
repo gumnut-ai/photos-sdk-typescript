@@ -116,6 +116,14 @@ export interface FaceResponse {
   asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
+   * Per-face cluster-assignment diagnostics: how well the face fits its
+   * currently-assigned Person, and which other Persons are nearby in embedding
+   * space. Surfaced via `include=cluster_assignment` on the faces endpoints — used
+   * by the operator-facing face cleanup dashboard to triage mis-clustered faces.
+   */
+  cluster_assignment?: FaceResponse.ClusterAssignment | null;
+
+  /**
    * ID of the person this face belongs to (if identified)
    */
   person_id?: string | null;
@@ -126,7 +134,66 @@ export interface FaceResponse {
   timestamp_ms?: number | null;
 }
 
+export namespace FaceResponse {
+  /**
+   * Per-face cluster-assignment diagnostics: how well the face fits its
+   * currently-assigned Person, and which other Persons are nearby in embedding
+   * space. Surfaced via `include=cluster_assignment` on the faces endpoints — used
+   * by the operator-facing face cleanup dashboard to triage mis-clustered faces.
+   */
+  export interface ClusterAssignment {
+    /**
+     * Persons in the same library that pass the same gate shape as production face
+     * assignment, surfaced with deliberately relaxed thresholds so the list is a
+     * superset of what the automated path would admit. Sorted ascending by distance.
+     * Excludes the face's currently-assigned Person (its distance is in
+     * `distance_to_person`). Empty when no eligible Persons pass the gate.
+     */
+    candidates?: Array<ClusterAssignment.Candidate>;
+
+    /**
+     * Cosine distance from the face's embedding to its currently-assigned Person's
+     * centroid. Lower = better fit. Null when the face is unassigned or when the
+     * assigned Person has no centroid.
+     */
+    distance_to_person?: number | null;
+  }
+
+  export namespace ClusterAssignment {
+    /**
+     * A Person whose centroid is close enough to a given face's embedding that it
+     * would be considered for assignment — surfaced under
+     * `ClusterAssignmentResponse.candidates`.
+     */
+    export interface Candidate {
+      /**
+       * Cosine distance from the face's embedding to this Person's centroid (lower =
+       * closer).
+       */
+      distance: number;
+
+      /**
+       * Person ID (with 'person\_' prefix) of the candidate.
+       */
+      person_id: string;
+
+      /**
+       * Display name of the candidate Person, or null for unnamed clusters. Candidates
+       * surface the same Persons production assignment considers, which includes unnamed
+       * clusters.
+       */
+      name?: string | null;
+    }
+  }
+}
+
 export interface FaceRetrieveParams {
+  /**
+   * Comma-separated list of opt-in expansion fields. See `list_faces` for supported
+   * values.
+   */
+  include?: string | null;
+
   /**
    * Library the face belongs to. Optional if the user has a single library; required
    * when they have multiple.
@@ -161,6 +228,13 @@ export interface FaceListParams extends CursorPageParams {
    * Look up specific faces by ID (max 100). IDs use the `face_` prefix.
    */
   ids?: Array<string> | null;
+
+  /**
+   * Comma-separated list of opt-in expansion fields. Supported values:
+   * `cluster_assignment` (adds the nested `cluster_assignment` object —
+   * `distance_to_person` and a top-K `candidates` list of nearby Persons).
+   */
+  include?: string | null;
 
   /**
    * Library to list from. Optional if the user has a single library; required when
