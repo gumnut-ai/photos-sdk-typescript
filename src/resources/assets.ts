@@ -104,6 +104,77 @@ export class Assets extends APIResource {
   ): APIPromise<AssetCountResponse> {
     return this._client.get('/api/assets/counts', { query, ...options });
   }
+
+  /**
+   * Hard-deletes each specified asset — the database record, the stored file, and
+   * all associated data (faces, album links, etc.). **Irreversible.** Prefer
+   * `trash_assets` for the user's standard delete action so accidents can be
+   * recovered.
+   *
+   * Up to 100 ids per request; over-cap requests return 422.
+   */
+  deleteList(params: AssetDeleteListParams, options?: RequestOptions): APIPromise<void> {
+    const { library_id, ...body } = params;
+    return this._client.delete('/api/assets', {
+      query: { library_id },
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Hard-deletes every trashed asset in the caller's library in one shot — storage
+   * and CDN are cleaned up via the same outbox path as the scheduled purge task.
+   * **Irreversible**. Deliberately not exposed as an MCP tool.
+   */
+  emptyTrash(
+    params: AssetEmptyTrashParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { library_id } = params ?? {};
+    return this._client.post('/api/assets/empty-trash', {
+      query: { library_id },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Restores trashed assets so they reappear in default list/search results.
+   * Idempotent — assets that are already live are silently skipped.
+   *
+   * Pairs with `trash_assets`: assets soft-deleted there can be brought back here
+   * within the retention window.
+   */
+  restore(params: AssetRestoreParams, options?: RequestOptions): APIPromise<void> {
+    const { library_id, ...body } = params;
+    return this._client.post('/api/assets/restore', {
+      query: { library_id },
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Soft-deletes the given assets. Trashed assets are excluded from default
+   * list/search results and are purged after the configured retention window.
+   * **Reversible** via `restore_assets` until purge.
+   *
+   * Use this for the user's standard 'delete' action. To delete forever in one step,
+   * use `permanently_delete_assets` instead — but prefer trash so the user can
+   * recover from accidental deletes.
+   */
+  trash(params: AssetTrashParams, options?: RequestOptions): APIPromise<void> {
+    const { library_id, ...body } = params;
+    return this._client.post('/api/assets/trash', {
+      query: { library_id },
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
 }
 
 export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
@@ -629,6 +700,56 @@ export interface AssetCountsParams {
   state?: 'live' | 'trashed' | 'all';
 }
 
+export interface AssetDeleteListParams {
+  /**
+   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 100
+   * ids per request.
+   */
+  ids: Array<string>;
+
+  /**
+   * Query param: Library that owns the assets. Optional if the user has a single
+   * library; required when they have multiple.
+   */
+  library_id?: string | null;
+}
+
+export interface AssetEmptyTrashParams {
+  /**
+   * Library whose trashed assets to permanently delete. Optional if the user has a
+   * single library; required when they have multiple.
+   */
+  library_id?: string | null;
+}
+
+export interface AssetRestoreParams {
+  /**
+   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 100
+   * ids per request.
+   */
+  ids: Array<string>;
+
+  /**
+   * Query param: Library that owns the assets. Optional if the user has a single
+   * library; required when they have multiple.
+   */
+  library_id?: string | null;
+}
+
+export interface AssetTrashParams {
+  /**
+   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 100
+   * ids per request.
+   */
+  ids: Array<string>;
+
+  /**
+   * Query param: Library that owns the assets. Optional if the user has a single
+   * library; required when they have multiple.
+   */
+  library_id?: string | null;
+}
+
 export declare namespace Assets {
   export {
     type AssetCountResponse as AssetCountResponse,
@@ -641,5 +762,9 @@ export declare namespace Assets {
     type AssetListParams as AssetListParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
     type AssetCountsParams as AssetCountsParams,
+    type AssetDeleteListParams as AssetDeleteListParams,
+    type AssetEmptyTrashParams as AssetEmptyTrashParams,
+    type AssetRestoreParams as AssetRestoreParams,
+    type AssetTrashParams as AssetTrashParams,
   };
 }
