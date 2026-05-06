@@ -38,16 +38,21 @@ import {
   AssetCountResponse,
   AssetCountsParams,
   AssetCreateParams,
+  AssetDeleteListParams,
+  AssetEmptyTrashParams,
   AssetExistenceResponse,
   AssetListParams,
   AssetLiteResponse,
   AssetResponse,
   AssetResponsesCursorPage,
+  AssetRestoreParams,
+  AssetTrashParams,
   Assets,
   MetadataResponse,
 } from './resources/assets';
 import { EventGetParams, Events, EventsResponse, ExifResponse } from './resources/events';
 import {
+  ClusterAssignmentResponse,
   FaceDeleteParams,
   FaceListParams,
   FaceResponse,
@@ -72,6 +77,7 @@ import {
   OAuthExchangeParams,
 } from './resources/oauth';
 import {
+  ClusterMetricsResponse,
   People,
   PersonCreateParams,
   PersonListParams,
@@ -891,6 +897,10 @@ export declare namespace Gumnut {
     type AssetListParams as AssetListParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
     type AssetCountsParams as AssetCountsParams,
+    type AssetDeleteListParams as AssetDeleteListParams,
+    type AssetEmptyTrashParams as AssetEmptyTrashParams,
+    type AssetRestoreParams as AssetRestoreParams,
+    type AssetTrashParams as AssetTrashParams,
   };
 
   export {
@@ -918,6 +928,7 @@ export declare namespace Gumnut {
 
   export {
     Faces as Faces,
+    type ClusterAssignmentResponse as ClusterAssignmentResponse,
     type FaceResponse as FaceResponse,
     type FaceResponsesCursorPage as FaceResponsesCursorPage,
     type FaceRetrieveParams as FaceRetrieveParams,
@@ -945,6 +956,7 @@ export declare namespace Gumnut {
 
   export {
     People as People,
+    type ClusterMetricsResponse as ClusterMetricsResponse,
     type PersonResponse as PersonResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,

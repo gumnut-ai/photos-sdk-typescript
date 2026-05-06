@@ -101,6 +101,35 @@ export class People extends APIResource {
 export type PersonResponsesCursorPage = CursorPage<PersonResponse>;
 
 /**
+ * Cohesion metrics for a Person's face cluster — surfaced via
+ * `include=cluster_metrics` on the people endpoints. These describe how tight the
+ * cluster is in embedding space (lower = more cohesive) and drive both the
+ * production face-assignment cohesion gate and the operator-facing face cleanup
+ * dashboard.
+ */
+export interface ClusterMetricsResponse {
+  /**
+   * Number of faces that fed into the centroid and pairwise metrics. This is the
+   * cluster-membership count, **not** the same as `asset_count` — `face_count`
+   * counts every face row, while `asset_count` counts distinct assets (one asset can
+   * contribute multiple faces of the same person).
+   */
+  face_count: number;
+
+  /**
+   * Mean pairwise cosine distance between faces in this person's cluster.
+   */
+  pairwise_mean: number;
+
+  /**
+   * 90th-percentile pairwise cosine distance between faces in this person's cluster.
+   * Lower = more cohesive cluster; loose clusters (higher pairwise_p90) are gated
+   * out of the face-assignment path to prevent further drift.
+   */
+  pairwise_p90: number;
+}
+
+/**
  * Represents a person identified through face clustering and recognition.
  */
 export interface PersonResponse {
@@ -152,7 +181,7 @@ export interface PersonResponse {
    * production face-assignment cohesion gate and the operator-facing face cleanup
    * dashboard.
    */
-  cluster_metrics?: PersonResponse.ClusterMetrics | null;
+  cluster_metrics?: ClusterMetricsResponse | null;
 
   /**
    * Optional name assigned to this person
@@ -163,37 +192,6 @@ export interface PersonResponse {
    * ID of the face resource used as this person's thumbnail
    */
   thumbnail_face_id?: string | null;
-}
-
-export namespace PersonResponse {
-  /**
-   * Cohesion metrics for a Person's face cluster — surfaced via
-   * `include=cluster_metrics` on the people endpoints. These describe how tight the
-   * cluster is in embedding space (lower = more cohesive) and drive both the
-   * production face-assignment cohesion gate and the operator-facing face cleanup
-   * dashboard.
-   */
-  export interface ClusterMetrics {
-    /**
-     * Number of faces that fed into the centroid and pairwise metrics. This is the
-     * cluster-membership count, **not** the same as `asset_count` — `face_count`
-     * counts every face row, while `asset_count` counts distinct assets (one asset can
-     * contribute multiple faces of the same person).
-     */
-    face_count: number;
-
-    /**
-     * Mean pairwise cosine distance between faces in this person's cluster.
-     */
-    pairwise_mean: number;
-
-    /**
-     * 90th-percentile pairwise cosine distance between faces in this person's cluster.
-     * Lower = more cohesive cluster; loose clusters (higher pairwise_p90) are gated
-     * out of the face-assignment path to prevent further drift.
-     */
-    pairwise_p90: number;
-  }
 }
 
 export interface PersonCreateParams {
@@ -327,6 +325,7 @@ export interface PersonMergeParams {
 
 export declare namespace People {
   export {
+    type ClusterMetricsResponse as ClusterMetricsResponse,
     type PersonResponse as PersonResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,
