@@ -11,7 +11,8 @@ export class AssetsAssociations extends APIResource {
    * Adds one or more existing assets to the specified album. Assets must already be
    * in the same library as the album (this tool does not upload new assets). Assets
    * already in the album are silently skipped and returned separately as
-   * `duplicate_assets`. Idempotent: calling with the same IDs twice leaves the album
+   * `duplicate_assets`; missing or different-library IDs are skipped and returned as
+   * `not_found_assets`. Idempotent: calling with the same IDs twice leaves the album
    * in the same state.
    *
    * Up to 100 ids per request; over-cap requests return 422.
@@ -62,6 +63,12 @@ export interface AssetsAssociationAddResponse {
    * an error).
    */
   duplicate_assets: Array<string>;
+
+  /**
+   * Asset IDs that were skipped because they do not exist or do not belong to the
+   * album's library.
+   */
+  not_found_assets: Array<string>;
 }
 
 export interface AssetsAssociationAddParams {
