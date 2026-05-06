@@ -34,11 +34,16 @@ export {
   type AssetListParams,
   type AssetCheckExistenceParams,
   type AssetCountsParams,
+  type AssetDeleteListParams,
+  type AssetEmptyTrashParams,
+  type AssetRestoreParams,
+  type AssetTrashParams,
   type AssetResponsesCursorPage,
 } from './assets';
 export { Events, type EventsResponse, type ExifResponse, type EventGetParams } from './events';
 export {
   Faces,
+  type ClusterAssignmentResponse,
   type FaceResponse,
   type FaceRetrieveParams,
   type FaceUpdateParams,
@@ -63,6 +68,7 @@ export {
 } from './oauth';
 export {
   People,
+  type ClusterMetricsResponse,
   type PersonResponse,
   type PersonCreateParams,
   type PersonRetrieveParams,

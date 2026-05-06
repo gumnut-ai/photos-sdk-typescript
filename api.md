@@ -37,6 +37,10 @@ Methods:
 - <code title="delete /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">delete</a>(assetID) -> void</code>
 - <code title="post /api/assets/exist">client.assets.<a href="./src/resources/assets.ts">checkExistence</a>({ ...params }) -> AssetExistenceResponse</code>
 - <code title="get /api/assets/counts">client.assets.<a href="./src/resources/assets.ts">counts</a>({ ...params }) -> AssetCountResponse</code>
+- <code title="delete /api/assets">client.assets.<a href="./src/resources/assets.ts">deleteList</a>({ ...params }) -> void</code>
+- <code title="post /api/assets/empty-trash">client.assets.<a href="./src/resources/assets.ts">emptyTrash</a>({ ...params }) -> void</code>
+- <code title="post /api/assets/restore">client.assets.<a href="./src/resources/assets.ts">restore</a>({ ...params }) -> void</code>
+- <code title="post /api/assets/trash">client.assets.<a href="./src/resources/assets.ts">trash</a>({ ...params }) -> void</code>
 
 # Albums
 
@@ -90,6 +94,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/faces.ts">ClusterAssignmentResponse</a></code>
 - <code><a href="./src/resources/faces.ts">FaceResponse</a></code>
 
 Methods:
@@ -132,6 +137,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/people.ts">ClusterMetricsResponse</a></code>
 - <code><a href="./src/resources/people.ts">PersonResponse</a></code>
 
 Methods:
