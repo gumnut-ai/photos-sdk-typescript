@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { Gumnut } from '../client';
+import type { GumnutAI } from '../client';
 
 export abstract class APIResource {
-  protected _client: Gumnut;
+  protected _client: GumnutAI;
 
-  constructor(client: Gumnut) {
+  constructor(client: GumnutAI) {
     this._client = client;
   }
 }

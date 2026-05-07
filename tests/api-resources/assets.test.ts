@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Gumnut, { toFile } from 'gumnut-sdk';
+import GumnutAI, { toFile } from 'gumnut-sdk';
 
-const client = new Gumnut({
+const client = new GumnutAI({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -80,7 +80,7 @@ describe('resource assets', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Gumnut.NotFoundError);
+    ).rejects.toThrow(GumnutAI.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -136,7 +136,7 @@ describe('resource assets', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(Gumnut.NotFoundError);
+    ).rejects.toThrow(GumnutAI.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -173,7 +173,7 @@ describe('resource assets', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.assets.emptyTrash({ library_id: 'library_id' }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Gumnut.NotFoundError);
+    ).rejects.toThrow(GumnutAI.NotFoundError);
   });
 
   // Mock server tests are disabled
