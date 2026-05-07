@@ -84,7 +84,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/events.ts">EventsResponse</a></code>
-- <code><a href="./src/resources/events.ts">ExifResponse</a></code>
 
 Methods:
 

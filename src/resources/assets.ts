@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as EventsAPI from './events';
 import * as FacesAPI from './faces';
 import * as PeopleAPI from './people';
 import * as Shared from './shared';
@@ -324,15 +323,10 @@ export interface AssetResponse {
   /**
    * AI-generated description of the asset's content, quality, and composition. null
    * means description generation has not yet run; empty string means the model
-   * refused to describe the asset. Distinct from exif.description (camera-embedded
-   * EXIF metadata).
+   * refused to describe the asset. Distinct from metadata.description
+   * (camera-embedded EXIF metadata).
    */
   description?: string | null;
-
-  /**
-   * EXIF metadata extracted from image and video files.
-   */
-  exif?: EventsAPI.ExifResponse | null;
 
   /**
    * All faces detected in this asset
