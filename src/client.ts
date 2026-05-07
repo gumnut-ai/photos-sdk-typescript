@@ -25,7 +25,14 @@ import {
   AlbumAssetResponsesCursorPage,
   AlbumAssets,
 } from './resources/album-assets';
-import { APIKeyResponse, APIKeys } from './resources/api-keys';
+import {
+  APIKeyCreateParams,
+  APIKeyCreateResponse,
+  APIKeyListResponse,
+  APIKeyResponse,
+  APIKeyUpdateParams,
+  APIKeys,
+} from './resources/api-keys';
 import {
   AssetCheckExistenceParams,
   AssetCountResponse,
@@ -869,7 +876,14 @@ export declare namespace Gumnut {
   export import CursorPage = Pagination.CursorPage;
   export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
 
-  export { APIKeys as APIKeys, type APIKeyResponse as APIKeyResponse };
+  export {
+    APIKeys as APIKeys,
+    type APIKeyResponse as APIKeyResponse,
+    type APIKeyCreateResponse as APIKeyCreateResponse,
+    type APIKeyListResponse as APIKeyListResponse,
+    type APIKeyCreateParams as APIKeyCreateParams,
+    type APIKeyUpdateParams as APIKeyUpdateParams,
+  };
 
   export {
     Assets as Assets,
