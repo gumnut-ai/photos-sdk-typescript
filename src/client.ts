@@ -126,7 +126,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['GUMNUT_AI_BASE_URL'].
+   * Defaults to process.env['GUMNUT_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -180,7 +180,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['GUMNUT_AI_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['GUMNUT_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -193,9 +193,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Gumnut AI API.
+ * API Client for interfacing with the Gumnut API.
  */
-export class GumnutAI {
+export class Gumnut {
   apiKey: string | null;
 
   baseURL: string;
@@ -211,10 +211,10 @@ export class GumnutAI {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Gumnut AI API.
+   * API Client for interfacing with the Gumnut API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['GUMNUT_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['GUMNUT_AI_BASE_URL'] ?? https://api.gumnut.ai] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['GUMNUT_BASE_URL'] ?? https://api.gumnut.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -223,7 +223,7 @@ export class GumnutAI {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('GUMNUT_AI_BASE_URL'),
+    baseURL = readEnv('GUMNUT_BASE_URL'),
     apiKey = readEnv('GUMNUT_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
@@ -234,21 +234,21 @@ export class GumnutAI {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? GumnutAI.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Gumnut.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('GUMNUT_AI_LOG'), "process.env['GUMNUT_AI_LOG']", this) ??
+      parseLogLevel(readEnv('GUMNUT_LOG'), "process.env['GUMNUT_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
 
-    const customHeadersEnv = readEnv('GUMNUT_AI_CUSTOM_HEADERS');
+    const customHeadersEnv = readEnv('GUMNUT_CUSTOM_HEADERS');
     if (customHeadersEnv) {
       const parsed: Record<string, string> = {};
       for (const line of customHeadersEnv.split('\n')) {
@@ -593,7 +593,7 @@ export class GumnutAI {
     options: PromiseOrValue<FinalRequestOptions>,
   ): Pagination.PagePromise<PageClass, Item> {
     const request = this.makeRequest(options, null, undefined);
-    return new Pagination.PagePromise<PageClass, Item>(this as any as GumnutAI, request, Page);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Gumnut, request, Page);
   }
 
   async fetchWithTimeout(
@@ -824,10 +824,10 @@ export class GumnutAI {
     }
   }
 
-  static GumnutAI = this;
+  static Gumnut = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static GumnutAIError = Errors.GumnutAIError;
+  static GumnutError = Errors.GumnutError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -857,20 +857,20 @@ export class GumnutAI {
   users: API.Users = new API.Users(this);
 }
 
-GumnutAI.APIKeys = APIKeys;
-GumnutAI.Assets = Assets;
-GumnutAI.Albums = Albums;
-GumnutAI.AlbumAssets = AlbumAssets;
-GumnutAI.Events = Events;
-GumnutAI.Faces = Faces;
-GumnutAI.Libraries = Libraries;
-GumnutAI.OAuth = OAuth;
-GumnutAI.People = People;
-GumnutAI.Ping = Ping;
-GumnutAI.Search = Search;
-GumnutAI.Users = Users;
+Gumnut.APIKeys = APIKeys;
+Gumnut.Assets = Assets;
+Gumnut.Albums = Albums;
+Gumnut.AlbumAssets = AlbumAssets;
+Gumnut.Events = Events;
+Gumnut.Faces = Faces;
+Gumnut.Libraries = Libraries;
+Gumnut.OAuth = OAuth;
+Gumnut.People = People;
+Gumnut.Ping = Ping;
+Gumnut.Search = Search;
+Gumnut.Users = Users;
 
-export declare namespace GumnutAI {
+export declare namespace Gumnut {
   export type RequestOptions = Opts.RequestOptions;
 
   export import CursorPage = Pagination.CursorPage;
