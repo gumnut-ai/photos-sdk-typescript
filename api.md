@@ -9,15 +9,6 @@ Types:
 Types:
 
 - <code><a href="./src/resources/api-keys.ts">APIKeyResponse</a></code>
-- <code><a href="./src/resources/api-keys.ts">APIKeyCreateResponse</a></code>
-- <code><a href="./src/resources/api-keys.ts">APIKeyListResponse</a></code>
-
-Methods:
-
-- <code title="post /api-keys/">client.apiKeys.<a href="./src/resources/api-keys.ts">create</a>({ ...params }) -> APIKeyCreateResponse</code>
-- <code title="patch /api-keys/{key_id}">client.apiKeys.<a href="./src/resources/api-keys.ts">update</a>(keyID, { ...params }) -> APIKeyResponse</code>
-- <code title="get /api-keys/">client.apiKeys.<a href="./src/resources/api-keys.ts">list</a>() -> APIKeyListResponse</code>
-- <code title="delete /api-keys/{key_id}">client.apiKeys.<a href="./src/resources/api-keys.ts">delete</a>(keyID) -> void</code>
 
 # Assets
 
