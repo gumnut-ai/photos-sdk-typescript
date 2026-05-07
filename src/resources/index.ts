@@ -1,7 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
-export { APIKeys, type APIKeyResponse } from './api-keys';
+export {
+  APIKeys,
+  type APIKeyResponse,
+  type APIKeyCreateResponse,
+  type APIKeyListResponse,
+  type APIKeyCreateParams,
+  type APIKeyUpdateParams,
+} from './api-keys';
 export {
   AlbumAssets,
   type AlbumAssetResponse,
