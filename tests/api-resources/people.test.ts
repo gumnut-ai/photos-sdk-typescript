@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import GumnutAI from 'gumnut-sdk';
+import Gumnut from 'gumnut-sdk';
 
-const client = new GumnutAI({
+const client = new Gumnut({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -37,7 +37,7 @@ describe('resource people', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.people.retrieve('person_id', { include: 'include' }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(GumnutAI.NotFoundError);
+    ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -82,7 +82,7 @@ describe('resource people', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(GumnutAI.NotFoundError);
+    ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
   // Mock server tests are disabled
