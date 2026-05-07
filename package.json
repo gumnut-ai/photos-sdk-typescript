@@ -1,8 +1,8 @@
 {
   "name": "gumnut-sdk",
   "version": "0.88.0",
-  "description": "The official TypeScript library for the Gumnut API",
-  "author": "Gumnut <tedmao@gmail.com>",
+  "description": "The official TypeScript library for the Gumnut AI API",
+  "author": "Gumnut AI <tedmao@gmail.com>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
