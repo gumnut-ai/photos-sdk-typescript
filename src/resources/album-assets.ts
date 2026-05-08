@@ -8,10 +8,11 @@ import { path } from '../internal/utils/path';
 
 export class AlbumAssets extends APIResource {
   /**
-   * Returns paginated _link_ records describing which assets are in which albums —
-   * each row contains `album_id` + `asset_id` + link timestamps, not the full asset
-   * or album metadata. Use this when you specifically need the junction records (for
-   * sync or change tracking).
+   * Returns paginated _link_ records (lightweight join rows between albums and
+   * assets) describing which assets are in which albums — each row contains
+   * `album_id` + `asset_id` + link timestamps, not the full asset or album metadata.
+   * Use this when you specifically need the junction records (for sync or change
+   * tracking).
    *
    * **For most use cases you want a different tool:** use `list_assets` with
    * `album_id` to get the full asset metadata for a specific album; use
@@ -31,8 +32,8 @@ export class AlbumAssets extends APIResource {
   }
 
   /**
-   * Fetches one album-asset link record (the junction row between an album and an
-   * asset). Rarely needed directly; most callers want `get_asset` or `get_album`
+   * Fetches one album-asset link record by ID (the junction row between an album and
+   * an asset). Rarely needed directly; most callers want `get_asset` or `get_album`
    * instead.
    */
   get(albumAssetID: string, options?: RequestOptions): APIPromise<AlbumAssetResponse> {

@@ -22,17 +22,18 @@ export class Albums extends APIResource {
   );
 
   /**
-   * Creates an album (with optional name and description) and returns it. The album
-   * starts empty — follow up with `add_assets_to_album` to populate it. To rename an
-   * existing album, use `update_album` instead of creating a new one.
+   * Creates a new, empty album in a library (with optional name and description) and
+   * returns it. The album starts empty — follow up with `add_assets_to_album` to
+   * populate it. To rename an existing album, use `update_album` instead of creating
+   * a new one.
    */
   create(body: AlbumCreateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.post('/api/albums', { body, ...options });
   }
 
   /**
-   * Fetches one album's metadata (name, description, cover, counts). Use when you
-   * already have an album ID. Does not include the album's assets — use
+   * Fetches one album's metadata by ID (name, description, cover, counts). Use when
+   * you already have an album ID. Does not include the album's assets — use
    * `list_album_assets` or `list_assets` with `album_id` for that.
    */
   retrieve(albumID: string, options?: RequestOptions): APIPromise<AlbumResponse> {
@@ -40,9 +41,9 @@ export class Albums extends APIResource {
   }
 
   /**
-   * Updates the `name` and/or `description` of an existing album. Only the fields
-   * included in the request body are changed. To modify the contents of an album,
-   * use `add_assets_to_album` / `remove_assets_from_album` instead — this tool only
+   * Renames an album or changes its description. Only the fields included in the
+   * request body are changed. To modify the contents of an album, use
+   * `add_assets_to_album` / `remove_assets_from_album` instead — this tool only
    * changes album metadata.
    */
   update(albumID: string, body: AlbumUpdateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
@@ -50,9 +51,9 @@ export class Albums extends APIResource {
   }
 
   /**
-   * Returns a paginated list of albums ordered by creation time (newest first). Use
-   * this to enumerate a user's albums or to find which albums contain a specific
-   * asset (via `asset_id`).
+   * Returns a paginated list of albums ordered by creation time (newest first),
+   * optionally filtered by asset membership or ID. Use this to enumerate a user's
+   * albums or to find which albums contain a specific asset (via `asset_id`).
    *
    * `list_albums` returns album metadata only — to list the assets inside a
    * particular album, use `list_album_assets` or `list_assets` with `album_id`.
