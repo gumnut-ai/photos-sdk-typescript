@@ -6,10 +6,10 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Users extends APIResource {
   /**
-   * Returns the authenticated caller's profile. Use this at the start of a session
-   * to ground subsequent calls (e.g., to confirm the caller's identity before making
-   * destructive changes). This tool does not accept a user ID; it always returns the
-   * authenticated caller.
+   * Returns the profile of the authenticated user (the caller). Use this at the
+   * start of a session to ground subsequent calls (e.g., to confirm the caller's
+   * identity before making destructive changes). This tool does not accept a user
+   * ID; it always returns the authenticated caller.
    */
   me(options?: RequestOptions): APIPromise<UserResponse> {
     return this._client.get('/api/users/me', options);
