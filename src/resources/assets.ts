@@ -526,6 +526,16 @@ export interface MetadataResponse {
   rating?: number | null;
 
   /**
+   * Pre-rotation raw height; null when not available
+   */
+  raw_height?: number | null;
+
+  /**
+   * Pre-rotation raw width; null when not available
+   */
+  raw_width?: number | null;
+
+  /**
    * State/province name
    */
   state?: string | null;
