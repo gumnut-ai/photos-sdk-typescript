@@ -41,9 +41,9 @@ export class Albums extends APIResource {
   }
 
   /**
-   * Renames an album or changes its description. Only the fields included in the
-   * request body are changed. To modify the contents of an album, use
-   * `add_assets_to_album` / `remove_assets_from_album` instead — this tool only
+   * Updates album metadata (name, description, and/or cover). Only the fields
+   * included in the request body are changed. To modify the contents of an album,
+   * use `add_assets_to_album` / `remove_assets_from_album` instead — this tool only
    * changes album metadata.
    */
   update(albumID: string, body: AlbumUpdateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
@@ -115,7 +115,9 @@ export interface AlbumResponse {
   updated_at: string;
 
   /**
-   * ID of the asset used as the album cover
+   * ID of the asset displayed as the album cover. May be a server-selected default
+   * when the album has no explicit cover set, or null when the album has no live
+   * assets.
    */
   album_cover_asset_id?: string | null;
 
@@ -160,6 +162,13 @@ export interface AlbumCreateParams {
 }
 
 export interface AlbumUpdateParams {
+  /**
+   * Asset ID (with `asset_` prefix) to use as the album cover. Must be a live asset
+   * already in the album — get IDs from `list_album_assets`. Pass `null` to clear
+   * the explicit cover. Omit to leave unchanged.
+   */
+  album_cover_asset_id?: string | null;
+
   /**
    * New free-form description for the album. Omit to leave unchanged.
    */
