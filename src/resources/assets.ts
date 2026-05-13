@@ -580,10 +580,10 @@ export interface AssetListParams extends CursorPageParams {
   album_id?: string | null;
 
   /**
-   * Look up specific assets by ID (max 100; each ID has the `asset_` prefix). Use
-   * this for bulk fetch when you already have asset IDs. Combines with other filters
-   * (album_id, person_id, datetime range) using AND logic — the result is the
-   * intersection.
+   * Look up specific assets by ID (max 100; each ID has the `asset_` prefix).
+   * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
+   * `ids=asset_1,asset_2`). Combines with other filters (album_id, person_id,
+   * datetime range) using AND logic — the result is the intersection.
    */
   ids?: Array<string> | null;
 

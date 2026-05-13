@@ -126,11 +126,12 @@ export interface EventGetParams {
   created_at_lt?: string | null;
 
   /**
-   * Comma-separated list of entity types to include (e.g., `asset,album`). Valid
-   * values: `asset`, `album`, `person`, `face`, `album_asset`, `metadata`. Omit to
-   * receive events for all types.
+   * Entity types to include (e.g., `asset`, `album`). Valid values: `asset`,
+   * `album`, `person`, `face`, `album_asset`, `metadata`. Accepts multiple
+   * `entity_types=` query params or a single comma-delimited value (e.g.,
+   * `entity_types=asset,album`). Omit to receive events for all types.
    */
-  entity_types?: string | null;
+  entity_types?: Array<string> | null;
 
   /**
    * Library to stream events from. Optional if the user has a single library;

@@ -235,10 +235,10 @@ export interface PersonCreateParams {
 
 export interface PersonRetrieveParams {
   /**
-   * Comma-separated list of opt-in expansion fields. See `list_people` for supported
-   * values.
+   * Opt-in expansion fields. See `list_people` for supported values. Accepts
+   * multiple `include=` query params or a single comma-delimited value.
    */
-  include?: string | null;
+  include?: Array<string> | null;
 }
 
 export interface PersonUpdateParams {
@@ -283,19 +283,20 @@ export interface PersonListParams extends CursorPageParams {
   asset_id?: string | null;
 
   /**
-   * Look up specific people by ID (max 100; each ID has the `person_` prefix). When
-   * set, `name_filter` defaults to `all` so unnamed clusters are included in the
-   * lookup.
+   * Look up specific people by ID (max 100; each ID has the `person_` prefix).
+   * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
+   * `ids=person_1,person_2`). When set, `name_filter` defaults to `all` so unnamed
+   * clusters are included in the lookup.
    */
   ids?: Array<string> | null;
 
   /**
-   * Comma-separated list of opt-in expansion fields. Supported values:
-   * `cluster_metrics` (adds the nested `cluster_metrics` object — `pairwise_p90`,
-   * `pairwise_mean`, `face_count` — for each Person with a populated centroid).
-   * Unknown values return 422.
+   * Opt-in expansion fields. Supported values: `cluster_metrics` (adds the nested
+   * `cluster_metrics` object — `pairwise_p90`, `pairwise_mean`, `face_count` — for
+   * each Person with a populated centroid). Accepts multiple `include=` query params
+   * or a single comma-delimited value. Unknown values return 422.
    */
-  include?: string | null;
+  include?: Array<string> | null;
 
   /**
    * Library to list from. Optional if the user has a single library; required when

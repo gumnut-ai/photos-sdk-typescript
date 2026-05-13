@@ -188,10 +188,10 @@ export interface FaceResponse {
 
 export interface FaceRetrieveParams {
   /**
-   * Comma-separated list of opt-in expansion fields. See `list_faces` for supported
-   * values.
+   * Opt-in expansion fields. See `list_faces` for supported values. Accepts multiple
+   * `include=` query params or a single comma-delimited value.
    */
-  include?: string | null;
+  include?: Array<string> | null;
 
   /**
    * Library the face belongs to. Optional if the user has a single library; required
@@ -224,16 +224,19 @@ export interface FaceListParams extends CursorPageParams {
   asset_id?: string | null;
 
   /**
-   * Look up specific faces by ID (max 100). IDs use the `face_` prefix.
+   * Look up specific faces by ID (max 100). IDs use the `face_` prefix. Accepts
+   * multiple `ids=` query params or a single comma-delimited value (e.g.,
+   * `ids=face_1,face_2`).
    */
   ids?: Array<string> | null;
 
   /**
-   * Comma-separated list of opt-in expansion fields. Supported values:
-   * `cluster_assignment` (adds the nested `cluster_assignment` object —
-   * `distance_to_person` and a top-K `candidates` list of nearby Persons).
+   * Opt-in expansion fields. Supported values: `cluster_assignment` (adds the nested
+   * `cluster_assignment` object — `distance_to_person` and a top-K `candidates` list
+   * of nearby Persons). Accepts multiple `include=` query params or a single
+   * comma-delimited value (e.g., `include=cluster_assignment`).
    */
-  include?: string | null;
+  include?: Array<string> | null;
 
   /**
    * Library to list from. Optional if the user has a single library; required when

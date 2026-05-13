@@ -26,7 +26,7 @@ describe('resource faces', () => {
     await expect(
       client.faces.retrieve(
         'face_id',
-        { include: 'include', library_id: 'library_id' },
+        { include: ['string', 'string'], library_id: 'library_id' },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Gumnut.NotFoundError);
@@ -64,7 +64,7 @@ describe('resource faces', () => {
         {
           asset_id: 'asset_id',
           ids: ['string', 'string'],
-          include: 'include',
+          include: ['string', 'string'],
           library_id: 'library_id',
           limit: 1,
           person_id: 'person_id',
