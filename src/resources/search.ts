@@ -167,9 +167,9 @@ export interface SearchSearchAssetsParams {
   page?: number;
 
   /**
-   * Filter to only include assets containing ALL of these person IDs. Can be
-   * comma-delimited string (e.g. 'person_123,person_abc') or multiple query
-   * parameters.
+   * Filter to assets containing ALL of these person IDs (intersection, not union).
+   * Accepts multiple `person_ids=` form fields or a single comma-delimited value
+   * (e.g., `person_123,person_abc`). Get person IDs from `list_people`.
    */
   person_ids?: Array<string> | null;
 
