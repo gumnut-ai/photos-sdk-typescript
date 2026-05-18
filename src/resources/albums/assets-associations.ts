@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -34,12 +33,12 @@ export class AssetsAssociations extends APIResource {
    *
    * Up to 100 ids per request; over-cap requests return 422.
    */
-  remove(albumID: string, body: AssetsAssociationRemoveParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/albums/${albumID}/assets`, {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  remove(
+    albumID: string,
+    body: AssetsAssociationRemoveParams,
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    return this._client.delete(path`/api/albums/${albumID}/assets`, { body, ...options });
   }
 }
 
@@ -71,6 +70,17 @@ export interface AssetsAssociationAddResponse {
   not_found_assets: Array<string>;
 }
 
+/**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export type AssetsAssociationRemoveResponse = unknown;
+
 export interface AssetsAssociationAddParams {
   /**
    * Asset IDs (with `asset_` prefix) to associate with the album. Get IDs from
@@ -93,6 +103,7 @@ export declare namespace AssetsAssociations {
   export {
     type AlbumAssetAssociation as AlbumAssetAssociation,
     type AssetsAssociationAddResponse as AssetsAssociationAddResponse,
+    type AssetsAssociationRemoveResponse as AssetsAssociationRemoveResponse,
     type AssetsAssociationAddParams as AssetsAssociationAddParams,
     type AssetsAssociationRemoveParams as AssetsAssociationRemoveParams,
   };

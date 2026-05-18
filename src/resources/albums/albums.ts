@@ -8,11 +8,11 @@ import {
   AssetsAssociationAddParams,
   AssetsAssociationAddResponse,
   AssetsAssociationRemoveParams,
+  AssetsAssociationRemoveResponse,
   AssetsAssociations,
 } from './assets-associations';
 import { APIPromise } from '../../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../../core/pagination';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -75,11 +75,8 @@ export class Albums extends APIResource {
    * assets, or `remove_assets_from_album` to detach specific assets from an album
    * you want to keep.
    */
-  delete(albumID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/albums/${albumID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  delete(albumID: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.delete(path`/api/albums/${albumID}`, options);
   }
 }
 
@@ -141,6 +138,17 @@ export interface AlbumResponse {
    */
   start_date?: string | null;
 }
+
+/**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export type AlbumDeleteResponse = unknown;
 
 export interface AlbumCreateParams {
   /**
@@ -206,6 +214,7 @@ Albums.AssetsAssociations = AssetsAssociations;
 export declare namespace Albums {
   export {
     type AlbumResponse as AlbumResponse,
+    type AlbumDeleteResponse as AlbumDeleteResponse,
     type AlbumResponsesCursorPage as AlbumResponsesCursorPage,
     type AlbumCreateParams as AlbumCreateParams,
     type AlbumUpdateParams as AlbumUpdateParams,
@@ -216,6 +225,7 @@ export declare namespace Albums {
     AssetsAssociations as AssetsAssociations,
     type AlbumAssetAssociation as AlbumAssetAssociation,
     type AssetsAssociationAddResponse as AssetsAssociationAddResponse,
+    type AssetsAssociationRemoveResponse as AssetsAssociationRemoveResponse,
     type AssetsAssociationAddParams as AssetsAssociationAddParams,
     type AssetsAssociationRemoveParams as AssetsAssociationRemoveParams,
   };
