@@ -87,4 +87,5 @@ export {
   type SearchSearchParams,
   type SearchSearchAssetsParams,
 } from './search';
+export { Tasks } from './tasks';
 export { Users, type UserResponse } from './users';
