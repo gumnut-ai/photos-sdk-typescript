@@ -62,6 +62,14 @@ describe('resource libraries', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.libraries.list({ state: 'live' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Gumnut.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.libraries.delete('library_id');
     const rawResponse = await responsePromise.asResponse();
