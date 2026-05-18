@@ -118,6 +118,8 @@ Methods:
 - <code title="patch /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">update</a>(libraryID, { ...params }) -> LibraryResponse</code>
 - <code title="get /api/libraries">client.libraries.<a href="./src/resources/libraries.ts">list</a>({ ...params }) -> LibraryListResponse</code>
 - <code title="delete /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">delete</a>(libraryID) -> void</code>
+- <code title="post /api/libraries/{library_id}/restore">client.libraries.<a href="./src/resources/libraries.ts">restore</a>(libraryID) -> LibraryResponse</code>
+- <code title="post /api/libraries/{library_id}/trash">client.libraries.<a href="./src/resources/libraries.ts">trash</a>(libraryID) -> void</code>
 
 # OAuth
 
