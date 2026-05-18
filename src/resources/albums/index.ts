@@ -3,6 +3,7 @@
 export {
   Albums,
   type AlbumResponse,
+  type AlbumDeleteResponse,
   type AlbumCreateParams,
   type AlbumUpdateParams,
   type AlbumListParams,
@@ -12,6 +13,7 @@ export {
   AssetsAssociations,
   type AlbumAssetAssociation,
   type AssetsAssociationAddResponse,
+  type AssetsAssociationRemoveResponse,
   type AssetsAssociationAddParams,
   type AssetsAssociationRemoveParams,
 } from './assets-associations';

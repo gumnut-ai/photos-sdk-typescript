@@ -4,7 +4,6 @@ import { APIResource } from '../core/resource';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -79,11 +78,8 @@ export class People extends APIResource {
    * deleting the whole person. Use `delete_face` to remove a face detection
    * entirely.
    */
-  delete(personID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/people/${personID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  delete(personID: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.delete(path`/api/people/${personID}`, options);
   }
 
   /**
@@ -196,6 +192,17 @@ export interface PersonResponse {
    */
   thumbnail_face_id?: string | null;
 }
+
+/**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export type PersonDeleteResponse = unknown;
 
 export interface PersonCreateParams {
   /**
@@ -331,6 +338,7 @@ export declare namespace People {
   export {
     type ClusterMetricsResponse as ClusterMetricsResponse,
     type PersonResponse as PersonResponse,
+    type PersonDeleteResponse as PersonDeleteResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,
     type PersonRetrieveParams as PersonRetrieveParams,
