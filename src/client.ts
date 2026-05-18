@@ -97,6 +97,7 @@ import {
   SearchSearchAssetsParams,
   SearchSearchParams,
 } from './resources/search';
+import { Tasks } from './resources/tasks';
 import { UserResponse, Users } from './resources/users';
 import {
   AlbumCreateParams,
@@ -856,6 +857,7 @@ export class Gumnut {
   people: API.People = new API.People(this);
   ping: API.Ping = new API.Ping(this);
   search: API.Search = new API.Search(this);
+  tasks: API.Tasks = new API.Tasks(this);
   users: API.Users = new API.Users(this);
 }
 
@@ -870,6 +872,7 @@ Gumnut.OAuth = OAuth;
 Gumnut.People = People;
 Gumnut.Ping = Ping;
 Gumnut.Search = Search;
+Gumnut.Tasks = Tasks;
 Gumnut.Users = Users;
 
 export declare namespace Gumnut {
@@ -974,6 +977,8 @@ export declare namespace Gumnut {
     type SearchSearchParams as SearchSearchParams,
     type SearchSearchAssetsParams as SearchSearchAssetsParams,
   };
+
+  export { Tasks as Tasks };
 
   export { Users as Users, type UserResponse as UserResponse };
 
