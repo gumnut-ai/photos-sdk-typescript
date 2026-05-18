@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.99.0 (2026-05-18)
+
+Full Changelog: [v0.98.0...v0.99.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.98.0...v0.99.0)
+
+### Features
+
+* **api:** library trash/restore endpoints ([4bb90d7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/4bb90d75f828d12a5a55c528d5b05a80369d3c97))
+* **api:** skip task endpoints ([c164d38](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c164d38ce36fadee03ad75e66fff3c289a7fb2b5))
+
 ## 0.98.0 (2026-05-18)
 
 Full Changelog: [v0.97.0...v0.98.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.97.0...v0.98.0)
