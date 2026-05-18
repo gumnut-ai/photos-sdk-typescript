@@ -69,6 +69,33 @@ export class Libraries extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Restores a previously-trashed library so it reappears in default list/search
+   * results. Works as long as the library row still exists — once `get_library`
+   * returns 404 the row is gone and restore is no longer possible. If the background
+   * drain has already started purging assets, restore succeeds but recovers only the
+   * assets the drain hasn't gotten to yet.
+   */
+  restore(libraryID: string, options?: RequestOptions): APIPromise<LibraryResponse> {
+    return this._client.post(path`/api/libraries/${libraryID}/restore`, options);
+  }
+
+  /**
+   * Moves the library and all its contents into the trash. The library becomes
+   * inaccessible by default and can be fully restored within 90 days by calling
+   * `restore_library`. After 90 days the library's assets are gradually purged in
+   * the background; until the library row itself is removed, restore still works but
+   * recovers only the assets not yet purged.
+   *
+   * Idempotent — a second call on an already-trashed library no-ops and returns 204.
+   */
+  trash(libraryID: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/api/libraries/${libraryID}/trash`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
 }
 
 /**
