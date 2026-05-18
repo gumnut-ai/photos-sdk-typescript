@@ -209,4 +209,16 @@ describe('resource assets', () => {
   test.skip('trash: required and optional params', async () => {
     const response = await client.assets.trash({ ids: ['string'], library_id: 'library_id' });
   });
+
+  // Mock server tests are disabled
+  test.skip('updateAsset', async () => {
+    const responsePromise = client.assets.updateAsset('asset_id', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
 });

@@ -174,6 +174,26 @@ export class Assets extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Edits the user-editable metadata for a single asset — description, GPS
+   * coordinates, and original capture datetime. Only fields included in the request
+   * body are changed; others are left untouched. Passing `null` for a field removes
+   * a previously-set value; the response then falls back to the value embedded in
+   * the file when present. `latitude` and `longitude` must be set together (both
+   * written or both cleared).
+   *
+   * Setting or clearing GPS coordinates re-enqueues reverse geocoding so location
+   * names refresh against the new effective coordinates. Setting the datetime moves
+   * the asset in the timeline (`list_assets` ordering).
+   */
+  updateAsset(
+    assetID: string,
+    body: AssetUpdateAssetParams,
+    options?: RequestOptions,
+  ): APIPromise<AssetResponse> {
+    return this._client.patch(path`/api/assets/${assetID}`, { body, ...options });
+  }
 }
 
 export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
@@ -754,6 +774,41 @@ export interface AssetTrashParams {
   library_id?: string | null;
 }
 
+export interface AssetUpdateAssetParams {
+  /**
+   * User-set description for the asset. Pass `null` to remove a previously-set value
+   * (the response then falls back to the description embedded in the file, if any).
+   * Omit to leave unchanged. Distinct from the AI-generated `description` field on
+   * the response — this writes to `metadata.description`.
+   */
+  description?: string | null;
+
+  /**
+   * GPS latitude in decimal degrees, `[-90, 90]`. Must be set together with
+   * `longitude`. Pass `null` (along with `longitude=null`) to remove a
+   * previously-set value; omit to leave unchanged.
+   */
+  latitude?: number | null;
+
+  /**
+   * GPS longitude in decimal degrees, `[-180, 180]`. Must be set together with
+   * `latitude`. Pass `null` (along with `latitude=null`) to remove a previously-set
+   * value; omit to leave unchanged.
+   */
+  longitude?: number | null;
+
+  /**
+   * When the asset was originally captured. Aware values store the offset from
+   * `utcoffset()` alongside; naive values store NULL offset. Pass `null` to remove a
+   * previously-set value — the response then falls back to the datetime embedded in
+   * the file when present, otherwise to the file's upload timestamp. Omit to leave
+   * unchanged.
+   */
+  original_datetime?: string | null;
+
+  [k: string]: unknown;
+}
+
 export declare namespace Assets {
   export {
     type AssetCountResponse as AssetCountResponse,
@@ -770,5 +825,6 @@ export declare namespace Assets {
     type AssetEmptyTrashParams as AssetEmptyTrashParams,
     type AssetRestoreParams as AssetRestoreParams,
     type AssetTrashParams as AssetTrashParams,
+    type AssetUpdateAssetParams as AssetUpdateAssetParams,
   };
 }

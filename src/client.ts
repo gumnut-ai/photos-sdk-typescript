@@ -47,6 +47,7 @@ import {
   AssetResponsesCursorPage,
   AssetRestoreParams,
   AssetTrashParams,
+  AssetUpdateAssetParams,
   Assets,
   MetadataResponse,
 } from './resources/assets';
@@ -901,6 +902,7 @@ export declare namespace Gumnut {
     type AssetEmptyTrashParams as AssetEmptyTrashParams,
     type AssetRestoreParams as AssetRestoreParams,
     type AssetTrashParams as AssetTrashParams,
+    type AssetUpdateAssetParams as AssetUpdateAssetParams,
   };
 
   export {

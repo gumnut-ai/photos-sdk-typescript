@@ -41,6 +41,7 @@ Methods:
 - <code title="post /api/assets/empty-trash">client.assets.<a href="./src/resources/assets.ts">emptyTrash</a>({ ...params }) -> void</code>
 - <code title="post /api/assets/restore">client.assets.<a href="./src/resources/assets.ts">restore</a>({ ...params }) -> void</code>
 - <code title="post /api/assets/trash">client.assets.<a href="./src/resources/assets.ts">trash</a>({ ...params }) -> void</code>
+- <code title="patch /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">updateAsset</a>(assetID, { ...params }) -> AssetResponse</code>
 
 # Albums
 
