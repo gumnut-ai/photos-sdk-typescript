@@ -18,9 +18,8 @@ export class Libraries extends APIResource {
   }
 
   /**
-   * Fetches one library's metadata by ID (name, description, asset count). Use when
-   * you already have a specific `library_id`; for enumerating a user's libraries
-   * prefer `list_libraries`.
+   * Fetches one library's metadata by ID. Returns the library regardless of trash
+   * state.
    */
   retrieve(libraryID: string, options?: RequestOptions): APIPromise<LibraryResponse> {
     return this._client.get(path`/api/libraries/${libraryID}`, options);
@@ -40,20 +39,29 @@ export class Libraries extends APIResource {
   }
 
   /**
-   * Returns every library owned by the authenticated user (no pagination — users
+   * Returns libraries owned by the authenticated user (no pagination — users
    * typically have one or a handful). Call this when another tool's `library_id`
    * parameter is required but you don't yet know which libraries exist. A
    * single-library user can usually omit `library_id` on other tools entirely.
+   *
+   * By default trashed libraries are excluded. Pass `state=trashed` to list the
+   * trash drawer (ordered by most recently trashed) or `state=all` for both.
    */
-  list(options?: RequestOptions): APIPromise<LibraryListResponse> {
-    return this._client.get('/api/libraries', options);
+  list(
+    query: LibraryListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<LibraryListResponse> {
+    return this._client.get('/api/libraries', { query, ...options });
   }
 
   /**
-   * Deletes the library and all its contents — assets (including their stored
-   * files), albums, people, and faces. **Destructive and irreversible** — should be
-   * used only when the user explicitly confirms they want to destroy an entire
-   * library.
+   * Expedites the background purge on a **trashed** library: the 90-day undo window
+   * is waived and the drain begins claiming this library on the next scheduled tick.
+   * Returns 204 immediately; the drain proceeds asynchronously in bounded batches
+   * and does not block on completion. Restore still works until the drain finishes
+   * purging all assets, but past this point it will recover only the assets the
+   * drain hasn't gotten to yet. Returns 409 if the library has not been trashed yet;
+   * trash it first.
    */
   delete(libraryID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/libraries/${libraryID}`, {
@@ -129,11 +137,20 @@ export interface LibraryUpdateParams {
   name?: string | null;
 }
 
+export interface LibraryListParams {
+  /**
+   * Which set of libraries to return: `live` (default — excludes trashed), `trashed`
+   * (only trashed, ordered by most recently trashed), or `all` (both).
+   */
+  state?: 'live' | 'trashed' | 'all';
+}
+
 export declare namespace Libraries {
   export {
     type LibraryResponse as LibraryResponse,
     type LibraryListResponse as LibraryListResponse,
     type LibraryCreateParams as LibraryCreateParams,
     type LibraryUpdateParams as LibraryUpdateParams,
+    type LibraryListParams as LibraryListParams,
   };
 }

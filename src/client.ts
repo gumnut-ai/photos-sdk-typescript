@@ -65,6 +65,7 @@ import {
 import {
   Libraries,
   LibraryCreateParams,
+  LibraryListParams,
   LibraryListResponse,
   LibraryResponse,
   LibraryUpdateParams,
@@ -940,6 +941,7 @@ export declare namespace Gumnut {
     type LibraryListResponse as LibraryListResponse,
     type LibraryCreateParams as LibraryCreateParams,
     type LibraryUpdateParams as LibraryUpdateParams,
+    type LibraryListParams as LibraryListParams,
   };
 
   export {
