@@ -38,6 +38,7 @@ export {
   type AssetEmptyTrashParams,
   type AssetRestoreParams,
   type AssetTrashParams,
+  type AssetUpdateAssetParams,
   type AssetResponsesCursorPage,
 } from './assets';
 export { Events, type EventsResponse, type EventGetParams } from './events';
