@@ -116,7 +116,7 @@ Methods:
 - <code title="post /api/libraries">client.libraries.<a href="./src/resources/libraries.ts">create</a>({ ...params }) -> LibraryResponse</code>
 - <code title="get /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">retrieve</a>(libraryID) -> LibraryResponse</code>
 - <code title="patch /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">update</a>(libraryID, { ...params }) -> LibraryResponse</code>
-- <code title="get /api/libraries">client.libraries.<a href="./src/resources/libraries.ts">list</a>() -> LibraryListResponse</code>
+- <code title="get /api/libraries">client.libraries.<a href="./src/resources/libraries.ts">list</a>({ ...params }) -> LibraryListResponse</code>
 - <code title="delete /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">delete</a>(libraryID) -> void</code>
 
 # OAuth
