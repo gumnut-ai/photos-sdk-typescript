@@ -2,7 +2,6 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -57,17 +56,14 @@ export class Libraries extends APIResource {
   /**
    * Expedites the background purge on a **trashed** library: the 90-day undo window
    * is waived and the drain begins claiming this library on the next scheduled tick.
-   * Returns 204 immediately; the drain proceeds asynchronously in bounded batches
-   * and does not block on completion. Restore still works until the drain finishes
+   * Returns immediately; the drain proceeds asynchronously in bounded batches and
+   * does not block on completion. Restore still works until the drain finishes
    * purging all assets, but past this point it will recover only the assets the
    * drain hasn't gotten to yet. Returns 409 if the library has not been trashed yet;
    * trash it first.
    */
-  delete(libraryID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/libraries/${libraryID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  delete(libraryID: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.delete(path`/api/libraries/${libraryID}`, options);
   }
 
   /**
@@ -88,13 +84,10 @@ export class Libraries extends APIResource {
    * the background; until the library row itself is removed, restore still works but
    * recovers only the assets not yet purged.
    *
-   * Idempotent — a second call on an already-trashed library no-ops and returns 204.
+   * Idempotent — a second call on an already-trashed library no-ops.
    */
-  trash(libraryID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/api/libraries/${libraryID}/trash`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  trash(libraryID: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.post(path`/api/libraries/${libraryID}/trash`, options);
   }
 }
 
@@ -140,6 +133,28 @@ export interface LibraryResponse {
 
 export type LibraryListResponse = Array<LibraryResponse>;
 
+/**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export type LibraryDeleteResponse = unknown;
+
+/**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export type LibraryTrashResponse = unknown;
+
 export interface LibraryCreateParams {
   /**
    * Display name for the new library. Required.
@@ -176,6 +191,8 @@ export declare namespace Libraries {
   export {
     type LibraryResponse as LibraryResponse,
     type LibraryListResponse as LibraryListResponse,
+    type LibraryDeleteResponse as LibraryDeleteResponse,
+    type LibraryTrashResponse as LibraryTrashResponse,
     type LibraryCreateParams as LibraryCreateParams,
     type LibraryUpdateParams as LibraryUpdateParams,
     type LibraryListParams as LibraryListParams,

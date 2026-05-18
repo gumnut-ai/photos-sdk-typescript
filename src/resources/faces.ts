@@ -4,7 +4,6 @@ import { APIResource } from '../core/resource';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -70,13 +69,9 @@ export class Faces extends APIResource {
     faceID: string,
     params: FaceDeleteParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<void> {
+  ): APIPromise<unknown> {
     const { library_id } = params ?? {};
-    return this._client.delete(path`/api/faces/${faceID}`, {
-      query: { library_id },
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/api/faces/${faceID}`, { query: { library_id }, ...options });
   }
 }
 
@@ -186,6 +181,17 @@ export interface FaceResponse {
   timestamp_ms?: number | null;
 }
 
+/**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export type FaceDeleteResponse = unknown;
+
 export interface FaceRetrieveParams {
   /**
    * Opt-in expansion fields. See `list_faces` for supported values. Accepts multiple
@@ -263,6 +269,7 @@ export declare namespace Faces {
   export {
     type ClusterAssignmentResponse as ClusterAssignmentResponse,
     type FaceResponse as FaceResponse,
+    type FaceDeleteResponse as FaceDeleteResponse,
     type FaceResponsesCursorPage as FaceResponsesCursorPage,
     type FaceRetrieveParams as FaceRetrieveParams,
     type FaceUpdateParams as FaceUpdateParams,

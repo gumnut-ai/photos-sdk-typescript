@@ -2,7 +2,6 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
-import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -31,11 +30,8 @@ export class APIKeys extends APIResource {
   /**
    * Deletes a specific API key
    */
-  delete(keyID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/api-keys/${keyID}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  delete(keyID: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.delete(path`/api/api-keys/${keyID}`, options);
   }
 }
 
@@ -109,6 +105,17 @@ export interface APIKeyCreateResponse {
 
 export type APIKeyListResponse = Array<APIKeyResponse>;
 
+/**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export type APIKeyDeleteResponse = unknown;
+
 export interface APIKeyCreateParams {
   name: string;
 }
@@ -122,6 +129,7 @@ export declare namespace APIKeys {
     type APIKeyResponse as APIKeyResponse,
     type APIKeyCreateResponse as APIKeyCreateResponse,
     type APIKeyListResponse as APIKeyListResponse,
+    type APIKeyDeleteResponse as APIKeyDeleteResponse,
     type APIKeyCreateParams as APIKeyCreateParams,
     type APIKeyUpdateParams as APIKeyUpdateParams,
   };
