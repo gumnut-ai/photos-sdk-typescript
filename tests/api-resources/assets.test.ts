@@ -126,7 +126,7 @@ describe('resource assets', () => {
       client.assets.counts(
         {
           album_id: 'album_id',
-          group_by: 'group_by',
+          group_by: 'month',
           library_id: 'library_id',
           limit: 1,
           local_datetime_after: '2019-12-27T18:11:19.117Z',
