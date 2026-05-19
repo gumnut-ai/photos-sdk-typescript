@@ -70,10 +70,9 @@ export class Albums extends APIResource {
 
   /**
    * Deletes the album itself. Assets that were in the album remain in the library —
-   * only the album and its asset-links are removed. Use `trash_assets` (or
-   * `permanently_delete_assets` for irreversible removal) to delete the underlying
-   * assets, or `remove_assets_from_album` to detach specific assets from an album
-   * you want to keep.
+   * only the album and its asset-links are removed. Use `trash_assets` to
+   * soft-delete the underlying assets, or `remove_assets_from_album` to detach
+   * specific assets from an album you want to keep.
    */
   delete(albumID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/api/albums/${albumID}`, options);
