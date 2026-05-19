@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.100.1 (2026-05-19)
+
+Full Changelog: [v0.100.0...v0.100.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.100.0...v0.100.1)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([3cdf218](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3cdf2186438128b0897ada11aa282d8657a878f6))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([e33343f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e33343fda06372392aef519dde3e5ea60a12026a))
+
 ## 0.100.0 (2026-05-18)
 
 Full Changelog: [v0.99.0...v0.100.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.99.0...v0.100.0)
