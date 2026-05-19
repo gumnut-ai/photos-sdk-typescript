@@ -57,10 +57,10 @@ export class Libraries extends APIResource {
    * Expedites the background purge on a **trashed** library: the 90-day undo window
    * is waived and the drain begins claiming this library on the next scheduled tick.
    * Returns immediately; the drain proceeds asynchronously in bounded batches and
-   * does not block on completion. Restore still works until the drain finishes
-   * purging all assets, but past this point it will recover only the assets the
-   * drain hasn't gotten to yet. Returns 409 if the library has not been trashed yet;
-   * trash it first.
+   * does not block on completion. `restore_library` still works until the drain
+   * finishes purging all assets, but past this point it will recover only the assets
+   * the drain hasn't gotten to yet. Returns 409 if the library has not been trashed
+   * yet — call `trash_library` first.
    */
   delete(libraryID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/api/libraries/${libraryID}`, options);
@@ -72,6 +72,9 @@ export class Libraries extends APIResource {
    * returns 404 the row is gone and restore is no longer possible. If the background
    * drain has already started purging assets, restore succeeds but recovers only the
    * assets the drain hasn't gotten to yet.
+   *
+   * Pairs with `trash_library`. To restore individual trashed assets within an
+   * untrashed library, use `restore_assets` instead.
    */
   restore(libraryID: string, options?: RequestOptions): APIPromise<LibraryResponse> {
     return this._client.post(path`/api/libraries/${libraryID}/restore`, options);
@@ -84,7 +87,9 @@ export class Libraries extends APIResource {
    * the background; until the library row itself is removed, restore still works but
    * recovers only the assets not yet purged.
    *
-   * Idempotent — a second call on an already-trashed library no-ops.
+   * Idempotent — a second call on an already-trashed library no-ops. To trash
+   * individual assets without trashing the whole library, use `trash_assets`
+   * instead.
    */
   trash(libraryID: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/api/libraries/${libraryID}/trash`, options);
