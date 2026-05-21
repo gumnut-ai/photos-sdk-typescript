@@ -74,6 +74,30 @@ export class Assets extends APIResource {
   }
 
   /**
+   * Updates metadata on multiple assets in one transactional call. Each item carries
+   * the target asset id and the per-asset change — different fields can be changed
+   * on different assets in the same request. Atomic: any per-item validation failure
+   * or unknown / cross-user id rejects the whole batch and writes nothing.
+   *
+   * Use this when the caller already holds the new per-asset values — importing
+   * metadata from another photo manager, per-camera time-offset correction, GPS
+   * correction from re-extracted EXIF, captioning output. The tool does not derive
+   * new values from the existing asset (no relative-shift mode); each item's new
+   * values are taken verbatim from the request.
+   *
+   * Up to 100 items per request; over-cap requests return 422. For a single-asset
+   * edit, prefer `update_asset` — semantically identical but slightly more concise
+   * at the call site.
+   *
+   * Does not change album membership (use `add_assets_to_album` /
+   * `remove_assets_from_album`), trash or delete assets (use `trash_assets`), or
+   * modify faces or people.
+   */
+  bulkUpdateAssets(body: AssetBulkUpdateAssetsParams, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.post('/api/assets/bulk-update', { body, ...options });
+  }
+
+  /**
    * Checks which assets exist in the user's library based on checksums or device
    * identifiers. Provide exactly one of: checksums, checksum_sha1s, or (deviceId AND
    * deviceAssetIds). List parameters are limited to 5000 items.
@@ -570,6 +594,16 @@ export interface MetadataResponse {
 export type AssetDeleteResponse = unknown;
 
 /**
+ * Acknowledgment body for `POST /api/assets/bulk-update`.
+ *
+ * Empty by design; exists so MCP tools generated from this endpoint have a real
+ * `outputSchema`. Distinct from `DeletionResponse` because that name is
+ * purpose-scoped to destructive operations — reusing it on a non-destructive
+ * endpoint would misname the wire shape in OpenAPI and generated SDKs.
+ */
+export type AssetBulkUpdateAssetsResponse = unknown;
+
+/**
  * Acknowledgment body returned by destructive endpoints (delete / trash / restore
  * / permanently delete / remove-from-album / empty-trash).
  *
@@ -686,6 +720,83 @@ export interface AssetListParams extends CursorPageParams {
    * `all` (both live and trashed, ordered by capture time like `live`).
    */
   state?: 'live' | 'trashed' | 'all';
+}
+
+export interface AssetBulkUpdateAssetsParams {
+  /**
+   * List of per-asset updates. Each item carries the target asset id and the change
+   * to apply to it; different fields can be changed on different assets in the same
+   * request. Up to 100 items per request.
+   */
+  updates: Array<AssetBulkUpdateAssetsParams.Update>;
+}
+
+export namespace AssetBulkUpdateAssetsParams {
+  /**
+   * One item in a bulk-update request.
+   *
+   * Names the target asset and carries the per-asset change to apply. The `change`
+   * object is exactly the body shape that the single-asset
+   * `PATCH /api/assets/{asset_id}` endpoint accepts; the wrapper exists so
+   * operation-level metadata (`id`, future `if_match` / idempotency-key fields)
+   * stays in a namespace disjoint from the entity-field changes.
+   */
+  export interface Update {
+    /**
+     * Asset ID (with the `asset_` prefix) to apply this change to. Obtain from
+     * `list_assets`, `search_assets`, or `list_album_assets`.
+     */
+    id: string;
+
+    /**
+     * The change to apply to this asset. Same shape as the body of the single-asset
+     * `update_asset` endpoint — same fields, same validation, same
+     * null-clears-the-override semantics.
+     */
+    change: Update.Change;
+  }
+
+  export namespace Update {
+    /**
+     * The change to apply to this asset. Same shape as the body of the single-asset
+     * `update_asset` endpoint — same fields, same validation, same
+     * null-clears-the-override semantics.
+     */
+    export interface Change {
+      /**
+       * User-set description for the asset. Pass `null` to remove a previously-set value
+       * (the response then falls back to the description embedded in the file, if any).
+       * Omit to leave unchanged. Distinct from the AI-generated `description` field on
+       * the response — this writes to `metadata.description`.
+       */
+      description?: string | null;
+
+      /**
+       * GPS latitude in decimal degrees, `[-90, 90]`. Must be set together with
+       * `longitude`. Pass `null` (along with `longitude=null`) to remove a
+       * previously-set value; omit to leave unchanged.
+       */
+      latitude?: number | null;
+
+      /**
+       * GPS longitude in decimal degrees, `[-180, 180]`. Must be set together with
+       * `latitude`. Pass `null` (along with `latitude=null`) to remove a previously-set
+       * value; omit to leave unchanged.
+       */
+      longitude?: number | null;
+
+      /**
+       * When the asset was originally captured. Aware values store the offset from
+       * `utcoffset()` alongside; naive values store NULL offset. Pass `null` to remove a
+       * previously-set value — the response then falls back to the datetime embedded in
+       * the file when present, otherwise to the file's upload timestamp. Omit to leave
+       * unchanged.
+       */
+      original_datetime?: string | null;
+
+      [k: string]: unknown;
+    }
+  }
 }
 
 export interface AssetCheckExistenceParams {
@@ -860,6 +971,7 @@ export declare namespace Assets {
     type AssetResponse as AssetResponse,
     type MetadataResponse as MetadataResponse,
     type AssetDeleteResponse as AssetDeleteResponse,
+    type AssetBulkUpdateAssetsResponse as AssetBulkUpdateAssetsResponse,
     type AssetDeleteListResponse as AssetDeleteListResponse,
     type AssetEmptyTrashResponse as AssetEmptyTrashResponse,
     type AssetRestoreResponse as AssetRestoreResponse,
@@ -867,6 +979,7 @@ export declare namespace Assets {
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
+    type AssetBulkUpdateAssetsParams as AssetBulkUpdateAssetsParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
     type AssetCountsParams as AssetCountsParams,
     type AssetDeleteListParams as AssetDeleteListParams,
