@@ -96,6 +96,42 @@ describe('resource assets', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('bulkUpdateAssets: only required params', async () => {
+    const responsePromise = client.assets.bulkUpdateAssets({
+      updates: [
+        {
+          id: 'id',
+          change: {},
+        },
+      ],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('bulkUpdateAssets: required and optional params', async () => {
+    const response = await client.assets.bulkUpdateAssets({
+      updates: [
+        {
+          id: 'id',
+          change: {
+            description: 'description',
+            latitude: 0,
+            longitude: 0,
+            original_datetime: '2019-12-27T18:11:19.117Z',
+          },
+        },
+      ],
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('checkExistence', async () => {
     const responsePromise = client.assets.checkExistence({});
     const rawResponse = await responsePromise.asResponse();

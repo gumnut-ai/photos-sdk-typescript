@@ -35,6 +35,8 @@ import {
   APIKeys,
 } from './resources/api-keys';
 import {
+  AssetBulkUpdateAssetsParams,
+  AssetBulkUpdateAssetsResponse,
   AssetCheckExistenceParams,
   AssetCountResponse,
   AssetCountsParams,
@@ -910,6 +912,7 @@ export declare namespace Gumnut {
     type AssetResponse as AssetResponse,
     type MetadataResponse as MetadataResponse,
     type AssetDeleteResponse as AssetDeleteResponse,
+    type AssetBulkUpdateAssetsResponse as AssetBulkUpdateAssetsResponse,
     type AssetDeleteListResponse as AssetDeleteListResponse,
     type AssetEmptyTrashResponse as AssetEmptyTrashResponse,
     type AssetRestoreResponse as AssetRestoreResponse,
@@ -917,6 +920,7 @@ export declare namespace Gumnut {
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetListParams as AssetListParams,
+    type AssetBulkUpdateAssetsParams as AssetBulkUpdateAssetsParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
     type AssetCountsParams as AssetCountsParams,
     type AssetDeleteListParams as AssetDeleteListParams,
