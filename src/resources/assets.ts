@@ -350,6 +350,12 @@ export interface AssetResponse {
   description?: string | null;
 
   /**
+   * Video length in seconds. `null` for images and for videos whose duration has not
+   * been extracted yet.
+   */
+  duration?: number | null;
+
+  /**
    * All faces detected in this asset
    */
   faces?: Array<FacesAPI.FaceResponse>;
