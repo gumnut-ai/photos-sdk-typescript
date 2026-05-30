@@ -386,6 +386,13 @@ export interface AssetResponse {
   people?: Array<PeopleAPI.PersonResponse>;
 
   /**
+   * Base64-encoded ThumbHash placeholder (~28 chars). Clients decode with the
+   * `thumbhash` library (JS / Swift / Kotlin) to render an instant blurred preview
+   * before the CDN thumbnail arrives. `null` while generation is pending.
+   */
+  thumbhash?: string | null;
+
+  /**
    * When this asset was moved to trash (ISO 8601, UTC). `null` for live assets.
    * Trashed assets are excluded from default list/search results and are purged
    * after the configured retention window.
