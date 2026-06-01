@@ -44,10 +44,14 @@ export class Search extends APIResource {
    * provided. Can search by text query, uploaded image, or both combined.
    */
   searchAssets(
-    body: SearchSearchAssetsParams | null | undefined = {},
+    params: SearchSearchAssetsParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<SearchResponse> {
-    return this._client.post('/api/search', multipartFormRequestOptions({ body, ...options }, this._client));
+    const { include, ...body } = params ?? {};
+    return this._client.post(
+      '/api/search',
+      multipartFormRequestOptions({ query: { include }, body, ...options }, this._client),
+    );
   }
 }
 
@@ -87,6 +91,17 @@ export interface SearchSearchParams {
    * inconsistency is tracked as a follow-up).
    */
   captured_before?: string | null;
+
+  /**
+   * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
+   * location names), `faces`, `people`, `metrics` (ML quality scores), and
+   * `file_data` (a group token gating the file/provenance scalars `device_asset_id`,
+   * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
+   * `file_size_bytes`). Accepts multiple `include=` query params or a single
+   * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
+   * When omitted, all fields are returned (transition default).
+   */
+  include?: Array<string> | null;
 
   /**
    * Library to search. Optional if the user has a single library; required when they
@@ -137,52 +152,67 @@ export interface SearchSearchParams {
 
 export interface SearchSearchAssetsParams {
   /**
-   * Filter to only include assets captured after this date (ISO format).
+   * Query param: Opt-in expansion fields. Supported values: `metadata`
+   * (camera/EXIF/GPS and location names), `faces`, `people`, `metrics` (ML quality
+   * scores), and `file_data` (a group token gating the file/provenance scalars
+   * `device_asset_id`, `device_id`, `file_created_at`, `file_modified_at`,
+   * `checksum`, `checksum_sha1`, `file_size_bytes`). Accepts multiple `include=`
+   * query params or a single comma-delimited value (e.g. `include=faces,people`).
+   * Unknown values return 422. When omitted, all fields are returned (transition
+   * default).
+   */
+  include?: Array<string> | null;
+
+  /**
+   * Body param: Filter to only include assets captured after this date (ISO format).
    */
   captured_after?: string | null;
 
   /**
-   * Filter to only include assets captured before this date (ISO format).
+   * Body param: Filter to only include assets captured before this date (ISO
+   * format).
    */
   captured_before?: string | null;
 
   /**
-   * Image file to search for similar assets. Can be combined with text query.
+   * Body param: Image file to search for similar assets. Can be combined with text
+   * query.
    */
   image?: Uploadable | null;
 
   /**
-   * Library to search assets from (optional)
+   * Body param: Library to search assets from (optional)
    */
   library_id?: string | null;
 
   /**
-   * Number of results per page (1-200)
+   * Body param: Number of results per page (1-200)
    */
   limit?: number;
 
   /**
-   * Page number
+   * Body param: Page number
    */
   page?: number;
 
   /**
-   * Filter to assets containing ALL of these person IDs (intersection, not union).
-   * Accepts multiple `person_ids=` form fields or a single comma-delimited value
-   * (e.g., `person_123,person_abc`). Get person IDs from `list_people`.
+   * Body param: Filter to assets containing ALL of these person IDs (intersection,
+   * not union). Accepts multiple `person_ids=` form fields or a single
+   * comma-delimited value (e.g., `person_123,person_abc`). Get person IDs from
+   * `list_people`.
    */
   person_ids?: Array<string> | null;
 
   /**
-   * The text query to search for. If you want to search for a specific person or set
-   * of people, use the person_ids parameter instead.If you want to search for a
-   * photos taken during a specific date range, use the captured_before and
-   * captured_after parameters instead.
+   * Body param: The text query to search for. If you want to search for a specific
+   * person or set of people, use the person_ids parameter instead.If you want to
+   * search for a photos taken during a specific date range, use the captured_before
+   * and captured_after parameters instead.
    */
   query?: string | null;
 
   /**
-   * Similarity threshold (lower means more similar)
+   * Body param: Similarity threshold (lower means more similar)
    */
   threshold?: number;
 }
