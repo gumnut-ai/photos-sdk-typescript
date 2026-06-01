@@ -380,7 +380,7 @@ export interface AssetResponse {
    * top-level `AssetResponse` fields are retained for backwards compatibility until
    * clients migrate, and populated under the same `include=file_data` gate.
    */
-  file_data?: AssetResponse.FileData | null;
+  file_data?: FileDataResponse | null;
 
   /**
    * When the file was last modified on the uploading device. Part of the `file_data`
@@ -439,55 +439,53 @@ export interface AssetResponse {
   width?: number;
 }
 
-export namespace AssetResponse {
+/**
+ * File/provenance scalars describing the uploaded _file_ (not its content).
+ *
+ * Returned only when requested via `include=file_data`; the whole object is `null`
+ * otherwise. When present, every field carries its real value — `checksum_sha1` is
+ * the lone exception (`null` for legacy rows that never had a SHA-1). This nested
+ * object is the preferred home for the file/provenance group; the equivalent
+ * top-level `AssetResponse` fields are retained for backwards compatibility until
+ * clients migrate, and populated under the same `include=file_data` gate.
+ */
+export interface FileDataResponse {
   /**
-   * File/provenance scalars describing the uploaded _file_ (not its content).
-   *
-   * Returned only when requested via `include=file_data`; the whole object is `null`
-   * otherwise. When present, every field carries its real value — `checksum_sha1` is
-   * the lone exception (`null` for legacy rows that never had a SHA-1). This nested
-   * object is the preferred home for the file/provenance group; the equivalent
-   * top-level `AssetResponse` fields are retained for backwards compatibility until
-   * clients migrate, and populated under the same `include=file_data` gate.
+   * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
+   * integrity.
    */
-  export interface FileData {
-    /**
-     * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
-     * integrity.
-     */
-    checksum: string;
+  checksum: string;
 
-    /**
-     * Original asset identifier from the device that uploaded this asset.
-     */
-    device_asset_id: string;
+  /**
+   * Original asset identifier from the device that uploaded this asset.
+   */
+  device_asset_id: string;
 
-    /**
-     * Identifier of the device that uploaded this asset.
-     */
-    device_id: string;
+  /**
+   * Identifier of the device that uploaded this asset.
+   */
+  device_id: string;
 
-    /**
-     * When the file was created on the uploading device.
-     */
-    file_created_at: string;
+  /**
+   * When the file was created on the uploading device.
+   */
+  file_created_at: string;
 
-    /**
-     * When the file was last modified on the uploading device.
-     */
-    file_modified_at: string;
+  /**
+   * When the file was last modified on the uploading device.
+   */
+  file_modified_at: string;
 
-    /**
-     * File size of the asset in bytes.
-     */
-    file_size_bytes: number;
+  /**
+   * File size of the asset in bytes.
+   */
+  file_size_bytes: number;
 
-    /**
-     * Base64-encoded SHA-1 hash for Immich client compatibility. `null` for older
-     * assets that have no SHA-1.
-     */
-    checksum_sha1?: string | null;
-  }
+  /**
+   * Base64-encoded SHA-1 hash for Immich client compatibility. `null` for older
+   * assets that have no SHA-1.
+   */
+  checksum_sha1?: string | null;
 }
 
 /**
@@ -1081,6 +1079,7 @@ export declare namespace Assets {
     type AssetExistenceResponse as AssetExistenceResponse,
     type AssetLiteResponse as AssetLiteResponse,
     type AssetResponse as AssetResponse,
+    type FileDataResponse as FileDataResponse,
     type MetadataResponse as MetadataResponse,
     type AssetDeleteResponse as AssetDeleteResponse,
     type AssetBulkUpdateAssetsResponse as AssetBulkUpdateAssetsResponse,

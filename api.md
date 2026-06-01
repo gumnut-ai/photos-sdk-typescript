@@ -28,6 +28,7 @@ Types:
 - <code><a href="./src/resources/assets.ts">AssetExistenceResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetLiteResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetResponse</a></code>
+- <code><a href="./src/resources/assets.ts">FileDataResponse</a></code>
 - <code><a href="./src/resources/assets.ts">MetadataResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetDeleteResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetBulkUpdateAssetsResponse</a></code>

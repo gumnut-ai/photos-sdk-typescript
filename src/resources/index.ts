@@ -31,6 +31,7 @@ export {
   type AssetExistenceResponse,
   type AssetLiteResponse,
   type AssetResponse,
+  type FileDataResponse,
   type MetadataResponse,
   type AssetDeleteResponse,
   type AssetBulkUpdateAssetsResponse,
