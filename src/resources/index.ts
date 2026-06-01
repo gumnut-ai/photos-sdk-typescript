@@ -39,6 +39,7 @@ export {
   type AssetRestoreResponse,
   type AssetTrashResponse,
   type AssetCreateParams,
+  type AssetRetrieveParams,
   type AssetListParams,
   type AssetBulkUpdateAssetsParams,
   type AssetCheckExistenceParams,

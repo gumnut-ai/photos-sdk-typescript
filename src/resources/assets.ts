@@ -28,8 +28,12 @@ export class Assets extends APIResource {
    * `list_album_assets`) and need its full details. For bulk fetch of multiple known
    * IDs, prefer `list_assets` with the `ids` parameter to avoid N round trips.
    */
-  retrieve(assetID: string, options?: RequestOptions): APIPromise<AssetResponse> {
-    return this._client.get(path`/api/assets/${assetID}`, options);
+  retrieve(
+    assetID: string,
+    query: AssetRetrieveParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AssetResponse> {
+    return this._client.get(path`/api/assets/${assetID}`, { query, ...options });
   }
 
   /**
@@ -278,35 +282,9 @@ export interface AssetResponse {
   id: string;
 
   /**
-   * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
-   * integrity
-   */
-  checksum: string;
-
-  /**
    * When this asset record was created in the database
    */
   created_at: string;
-
-  /**
-   * Original asset identifier from the device that uploaded this asset
-   */
-  device_asset_id: string;
-
-  /**
-   * Identifier of the device that uploaded this asset
-   */
-  device_id: string;
-
-  /**
-   * When the file was created on the uploading device
-   */
-  file_created_at: string;
-
-  /**
-   * When the file was last modified on the uploading device
-   */
-  file_modified_at: string;
 
   /**
    * When the photo/video was taken, in the device's local timezone
@@ -336,8 +314,18 @@ export interface AssetResponse {
   asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
-   * Base64-encoded SHA-1 hash for Immich client compatibility. May be null for older
-   * assets.
+   * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
+   * integrity. Part of the `file_data` group — `null` when not requested via
+   * `include=file_data`. Superseded by `file_data.checksum`.
+   */
+  checksum?: string | null;
+
+  /**
+   * Base64-encoded SHA-1 hash for Immich client compatibility. Part of the
+   * `file_data` group. `null` either when not requested via `include=file_data` or,
+   * when requested, for older assets that have no SHA-1 (a consumer distinguishes
+   * the two by whether it passed the token). Superseded by `file_data.checksum_sha1`
+   * (see `file_data`).
    */
   checksum_sha1?: string | null;
 
@@ -350,20 +338,63 @@ export interface AssetResponse {
   description?: string | null;
 
   /**
+   * Original asset identifier from the device that uploaded this asset. Part of the
+   * `file_data` group — `null` when not requested via `include=file_data`.
+   * Superseded by `file_data.device_asset_id`.
+   */
+  device_asset_id?: string | null;
+
+  /**
+   * Identifier of the device that uploaded this asset. Part of the `file_data` group
+   * — `null` when not requested via `include=file_data`. Superseded by
+   * `file_data.device_id`.
+   */
+  device_id?: string | null;
+
+  /**
    * Video length in seconds. `null` for images and for videos whose duration has not
    * been extracted yet.
    */
   duration?: number | null;
 
   /**
-   * All faces detected in this asset
+   * All faces detected in this asset. `null` when not requested via `include=faces`;
+   * `[]` when requested but the asset has no faces.
    */
-  faces?: Array<FacesAPI.FaceResponse>;
+  faces?: Array<FacesAPI.FaceResponse> | null;
 
   /**
-   * File size of the asset in bytes
+   * When the file was created on the uploading device. Part of the `file_data` group
+   * — `null` when not requested via `include=file_data`. Superseded by
+   * `file_data.file_created_at`.
    */
-  file_size_bytes?: number;
+  file_created_at?: string | null;
+
+  /**
+   * File/provenance scalars describing the uploaded _file_ (not its content).
+   *
+   * Returned only when requested via `include=file_data`; the whole object is `null`
+   * otherwise. When present, every field carries its real value — `checksum_sha1` is
+   * the lone exception (`null` for legacy rows that never had a SHA-1). This nested
+   * object is the preferred home for the file/provenance group; the equivalent
+   * top-level `AssetResponse` fields are retained for backwards compatibility until
+   * clients migrate, and populated under the same `include=file_data` gate.
+   */
+  file_data?: AssetResponse.FileData | null;
+
+  /**
+   * When the file was last modified on the uploading device. Part of the `file_data`
+   * group — `null` when not requested via `include=file_data`. Superseded by
+   * `file_data.file_modified_at`.
+   */
+  file_modified_at?: string | null;
+
+  /**
+   * File size of the asset in bytes. Part of the `file_data` group — `null` when not
+   * requested via `include=file_data` (distinct from a real zero-byte file).
+   * Superseded by `file_data.file_size_bytes`.
+   */
+  file_size_bytes?: number | null;
 
   /**
    * Height of the asset in pixels
@@ -376,14 +407,17 @@ export interface AssetResponse {
   metadata?: MetadataResponse | null;
 
   /**
-   * ML-generated quality scores and other metrics
+   * ML-generated quality scores and other metrics. `null` when not requested via
+   * `include=metrics`.
    */
   metrics?: { [key: string]: number | null } | null;
 
   /**
-   * All unique people identified in this asset (deduplicated from faces)
+   * All unique people identified in this asset (deduplicated from faces). `null`
+   * when not requested via `include=people`; `[]` when requested but none are
+   * identified.
    */
-  people?: Array<PeopleAPI.PersonResponse>;
+  people?: Array<PeopleAPI.PersonResponse> | null;
 
   /**
    * Base64-encoded ThumbHash placeholder (~28 chars). Clients decode with the
@@ -403,6 +437,57 @@ export interface AssetResponse {
    * Width of the asset in pixels
    */
   width?: number;
+}
+
+export namespace AssetResponse {
+  /**
+   * File/provenance scalars describing the uploaded _file_ (not its content).
+   *
+   * Returned only when requested via `include=file_data`; the whole object is `null`
+   * otherwise. When present, every field carries its real value — `checksum_sha1` is
+   * the lone exception (`null` for legacy rows that never had a SHA-1). This nested
+   * object is the preferred home for the file/provenance group; the equivalent
+   * top-level `AssetResponse` fields are retained for backwards compatibility until
+   * clients migrate, and populated under the same `include=file_data` gate.
+   */
+  export interface FileData {
+    /**
+     * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
+     * integrity.
+     */
+    checksum: string;
+
+    /**
+     * Original asset identifier from the device that uploaded this asset.
+     */
+    device_asset_id: string;
+
+    /**
+     * Identifier of the device that uploaded this asset.
+     */
+    device_id: string;
+
+    /**
+     * When the file was created on the uploading device.
+     */
+    file_created_at: string;
+
+    /**
+     * When the file was last modified on the uploading device.
+     */
+    file_modified_at: string;
+
+    /**
+     * File size of the asset in bytes.
+     */
+    file_size_bytes: number;
+
+    /**
+     * Base64-encoded SHA-1 hash for Immich client compatibility. `null` for older
+     * assets that have no SHA-1.
+     */
+    checksum_sha1?: string | null;
+  }
 }
 
 /**
@@ -670,6 +755,19 @@ export interface AssetCreateParams {
   library_id?: string | null;
 }
 
+export interface AssetRetrieveParams {
+  /**
+   * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
+   * location names), `faces`, `people`, `metrics` (ML quality scores), and
+   * `file_data` (a group token gating the file/provenance scalars `device_asset_id`,
+   * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
+   * `file_size_bytes`). Accepts multiple `include=` query params or a single
+   * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
+   * When omitted, all fields are returned (transition default).
+   */
+  include?: Array<string> | null;
+}
+
 export interface AssetListParams extends CursorPageParams {
   /**
    * Return only assets that are in the album with this ID. Equivalent to calling
@@ -685,6 +783,17 @@ export interface AssetListParams extends CursorPageParams {
    * datetime range) using AND logic — the result is the intersection.
    */
   ids?: Array<string> | null;
+
+  /**
+   * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
+   * location names), `faces`, `people`, `metrics` (ML quality scores), and
+   * `file_data` (a group token gating the file/provenance scalars `device_asset_id`,
+   * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
+   * `file_size_bytes`). Accepts multiple `include=` query params or a single
+   * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
+   * When omitted, all fields are returned (transition default).
+   */
+  include?: Array<string> | null;
 
   /**
    * Library to list assets from. Optional if the user has a single library; required
@@ -981,6 +1090,7 @@ export declare namespace Assets {
     type AssetTrashResponse as AssetTrashResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
+    type AssetRetrieveParams as AssetRetrieveParams,
     type AssetListParams as AssetListParams,
     type AssetBulkUpdateAssetsParams as AssetBulkUpdateAssetsParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,

@@ -51,6 +51,18 @@ describe('resource assets', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.assets.retrieve(
+        'asset_id',
+        { include: ['string', 'string'] },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Gumnut.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.assets.list();
     const rawResponse = await responsePromise.asResponse();
@@ -70,6 +82,7 @@ describe('resource assets', () => {
         {
           album_id: 'album_id',
           ids: ['string', 'string'],
+          include: ['string', 'string'],
           library_id: 'library_id',
           limit: 1,
           local_datetime_after: '2019-12-27T18:11:19.117Z',
