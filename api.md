@@ -39,7 +39,7 @@ Types:
 Methods:
 
 - <code title="post /api/assets">client.assets.<a href="./src/resources/assets.ts">create</a>({ ...params }) -> AssetResponse</code>
-- <code title="get /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">retrieve</a>(assetID) -> AssetResponse</code>
+- <code title="get /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">retrieve</a>(assetID, { ...params }) -> AssetResponse</code>
 - <code title="get /api/assets">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetResponsesCursorPage</code>
 - <code title="delete /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">delete</a>(assetID) -> unknown</code>
 - <code title="post /api/assets/bulk-update">client.assets.<a href="./src/resources/assets.ts">bulkUpdateAssets</a>({ ...params }) -> unknown</code>

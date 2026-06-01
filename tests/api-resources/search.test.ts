@@ -28,6 +28,7 @@ describe('resource search', () => {
         {
           captured_after: '2019-12-27T18:11:19.117Z',
           captured_before: '2019-12-27T18:11:19.117Z',
+          include: ['string', 'string'],
           library_id: 'library_id',
           limit: 1,
           page: 1,
@@ -58,6 +59,7 @@ describe('resource search', () => {
     await expect(
       client.search.searchAssets(
         {
+          include: ['string', 'string'],
           captured_after: '2019-12-27T18:11:19.117Z',
           captured_before: '2019-12-27T18:11:19.117Z',
           image: await toFile(Buffer.from('Example data'), 'README.md'),
