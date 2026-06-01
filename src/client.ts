@@ -58,6 +58,7 @@ import {
   AssetTrashResponse,
   AssetUpdateAssetParams,
   Assets,
+  FileDataResponse,
   MetadataResponse,
 } from './resources/assets';
 import { EventGetParams, Events, EventsResponse } from './resources/events';
@@ -911,6 +912,7 @@ export declare namespace Gumnut {
     type AssetExistenceResponse as AssetExistenceResponse,
     type AssetLiteResponse as AssetLiteResponse,
     type AssetResponse as AssetResponse,
+    type FileDataResponse as FileDataResponse,
     type MetadataResponse as MetadataResponse,
     type AssetDeleteResponse as AssetDeleteResponse,
     type AssetBulkUpdateAssetsResponse as AssetBulkUpdateAssetsResponse,
