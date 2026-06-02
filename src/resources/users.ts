@@ -46,6 +46,16 @@ export interface UserResponse {
   is_verified: boolean;
 
   /**
+   * Maximum bytes of assets the user may store
+   */
+  storage_limit_bytes: number;
+
+  /**
+   * Total bytes of assets the user is currently storing
+   */
+  storage_used_bytes: number;
+
+  /**
    * When this user account was last updated
    */
   updated_at: string;
