@@ -121,6 +121,11 @@ export interface LibraryResponse {
   name: string;
 
   /**
+   * Bytes of assets currently stored in this library
+   */
+  storage_used_bytes: number;
+
+  /**
    * When this library was last updated
    */
   updated_at: string;
@@ -134,6 +139,11 @@ export interface LibraryResponse {
    * Optional description text for the library
    */
   description?: string | null;
+
+  /**
+   * Maximum bytes this library may store, or null if no per-library limit applies
+   */
+  storage_limit_bytes?: number | null;
 }
 
 export type LibraryListResponse = Array<LibraryResponse>;
