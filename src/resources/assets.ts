@@ -761,7 +761,9 @@ export interface AssetRetrieveParams {
    * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
    * `file_size_bytes`). Accepts multiple `include=` query params or a single
    * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
-   * When omitted, all fields are returned (transition default).
+   * When omitted, only the lean core is returned (`id`, `mime_type`,
+   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`) and each
+   * value above is null/absent until you request it.
    */
   include?: Array<string> | null;
 }
@@ -789,7 +791,9 @@ export interface AssetListParams extends CursorPageParams {
    * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
    * `file_size_bytes`). Accepts multiple `include=` query params or a single
    * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
-   * When omitted, all fields are returned (transition default).
+   * When omitted, only the lean core is returned (`id`, `mime_type`,
+   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`) and each
+   * value above is null/absent until you request it.
    */
   include?: Array<string> | null;
 
