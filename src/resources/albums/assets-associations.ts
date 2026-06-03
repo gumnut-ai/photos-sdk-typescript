@@ -37,7 +37,7 @@ export class AssetsAssociations extends APIResource {
     albumID: string,
     body: AssetsAssociationRemoveParams,
     options?: RequestOptions,
-  ): APIPromise<unknown> {
+  ): APIPromise<AssetsAssociationRemoveResponse> {
     return this._client.delete(path`/api/albums/${albumID}/assets`, { body, ...options });
   }
 }
@@ -79,7 +79,7 @@ export interface AssetsAssociationAddResponse {
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type AssetsAssociationRemoveResponse = unknown;
+export interface AssetsAssociationRemoveResponse {}
 
 export interface AssetsAssociationAddParams {
   /**

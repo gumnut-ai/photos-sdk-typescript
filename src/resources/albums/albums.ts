@@ -74,7 +74,7 @@ export class Albums extends APIResource {
    * soft-delete the underlying assets, or `remove_assets_from_album` to detach
    * specific assets from an album you want to keep.
    */
-  delete(albumID: string, options?: RequestOptions): APIPromise<unknown> {
+  delete(albumID: string, options?: RequestOptions): APIPromise<AlbumDeleteResponse> {
     return this._client.delete(path`/api/albums/${albumID}`, options);
   }
 }
@@ -147,7 +147,7 @@ export interface AlbumResponse {
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type AlbumDeleteResponse = unknown;
+export interface AlbumDeleteResponse {}
 
 export interface AlbumCreateParams {
   /**

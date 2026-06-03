@@ -30,7 +30,7 @@ export class APIKeys extends APIResource {
   /**
    * Deletes a specific API key
    */
-  delete(keyID: string, options?: RequestOptions): APIPromise<unknown> {
+  delete(keyID: string, options?: RequestOptions): APIPromise<APIKeyDeleteResponse> {
     return this._client.delete(path`/api/api-keys/${keyID}`, options);
   }
 }
@@ -114,7 +114,7 @@ export type APIKeyListResponse = Array<APIKeyResponse>;
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type APIKeyDeleteResponse = unknown;
+export interface APIKeyDeleteResponse {}
 
 export interface APIKeyCreateParams {
   name: string;
