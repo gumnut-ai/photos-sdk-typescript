@@ -68,7 +68,7 @@ export class Faces extends APIResource {
     faceID: string,
     params: FaceDeleteParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<unknown> {
+  ): APIPromise<FaceDeleteResponse> {
     const { library_id } = params ?? {};
     return this._client.delete(path`/api/faces/${faceID}`, { query: { library_id }, ...options });
   }
@@ -189,7 +189,7 @@ export interface FaceResponse {
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type FaceDeleteResponse = unknown;
+export interface FaceDeleteResponse {}
 
 export interface FaceRetrieveParams {
   /**
