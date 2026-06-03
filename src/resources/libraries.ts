@@ -62,7 +62,7 @@ export class Libraries extends APIResource {
    * the drain hasn't gotten to yet. Returns 409 if the library has not been trashed
    * yet — call `trash_library` first.
    */
-  delete(libraryID: string, options?: RequestOptions): APIPromise<unknown> {
+  delete(libraryID: string, options?: RequestOptions): APIPromise<LibraryDeleteResponse> {
     return this._client.delete(path`/api/libraries/${libraryID}`, options);
   }
 
@@ -91,7 +91,7 @@ export class Libraries extends APIResource {
    * individual assets without trashing the whole library, use `trash_assets`
    * instead.
    */
-  trash(libraryID: string, options?: RequestOptions): APIPromise<unknown> {
+  trash(libraryID: string, options?: RequestOptions): APIPromise<LibraryTrashResponse> {
     return this._client.post(path`/api/libraries/${libraryID}/trash`, options);
   }
 }
@@ -157,7 +157,7 @@ export type LibraryListResponse = Array<LibraryResponse>;
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type LibraryDeleteResponse = unknown;
+export interface LibraryDeleteResponse {}
 
 /**
  * Acknowledgment body returned by destructive endpoints (delete / trash / restore
@@ -168,7 +168,7 @@ export type LibraryDeleteResponse = unknown;
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type LibraryTrashResponse = unknown;
+export interface LibraryTrashResponse {}
 
 export interface LibraryCreateParams {
   /**

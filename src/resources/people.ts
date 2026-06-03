@@ -78,7 +78,7 @@ export class People extends APIResource {
    * deleting the whole person. Use `delete_face` to remove a face detection
    * entirely.
    */
-  delete(personID: string, options?: RequestOptions): APIPromise<unknown> {
+  delete(personID: string, options?: RequestOptions): APIPromise<PersonDeleteResponse> {
     return this._client.delete(path`/api/people/${personID}`, options);
   }
 
@@ -202,7 +202,7 @@ export interface PersonResponse {
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type PersonDeleteResponse = unknown;
+export interface PersonDeleteResponse {}
 
 export interface PersonCreateParams {
   /**

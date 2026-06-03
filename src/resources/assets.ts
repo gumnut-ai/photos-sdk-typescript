@@ -73,7 +73,7 @@ export class Assets extends APIResource {
    * asset from a specific album but keep the file in their library. Use
    * `delete_album` to remove an album without deleting its assets.
    */
-  delete(assetID: string, options?: RequestOptions): APIPromise<unknown> {
+  delete(assetID: string, options?: RequestOptions): APIPromise<AssetDeleteResponse> {
     return this._client.delete(path`/api/assets/${assetID}`, options);
   }
 
@@ -87,7 +87,10 @@ export class Assets extends APIResource {
    * edit, prefer `update_asset` — semantically identical but slightly more concise
    * at the call site.
    */
-  bulkUpdateAssets(body: AssetBulkUpdateAssetsParams, options?: RequestOptions): APIPromise<unknown> {
+  bulkUpdateAssets(
+    body: AssetBulkUpdateAssetsParams,
+    options?: RequestOptions,
+  ): APIPromise<AssetBulkUpdateAssetsResponse> {
     return this._client.post('/api/assets/bulk-update', { body, ...options });
   }
 
@@ -133,7 +136,7 @@ export class Assets extends APIResource {
    *
    * Up to 100 ids per request; over-cap requests return 422.
    */
-  deleteList(params: AssetDeleteListParams, options?: RequestOptions): APIPromise<unknown> {
+  deleteList(params: AssetDeleteListParams, options?: RequestOptions): APIPromise<AssetDeleteListResponse> {
     const { library_id, ...body } = params;
     return this._client.delete('/api/assets', { query: { library_id }, body, ...options });
   }
@@ -146,7 +149,7 @@ export class Assets extends APIResource {
   emptyTrash(
     params: AssetEmptyTrashParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<unknown> {
+  ): APIPromise<AssetEmptyTrashResponse> {
     const { library_id } = params ?? {};
     return this._client.post('/api/assets/empty-trash', { query: { library_id }, ...options });
   }
@@ -159,7 +162,7 @@ export class Assets extends APIResource {
    * within the retention window. To restore a whole trashed library, use
    * `restore_library`.
    */
-  restore(params: AssetRestoreParams, options?: RequestOptions): APIPromise<unknown> {
+  restore(params: AssetRestoreParams, options?: RequestOptions): APIPromise<AssetRestoreResponse> {
     const { library_id, ...body } = params;
     return this._client.post('/api/assets/restore', { query: { library_id }, body, ...options });
   }
@@ -173,7 +176,7 @@ export class Assets extends APIResource {
    * permanent-delete tool, so trash is the only path. To trash an entire library at
    * once instead of enumerating asset IDs, use `trash_library`.
    */
-  trash(params: AssetTrashParams, options?: RequestOptions): APIPromise<unknown> {
+  trash(params: AssetTrashParams, options?: RequestOptions): APIPromise<AssetTrashResponse> {
     const { library_id, ...body } = params;
     return this._client.post('/api/assets/trash', { query: { library_id }, body, ...options });
   }
@@ -677,7 +680,7 @@ export interface MetadataResponse {
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type AssetDeleteResponse = unknown;
+export interface AssetDeleteResponse {}
 
 /**
  * Acknowledgment body for `POST /api/assets/bulk-update`.
@@ -687,7 +690,7 @@ export type AssetDeleteResponse = unknown;
  * purpose-scoped to destructive operations — reusing it on a non-destructive
  * endpoint would misname the wire shape in OpenAPI and generated SDKs.
  */
-export type AssetBulkUpdateAssetsResponse = unknown;
+export interface AssetBulkUpdateAssetsResponse {}
 
 /**
  * Acknowledgment body returned by destructive endpoints (delete / trash / restore
@@ -698,7 +701,7 @@ export type AssetBulkUpdateAssetsResponse = unknown;
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type AssetDeleteListResponse = unknown;
+export interface AssetDeleteListResponse {}
 
 /**
  * Acknowledgment body returned by destructive endpoints (delete / trash / restore
@@ -709,7 +712,7 @@ export type AssetDeleteListResponse = unknown;
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type AssetEmptyTrashResponse = unknown;
+export interface AssetEmptyTrashResponse {}
 
 /**
  * Acknowledgment body returned by destructive endpoints (delete / trash / restore
@@ -720,7 +723,7 @@ export type AssetEmptyTrashResponse = unknown;
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type AssetRestoreResponse = unknown;
+export interface AssetRestoreResponse {}
 
 /**
  * Acknowledgment body returned by destructive endpoints (delete / trash / restore
@@ -731,7 +734,7 @@ export type AssetRestoreResponse = unknown;
  * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
  * which ChatGPT's MCP submission tooling requires.
  */
-export type AssetTrashResponse = unknown;
+export interface AssetTrashResponse {}
 
 export interface AssetCreateParams {
   /**
