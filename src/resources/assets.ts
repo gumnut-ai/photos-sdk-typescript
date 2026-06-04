@@ -317,42 +317,12 @@ export interface AssetResponse {
   asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
-   * Base64-encoded SHA-256 hash of the asset contents for duplicate detection and
-   * integrity. Part of the `file_data` group — `null` when not requested via
-   * `include=file_data`. Superseded by `file_data.checksum`.
-   */
-  checksum?: string | null;
-
-  /**
-   * Base64-encoded SHA-1 hash for Immich client compatibility. Part of the
-   * `file_data` group. `null` either when not requested via `include=file_data` or,
-   * when requested, for older assets that have no SHA-1 (a consumer distinguishes
-   * the two by whether it passed the token). Superseded by `file_data.checksum_sha1`
-   * (see `file_data`).
-   */
-  checksum_sha1?: string | null;
-
-  /**
    * AI-generated description of the asset's content, quality, and composition. null
    * means description generation has not yet run; empty string means the model
    * refused to describe the asset. Distinct from metadata.description
    * (camera-embedded EXIF metadata).
    */
   description?: string | null;
-
-  /**
-   * Original asset identifier from the device that uploaded this asset. Part of the
-   * `file_data` group — `null` when not requested via `include=file_data`.
-   * Superseded by `file_data.device_asset_id`.
-   */
-  device_asset_id?: string | null;
-
-  /**
-   * Identifier of the device that uploaded this asset. Part of the `file_data` group
-   * — `null` when not requested via `include=file_data`. Superseded by
-   * `file_data.device_id`.
-   */
-  device_id?: string | null;
 
   /**
    * Video length in seconds. `null` for images and for videos whose duration has not
@@ -367,37 +337,14 @@ export interface AssetResponse {
   faces?: Array<FacesAPI.FaceResponse> | null;
 
   /**
-   * When the file was created on the uploading device. Part of the `file_data` group
-   * — `null` when not requested via `include=file_data`. Superseded by
-   * `file_data.file_created_at`.
-   */
-  file_created_at?: string | null;
-
-  /**
    * File/provenance scalars describing the uploaded _file_ (not its content).
    *
    * Returned only when requested via `include=file_data`; the whole object is `null`
    * otherwise. When present, every field carries its real value — `checksum_sha1` is
    * the lone exception (`null` for legacy rows that never had a SHA-1). This nested
-   * object is the preferred home for the file/provenance group; the equivalent
-   * top-level `AssetResponse` fields are retained for backwards compatibility until
-   * clients migrate, and populated under the same `include=file_data` gate.
+   * object is the home for the file/provenance group.
    */
   file_data?: FileDataResponse | null;
-
-  /**
-   * When the file was last modified on the uploading device. Part of the `file_data`
-   * group — `null` when not requested via `include=file_data`. Superseded by
-   * `file_data.file_modified_at`.
-   */
-  file_modified_at?: string | null;
-
-  /**
-   * File size of the asset in bytes. Part of the `file_data` group — `null` when not
-   * requested via `include=file_data` (distinct from a real zero-byte file).
-   * Superseded by `file_data.file_size_bytes`.
-   */
-  file_size_bytes?: number | null;
 
   /**
    * Height of the asset in pixels
@@ -448,9 +395,7 @@ export interface AssetResponse {
  * Returned only when requested via `include=file_data`; the whole object is `null`
  * otherwise. When present, every field carries its real value — `checksum_sha1` is
  * the lone exception (`null` for legacy rows that never had a SHA-1). This nested
- * object is the preferred home for the file/provenance group; the equivalent
- * top-level `AssetResponse` fields are retained for backwards compatibility until
- * clients migrate, and populated under the same `include=file_data` gate.
+ * object is the home for the file/provenance group.
  */
 export interface FileDataResponse {
   /**
@@ -760,13 +705,14 @@ export interface AssetRetrieveParams {
   /**
    * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
    * location names), `faces`, `people`, `metrics` (ML quality scores), and
-   * `file_data` (a group token gating the file/provenance scalars `device_asset_id`,
-   * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
-   * `file_size_bytes`). Accepts multiple `include=` query params or a single
-   * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
-   * When omitted, only the lean core is returned (`id`, `mime_type`,
-   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`) and each
-   * value above is null/absent until you request it.
+   * `file_data` (a group token populating the nested `file_data` object with the
+   * file/provenance scalars `device_asset_id`, `device_id`, `file_created_at`,
+   * `file_modified_at`, `checksum`, `checksum_sha1`, `file_size_bytes`). Accepts
+   * multiple `include=` query params or a single comma-delimited value (e.g.
+   * `include=faces,people`). Unknown values return 422. When omitted, only the lean
+   * core is returned (`id`, `mime_type`, `local_datetime`, dimensions,
+   * `description`, `thumbhash`, `asset_urls`) and each value above is null/absent
+   * until you request it.
    */
   include?: Array<string> | null;
 }
@@ -790,13 +736,14 @@ export interface AssetListParams extends CursorPageParams {
   /**
    * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
    * location names), `faces`, `people`, `metrics` (ML quality scores), and
-   * `file_data` (a group token gating the file/provenance scalars `device_asset_id`,
-   * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
-   * `file_size_bytes`). Accepts multiple `include=` query params or a single
-   * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
-   * When omitted, only the lean core is returned (`id`, `mime_type`,
-   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`) and each
-   * value above is null/absent until you request it.
+   * `file_data` (a group token populating the nested `file_data` object with the
+   * file/provenance scalars `device_asset_id`, `device_id`, `file_created_at`,
+   * `file_modified_at`, `checksum`, `checksum_sha1`, `file_size_bytes`). Accepts
+   * multiple `include=` query params or a single comma-delimited value (e.g.
+   * `include=faces,people`). Unknown values return 422. When omitted, only the lean
+   * core is returned (`id`, `mime_type`, `local_datetime`, dimensions,
+   * `description`, `thumbhash`, `asset_urls`) and each value above is null/absent
+   * until you request it.
    */
   include?: Array<string> | null;
 
