@@ -82,6 +82,7 @@ describe('resource people', () => {
           limit: 1,
           name: 'name',
           name_filter: 'named',
+          sort: 'created_at_desc',
           starting_after_id: 'starting_after_id',
         },
         { path: '/_stainless_unknown_path' },
