@@ -49,10 +49,10 @@ export class People extends APIResource {
 
   /**
    * Returns a paginated list of people (named identities that group one or more
-   * faces), ordered by creation time (newest first), optionally filtered by asset,
-   * album, name, or ID. Use this to enumerate who appears in the library, to resolve
-   * a user-typed name to a `person_id`, or to find who appears in a specific asset
-   * or album.
+   * faces), ordered according to `sort` (newest first by default), optionally
+   * filtered by asset, album, name, or ID. Use this to enumerate who appears in the
+   * library, to resolve a user-typed name to a `person_id`, or to find who appears
+   * in a specific asset or album.
    *
    * By default only **named** people are returned; pass `name_filter=all` or
    * `name_filter=unnamed` to include clusters that haven't been named yet.
@@ -325,6 +325,21 @@ export interface PersonListParams extends CursorPageParams {
    * Defaults to `named` (or `all` when `ids` is provided).
    */
   name_filter?: 'named' | 'unnamed' | 'all' | null;
+
+  /**
+   * Sort order for results: `created_at_desc` (newest people first; default) /
+   * `created_at_asc`, `name_asc` / `name_desc` (alphabetical by name, locale-aware;
+   * unnamed people always sort last), or `asset_count_desc` / `asset_count_asc` (by
+   * number of photos the person appears in). Name sorts cannot be combined with
+   * `name_filter=unnamed`.
+   */
+  sort?:
+    | 'created_at_desc'
+    | 'created_at_asc'
+    | 'name_asc'
+    | 'name_desc'
+    | 'asset_count_desc'
+    | 'asset_count_asc';
 }
 
 export interface PersonMergeParams {
