@@ -310,9 +310,9 @@ export interface AssetResponse {
   updated_at: string;
 
   /**
-   * Named asset variants. Images: 'original', 'thumbnail', 'preview', 'fullsize'.
-   * Videos: 'original' always, plus 'thumbnail_image', 'preview_image',
-   * 'fullsize_image' once a still has been extracted.
+   * Named asset variants. Images: 'original', 'thumbnail', 'small', 'preview',
+   * 'fullsize'. Videos: 'original' always, plus 'thumbnail_image', 'small_image',
+   * 'preview_image', 'fullsize_image' once a still has been extracted.
    */
   asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
