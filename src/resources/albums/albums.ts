@@ -33,8 +33,9 @@ export class Albums extends APIResource {
 
   /**
    * Fetches one album's metadata by ID (name, description, cover, counts). Use when
-   * you already have an album ID. Does not include the album's assets — use
-   * `list_album_assets` or `list_assets` with `album_id` for that.
+   * you already have an album ID. The JSON response is metadata only and does not
+   * include the album's assets — to get the asset IDs or data, use
+   * `list_album_assets` or `list_assets` with `album_id`.
    */
   retrieve(albumID: string, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.get(path`/api/albums/${albumID}`, options);
