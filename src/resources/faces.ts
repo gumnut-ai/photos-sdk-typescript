@@ -152,6 +152,12 @@ export interface FaceResponse {
   created_at: string;
 
   /**
+   * How this face was added: 'automatic' for detector-found faces, 'manual' for
+   * user-drawn face boxes.
+   */
+  source: 'automatic' | 'manual';
+
+  /**
    * When this face record was last updated
    */
   updated_at: string;
@@ -168,6 +174,14 @@ export interface FaceResponse {
    * by the operator-facing face cleanup dashboard to triage mis-clustered faces.
    */
   cluster_assignment?: ClusterAssignmentResponse | null;
+
+  /**
+   * Detector confidence on a 0-1 scale; higher is more confident among faces
+   * detected under the same configuration (values are not comparable across detector
+   * generations). Null on legacy faces without a stored score and on manually added
+   * faces.
+   */
+  confidence?: number | null;
 
   /**
    * ID of the person this face belongs to (if identified)
