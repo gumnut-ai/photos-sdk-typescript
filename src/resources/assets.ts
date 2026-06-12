@@ -27,6 +27,8 @@ export class Assets extends APIResource {
    * have a specific asset ID (e.g., from `list_assets`, `search_assets`, or
    * `list_album_assets`) and need its full details. For bulk fetch of multiple known
    * IDs, prefer `list_assets` with the `ids` parameter to avoid N round trips.
+   * `asset_urls` are signed URLs for client rendering only; to visually inspect the
+   * image pixels, call `view_asset` instead.
    */
   retrieve(
     assetID: string,
