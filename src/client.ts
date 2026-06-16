@@ -64,6 +64,7 @@ import {
 import { EventGetParams, Events, EventsResponse } from './resources/events';
 import {
   ClusterAssignmentResponse,
+  FaceCreateParams,
   FaceDeleteParams,
   FaceDeleteResponse,
   FaceListParams,
@@ -959,6 +960,7 @@ export declare namespace Gumnut {
     type FaceResponse as FaceResponse,
     type FaceDeleteResponse as FaceDeleteResponse,
     type FaceResponsesCursorPage as FaceResponsesCursorPage,
+    type FaceCreateParams as FaceCreateParams,
     type FaceRetrieveParams as FaceRetrieveParams,
     type FaceUpdateParams as FaceUpdateParams,
     type FaceListParams as FaceListParams,

@@ -9,6 +9,41 @@ const client = new Gumnut({
 
 describe('resource faces', () => {
   // Mock server tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.faces.create({
+      asset_id: 'asset_id',
+      bounding_box: {
+        h: 1,
+        w: 1,
+        x: 0,
+        y: 0,
+      },
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.faces.create({
+      asset_id: 'asset_id',
+      bounding_box: {
+        h: 1,
+        w: 1,
+        x: 0,
+        y: 0,
+      },
+      library_id: 'library_id',
+      person_id: 'person_id',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.faces.retrieve('face_id');
     const rawResponse = await responsePromise.asResponse();
