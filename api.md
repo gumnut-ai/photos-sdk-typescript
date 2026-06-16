@@ -111,6 +111,7 @@ Types:
 
 Methods:
 
+- <code title="post /api/faces">client.faces.<a href="./src/resources/faces.ts">create</a>({ ...params }) -> FaceResponse</code>
 - <code title="get /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">retrieve</a>(faceID, { ...params }) -> FaceResponse</code>
 - <code title="patch /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">update</a>(faceID, { ...params }) -> FaceResponse</code>
 - <code title="get /api/faces">client.faces.<a href="./src/resources/faces.ts">list</a>({ ...params }) -> FaceResponsesCursorPage</code>
