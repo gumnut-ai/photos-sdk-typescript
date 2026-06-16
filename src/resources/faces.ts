@@ -9,6 +9,15 @@ import { path } from '../internal/utils/path';
 
 export class Faces extends APIResource {
   /**
+   * Adds a user-drawn face box to an asset, for a face the detector missed. To
+   * remove a face detection instead, use `delete_face`; to introduce a brand-new
+   * identity first, use `create_person`.
+   */
+  create(body: FaceCreateParams, options?: RequestOptions): APIPromise<FaceResponse> {
+    return this._client.post('/api/faces', { body, ...options });
+  }
+
+  /**
    * Fetches one face's details by ID (bounding box, assigned person, timestamps,
    * thumbnail). Use when you already have a `face_id`.
    */
@@ -205,6 +214,61 @@ export interface FaceResponse {
  */
 export interface FaceDeleteResponse {}
 
+export interface FaceCreateParams {
+  /**
+   * ID of the asset (with `asset_` prefix) to draw the face box on. Get IDs from
+   * `list_assets` / `search_assets`. The asset must belong to the target library.
+   */
+  asset_id: string;
+
+  /**
+   * Where the face is, as a box in display-space pixels matching the asset's
+   * reported `width`/`height`. The box must fit inside those dimensions.
+   */
+  bounding_box: FaceCreateParams.BoundingBox;
+
+  /**
+   * Library to create the face in. Optional if the user has a single library;
+   * required when they have multiple.
+   */
+  library_id?: string | null;
+
+  /**
+   * Optional person ID (with `person_` prefix) to assign this face to at creation.
+   * Omit to leave it unassigned; assign it later via `update_face`. Get IDs from
+   * `list_people`; use `create_person` first if the identity doesn't exist yet.
+   */
+  person_id?: string | null;
+}
+
+export namespace FaceCreateParams {
+  /**
+   * Where the face is, as a box in display-space pixels matching the asset's
+   * reported `width`/`height`. The box must fit inside those dimensions.
+   */
+  export interface BoundingBox {
+    /**
+     * Box height in pixels. `y + h` must not exceed the asset's height.
+     */
+    h: number;
+
+    /**
+     * Box width in pixels. `x + w` must not exceed the asset's width.
+     */
+    w: number;
+
+    /**
+     * Left edge, in pixels from the asset's left side (0-based).
+     */
+    x: number;
+
+    /**
+     * Top edge, in pixels from the asset's top side (0-based).
+     */
+    y: number;
+  }
+}
+
 export interface FaceRetrieveParams {
   /**
    * Opt-in expansion fields. See `list_faces` for supported values. Accepts multiple
@@ -284,6 +348,7 @@ export declare namespace Faces {
     type FaceResponse as FaceResponse,
     type FaceDeleteResponse as FaceDeleteResponse,
     type FaceResponsesCursorPage as FaceResponsesCursorPage,
+    type FaceCreateParams as FaceCreateParams,
     type FaceRetrieveParams as FaceRetrieveParams,
     type FaceUpdateParams as FaceUpdateParams,
     type FaceListParams as FaceListParams,

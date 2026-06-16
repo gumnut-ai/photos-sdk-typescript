@@ -58,6 +58,7 @@ export {
   type ClusterAssignmentResponse,
   type FaceResponse,
   type FaceDeleteResponse,
+  type FaceCreateParams,
   type FaceRetrieveParams,
   type FaceUpdateParams,
   type FaceListParams,
