@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.122.1 (2026-06-17)
+
+Full Changelog: [v0.122.0...v0.122.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.122.0...v0.122.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([d5c30ae](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d5c30ae4e531f0846c3ab5e760062b1bf4f6f684))
+
 ## 0.122.0 (2026-06-16)
 
 Full Changelog: [v0.121.0...v0.122.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.121.0...v0.122.0)
