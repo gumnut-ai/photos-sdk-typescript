@@ -74,6 +74,12 @@ export interface UserResponse {
    * User's last name
    */
   last_name?: string | null;
+
+  /**
+   * User's home timezone as an IANA zone id (e.g. 'America/Los_Angeles'); null until
+   * a home zone is captured
+   */
+  timezone?: string | null;
 }
 
 export declare namespace Users {
