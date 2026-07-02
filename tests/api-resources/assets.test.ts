@@ -81,6 +81,8 @@ describe('resource assets', () => {
       client.assets.list(
         {
           album_id: 'album_id',
+          bbox: 'bbox',
+          center: 'center',
           ids: ['string', 'string'],
           include: ['string', 'string'],
           library_id: 'library_id',
@@ -88,6 +90,7 @@ describe('resource assets', () => {
           local_datetime_after: '2019-12-27T18:11:19.117Z',
           local_datetime_before: '2019-12-27T18:11:19.117Z',
           person_id: 'person_id',
+          radius: 0,
           starting_after_id: 'starting_after_id',
           state: 'live',
         },
