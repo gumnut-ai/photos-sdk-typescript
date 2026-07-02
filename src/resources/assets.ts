@@ -40,15 +40,20 @@ export class Assets extends APIResource {
 
   /**
    * Returns a paginated list of assets ordered by local capture time (newest first),
-   * optionally filtered by album, person, date range, or asset ID. Use this tool for
-   * structured browsing and filtering — when the request can be expressed as exact
-   * filters on album membership, people, date range, or specific asset IDs.
+   * optionally filtered by album, person, date range, geographic area, or asset ID.
+   * Use this tool for structured browsing and filtering — when the request can be
+   * expressed as exact filters on album membership, people, date range, geographic
+   * coordinates, or specific asset IDs.
+   *
+   * **Location filtering is by coordinate:** pass a radius (`center` + `radius`) or
+   * a bounding box (`bbox`) to restrict results to a geographic area. The two modes
+   * are mutually exclusive.
    *
    * **Use `search_assets` instead** when the request involves natural-language image
-   * content ('photos of sunsets', 'pictures with my dog'), location or place
-   * ('photos from Japan'), or any concept requiring semantic understanding of what's
-   * in the image. `list_assets` does not filter by image content, location, or
-   * caption text.
+   * content ('photos of sunsets', 'pictures with my dog'), a place _name_ ('photos
+   * from Japan'), or any concept requiring semantic understanding of what's in the
+   * image. `list_assets` filters by coordinate but not by image content, place name,
+   * or caption text.
    *
    * **To present a curated set of specific assets to the user** (e.g., a hand-picked
    * subset of `search_assets` results), call this tool with `ids=[...]` rather than
@@ -735,6 +740,22 @@ export interface AssetListParams extends CursorPageParams {
   album_id?: string | null;
 
   /**
+   * Bounding-box (map viewport) location filter: four comma-separated decimal-degree
+   * numbers `min_longitude,min_latitude,max_longitude,max_latitude`
+   * (west,south,east,north), e.g. `-77.1,38.9,-77.0,39.0`. Mutually exclusive with
+   * `center`/`radius`. A box whose `min_longitude` exceeds `max_longitude`
+   * (antimeridian-crossing) is accepted but matches nothing — split it client-side.
+   */
+  bbox?: string | null;
+
+  /**
+   * Center point of a radius location filter: two comma-separated decimal-degree
+   * numbers `longitude,latitude`, e.g. `-77.05,38.95`. Supply with `radius`.
+   * Mutually exclusive with `bbox`.
+   */
+  center?: string | null;
+
+  /**
    * Look up specific assets by ID (max 100; each ID has the `asset_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
    * `ids=asset_1,asset_2`). Combines with other filters (album_id, person_id,
@@ -789,6 +810,12 @@ export interface AssetListParams extends CursorPageParams {
    * tool; the sibling `search_assets` uses `person_ids` (plural, ALL-of).
    */
   person_id?: string | null;
+
+  /**
+   * Radius of the `center` location filter, in meters (greater than 0, at most
+   * 50000).
+   */
+  radius?: number | null;
 
   /**
    * Which set of assets to read from: `live` (default — only assets that are not
