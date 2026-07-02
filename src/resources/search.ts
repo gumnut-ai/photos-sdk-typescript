@@ -25,11 +25,15 @@ export class Search extends APIResource {
    * filters alone (album, person, date range, ID) — it's cheaper and more
    * deterministic than semantic search.
    *
-   * Does not filter by location/place today; pass place names as part of `query` and
-   * rely on semantic matching until a structured location filter lands.
+   * Location filtering is by coordinate radius only: pass `center` + `radius`
+   * together to keep only assets within that circle (a filter that narrows
+   * candidates — the semantic/date ordering is unchanged). Place-name search
+   * ('photos in Paris') is not supported; pass place names as part of `query` and
+   * rely on semantic matching.
    *
    * At least one of `query`, `person_ids`, `captured_before`, or `captured_after`
-   * must be provided.
+   * must be provided; the radius is an additional filter, not a search criterion on
+   * its own.
    */
   search(
     query: SearchSearchParams | null | undefined = {},
@@ -93,6 +97,12 @@ export interface SearchSearchParams {
   captured_before?: string | null;
 
   /**
+   * Center point of a radius location filter: two comma-separated decimal-degree
+   * numbers `longitude,latitude`, e.g. `-77.05,38.95`. Supply with `radius`.
+   */
+  center?: string | null;
+
+  /**
    * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
    * location names), `faces`, `people`, `metrics` (ML quality scores), `file_data`
    * (a group token populating the nested `file_data` object with the file/provenance
@@ -147,6 +157,12 @@ export interface SearchSearchParams {
   query?: string | null;
 
   /**
+   * Radius of the `center` location filter, in meters (greater than 0, at most
+   * 50,000).
+   */
+  radius?: number | null;
+
+  /**
    * Maximum semantic distance for a result to be included (0.0 = identical, 1.0 =
    * unrelated). Lower values return fewer, more confident matches; higher values
    * return more results with looser matching. Default 0.8 is moderate — try 0.6 for
@@ -187,6 +203,13 @@ export interface SearchSearchAssetsParams {
   captured_before?: string | null;
 
   /**
+   * Body param: Center point of a radius location filter: two comma-separated
+   * decimal-degree numbers `longitude,latitude`, e.g. `-77.05,38.95`. Supply with
+   * `radius`.
+   */
+  center?: string | null;
+
+  /**
    * Body param: Image file to search for similar assets. Can be combined with text
    * query.
    */
@@ -222,6 +245,12 @@ export interface SearchSearchAssetsParams {
    * and captured_after parameters instead.
    */
   query?: string | null;
+
+  /**
+   * Body param: Radius of the `center` location filter, in meters (greater than 0,
+   * at most 50,000).
+   */
+  radius?: number | null;
 
   /**
    * Body param: Similarity threshold (lower means more similar)
