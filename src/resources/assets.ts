@@ -47,7 +47,9 @@ export class Assets extends APIResource {
    *
    * **Location filtering is by coordinate:** pass a radius (`center` + `radius`) or
    * a bounding box (`bbox`) to restrict results to a geographic area. The two modes
-   * are mutually exclusive.
+   * are mutually exclusive. To count or cluster geotagged assets across a map
+   * viewport (how many photos fall in each area) rather than list them, use
+   * `get_geo_clusters`.
    *
    * **Use `search_assets` instead** when the request involves natural-language image
    * content ('photos of sunsets', 'pictures with my dog'), a place _name_ ('photos
