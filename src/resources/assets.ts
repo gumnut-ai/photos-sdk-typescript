@@ -117,6 +117,26 @@ export class Assets extends APIResource {
   }
 
   /**
+   * Clusters geotagged assets in a map viewport (bounding box) onto a grid of square
+   * cells and returns one entry per non-empty cell — its centroid, asset count, and
+   * a representative cover asset. Use this to render a clustered map or to count how
+   * many photos fall in each part of a viewport at a chosen zoom granularity.
+   *
+   * The result is a single un-paginated list capped at 1000 cells; a viewport that
+   * is too dense at the given `cell_size` returns 422 (coarsen `cell_size` or zoom
+   * in). A viewport whose `min_longitude` exceeds `max_longitude` (crossing the
+   * antimeridian) returns no cells — split it into two requests client-side. To list
+   * the individual assets behind a cell, call `list_assets` with a tighter bounding
+   * box over the same filters.
+   */
+  clusterByGeo(
+    query: AssetClusterByGeoParams,
+    options?: RequestOptions,
+  ): APIPromise<AssetClusterByGeoResponse> {
+    return this._client.get('/api/assets/geo-clusters', { query, ...options });
+  }
+
+  /**
    * Counts assets bucketed by time period — use this to summarize a library (or a
    * filtered slice) without paging through the full timeline. Returns one row per
    * bucket, ordered most-recent-first, with optional filtering by album, person,
@@ -650,6 +670,42 @@ export interface AssetDeleteResponse {}
  */
 export interface AssetBulkUpdateAssetsResponse {}
 
+export interface AssetClusterByGeoResponse {
+  /**
+   * Non-empty grid cells within the requested viewport. Not paginated: the list is
+   * capped at 1000 cells and a denser viewport returns 422 instead — coarsen
+   * `cell_size` or zoom in.
+   */
+  data: Array<AssetClusterByGeoResponse.Data>;
+}
+
+export namespace AssetClusterByGeoResponse {
+  export interface Data {
+    /**
+     * Number of assets in this grid cell.
+     */
+    count: number;
+
+    /**
+     * Cluster centroid latitude in decimal degrees — the average latitude of the
+     * cell's members.
+     */
+    latitude: number;
+
+    /**
+     * Cluster centroid longitude in decimal degrees — the average longitude of the
+     * cell's members.
+     */
+    longitude: number;
+
+    /**
+     * ID of a cover asset for the cell — the most recently captured geotagged asset in
+     * it (ties broken by descending id).
+     */
+    representative_asset_id: string;
+  }
+}
+
 /**
  * Acknowledgment body returned by destructive endpoints (delete / trash / restore
  * / permanently delete / remove-from-album / empty-trash).
@@ -932,6 +988,57 @@ export interface AssetCheckExistenceParams {
   deviceId?: string | null;
 }
 
+export interface AssetClusterByGeoParams {
+  /**
+   * Map viewport as four comma-separated decimal-degree numbers
+   * `min_longitude,min_latitude,max_longitude,max_latitude` (west,south,east,north),
+   * e.g. `-77.1,38.9,-77.0,39.0`. A box whose `min_longitude` exceeds
+   * `max_longitude` (antimeridian-crossing) returns no cells — split it client-side.
+   */
+  bbox: string;
+
+  /**
+   * Grid cell edge in decimal degrees — the clustering granularity. Larger values
+   * give coarser clusters; the client maps map-zoom to `cell_size`. Must be at least
+   * 0.0001 (~11 m).
+   */
+  cell_size: number;
+
+  /**
+   * Return only assets that are in the album with this ID.
+   */
+  album_id?: string | null;
+
+  /**
+   * Library to cluster assets from. Optional if the user has a single library;
+   * required when they have multiple.
+   */
+  library_id?: string | null;
+
+  /**
+   * Only include assets captured strictly after this instant (ISO 8601; exclusive).
+   * Same awareness/offset semantics as on `list_assets`.
+   */
+  local_datetime_after?: string | null;
+
+  /**
+   * Only include assets captured strictly before this instant (ISO 8601; exclusive).
+   * Same awareness/offset semantics as on `list_assets`.
+   */
+  local_datetime_before?: string | null;
+
+  /**
+   * Return only assets containing a face belonging to this person.
+   */
+  person_id?: string | null;
+
+  /**
+   * Which set of assets to cluster: `live` (default — excludes trashed assets),
+   * `trashed` (only trashed assets), or `all` (both).
+   */
+  state?: 'live' | 'trashed' | 'all';
+}
+
 export interface AssetCountsParams {
   /**
    * Filter by assets in a specific album
@@ -1078,6 +1185,7 @@ export declare namespace Assets {
     type MetadataResponse as MetadataResponse,
     type AssetDeleteResponse as AssetDeleteResponse,
     type AssetBulkUpdateAssetsResponse as AssetBulkUpdateAssetsResponse,
+    type AssetClusterByGeoResponse as AssetClusterByGeoResponse,
     type AssetDeleteListResponse as AssetDeleteListResponse,
     type AssetEmptyTrashResponse as AssetEmptyTrashResponse,
     type AssetRestoreResponse as AssetRestoreResponse,
@@ -1088,6 +1196,7 @@ export declare namespace Assets {
     type AssetListParams as AssetListParams,
     type AssetBulkUpdateAssetsParams as AssetBulkUpdateAssetsParams,
     type AssetCheckExistenceParams as AssetCheckExistenceParams,
+    type AssetClusterByGeoParams as AssetClusterByGeoParams,
     type AssetCountsParams as AssetCountsParams,
     type AssetDeleteListParams as AssetDeleteListParams,
     type AssetEmptyTrashParams as AssetEmptyTrashParams,

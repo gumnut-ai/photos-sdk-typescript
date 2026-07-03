@@ -160,6 +160,32 @@ describe('resource assets', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('clusterByGeo: only required params', async () => {
+    const responsePromise = client.assets.clusterByGeo({ bbox: 'bbox', cell_size: 0 });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('clusterByGeo: required and optional params', async () => {
+    const response = await client.assets.clusterByGeo({
+      bbox: 'bbox',
+      cell_size: 0,
+      album_id: 'album_id',
+      library_id: 'library_id',
+      local_datetime_after: '2019-12-27T18:11:19.117Z',
+      local_datetime_before: '2019-12-27T18:11:19.117Z',
+      person_id: 'person_id',
+      state: 'live',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('counts', async () => {
     const responsePromise = client.assets.counts();
     const rawResponse = await responsePromise.asResponse();
