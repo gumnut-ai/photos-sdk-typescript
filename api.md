@@ -32,6 +32,7 @@ Types:
 - <code><a href="./src/resources/assets.ts">MetadataResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetDeleteResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetBulkUpdateAssetsResponse</a></code>
+- <code><a href="./src/resources/assets.ts">AssetClusterByGeoResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetDeleteListResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetEmptyTrashResponse</a></code>
 - <code><a href="./src/resources/assets.ts">AssetRestoreResponse</a></code>
@@ -45,6 +46,7 @@ Methods:
 - <code title="delete /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">delete</a>(assetID) -> AssetDeleteResponse</code>
 - <code title="post /api/assets/bulk-update">client.assets.<a href="./src/resources/assets.ts">bulkUpdateAssets</a>({ ...params }) -> AssetBulkUpdateAssetsResponse</code>
 - <code title="post /api/assets/exist">client.assets.<a href="./src/resources/assets.ts">checkExistence</a>({ ...params }) -> AssetExistenceResponse</code>
+- <code title="get /api/assets/geo-clusters">client.assets.<a href="./src/resources/assets.ts">clusterByGeo</a>({ ...params }) -> AssetClusterByGeoResponse</code>
 - <code title="get /api/assets/counts">client.assets.<a href="./src/resources/assets.ts">counts</a>({ ...params }) -> AssetCountResponse</code>
 - <code title="delete /api/assets">client.assets.<a href="./src/resources/assets.ts">deleteList</a>({ ...params }) -> AssetDeleteListResponse</code>
 - <code title="post /api/assets/empty-trash">client.assets.<a href="./src/resources/assets.ts">emptyTrash</a>({ ...params }) -> AssetEmptyTrashResponse</code>
