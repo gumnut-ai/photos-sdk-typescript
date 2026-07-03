@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.128.0 (2026-07-03)
+
+Full Changelog: [v0.127.0...v0.128.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.127.0...v0.128.0)
+
+### Features
+
+* **api:** cluster by geo ([1b8899f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/1b8899f511c2746becd1e5157a8362fa0ff20c95))
+
 ## 0.127.0 (2026-07-02)
 
 Full Changelog: [v0.126.0...v0.127.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.126.0...v0.127.0)
