@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.128.1 (2026-07-11)
+
+Full Changelog: [v0.128.0...v0.128.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.128.0...v0.128.1)
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([d7e3169](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d7e3169f0215af41595b21c21018b7e9ef6fde83))
+
+
+### Chores
+
+* **internal:** codegen related update ([693b068](https://github.com/gumnut-ai/photos-sdk-typescript/commit/693b06871eda0ac8cd9cadca1568fc3646016c16))
+
 ## 0.128.0 (2026-07-03)
 
 Full Changelog: [v0.127.0...v0.128.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.127.0...v0.128.0)
