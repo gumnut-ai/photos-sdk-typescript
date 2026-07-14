@@ -403,6 +403,16 @@ export interface AssetResponse {
   people?: Array<PeopleAPI.PersonResponse> | null;
 
   /**
+   * ID of the burst stack this asset belongs to (`asset_stack_` prefix), or `null`
+   * when the asset is not part of a stack. Group assets by this value to collapse a
+   * burst into a single tile; the stack's own cover and member count are not carried
+   * on the asset. Distinct from `metadata.auto_stack_id`, which is the camera's
+   * in-EXIF `MakerNotes:AutoStackID` string — this is the server-assigned foreign
+   * key to the asset's stack.
+   */
+  stack_id?: string | null;
+
+  /**
    * Base64-encoded ThumbHash placeholder (~28 chars). Clients decode with the
    * `thumbhash` library (JS / Swift / Kotlin) to render an instant blurred preview
    * before the CDN thumbnail arrives. `null` while generation is pending.
@@ -817,7 +827,7 @@ export interface AssetListParams extends CursorPageParams {
    * Look up specific assets by ID (max 100; each ID has the `asset_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
    * `ids=asset_1,asset_2`). Combines with other filters (album_id, person_id,
-   * datetime range) using AND logic — the result is the intersection.
+   * stack_id, datetime range) using AND logic — the result is the intersection.
    */
   ids?: Array<string> | null;
 
@@ -874,6 +884,12 @@ export interface AssetListParams extends CursorPageParams {
    * 50000).
    */
   radius?: number | null;
+
+  /**
+   * Return only assets belonging to this burst stack (the `asset_stack_` ID carried
+   * by the `stack_id` field on every asset).
+   */
+  stack_id?: string | null;
 
   /**
    * Which set of assets to read from: `live` (default — only assets that are not
