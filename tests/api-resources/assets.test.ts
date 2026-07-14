@@ -91,6 +91,7 @@ describe('resource assets', () => {
           local_datetime_before: '2019-12-27T18:11:19.117Z',
           person_id: 'person_id',
           radius: 0,
+          stack_id: 'stack_id',
           starting_after_id: 'starting_after_id',
           state: 'live',
         },
