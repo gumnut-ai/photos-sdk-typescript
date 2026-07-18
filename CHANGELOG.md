@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.130.0 (2026-07-18)
+
+Full Changelog: [v0.129.0...v0.130.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.129.0...v0.130.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([e555cdc](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e555cdccbd23ed23fe983dc9c53a44b8ff0ecdec))
+
 ## 0.129.0 (2026-07-14)
 
 Full Changelog: [v0.128.1...v0.129.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.128.1...v0.129.0)
