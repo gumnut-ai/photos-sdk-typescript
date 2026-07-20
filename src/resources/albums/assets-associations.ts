@@ -14,7 +14,7 @@ export class AssetsAssociations extends APIResource {
    * `not_found_assets`. Idempotent: calling with the same IDs twice leaves the album
    * in the same state.
    *
-   * Up to 100 ids per request; over-cap requests return 422.
+   * Up to 200 ids per request; over-cap requests return 422.
    */
   add(
     albumID: string,
@@ -31,7 +31,7 @@ export class AssetsAssociations extends APIResource {
    * `list_album_assets` to get the links and then remove them, or delete the album
    * itself with `delete_album`.
    *
-   * Up to 100 ids per request; over-cap requests return 422.
+   * Up to 200 ids per request; over-cap requests return 422.
    */
   remove(
     albumID: string,
@@ -45,7 +45,7 @@ export class AssetsAssociations extends APIResource {
 export interface AlbumAssetAssociation {
   /**
    * Asset IDs (with `asset_` prefix) to associate with the album. Get IDs from
-   * `list_assets`, `search_assets`, or `list_album_assets`. Up to 100 ids per
+   * `list_assets`, `search_assets`, or `list_album_assets`. Up to 200 ids per
    * request.
    */
   asset_ids: Array<string>;
@@ -84,7 +84,7 @@ export interface AssetsAssociationRemoveResponse {}
 export interface AssetsAssociationAddParams {
   /**
    * Asset IDs (with `asset_` prefix) to associate with the album. Get IDs from
-   * `list_assets`, `search_assets`, or `list_album_assets`. Up to 100 ids per
+   * `list_assets`, `search_assets`, or `list_album_assets`. Up to 200 ids per
    * request.
    */
   asset_ids: Array<string>;
@@ -93,7 +93,7 @@ export interface AssetsAssociationAddParams {
 export interface AssetsAssociationRemoveParams {
   /**
    * Asset IDs (with `asset_` prefix) to associate with the album. Get IDs from
-   * `list_assets`, `search_assets`, or `list_album_assets`. Up to 100 ids per
+   * `list_assets`, `search_assets`, or `list_album_assets`. Up to 200 ids per
    * request.
    */
   asset_ids: Array<string>;
