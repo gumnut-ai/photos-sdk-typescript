@@ -197,7 +197,7 @@ export interface AlbumListParams extends CursorPageParams {
   asset_id?: string | null;
 
   /**
-   * Look up specific albums by ID (max 100; each ID has the `album_` prefix).
+   * Look up specific albums by ID (max 200; each ID has the `album_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
    * `ids=album_1,album_2`).
    */
