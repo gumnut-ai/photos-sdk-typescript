@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.133.0 (2026-07-20)
+
+Full Changelog: [v0.132.0...v0.133.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.132.0...v0.133.0)
+
+### Features
+
+* **api:** add endpoints for asset stacks. ([769a474](https://github.com/gumnut-ai/photos-sdk-typescript/commit/769a4748793f9ffa55c4162d3f1a5befa989d3e5))
+
 ## 0.132.0 (2026-07-20)
 
 Full Changelog: [v0.131.0...v0.132.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.131.0...v0.132.0)
