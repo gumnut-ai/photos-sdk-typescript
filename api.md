@@ -191,6 +191,18 @@ Methods:
 - <code title="get /api/search">client.search.<a href="./src/resources/search.ts">search</a>({ ...params }) -> SearchResponse</code>
 - <code title="post /api/search">client.search.<a href="./src/resources/search.ts">searchAssets</a>({ ...params }) -> SearchResponse</code>
 
+# Stacks
+
+Types:
+
+- <code><a href="./src/resources/stacks.ts">StackListStacksResponse</a></code>
+- <code><a href="./src/resources/stacks.ts">StackRetrieveStackResponse</a></code>
+
+Methods:
+
+- <code title="get /api/stacks">client.stacks.<a href="./src/resources/stacks.ts">listStacks</a>({ ...params }) -> StackListStacksResponsesCursorPage</code>
+- <code title="get /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">retrieveStack</a>(stackID) -> StackRetrieveStackResponse</code>
+
 # Tasks
 
 # Users

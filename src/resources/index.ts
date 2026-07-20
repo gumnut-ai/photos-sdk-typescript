@@ -105,5 +105,12 @@ export {
   type SearchSearchParams,
   type SearchSearchAssetsParams,
 } from './search';
+export {
+  Stacks,
+  type StackListStacksResponse,
+  type StackRetrieveStackResponse,
+  type StackListStacksParams,
+  type StackListStacksResponsesCursorPage,
+} from './stacks';
 export { Tasks } from './tasks';
 export { Users, type UserResponse } from './users';

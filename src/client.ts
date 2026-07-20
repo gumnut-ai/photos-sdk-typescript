@@ -114,6 +114,13 @@ import {
   SearchSearchAssetsParams,
   SearchSearchParams,
 } from './resources/search';
+import {
+  StackListStacksParams,
+  StackListStacksResponse,
+  StackListStacksResponsesCursorPage,
+  StackRetrieveStackResponse,
+  Stacks,
+} from './resources/stacks';
 import { Tasks } from './resources/tasks';
 import { UserResponse, Users } from './resources/users';
 import {
@@ -883,6 +890,7 @@ export class Gumnut {
   people: API.People = new API.People(this);
   ping: API.Ping = new API.Ping(this);
   search: API.Search = new API.Search(this);
+  stacks: API.Stacks = new API.Stacks(this);
   tasks: API.Tasks = new API.Tasks(this);
   users: API.Users = new API.Users(this);
 }
@@ -898,6 +906,7 @@ Gumnut.OAuth = OAuth;
 Gumnut.People = People;
 Gumnut.Ping = Ping;
 Gumnut.Search = Search;
+Gumnut.Stacks = Stacks;
 Gumnut.Tasks = Tasks;
 Gumnut.Users = Users;
 
@@ -1020,6 +1029,14 @@ export declare namespace Gumnut {
     type SearchResultItem as SearchResultItem,
     type SearchSearchParams as SearchSearchParams,
     type SearchSearchAssetsParams as SearchSearchAssetsParams,
+  };
+
+  export {
+    Stacks as Stacks,
+    type StackListStacksResponse as StackListStacksResponse,
+    type StackRetrieveStackResponse as StackRetrieveStackResponse,
+    type StackListStacksResponsesCursorPage as StackListStacksResponsesCursorPage,
+    type StackListStacksParams as StackListStacksParams,
   };
 
   export { Tasks as Tasks };
