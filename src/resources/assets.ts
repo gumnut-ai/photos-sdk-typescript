@@ -92,7 +92,7 @@ export class Assets extends APIResource {
    * on different assets in the same request. Atomic: any per-item validation failure
    * or unknown / cross-user id rejects the whole batch and writes nothing.
    *
-   * Up to 100 items per request; over-cap requests return 422. For a single-asset
+   * Up to 200 items per request; over-cap requests return 422. For a single-asset
    * edit, prefer `update_asset` — semantically identical but slightly more concise
    * at the call site.
    */
@@ -163,7 +163,7 @@ export class Assets extends APIResource {
    * `trash_assets` for the user's standard delete action so accidents can be
    * recovered.
    *
-   * Up to 100 ids per request; over-cap requests return 422.
+   * Up to 200 ids per request; over-cap requests return 422.
    */
   deleteList(params: AssetDeleteListParams, options?: RequestOptions): APIPromise<AssetDeleteListResponse> {
     const { library_id, ...body } = params;
@@ -824,7 +824,7 @@ export interface AssetListParams extends CursorPageParams {
   center?: string | null;
 
   /**
-   * Look up specific assets by ID (max 100; each ID has the `asset_` prefix).
+   * Look up specific assets by ID (max 200; each ID has the `asset_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
    * `ids=asset_1,asset_2`). Combines with other filters (album_id, person_id,
    * stack_id, datetime range) using AND logic — the result is the intersection.
@@ -903,7 +903,7 @@ export interface AssetBulkUpdateAssetsParams {
   /**
    * List of per-asset updates. Each item carries the target asset id and the change
    * to apply to it; different fields can be changed on different assets in the same
-   * request. Up to 100 items per request.
+   * request. Up to 200 items per request.
    */
   updates: Array<AssetBulkUpdateAssetsParams.Update>;
 }
@@ -1108,7 +1108,7 @@ export interface AssetCountsParams {
 
 export interface AssetDeleteListParams {
   /**
-   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 100
+   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 200
    * ids per request.
    */
   ids: Array<string>;
@@ -1130,7 +1130,7 @@ export interface AssetEmptyTrashParams {
 
 export interface AssetRestoreParams {
   /**
-   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 100
+   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 200
    * ids per request.
    */
   ids: Array<string>;
@@ -1144,7 +1144,7 @@ export interface AssetRestoreParams {
 
 export interface AssetTrashParams {
   /**
-   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 100
+   * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 200
    * ids per request.
    */
   ids: Array<string>;

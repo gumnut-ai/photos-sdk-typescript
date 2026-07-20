@@ -307,7 +307,7 @@ export interface FaceListParams extends CursorPageParams {
   asset_id?: string | null;
 
   /**
-   * Look up specific faces by ID (max 100). IDs use the `face_` prefix. Accepts
+   * Look up specific faces by ID (max 200). IDs use the `face_` prefix. Accepts
    * multiple `ids=` query params or a single comma-delimited value (e.g.,
    * `ids=face_1,face_2`).
    */

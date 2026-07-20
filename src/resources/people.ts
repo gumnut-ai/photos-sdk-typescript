@@ -291,7 +291,7 @@ export interface PersonListParams extends CursorPageParams {
   asset_id?: string | null;
 
   /**
-   * Look up specific people by ID (max 100; each ID has the `person_` prefix).
+   * Look up specific people by ID (max 200; each ID has the `person_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
    * `ids=person_1,person_2`). When set, `name_filter` defaults to `all` so unnamed
    * clusters are included in the lookup.
