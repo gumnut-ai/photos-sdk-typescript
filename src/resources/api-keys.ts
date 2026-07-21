@@ -55,14 +55,34 @@ export interface APIKeyResponse {
   is_active: boolean;
 
   /**
+   * Action verbs this key's grant allows; null for legacy keys
+   */
+  actions?: Array<'read' | 'write' | 'delete' | 'delete_permanently'> | null;
+
+  /**
    * When this API key was last used for authentication
    */
   last_used_at?: string | null;
 
   /**
+   * Which of the owner's libraries a grant covers.
+   *
+   * `all_libraries` means all current and future live libraries owned by the grant's
+   * user. `selected_libraries` means only the libraries listed in
+   * `access_grant_libraries`, with no automatic expansion.
+   */
+  library_scope_mode?: 'all_libraries' | 'selected_libraries' | null;
+
+  /**
    * Optional descriptive name for this API key
    */
   name?: string | null;
+
+  /**
+   * Number of libraries a 'selected_libraries' grant covers; null unless
+   * library_scope_mode is 'selected_libraries'
+   */
+  selected_library_count?: number | null;
 }
 
 /**
@@ -93,14 +113,34 @@ export interface APIKeyCreateResponse {
   is_active: boolean;
 
   /**
+   * Action verbs this key's grant allows; null for legacy keys
+   */
+  actions?: Array<'read' | 'write' | 'delete' | 'delete_permanently'> | null;
+
+  /**
    * When this API key was last used for authentication
    */
   last_used_at?: string | null;
 
   /**
+   * Which of the owner's libraries a grant covers.
+   *
+   * `all_libraries` means all current and future live libraries owned by the grant's
+   * user. `selected_libraries` means only the libraries listed in
+   * `access_grant_libraries`, with no automatic expansion.
+   */
+  library_scope_mode?: 'all_libraries' | 'selected_libraries' | null;
+
+  /**
    * Optional descriptive name for this API key
    */
   name?: string | null;
+
+  /**
+   * Number of libraries a 'selected_libraries' grant covers; null unless
+   * library_scope_mode is 'selected_libraries'
+   */
+  selected_library_count?: number | null;
 }
 
 export type APIKeyListResponse = Array<APIKeyResponse>;
@@ -118,6 +158,27 @@ export interface APIKeyDeleteResponse {}
 
 export interface APIKeyCreateParams {
   name: string;
+
+  /**
+   * Action verbs the key may perform. Omit for full access. `read` is required
+   * whenever any broader action is selected.
+   */
+  actions?: Array<'read' | 'write' | 'delete' | 'delete_permanently'> | null;
+
+  /**
+   * Libraries the key covers. Required (at least one) when `library_scope_mode` is
+   * `selected_libraries`; not allowed otherwise. Up to 200 ids.
+   */
+  library_ids?: Array<string> | null;
+
+  /**
+   * Which of the owner's libraries a grant covers.
+   *
+   * `all_libraries` means all current and future live libraries owned by the grant's
+   * user. `selected_libraries` means only the libraries listed in
+   * `access_grant_libraries`, with no automatic expansion.
+   */
+  library_scope_mode?: 'all_libraries' | 'selected_libraries' | null;
 }
 
 export interface APIKeyUpdateParams {
