@@ -51,6 +51,9 @@ export class Assets extends APIResource {
    * viewport (how many photos fall in each area) rather than list them, use
    * `get_geo_clusters`.
    *
+   * Album and person filters compose using AND. `person_id` is a deprecated alias
+   * for one `person_ids` value; do not supply both person parameters.
+   *
    * **Use `search_assets` instead** when the request involves natural-language image
    * content ('photos of sunsets', 'pictures with my dog'), a place _name_ ('photos
    * from Japan'), or any concept requiring semantic understanding of what's in the
@@ -127,7 +130,9 @@ export class Assets extends APIResource {
    * in). A viewport whose `min_longitude` exceeds `max_longitude` (crossing the
    * antimeridian) returns no cells — split it into two requests client-side. To list
    * the individual assets behind a cell, call `list_assets` with a tighter bounding
-   * box over the same filters.
+   * box over the same filters. Album and person filters compose using AND.
+   * `person_id` is a deprecated alias for one `person_ids` value; do not supply both
+   * person parameters.
    */
   clusterByGeo(
     query: AssetClusterByGeoParams,
@@ -801,10 +806,10 @@ export interface AssetRetrieveParams {
 
 export interface AssetListParams extends CursorPageParams {
   /**
-   * Return only assets that are in the album with this ID. Equivalent to calling
-   * `list_album_assets` with `album_id` and then fetching each asset — prefer this
-   * param when you need the full asset metadata in one call. Singular on this tool;
-   * the sibling `search_assets` uses `album_ids` (plural, ALL-of).
+   * Return only assets in this album. Get album IDs from `list_albums`. To browse
+   * one album's full asset metadata, prefer this filter over `list_album_assets`,
+   * which returns link records. The sibling `search_assets` uses `album_ids`
+   * (plural, ALL-of).
    */
   album_id?: string | null;
 
@@ -827,7 +832,7 @@ export interface AssetListParams extends CursorPageParams {
   /**
    * Look up specific assets by ID (max 200; each ID has the `asset_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
-   * `ids=asset_1,asset_2`). Combines with other filters (album_id, person_id,
+   * `ids=asset_1,asset_2`). Combines with other filters (album_id, person_ids,
    * stack_id, datetime range) using AND logic — the result is the intersection.
    */
   ids?: Array<string> | null;
@@ -875,10 +880,16 @@ export interface AssetListParams extends CursorPageParams {
   local_datetime_before?: string | null;
 
   /**
-   * Return only assets containing a face belonging to this person. Singular on this
-   * tool; the sibling `search_assets` uses `person_ids` (plural, ALL-of).
+   * @deprecated Deprecated compatibility alias for a single `person_ids` value.
    */
   person_id?: string | null;
+
+  /**
+   * Return only assets containing faces belonging to ALL of these people
+   * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
+   * query params or comma-delimited values. Get person IDs from `list_people`.
+   */
+  person_ids?: Array<string> | null;
 
   /**
    * Radius of the `center` location filter, in meters (greater than 0, at most
@@ -1022,7 +1033,7 @@ export interface AssetClusterByGeoParams {
   cell_size: number;
 
   /**
-   * Return only assets that are in the album with this ID.
+   * Return only assets in this album. Get album IDs from `list_albums`.
    */
   album_id?: string | null;
 
@@ -1045,9 +1056,16 @@ export interface AssetClusterByGeoParams {
   local_datetime_before?: string | null;
 
   /**
-   * Return only assets containing a face belonging to this person.
+   * @deprecated Deprecated compatibility alias for a single `person_ids` value.
    */
   person_id?: string | null;
+
+  /**
+   * Return only assets containing faces belonging to ALL of these people
+   * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
+   * query params or comma-delimited values.
+   */
+  person_ids?: Array<string> | null;
 
   /**
    * Which set of assets to cluster: `live` (default — excludes trashed assets),

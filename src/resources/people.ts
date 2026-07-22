@@ -25,7 +25,7 @@ export class People extends APIResource {
    * Fetches one person's metadata by ID (name, asset count, thumbnail, etc.). Use
    * this when you already have a `person_id`. The JSON response is metadata only; to
    * get the photos that contain this person, use `search_assets` with `person_ids`
-   * or `list_assets` with `person_id`.
+   * or `list_assets` with `person_ids`.
    */
   retrieve(
     personID: string,
@@ -315,7 +315,7 @@ export interface PersonListParams extends CursorPageParams {
   /**
    * Filter by name using case-insensitive substring matching. Use this to resolve a
    * user-supplied name like 'Alice' into a `person_id`, then pass that ID into
-   * `search_assets.person_ids` or `list_assets.person_id`.
+   * `search_assets.person_ids` or `list_assets.person_ids`.
    */
   name?: string | null;
 
