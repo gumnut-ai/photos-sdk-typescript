@@ -10,7 +10,11 @@ const client = new Gumnut({
 describe('resource apiKeys', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.apiKeys.create({ name: 'name' });
+    const responsePromise = client.apiKeys.create({
+      actions: ['read'],
+      library_scope_mode: 'all_libraries',
+      name: 'name',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,10 +27,10 @@ describe('resource apiKeys', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.apiKeys.create({
-      name: 'name',
       actions: ['read'],
-      library_ids: ['string'],
       library_scope_mode: 'all_libraries',
+      name: 'name',
+      library_ids: ['string'],
     });
   });
 

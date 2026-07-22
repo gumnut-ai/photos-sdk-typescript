@@ -9,19 +9,19 @@ import { multipartFormRequestOptions } from '../internal/uploads';
 
 export class Search extends APIResource {
   /**
-   * Searches for assets using semantic (CLIP-based) image-content matching and/or
-   * typed structured filters on albums, people, and date range. Use this tool when
-   * the user describes _what's in_ the photos they want — subjects, scenes, places,
-   * activities, moods, objects — optionally narrowed by album, person, date, or
-   * location.
+   * Searches for assets using rank fusion across dense visual retrieval and
+   * authoritative-metadata full-text retrieval, with typed structured filters on
+   * albums, people, and date range. Use this tool when the user describes _what's
+   * in_ the photos they want — subjects, scenes, places, activities, moods, objects
+   * — optionally narrowed by album, person, date, or location.
    *
    * Prefer typed filters for anything the request states exactly: `album_ids` for
    * album membership, `person_ids` for people, `captured_before`/`captured_after`
    * for date ranges, and `center` + `radius` for location. There is no typed camera
-   * or place-name filter — pass those terms in the free-text `query`; matching is
-   * semantic (CLIP embeddings), not an exact EXIF predicate, so results are
-   * best-effort. For example, 'photos of my kids at the beach last summer' becomes
-   * `query='kids at the beach'` + `captured_after=2025-06-01` +
+   * or place-name filter — pass those terms in the free-text `query`; the metadata
+   * full-text stage can match those terms, while dense retrieval adds
+   * visual-semantic matches. For example, 'photos of my kids at the beach last
+   * summer' becomes `query='kids at the beach'` + `captured_after=2025-06-01` +
    * `captured_before=2025-09-01`.
    *
    * **Use `list_assets` instead** for a plain browse a single exact filter can
@@ -44,9 +44,11 @@ export class Search extends APIResource {
   }
 
   /**
-   * Searches for assets using semantic similarity and/or metadata filters. Results
-   * include asset metadata, faces, and people. At least one search criterion must be
-   * provided. Can search by text query, uploaded image, or both combined.
+   * Searches for assets using Reciprocal Rank Fusion across independent dense-text,
+   * dense-image, and authoritative-metadata full-text stages plus structured
+   * filters. Results include asset metadata, faces, and people. At least one search
+   * criterion must be provided. Text and uploaded-image signals stay independent
+   * when both are provided.
    */
   searchAssets(
     params: SearchSearchAssetsParams | null | undefined = {},
@@ -62,10 +64,73 @@ export class Search extends APIResource {
 
 export interface SearchResponse {
   /**
-   * Matching assets ordered by semantic distance (closest first) when `query` is
-   * set.
+   * For text or image search, matching assets are ordered by Reciprocal Rank Fusion
+   * across the available dense and sparse stages. Structured-filter-only searches
+   * retain newest-first capture-date ordering.
    */
   data: Array<SearchResultItem>;
+
+  /**
+   * Opt-in per-stage ranks and scores for evaluation attribution.
+   */
+  debug?: SearchResponse.Debug | null;
+}
+
+export namespace SearchResponse {
+  /**
+   * Opt-in per-stage ranks and scores for evaluation attribution.
+   */
+  export interface Debug {
+    dense_image: Array<Debug.DenseImage>;
+
+    dense_text: Array<Debug.DenseText>;
+
+    fused: Array<Debug.Fused>;
+
+    sparse: Array<Debug.Sparse>;
+  }
+
+  export namespace Debug {
+    export interface DenseImage {
+      asset_id: string;
+
+      distance: number;
+
+      rank: number;
+    }
+
+    export interface DenseText {
+      asset_id: string;
+
+      distance: number;
+
+      rank: number;
+    }
+
+    export interface Fused {
+      asset_id: string;
+
+      rank: number;
+
+      score: number;
+
+      dense_image_rank?: number | null;
+
+      dense_text_rank?: number | null;
+
+      sparse_rank?: number | null;
+    }
+
+    export interface Sparse {
+      asset_id: string;
+
+      matched_categories: Array<string>;
+
+      rank: number;
+
+      score: number;
+    }
+  }
 }
 
 export interface SearchResultItem {
@@ -75,9 +140,9 @@ export interface SearchResultItem {
   asset: AssetsAPI.AssetResponse;
 
   /**
-   * Semantic distance from `query` (0.0 = identical, 1.0 = unrelated); lower is more
-   * similar — inverted from the usual 'similarity score' convention. Null when no
-   * semantic `query` was provided (structured-filter-only search).
+   * Best available dense-stage cosine distance (lower is more similar). This is
+   * attribution only: results are ordered by fused rank, not distance. Null for
+   * sparse-only and structured-filter-only matches.
    */
   distance: number | null;
 }
@@ -129,6 +194,12 @@ export interface SearchSearchParams {
   include?: Array<string> | null;
 
   /**
+   * Include per-stage dense/sparse ranks and scores plus fused attribution. Intended
+   * for debugging and evaluation; omitted from normal responses.
+   */
+  include_debug?: boolean;
+
+  /**
    * Library to search. Optional if the user has a single library; required when they
    * have multiple. Use `list_libraries` to enumerate available libraries.
    */
@@ -142,7 +213,8 @@ export interface SearchSearchParams {
   /**
    * 1-indexed page number. `search_assets` uses page-number pagination; the sibling
    * `list_assets` uses cursor pagination via `starting_after_id`. Increment `page`
-   * to fetch subsequent pages.
+   * to fetch subsequent pages. Relevance-ranked searches paginate a fixed top-200
+   * fused candidate population, so pages beyond that population are empty.
    */
   page?: number;
 
@@ -155,9 +227,10 @@ export interface SearchSearchParams {
   person_ids?: Array<string> | null;
 
   /**
-   * Natural-language description of the image content to search for. Matched against
-   * CLIP image embeddings, so it works best with concrete visual concepts: subjects,
-   * scenes, objects, settings ('beach sunset', 'birthday cake', 'mountain hike').
+   * Natural-language search text. It runs independently through dense visual
+   * retrieval and authoritative-metadata full-text retrieval, then the ranked lists
+   * are fused. Concrete visual concepts work well in the dense stage, while exact
+   * metadata terms can match through full-text search.
    *
    * Prefer structured params when available: use `album_ids` for albums (not album
    * names in `query`), `person_ids` for people (not names in `query`), and
@@ -173,11 +246,9 @@ export interface SearchSearchParams {
   radius?: number | null;
 
   /**
-   * Maximum semantic distance for a result to be included (0.0 = identical, 1.0 =
-   * unrelated). Lower values return fewer, more confident matches; higher values
-   * return more results with looser matching. Default 0.8 is moderate — try 0.6 for
-   * high-precision queries, 0.9 for exploratory searches. **Note:** this is inverted
-   * from the usual 'similarity score' convention where higher means more similar.
+   * @deprecated Deprecated compatibility parameter. Accepted and validated during
+   * the transition window but ignored because rank-fused results do not have one
+   * meaningful cosine-distance cutoff.
    */
   threshold?: number;
 }
@@ -227,10 +298,18 @@ export interface SearchSearchAssetsParams {
   center?: string | null;
 
   /**
-   * Body param: Image file to search for similar assets. Can be combined with text
-   * query.
+   * Body param: Image file for an independent dense-image retrieval stage. When text
+   * is also provided, the stage ranks are fused rather than blending their
+   * embeddings.
    */
   image?: Uploadable | null;
+
+  /**
+   * Body param: Include per-stage dense/sparse ranks and scores plus fused
+   * attribution. Intended for debugging and evaluation; omitted from normal
+   * responses.
+   */
+  include_debug?: boolean;
 
   /**
    * Body param: Library to search assets from (optional)
@@ -270,7 +349,9 @@ export interface SearchSearchAssetsParams {
   radius?: number | null;
 
   /**
-   * Body param: Similarity threshold (lower means more similar)
+   * @deprecated Body param: Deprecated compatibility parameter. Accepted and
+   * validated but ignored because rank-fused results have no meaningful
+   * cosine-distance cutoff.
    */
   threshold?: number;
 }
