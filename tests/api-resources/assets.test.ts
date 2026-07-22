@@ -90,6 +90,7 @@ describe('resource assets', () => {
           local_datetime_after: '2019-12-27T18:11:19.117Z',
           local_datetime_before: '2019-12-27T18:11:19.117Z',
           person_id: 'person_id',
+          person_ids: ['string', 'string'],
           radius: 0,
           stack_id: 'stack_id',
           starting_after_id: 'starting_after_id',
@@ -182,6 +183,7 @@ describe('resource assets', () => {
       local_datetime_after: '2019-12-27T18:11:19.117Z',
       local_datetime_before: '2019-12-27T18:11:19.117Z',
       person_id: 'person_id',
+      person_ids: ['string', 'string'],
       state: 'live',
     });
   });
