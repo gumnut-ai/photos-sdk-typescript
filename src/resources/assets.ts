@@ -39,11 +39,12 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Returns a paginated list of assets ordered by local capture time (newest first),
-   * optionally filtered by album, person, date range, geographic area, or asset ID.
-   * Use this tool for structured browsing and filtering — when the request can be
-   * expressed as exact filters on album membership, people, date range, geographic
-   * coordinates, or specific asset IDs.
+   * Returns a paginated list of assets ordered by local capture time (or trash time
+   * for trashed assets), newest first by default, optionally filtered by album,
+   * person, date range, geographic area, or asset ID. Use this tool for structured
+   * browsing and filtering — when the request can be expressed as exact filters on
+   * album membership, people, date range, geographic coordinates, or specific asset
+   * IDs.
    *
    * **Location filtering is by coordinate:** pass a radius (`center` + `radius`) or
    * a bounding box (`bbox`) to restrict results to a geographic area. The two modes
@@ -66,7 +67,8 @@ export class Assets extends APIResource {
    * re-render them through the interactive widget.
    *
    * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
-   * last asset in `data` as `starting_after_id` to fetch the next page.
+   * last asset in `data` as `starting_after_id` and repeat the same filters,
+   * `state`, and `order` to fetch the next page.
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -880,6 +882,13 @@ export interface AssetListParams extends CursorPageParams {
   local_datetime_before?: string | null;
 
   /**
+   * Sort direction for the selected state's timestamp: capture time for
+   * `live`/`all`, or trash time for `trashed`. The asset ID tie-breaker uses the
+   * same direction.
+   */
+  order?: 'asc' | 'desc';
+
+  /**
    * @deprecated Deprecated compatibility alias for a single `person_ids` value.
    */
   person_id?: string | null;
@@ -905,8 +914,9 @@ export interface AssetListParams extends CursorPageParams {
 
   /**
    * Which set of assets to read from: `live` (default — only assets that are not
-   * trashed), `trashed` (only trashed assets, ordered by most recently trashed), or
-   * `all` (both live and trashed, ordered by capture time like `live`).
+   * trashed), `trashed` (only trashed assets, ordered by trash time), or `all` (both
+   * live and trashed, ordered by capture time like `live`). Ordering defaults to
+   * newest or most recently trashed first.
    */
   state?: 'live' | 'trashed' | 'all';
 }
