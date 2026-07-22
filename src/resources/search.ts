@@ -24,8 +24,8 @@ export class Search extends APIResource {
    * summer' becomes `query='kids at the beach'` + `captured_after=2025-06-01` +
    * `captured_before=2025-09-01`.
    *
-   * **Use `list_assets` instead** for a plain browse a single exact filter can
-   * answer (one album, one person, a date range, or IDs) with no content `query` —
+   * **Use `list_assets` instead** for a plain structured browse that album, person,
+   * date-range, location, or asset-ID filters can answer with no content `query` —
    * it's cheaper and more deterministic than semantic search.
    *
    * Location filtering is by coordinate radius only: pass `center` + `radius`
@@ -221,8 +221,7 @@ export interface SearchSearchParams {
   /**
    * Filter to assets containing ALL of these person IDs (intersection, not union).
    * Accepts multiple `person_ids=` query params or a single comma-delimited value
-   * (e.g., `person_123,person_abc`). Get person IDs from `list_people`. Plural on
-   * this tool; the sibling `list_assets` uses `person_id` (singular).
+   * (e.g., `person_123,person_abc`). Get person IDs from `list_people`.
    */
   person_ids?: Array<string> | null;
 
@@ -275,7 +274,8 @@ export interface SearchSearchAssetsParams {
   /**
    * Body param: Filter to assets in ALL of these album IDs (intersection, not
    * union). Accepts multiple `album_ids=` form fields or a single comma-delimited
-   * value (e.g., `album_123,album_abc`). Get album IDs from `list_albums`.
+   * value (e.g., `album_123,album_abc`). Get album IDs from `list_albums`. Plural on
+   * this tool; the sibling `list_assets` uses `album_id` (singular).
    */
   album_ids?: Array<string> | null;
 
