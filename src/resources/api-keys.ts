@@ -157,28 +157,25 @@ export type APIKeyListResponse = Array<APIKeyResponse>;
 export interface APIKeyDeleteResponse {}
 
 export interface APIKeyCreateParams {
-  name: string;
+  /**
+   * Action verbs the key may perform (at least one). `read` is required whenever any
+   * broader action is selected. Pass all four actions for a full-access key.
+   */
+  actions: Array<'read' | 'write' | 'delete' | 'delete_permanently'>;
 
   /**
-   * Action verbs the key may perform. Omit for full access. `read` is required
-   * whenever any broader action is selected.
+   * Which libraries the key covers: `all_libraries` (all current and future
+   * libraries) or `selected_libraries`.
    */
-  actions?: Array<'read' | 'write' | 'delete' | 'delete_permanently'> | null;
+  library_scope_mode: 'all_libraries' | 'selected_libraries';
+
+  name: string;
 
   /**
    * Libraries the key covers. Required (at least one) when `library_scope_mode` is
    * `selected_libraries`; not allowed otherwise. Up to 200 ids.
    */
   library_ids?: Array<string> | null;
-
-  /**
-   * Which of the owner's libraries a grant covers.
-   *
-   * `all_libraries` means all current and future live libraries owned by the grant's
-   * user. `selected_libraries` means only the libraries listed in
-   * `access_grant_libraries`, with no automatic expansion.
-   */
-  library_scope_mode?: 'all_libraries' | 'selected_libraries' | null;
 }
 
 export interface APIKeyUpdateParams {
