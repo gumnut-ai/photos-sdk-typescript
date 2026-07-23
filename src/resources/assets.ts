@@ -13,10 +13,7 @@ import { path } from '../internal/utils/path';
 
 export class Assets extends APIResource {
   /**
-   * Uploads a new asset file (image or video) along with its metadata to the
-   * specified library. If no library_id is provided and the user only has one
-   * library, uses that library. If the user has multiple libraries, library_id is
-   * required.
+   * Uploads a new asset file (image or video) and its metadata.
    */
   create(body: AssetCreateParams, options?: RequestOptions): APIPromise<AssetResponse> {
     return this._client.post('/api/assets', multipartFormRequestOptions({ body, ...options }, this._client));
@@ -782,7 +779,11 @@ export interface AssetCreateParams {
   file_modified_at: string;
 
   /**
-   * Library to upload asset to (optional)
+   * Library to upload into. For an all-library credential, omit to use the account's
+   * sole live library or create a fresh default when there are no live libraries;
+   * pass explicitly when the account has multiple live libraries. For a
+   * selected-library credential, omit to use its sole selected library; pass
+   * explicitly when it selects multiple libraries.
    */
   library_id?: string | null;
 }
