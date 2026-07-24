@@ -17,9 +17,9 @@ export class Search extends APIResource {
    *
    * Prefer typed filters for anything the request states exactly: `album_ids` for
    * album membership, `person_ids` for people, `captured_before`/`captured_after`
-   * for date ranges, and `center` + `radius` for location. There is no typed camera
-   * or place-name filter — pass those terms in the free-text `query`; the metadata
-   * full-text stage can match those terms, while dense retrieval adds
+   * for date ranges, and `center` + `radius` or `bbox` for location. There is no
+   * typed camera or place-name filter — pass those terms in the free-text `query`;
+   * the metadata full-text stage can match those terms, while dense retrieval adds
    * visual-semantic matches. For example, 'photos of my kids at the beach last
    * summer' becomes `query='kids at the beach'` + `captured_after=2025-06-01` +
    * `captured_before=2025-09-01`.
@@ -28,13 +28,15 @@ export class Search extends APIResource {
    * date-range, location, or asset-ID filters can answer with no content `query` —
    * it's cheaper and more deterministic than semantic search.
    *
-   * Location filtering is by coordinate radius only: pass `center` + `radius`
-   * together to keep only assets within that circle (a filter that narrows
-   * candidates — the semantic/date ordering is unchanged).
+   * **Location filtering is by coordinate,** matching `list_assets`, in two
+   * mutually-exclusive modes: a radius (`center` + `radius`) keeps assets within
+   * that circle, or a bounding box (`bbox`) keeps assets inside that map viewport.
+   * Either is a filter that narrows candidates — the semantic/date ordering is
+   * unchanged.
    *
    * At least one of `query`, `album_ids`, `person_ids`, `captured_before`, or
-   * `captured_after` must be provided; the radius is an additional filter, not a
-   * search criterion on its own.
+   * `captured_after` must be provided; the location filter is an additional filter,
+   * not a search criterion on its own.
    */
   search(
     query: SearchSearchParams | null | undefined = {},
@@ -48,7 +50,9 @@ export class Search extends APIResource {
    * dense-image, and authoritative-metadata full-text stages plus structured
    * filters. Results include asset metadata, faces, and people. At least one search
    * criterion must be provided. Text and uploaded-image signals stay independent
-   * when both are provided.
+   * when both are provided. Location filtering is by coordinate in two
+   * mutually-exclusive modes: a radius (`center` + `radius`) or a bounding box
+   * (`bbox`); it narrows candidates and is not a search criterion on its own.
    */
   searchAssets(
     params: SearchSearchAssetsParams | null | undefined = {},
@@ -155,6 +159,15 @@ export interface SearchSearchParams {
    * the sibling `list_assets` uses `album_id` (singular).
    */
   album_ids?: Array<string> | null;
+
+  /**
+   * Bounding-box (map viewport) location filter: four comma-separated decimal-degree
+   * numbers `min_longitude,min_latitude,max_longitude,max_latitude`
+   * (west,south,east,north), e.g. `-77.1,38.9,-77.0,39.0`. A box whose
+   * `min_longitude` exceeds `max_longitude` (antimeridian-crossing) is accepted but
+   * matches nothing — split it client-side.
+   */
+  bbox?: string | null;
 
   /**
    * Only include assets captured strictly after this instant (ISO 8601; exclusive).
@@ -278,6 +291,15 @@ export interface SearchSearchAssetsParams {
    * this tool; the sibling `list_assets` uses `album_id` (singular).
    */
   album_ids?: Array<string> | null;
+
+  /**
+   * Body param: Bounding-box (map viewport) location filter: four comma-separated
+   * decimal-degree numbers `min_longitude,min_latitude,max_longitude,max_latitude`
+   * (west,south,east,north), e.g. `-77.1,38.9,-77.0,39.0`. A box whose
+   * `min_longitude` exceeds `max_longitude` (antimeridian-crossing) is accepted but
+   * matches nothing — split it client-side.
+   */
+  bbox?: string | null;
 
   /**
    * Body param: Filter to only include assets captured after this date (ISO format).
