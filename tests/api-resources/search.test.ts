@@ -27,6 +27,7 @@ describe('resource search', () => {
       client.search.search(
         {
           album_ids: ['string', 'string'],
+          bbox: 'bbox',
           captured_after: '2019-12-27T18:11:19.117Z',
           captured_before: '2019-12-27T18:11:19.117Z',
           center: 'center',
@@ -65,6 +66,7 @@ describe('resource search', () => {
         {
           include: ['string', 'string'],
           album_ids: ['string'],
+          bbox: 'bbox',
           captured_after: '2019-12-27T18:11:19.117Z',
           captured_before: '2019-12-27T18:11:19.117Z',
           center: 'center',
