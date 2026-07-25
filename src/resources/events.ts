@@ -135,7 +135,7 @@ export interface EventGetParams {
 
   /**
    * Library to stream events from. Optional if the user has a single library;
-   * required when they have multiple. Use `list_libraries` to enumerate.
+   * required when they have multiple.
    */
   library_id?: string | null;
 

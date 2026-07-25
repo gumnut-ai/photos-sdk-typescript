@@ -234,9 +234,9 @@ export interface PersonCreateParams {
   name?: string | null;
 
   /**
-   * ID of the face to use as this person's thumbnail (with `face_` prefix).
-   * Typically set after the person has at least one associated face — get face IDs
-   * from `list_faces`.
+   * ID of the face to use as this person's thumbnail (with `face_` prefix). Carried
+   * by the entries of an asset's `faces` field (returned with `include=faces`). The
+   * face need not already be assigned to a person.
    */
   thumbnail_face_id?: string | null;
 }
@@ -271,8 +271,8 @@ export interface PersonUpdateParams {
   name?: string | null;
 
   /**
-   * New thumbnail face ID for this person. Omit to leave unchanged. Get face IDs
-   * from `list_faces`.
+   * New thumbnail face ID for this person. Omit to leave unchanged. Enumerate a
+   * person's faces with `list_faces` and `person_id`.
    */
   thumbnail_face_id?: string | null;
 }
