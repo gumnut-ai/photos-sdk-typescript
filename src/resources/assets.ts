@@ -1043,7 +1043,7 @@ export interface AssetClusterByGeoParams {
   cell_size: number;
 
   /**
-   * Return only assets in this album.
+   * Cluster only assets in this album.
    */
   album_id?: string | null;
 
@@ -1071,7 +1071,7 @@ export interface AssetClusterByGeoParams {
   person_id?: string | null;
 
   /**
-   * Return only assets containing faces belonging to ALL of these people
+   * Cluster only assets containing faces belonging to ALL of these people
    * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
    * query params or comma-delimited values. Person IDs are carried by the entries of
    * an asset's `people` field (returned with `include=people`).
