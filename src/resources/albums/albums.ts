@@ -158,7 +158,7 @@ export interface AlbumCreateParams {
 
   /**
    * Library to create the album in. Optional if the user has a single library;
-   * required when they have multiple. Use `list_libraries` to enumerate.
+   * required when they have multiple.
    */
   library_id?: string | null;
 
@@ -172,8 +172,8 @@ export interface AlbumCreateParams {
 export interface AlbumUpdateParams {
   /**
    * Asset ID (with `asset_` prefix) to use as the album cover. Must be a live asset
-   * already in the album — get IDs from `list_album_assets`. Pass `null` to clear
-   * the explicit cover. Omit to leave unchanged.
+   * already in the album. Pass `null` to clear the explicit cover. Omit to leave
+   * unchanged.
    */
   album_cover_asset_id?: string | null;
 
@@ -205,7 +205,7 @@ export interface AlbumListParams extends CursorPageParams {
 
   /**
    * Library to list albums from. Optional if the user has a single library; required
-   * when they have multiple. Use `list_libraries` to enumerate.
+   * when they have multiple.
    */
   library_id?: string | null;
 }
