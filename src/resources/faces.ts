@@ -216,8 +216,8 @@ export interface FaceDeleteResponse {}
 
 export interface FaceCreateParams {
   /**
-   * ID of the asset (with `asset_` prefix) to draw the face box on. Get IDs from
-   * `list_assets` / `search_assets`. The asset must belong to the target library.
+   * ID of the asset (with `asset_` prefix) to draw the face box on. The asset must
+   * belong to the target library.
    */
   asset_id: string;
 
@@ -235,8 +235,8 @@ export interface FaceCreateParams {
 
   /**
    * Optional person ID (with `person_` prefix) to assign this face to at creation.
-   * Omit to leave it unassigned; assign it later via `update_face`. Get IDs from
-   * `list_people`; use `create_person` first if the identity doesn't exist yet.
+   * Omit to leave it unassigned; assign it later via `update_face`. Use
+   * `create_person` first if the identity doesn't exist yet.
    */
   person_id?: string | null;
 }
@@ -293,8 +293,7 @@ export interface FaceUpdateParams {
   /**
    * Body param: Target person ID (with `person_` prefix) to assign this face to.
    * Pass `null` to detach the face from its current person without deleting either.
-   * Get IDs from `list_people`; use `create_person` first if the target identity
-   * doesn't exist yet.
+   * Use `create_person` first if the target identity doesn't exist yet.
    */
   person_id?: string | null;
 }

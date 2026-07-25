@@ -809,10 +809,9 @@ export interface AssetRetrieveParams {
 
 export interface AssetListParams extends CursorPageParams {
   /**
-   * Return only assets in this album. Get album IDs from `list_albums`. To browse
-   * one album's full asset metadata, prefer this filter over `list_album_assets`,
-   * which returns link records. The sibling `search_assets` uses `album_ids`
-   * (plural, ALL-of).
+   * Return only assets in this album. To browse one album's full asset metadata,
+   * prefer this filter over `list_album_assets`, which returns link records. The
+   * sibling `search_assets` uses `album_ids` (plural, ALL-of).
    */
   album_id?: string | null;
 
@@ -859,7 +858,7 @@ export interface AssetListParams extends CursorPageParams {
 
   /**
    * Library to list assets from. Optional if the user has a single library; required
-   * when they have multiple. Use `list_libraries` to enumerate available libraries.
+   * when they have multiple.
    */
   library_id?: string | null;
 
@@ -897,7 +896,8 @@ export interface AssetListParams extends CursorPageParams {
   /**
    * Return only assets containing faces belonging to ALL of these people
    * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
-   * query params or comma-delimited values. Get person IDs from `list_people`.
+   * query params or comma-delimited values. Person IDs are carried by the entries of
+   * an asset's `people` field (returned with `include=people`).
    */
   person_ids?: Array<string> | null;
 
@@ -943,8 +943,7 @@ export namespace AssetBulkUpdateAssetsParams {
    */
   export interface Update {
     /**
-     * Asset ID (with the `asset_` prefix) to apply this change to. Obtain from
-     * `list_assets`, `search_assets`, or `list_album_assets`.
+     * Asset ID (with the `asset_` prefix) to apply this change to.
      */
     id: string;
 
@@ -1044,7 +1043,7 @@ export interface AssetClusterByGeoParams {
   cell_size: number;
 
   /**
-   * Return only assets in this album. Get album IDs from `list_albums`.
+   * Return only assets in this album.
    */
   album_id?: string | null;
 
@@ -1074,7 +1073,8 @@ export interface AssetClusterByGeoParams {
   /**
    * Return only assets containing faces belonging to ALL of these people
    * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
-   * query params or comma-delimited values.
+   * query params or comma-delimited values. Person IDs are carried by the entries of
+   * an asset's `people` field (returned with `include=people`).
    */
   person_ids?: Array<string> | null;
 

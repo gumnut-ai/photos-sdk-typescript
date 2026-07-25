@@ -139,7 +139,7 @@ export interface StackListStacksParams extends CursorPageParams {
 
   /**
    * Library to list stacks from. Optional if the user has a single library; required
-   * when they have multiple. Use `list_libraries` to enumerate.
+   * when they have multiple.
    */
   library_id?: string | null;
 
