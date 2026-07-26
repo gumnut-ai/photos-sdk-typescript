@@ -9,6 +9,18 @@ const client = new Gumnut({
 
 describe('resource stacks', () => {
   // Mock server tests are disabled
+  test.skip('delete', async () => {
+    const responsePromise = client.stacks.delete('stack_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('listStacks', async () => {
     const responsePromise = client.stacks.listStacks();
     const rawResponse = await responsePromise.asResponse();
@@ -39,6 +51,23 @@ describe('resource stacks', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('removeAssets: only required params', async () => {
+    const responsePromise = client.stacks.removeAssets('stack_id', { asset_ids: ['string'] });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('removeAssets: required and optional params', async () => {
+    const response = await client.stacks.removeAssets('stack_id', { asset_ids: ['string'] });
+  });
+
+  // Mock server tests are disabled
   test.skip('retrieveStack', async () => {
     const responsePromise = client.stacks.retrieveStack('stack_id');
     const rawResponse = await responsePromise.asResponse();
@@ -48,5 +77,22 @@ describe('resource stacks', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('setCover: only required params', async () => {
+    const responsePromise = client.stacks.setCover('stack_id', { primary_asset_id: 'primary_asset_id' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('setCover: required and optional params', async () => {
+    const response = await client.stacks.setCover('stack_id', { primary_asset_id: 'primary_asset_id' });
   });
 });
