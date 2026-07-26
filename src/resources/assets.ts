@@ -49,8 +49,8 @@ export class Assets extends APIResource {
    * viewport (how many photos fall in each area) rather than list them, use
    * `get_geo_clusters`.
    *
-   * Album and person filters compose using AND. `person_id` is a deprecated alias
-   * for one `person_ids` value; do not supply both person parameters.
+   * Album and person filters compose using AND; do not supply both `person_id` and
+   * `person_ids`.
    *
    * **Use `search_assets` instead** when the request involves natural-language image
    * content ('photos of sunsets', 'pictures with my dog'), a place _name_ ('photos
@@ -63,9 +63,8 @@ export class Assets extends APIResource {
    * building a custom gallery — the asset IDs you already have are enough to
    * re-render them through the interactive widget.
    *
-   * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
-   * last asset in `data` as `starting_after_id` and repeat the same filters,
-   * `state`, and `order` to fetch the next page.
+   * **Pagination** is cursor-based: while `has_more` is true, keep fetching with
+   * `starting_after_id`.
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -809,9 +808,9 @@ export interface AssetRetrieveParams {
 
 export interface AssetListParams extends CursorPageParams {
   /**
-   * Return only assets in this album. To browse one album's full asset metadata,
-   * prefer this filter over `list_album_assets`, which returns link records. The
-   * sibling `search_assets` uses `album_ids` (plural, ALL-of).
+   * Return only assets in this album — the album's `album_` ID, not its name. To
+   * browse one album's full asset metadata, prefer this filter over
+   * `list_album_assets`, which returns link records.
    */
   album_id?: string | null;
 
@@ -864,20 +863,19 @@ export interface AssetListParams extends CursorPageParams {
 
   /**
    * Only include assets captured strictly after this instant (ISO 8601; exclusive).
-   * `local_datetime` is the photo's wall-clock time in the device's own timezone.
-   * Naive values compare directly against `local_datetime`. Timezone-aware values:
-   * assets with a known offset are compared in UTC (`local_datetime - offset`);
-   * assets without an offset fall back to wall-clock comparison against
-   * `local_datetime`. Equivalent in purpose to `captured_after` on `search_assets`
-   * (naming inconsistency is tracked as a follow-up).
+   * Convert a relative or natural-language date phrase ('in 2023') into an explicit
+   * bound before sending. `local_datetime` is the photo's wall-clock time in the
+   * device's own timezone. Naive values compare directly against `local_datetime`.
+   * Timezone-aware values: assets with a known offset are compared in UTC
+   * (`local_datetime - offset`); assets without an offset fall back to wall-clock
+   * comparison against `local_datetime`.
    */
   local_datetime_after?: string | null;
 
   /**
    * Only include assets captured strictly before this instant (ISO 8601; exclusive).
-   * Same awareness/offset semantics as `local_datetime_after`. Equivalent in purpose
-   * to `captured_before` on `search_assets` (naming inconsistency is tracked as a
-   * follow-up).
+   * Same conversion requirement and awareness/offset semantics as
+   * `local_datetime_after`.
    */
   local_datetime_before?: string | null;
 

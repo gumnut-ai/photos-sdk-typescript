@@ -15,28 +15,26 @@ export class Search extends APIResource {
    * in_ the photos they want — subjects, scenes, places, activities, moods, objects
    * — optionally narrowed by album, person, date, or location.
    *
-   * Prefer typed filters for anything the request states exactly: `album_ids` for
-   * album membership, `person_ids` for people, `captured_before`/`captured_after`
-   * for date ranges, and `center` + `radius` or `bbox` for location. There is no
-   * typed camera or place-name filter — pass those terms in the free-text `query`;
-   * the metadata full-text stage can match those terms, while dense retrieval adds
-   * visual-semantic matches. For example, 'photos of my kids at the beach last
-   * summer' becomes `query='kids at the beach'` + `captured_after=2025-06-01` +
-   * `captured_before=2025-09-01`.
+   * Prefer typed filters for anything the request states exactly: `album_id` for
+   * album membership, `person_ids` for people,
+   * `local_datetime_before`/`local_datetime_after` for date ranges, and `center` +
+   * `radius` or `bbox` for location. There is no typed camera or place-name filter —
+   * pass those terms in the free-text `query`; the metadata full-text stage can
+   * match those terms, while dense retrieval adds visual-semantic matches. For
+   * example, 'photos of my kids at the beach last summer' becomes
+   * `query='kids at the beach'` + `local_datetime_after=2025-06-01` +
+   * `local_datetime_before=2025-09-01`.
    *
    * **Use `list_assets` instead** for a plain structured browse that album, person,
    * date-range, location, or asset-ID filters can answer with no content `query` —
    * it's cheaper and more deterministic than semantic search.
    *
-   * **Location filtering is by coordinate,** matching `list_assets`, in two
-   * mutually-exclusive modes: a radius (`center` + `radius`) keeps assets within
-   * that circle, or a bounding box (`bbox`) keeps assets inside that map viewport.
-   * Either is a filter that narrows candidates — the semantic/date ordering is
-   * unchanged.
+   * **Location filtering is by coordinate,** in two mutually-exclusive modes: a
+   * radius (`center` + `radius`) or a bounding box (`bbox`).
    *
-   * At least one of `query`, `album_ids`, `person_ids`, `captured_before`, or
-   * `captured_after` must be provided; the location filter is an additional filter,
-   * not a search criterion on its own.
+   * At least one of `query`, `album_id`, `person_ids`, `local_datetime_before`, or
+   * `local_datetime_after` must be provided; a location filter only narrows those
+   * results and is not a search criterion on its own.
    */
   search(
     query: SearchSearchParams | null | undefined = {},
@@ -153,12 +151,9 @@ export interface SearchResultItem {
 
 export interface SearchSearchParams {
   /**
-   * Filter to assets in ALL of these album IDs (intersection, not union). Accepts
-   * multiple `album_ids=` query params or a single comma-delimited value (e.g.,
-   * `album_123,album_abc`). Plural on this tool; the sibling `list_assets` uses
-   * `album_id` (singular).
+   * Return only assets in this album — the album's `album_` ID, not its name.
    */
-  album_ids?: Array<string> | null;
+  album_id?: string | null;
 
   /**
    * Bounding-box (map viewport) location filter: four comma-separated decimal-degree
@@ -168,20 +163,6 @@ export interface SearchSearchParams {
    * matches nothing — split it client-side.
    */
   bbox?: string | null;
-
-  /**
-   * Only include assets captured strictly after this instant (ISO 8601; exclusive).
-   * Equivalent in purpose to `local_datetime_after` on `list_assets` (naming
-   * inconsistency is tracked as a follow-up).
-   */
-  captured_after?: string | null;
-
-  /**
-   * Only include assets captured strictly before this instant (ISO 8601; exclusive).
-   * Equivalent in purpose to `local_datetime_before` on `list_assets` (naming
-   * inconsistency is tracked as a follow-up).
-   */
-  captured_before?: string | null;
 
   /**
    * Center point of a radius location filter: two comma-separated decimal-degree
@@ -224,10 +205,29 @@ export interface SearchSearchParams {
   limit?: number;
 
   /**
-   * 1-indexed page number. `search_assets` uses page-number pagination; the sibling
-   * `list_assets` uses cursor pagination via `starting_after_id`. Increment `page`
-   * to fetch subsequent pages. Relevance-ranked searches paginate a fixed top-200
-   * fused candidate population, so pages beyond that population are empty.
+   * Only include assets captured strictly after this instant (ISO 8601; exclusive).
+   * Convert a relative or natural-language date phrase ('in 2023') into an explicit
+   * bound before sending. `local_datetime` is the photo's wall-clock time in the
+   * device's own timezone. Naive values compare directly against `local_datetime`.
+   * Timezone-aware values: assets with a known offset are compared in UTC
+   * (`local_datetime - offset`); assets without an offset fall back to wall-clock
+   * comparison against `local_datetime`.
+   */
+  local_datetime_after?: string | null;
+
+  /**
+   * Only include assets captured strictly before this instant (ISO 8601; exclusive).
+   * Same conversion requirement and awareness/offset semantics as
+   * `local_datetime_after`.
+   */
+  local_datetime_before?: string | null;
+
+  /**
+   * 1-indexed page number; increment it to fetch subsequent pages. `search_assets`
+   * pages by number rather than by cursor because it ranks a fixed top-200 fused
+   * candidate population by relevance, so pages beyond that population are empty.
+   * The sibling `list_assets` cursors with `starting_after_id` over a stable
+   * capture-time ordering.
    */
   page?: number;
 
@@ -245,10 +245,10 @@ export interface SearchSearchParams {
    * are fused. Concrete visual concepts work well in the dense stage, while exact
    * metadata terms can match through full-text search.
    *
-   * Prefer structured params when available: use `album_ids` for albums (not album
-   * names in `query`), `person_ids` for people (not names in `query`), and
-   * `captured_before`/`captured_after` for dates (not phrases like 'in 2023' in
-   * `query`).
+   * Resolve album and people names to IDs and pass them as `album_id` and
+   * `person_ids`; convert date phrases like 'in 2023' into ISO 8601 bounds on
+   * `local_datetime_after`/`local_datetime_before` (here, `2023-01-01` and
+   * `2024-01-01`). None of those belong in `query`.
    */
   query?: string | null;
 
@@ -286,10 +286,14 @@ export interface SearchSearchAssetsParams {
   include?: Array<string> | null;
 
   /**
-   * Body param: Filter to assets in ALL of these album IDs (intersection, not
-   * union). Accepts multiple `album_ids=` form fields or a single comma-delimited
-   * value (e.g., `album_123,album_abc`). Plural on this tool; the sibling
-   * `list_assets` uses `album_id` (singular).
+   * Body param: Return only assets in this album — the album's `album_` ID, not its
+   * name.
+   */
+  album_id?: string | null;
+
+  /**
+   * @deprecated Body param: Deprecated alias for `album_id`. Accepts a single album
+   * ID; supplying more than one is rejected.
    */
   album_ids?: Array<string> | null;
 
@@ -303,13 +307,12 @@ export interface SearchSearchAssetsParams {
   bbox?: string | null;
 
   /**
-   * Body param: Filter to only include assets captured after this date (ISO format).
+   * @deprecated Body param: Deprecated alias for `local_datetime_after`.
    */
   captured_after?: string | null;
 
   /**
-   * Body param: Filter to only include assets captured before this date (ISO
-   * format).
+   * @deprecated Body param: Deprecated alias for `local_datetime_before`.
    */
   captured_before?: string | null;
 
@@ -345,6 +348,24 @@ export interface SearchSearchAssetsParams {
   limit?: number;
 
   /**
+   * Body param: Only include assets captured strictly after this instant (ISO 8601;
+   * exclusive). Convert a relative or natural-language date phrase ('in 2023') into
+   * an explicit bound before sending. `local_datetime` is the photo's wall-clock
+   * time in the device's own timezone. Naive values compare directly against
+   * `local_datetime`. Timezone-aware values: assets with a known offset are compared
+   * in UTC (`local_datetime - offset`); assets without an offset fall back to
+   * wall-clock comparison against `local_datetime`.
+   */
+  local_datetime_after?: string | null;
+
+  /**
+   * Body param: Only include assets captured strictly before this instant (ISO 8601;
+   * exclusive). Same conversion requirement and awareness/offset semantics as
+   * `local_datetime_after`.
+   */
+  local_datetime_before?: string | null;
+
+  /**
    * Body param: Page number
    */
   page?: number;
@@ -358,10 +379,10 @@ export interface SearchSearchAssetsParams {
   person_ids?: Array<string> | null;
 
   /**
-   * Body param: The text query to search for. If you want to search for a specific
-   * person or set of people, use the person_ids parameter instead.If you want to
-   * search for a photos taken during a specific date range, use the captured_before
-   * and captured_after parameters instead.
+   * Body param: Natural-language search text, matched against image embeddings and
+   * authoritative metadata. Album and people names belong in `album_id` and
+   * `person_ids`, and date ranges in `local_datetime_before`/`local_datetime_after`,
+   * not here.
    */
   query?: string | null;
 
