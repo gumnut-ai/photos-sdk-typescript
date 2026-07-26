@@ -8,6 +8,17 @@ import { path } from '../internal/utils/path';
 
 export class Stacks extends APIResource {
   /**
+   * Dissolves the stack: the grouping is removed and every member frame returns to
+   * loose, individual display. The photos themselves are untouched — nothing is
+   * trashed or deleted from the library; like `remove_assets_from_album`, this only
+   * removes an organizational grouping. Use `trash_assets` to soft-delete the
+   * underlying assets.
+   */
+  delete(stackID: string, options?: RequestOptions): APIPromise<StackDeleteResponse> {
+    return this._client.delete(path`/api/stacks/${stackID}`, options);
+  }
+
+  /**
    * Returns a paginated list of stacks — assets grouped for collapsed display,
    * whether detected automatically or grouped by the user — ordered by `id`: stable,
    * but arbitrary rather than chronological.
@@ -26,6 +37,30 @@ export class Stacks extends APIResource {
   }
 
   /**
+   * Pulls one or more frames out of the stack. The assets themselves are untouched —
+   * they remain in the library (and in any albums) and simply appear as individual
+   * photos again. IDs that are not current members of the stack are silently
+   * ignored.
+   *
+   * If a removed frame was the pinned cover, the pin is cleared with no automatic
+   * re-pick — clients choose their own display cover. A stack that survives the
+   * removal is marked user-owned (`origin = user`) so burst re-detection honors the
+   * edit; a removal that leaves fewer than 2 members dissolves the stack entirely,
+   * returning its remaining frames to loose display too. Trashed frames still count
+   * as members for that threshold (unlike `asset_count`, which excludes them), so a
+   * stack can survive with `asset_count` below 2.
+   *
+   * Up to 200 ids per request; over-cap requests return 422.
+   */
+  removeAssets(
+    stackID: string,
+    body: StackRemoveAssetsParams,
+    options?: RequestOptions,
+  ): APIPromise<StackRemoveAssetsResponse> {
+    return this._client.delete(path`/api/stacks/${stackID}/assets`, { body, ...options });
+  }
+
+  /**
    * Fetches one stack's metadata by ID (pinned cover, live member count,
    * provenance). The response is metadata only and does not include the stack's
    * assets — to get its frames, use `list_assets` with `stack_id`.
@@ -33,9 +68,39 @@ export class Stacks extends APIResource {
   retrieveStack(stackID: string, options?: RequestOptions): APIPromise<StackRetrieveStackResponse> {
     return this._client.get(path`/api/stacks/${stackID}`, options);
   }
+
+  /**
+   * Pins one of the stack's own live members as its cover (`primary_asset_id`).
+   * Setting a cover marks the stack as user-owned (`origin = user`), which freezes
+   * it — membership included — against burst re-detection, so neither the chosen
+   * cover nor the frame grouping is ever silently reverted by a later detection
+   * pass.
+   *
+   * `primary_asset_id` cannot be null: there is no manual clear-cover operation. A
+   * pin clears automatically when the pinned frame is removed from the stack or
+   * permanently deleted.
+   */
+  setCover(
+    stackID: string,
+    body: StackSetCoverParams,
+    options?: RequestOptions,
+  ): APIPromise<StackSetCoverResponse> {
+    return this._client.patch(path`/api/stacks/${stackID}`, { body, ...options });
+  }
 }
 
 export type StackListStacksResponsesCursorPage = CursorPage<StackListStacksResponse>;
+
+/**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export interface StackDeleteResponse {}
 
 /**
  * Represents a group of assets displayed as a single tile.
@@ -84,9 +149,66 @@ export interface StackListStacksResponse {
 }
 
 /**
+ * Acknowledgment body returned by destructive endpoints (delete / trash / restore
+ * / permanently delete / remove-from-album / empty-trash).
+ *
+ * Carries no fields — the HTTP 200 + empty JSON object is itself the success
+ * signal. Exists so MCP tools generated from these endpoints have a real
+ * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
+ * which ChatGPT's MCP submission tooling requires.
+ */
+export interface StackRemoveAssetsResponse {}
+
+/**
  * Represents a group of assets displayed as a single tile.
  */
 export interface StackRetrieveStackResponse {
+  /**
+   * Unique stack identifier with 'asset*stack*' prefix
+   */
+  id: string;
+
+  /**
+   * Number of live assets in this stack. Excludes trashed members, so it can drop
+   * below the number of frames originally grouped.
+   */
+  asset_count: number;
+
+  /**
+   * When this stack was created
+   */
+  created_at: string;
+
+  /**
+   * How a stack came to exist.
+   *
+   * `auto_burst` marks a stack the burst detector created from the time +
+   * EXIF-camera signal; `user` marks a stack a user created or edited (manual
+   * create, set-cover, add/remove, unstack). The distinction is what keeps
+   * re-detection from stomping a user's correction — the detection pass skips `user`
+   * stacks.
+   */
+  origin: 'auto_burst' | 'user';
+
+  /**
+   * When this stack was last updated
+   */
+  updated_at: string;
+
+  /**
+   * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
+   * Null for an auto-detected burst unless a user has since pinned a cover — there
+   * is no server-selected default, so a client showing a stack with no pinned cover
+   * picks its own. A pinned cover that has been trashed keeps its ID here; it is
+   * cleared only once the asset is permanently deleted.
+   */
+  primary_asset_id?: string | null;
+}
+
+/**
+ * Represents a group of assets displayed as a single tile.
+ */
+export interface StackSetCoverResponse {
   /**
    * Unique stack identifier with 'asset*stack*' prefix
    */
@@ -154,11 +276,33 @@ export interface StackListStacksParams extends CursorPageParams {
   primary_asset_id?: string | null;
 }
 
+export interface StackRemoveAssetsParams {
+  /**
+   * Asset IDs (with `asset_` prefix) to pull out of the stack. Get member IDs from
+   * `list_assets` with `stack_id`. Up to 200 ids per request.
+   */
+  asset_ids: Array<string>;
+}
+
+export interface StackSetCoverParams {
+  /**
+   * Asset ID (with `asset_` prefix) to pin as the stack's cover. Must be a live,
+   * current member of this stack — get member IDs from `list_assets` with
+   * `stack_id`.
+   */
+  primary_asset_id: string;
+}
+
 export declare namespace Stacks {
   export {
+    type StackDeleteResponse as StackDeleteResponse,
     type StackListStacksResponse as StackListStacksResponse,
+    type StackRemoveAssetsResponse as StackRemoveAssetsResponse,
     type StackRetrieveStackResponse as StackRetrieveStackResponse,
+    type StackSetCoverResponse as StackSetCoverResponse,
     type StackListStacksResponsesCursorPage as StackListStacksResponsesCursorPage,
     type StackListStacksParams as StackListStacksParams,
+    type StackRemoveAssetsParams as StackRemoveAssetsParams,
+    type StackSetCoverParams as StackSetCoverParams,
   };
 }
