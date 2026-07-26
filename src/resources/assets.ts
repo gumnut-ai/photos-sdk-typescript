@@ -1041,7 +1041,7 @@ export interface AssetClusterByGeoParams {
   cell_size: number;
 
   /**
-   * Cluster only assets in this album.
+   * Return only assets in this album — the album's `album_` ID, not its name.
    */
   album_id?: string | null;
 
@@ -1053,13 +1053,19 @@ export interface AssetClusterByGeoParams {
 
   /**
    * Only include assets captured strictly after this instant (ISO 8601; exclusive).
-   * Same awareness/offset semantics as on `list_assets`.
+   * Convert a relative or natural-language date phrase ('in 2023') into an explicit
+   * bound before sending. `local_datetime` is the photo's wall-clock time in the
+   * device's own timezone. Naive values compare directly against `local_datetime`.
+   * Timezone-aware values: assets with a known offset are compared in UTC
+   * (`local_datetime - offset`); assets without an offset fall back to wall-clock
+   * comparison against `local_datetime`.
    */
   local_datetime_after?: string | null;
 
   /**
    * Only include assets captured strictly before this instant (ISO 8601; exclusive).
-   * Same awareness/offset semantics as on `list_assets`.
+   * Same conversion requirement and awareness/offset semantics as
+   * `local_datetime_after`.
    */
   local_datetime_before?: string | null;
 
@@ -1085,7 +1091,7 @@ export interface AssetClusterByGeoParams {
 
 export interface AssetCountsParams {
   /**
-   * Filter by assets in a specific album
+   * Return only assets in this album — the album's `album_` ID, not its name.
    */
   album_id?: string | null;
 
@@ -1106,19 +1112,20 @@ export interface AssetCountsParams {
   limit?: number;
 
   /**
-   * Only include assets with local_datetime after this value (ISO 8601). Naive
-   * values compare directly against local_datetime. Timezone-aware values: assets
-   * with a known offset are compared in UTC (local_datetime - offset); assets
-   * without an offset fall back to wall-clock comparison against local_datetime.
+   * Only include assets captured strictly after this instant (ISO 8601; exclusive).
+   * Convert a relative or natural-language date phrase ('in 2023') into an explicit
+   * bound before sending. `local_datetime` is the photo's wall-clock time in the
+   * device's own timezone. Naive values compare directly against `local_datetime`.
+   * Timezone-aware values: assets with a known offset are compared in UTC
+   * (`local_datetime - offset`); assets without an offset fall back to wall-clock
+   * comparison against `local_datetime`.
    */
   local_datetime_after?: string | null;
 
   /**
-   * Only include assets with local_datetime before this value (ISO 8601). Naive
-   * values compare directly against local_datetime. Timezone-aware values: assets
-   * with a known offset are compared in UTC (local_datetime - offset); assets
-   * without an offset fall back to wall-clock comparison against local_datetime. Use
-   * the last time_bucket from a previous response to paginate.
+   * Only include assets captured strictly before this instant (ISO 8601; exclusive).
+   * Same conversion requirement and awareness/offset semantics as
+   * `local_datetime_after`.
    */
   local_datetime_before?: string | null;
 
