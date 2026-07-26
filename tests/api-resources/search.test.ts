@@ -26,15 +26,15 @@ describe('resource search', () => {
     await expect(
       client.search.search(
         {
-          album_ids: ['string', 'string'],
+          album_id: 'album_id',
           bbox: 'bbox',
-          captured_after: '2019-12-27T18:11:19.117Z',
-          captured_before: '2019-12-27T18:11:19.117Z',
           center: 'center',
           include: ['string', 'string'],
           include_debug: true,
           library_id: 'library_id',
           limit: 1,
+          local_datetime_after: '2019-12-27T18:11:19.117Z',
+          local_datetime_before: '2019-12-27T18:11:19.117Z',
           page: 1,
           person_ids: ['string', 'string'],
           query: 'query',
@@ -65,6 +65,7 @@ describe('resource search', () => {
       client.search.searchAssets(
         {
           include: ['string', 'string'],
+          album_id: 'album_id',
           album_ids: ['string'],
           bbox: 'bbox',
           captured_after: '2019-12-27T18:11:19.117Z',
@@ -74,6 +75,8 @@ describe('resource search', () => {
           include_debug: true,
           library_id: 'library_id',
           limit: 1,
+          local_datetime_after: '2019-12-27T18:11:19.117Z',
+          local_datetime_before: '2019-12-27T18:11:19.117Z',
           page: 1,
           person_ids: ['string'],
           query: 'query',
