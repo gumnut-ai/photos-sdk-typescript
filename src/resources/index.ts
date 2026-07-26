@@ -107,9 +107,14 @@ export {
 } from './search';
 export {
   Stacks,
+  type StackDeleteResponse,
   type StackListStacksResponse,
+  type StackRemoveAssetsResponse,
   type StackRetrieveStackResponse,
+  type StackSetCoverResponse,
   type StackListStacksParams,
+  type StackRemoveAssetsParams,
+  type StackSetCoverParams,
   type StackListStacksResponsesCursorPage,
 } from './stacks';
 export { Tasks } from './tasks';
