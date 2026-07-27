@@ -21,6 +21,44 @@ describe('resource stacks', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('addAssetsToStack: only required params', async () => {
+    const responsePromise = client.stacks.addAssetsToStack('stack_id', { asset_ids: ['string'] });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('addAssetsToStack: required and optional params', async () => {
+    const response = await client.stacks.addAssetsToStack('stack_id', { asset_ids: ['string'] });
+  });
+
+  // Mock server tests are disabled
+  test.skip('createStack: only required params', async () => {
+    const responsePromise = client.stacks.createStack({ asset_ids: ['string', 'string'] });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('createStack: required and optional params', async () => {
+    const response = await client.stacks.createStack({
+      asset_ids: ['string', 'string'],
+      library_id: 'library_id',
+      primary_asset_id: 'primary_asset_id',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('listStacks', async () => {
     const responsePromise = client.stacks.listStacks();
     const rawResponse = await responsePromise.asResponse();

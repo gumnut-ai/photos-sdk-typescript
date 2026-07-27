@@ -19,6 +19,43 @@ export class Stacks extends APIResource {
   }
 
   /**
+   * Adds one or more existing assets to the stack. An asset already in another stack
+   * is reconciled exactly as `create_stack` does. Ids already in this stack are
+   * silently skipped.
+   *
+   * An add that changes membership marks the stack user-owned (`origin = user`),
+   * which freezes it against burst re-detection; a request that changes nothing
+   * leaves `origin` unchanged.
+   *
+   * If a concurrent stack change invalidates the request mid-flight, it returns 409
+   * and nothing is changed; retry the request unchanged, except where the 409
+   * reports the target stack itself is gone, which is terminal.
+   */
+  addAssetsToStack(
+    stackID: string,
+    body: StackAddAssetsToStackParams,
+    options?: RequestOptions,
+  ): APIPromise<StackAddAssetsToStackResponse> {
+    return this._client.post(path`/api/stacks/${stackID}/assets`, { body, ...options });
+  }
+
+  /**
+   * Groups two or more existing assets into a new user-owned stack (`origin = user`)
+   * for collapsed display. A user-owned stack is never re-segmented by burst
+   * re-detection.
+   *
+   * An asset already in another stack is repointed into the new one, folding that
+   * stack in whole if it was its pinned cover; a stack left with fewer than 2
+   * members dissolves. The photos themselves are untouched.
+   *
+   * If a concurrent stack change invalidates the request mid-flight, it returns 409
+   * and nothing is created; retry the request unchanged.
+   */
+  createStack(body: StackCreateStackParams, options?: RequestOptions): APIPromise<StackCreateStackResponse> {
+    return this._client.post('/api/stacks', { body, ...options });
+  }
+
+  /**
    * Returns a paginated list of stacks — assets grouped for collapsed display,
    * whether detected automatically or grouped by the user — ordered by `id`: stable,
    * but arbitrary rather than chronological.
@@ -101,6 +138,98 @@ export type StackListStacksResponsesCursorPage = CursorPage<StackListStacksRespo
  * which ChatGPT's MCP submission tooling requires.
  */
 export interface StackDeleteResponse {}
+
+/**
+ * Represents a group of assets displayed as a single tile.
+ */
+export interface StackAddAssetsToStackResponse {
+  /**
+   * Unique stack identifier with 'asset*stack*' prefix
+   */
+  id: string;
+
+  /**
+   * Number of live assets in this stack. Excludes trashed members, so it can drop
+   * below the number of frames originally grouped.
+   */
+  asset_count: number;
+
+  /**
+   * When this stack was created
+   */
+  created_at: string;
+
+  /**
+   * How a stack came to exist.
+   *
+   * `auto_burst` marks a stack the burst detector created from the time +
+   * EXIF-camera signal; `user` marks a stack a user created or edited (manual
+   * create, set-cover, add/remove, unstack). The distinction is what keeps
+   * re-detection from stomping a user's correction — the detection pass skips `user`
+   * stacks.
+   */
+  origin: 'auto_burst' | 'user';
+
+  /**
+   * When this stack was last updated
+   */
+  updated_at: string;
+
+  /**
+   * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
+   * Null for an auto-detected burst unless a user has since pinned a cover — there
+   * is no server-selected default, so a client showing a stack with no pinned cover
+   * picks its own. A pinned cover that has been trashed keeps its ID here; it is
+   * cleared only once the asset is permanently deleted.
+   */
+  primary_asset_id?: string | null;
+}
+
+/**
+ * Represents a group of assets displayed as a single tile.
+ */
+export interface StackCreateStackResponse {
+  /**
+   * Unique stack identifier with 'asset*stack*' prefix
+   */
+  id: string;
+
+  /**
+   * Number of live assets in this stack. Excludes trashed members, so it can drop
+   * below the number of frames originally grouped.
+   */
+  asset_count: number;
+
+  /**
+   * When this stack was created
+   */
+  created_at: string;
+
+  /**
+   * How a stack came to exist.
+   *
+   * `auto_burst` marks a stack the burst detector created from the time +
+   * EXIF-camera signal; `user` marks a stack a user created or edited (manual
+   * create, set-cover, add/remove, unstack). The distinction is what keeps
+   * re-detection from stomping a user's correction — the detection pass skips `user`
+   * stacks.
+   */
+  origin: 'auto_burst' | 'user';
+
+  /**
+   * When this stack was last updated
+   */
+  updated_at: string;
+
+  /**
+   * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
+   * Null for an auto-detected burst unless a user has since pinned a cover — there
+   * is no server-selected default, so a client showing a stack with no pinned cover
+   * picks its own. A pinned cover that has been trashed keeps its ID here; it is
+   * cleared only once the asset is permanently deleted.
+   */
+  primary_asset_id?: string | null;
+}
 
 /**
  * Represents a group of assets displayed as a single tile.
@@ -251,6 +380,35 @@ export interface StackSetCoverResponse {
   primary_asset_id?: string | null;
 }
 
+export interface StackAddAssetsToStackParams {
+  /**
+   * Asset IDs (with `asset_` prefix) to add to the stack — all in the stack's
+   * library.
+   */
+  asset_ids: Array<string>;
+}
+
+export interface StackCreateStackParams {
+  /**
+   * Asset IDs (with `asset_` prefix) to group into the new stack — at least 2
+   * distinct ids, all in the target library.
+   */
+  asset_ids: Array<string>;
+
+  /**
+   * Library to create the stack in. Optional if the user has a single library;
+   * required when they have multiple.
+   */
+  library_id?: string | null;
+
+  /**
+   * Asset ID (with `asset_` prefix) to pin as the stack's cover; must be one of
+   * `asset_ids`. Omit to leave the cover unpinned — there is no automatic pick, and
+   * clients choose their own display cover for an unpinned stack.
+   */
+  primary_asset_id?: string | null;
+}
+
 export interface StackListStacksParams extends CursorPageParams {
   /**
    * Look up specific stacks by ID (max 200; each ID has the `asset_stack_` prefix).
@@ -296,11 +454,15 @@ export interface StackSetCoverParams {
 export declare namespace Stacks {
   export {
     type StackDeleteResponse as StackDeleteResponse,
+    type StackAddAssetsToStackResponse as StackAddAssetsToStackResponse,
+    type StackCreateStackResponse as StackCreateStackResponse,
     type StackListStacksResponse as StackListStacksResponse,
     type StackRemoveAssetsResponse as StackRemoveAssetsResponse,
     type StackRetrieveStackResponse as StackRetrieveStackResponse,
     type StackSetCoverResponse as StackSetCoverResponse,
     type StackListStacksResponsesCursorPage as StackListStacksResponsesCursorPage,
+    type StackAddAssetsToStackParams as StackAddAssetsToStackParams,
+    type StackCreateStackParams as StackCreateStackParams,
     type StackListStacksParams as StackListStacksParams,
     type StackRemoveAssetsParams as StackRemoveAssetsParams,
     type StackSetCoverParams as StackSetCoverParams,

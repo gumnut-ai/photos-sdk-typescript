@@ -115,6 +115,10 @@ import {
   SearchSearchParams,
 } from './resources/search';
 import {
+  StackAddAssetsToStackParams,
+  StackAddAssetsToStackResponse,
+  StackCreateStackParams,
+  StackCreateStackResponse,
   StackDeleteResponse,
   StackListStacksParams,
   StackListStacksResponse,
@@ -1039,11 +1043,15 @@ export declare namespace Gumnut {
   export {
     Stacks as Stacks,
     type StackDeleteResponse as StackDeleteResponse,
+    type StackAddAssetsToStackResponse as StackAddAssetsToStackResponse,
+    type StackCreateStackResponse as StackCreateStackResponse,
     type StackListStacksResponse as StackListStacksResponse,
     type StackRemoveAssetsResponse as StackRemoveAssetsResponse,
     type StackRetrieveStackResponse as StackRetrieveStackResponse,
     type StackSetCoverResponse as StackSetCoverResponse,
     type StackListStacksResponsesCursorPage as StackListStacksResponsesCursorPage,
+    type StackAddAssetsToStackParams as StackAddAssetsToStackParams,
+    type StackCreateStackParams as StackCreateStackParams,
     type StackListStacksParams as StackListStacksParams,
     type StackRemoveAssetsParams as StackRemoveAssetsParams,
     type StackSetCoverParams as StackSetCoverParams,
