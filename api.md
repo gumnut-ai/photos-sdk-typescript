@@ -196,6 +196,8 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/stacks.ts">StackDeleteResponse</a></code>
+- <code><a href="./src/resources/stacks.ts">StackAddAssetsToStackResponse</a></code>
+- <code><a href="./src/resources/stacks.ts">StackCreateStackResponse</a></code>
 - <code><a href="./src/resources/stacks.ts">StackListStacksResponse</a></code>
 - <code><a href="./src/resources/stacks.ts">StackRemoveAssetsResponse</a></code>
 - <code><a href="./src/resources/stacks.ts">StackRetrieveStackResponse</a></code>
@@ -204,6 +206,8 @@ Types:
 Methods:
 
 - <code title="delete /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">delete</a>(stackID) -> StackDeleteResponse</code>
+- <code title="post /api/stacks/{stack_id}/assets">client.stacks.<a href="./src/resources/stacks.ts">addAssetsToStack</a>(stackID, { ...params }) -> StackAddAssetsToStackResponse</code>
+- <code title="post /api/stacks">client.stacks.<a href="./src/resources/stacks.ts">createStack</a>({ ...params }) -> StackCreateStackResponse</code>
 - <code title="get /api/stacks">client.stacks.<a href="./src/resources/stacks.ts">listStacks</a>({ ...params }) -> StackListStacksResponsesCursorPage</code>
 - <code title="delete /api/stacks/{stack_id}/assets">client.stacks.<a href="./src/resources/stacks.ts">removeAssets</a>(stackID, { ...params }) -> StackRemoveAssetsResponse</code>
 - <code title="get /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">retrieveStack</a>(stackID) -> StackRetrieveStackResponse</code>
