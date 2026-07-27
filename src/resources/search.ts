@@ -66,9 +66,10 @@ export class Search extends APIResource {
 
 export interface SearchResponse {
   /**
-   * For text or image search, matching assets are ordered by Reciprocal Rank Fusion
-   * across the available dense and sparse stages. Structured-filter-only searches
-   * retain newest-first capture-date ordering.
+   * Text-query matches use the configured reranker over the first 50 Reciprocal Rank
+   * Fusion candidates, with fail-open RRF ordering. Image-only matches use RRF
+   * across available stages. Structured-filter-only searches retain newest-first
+   * capture-date ordering.
    */
   data: Array<SearchResultItem>;
 
@@ -88,6 +89,12 @@ export namespace SearchResponse {
     dense_text: Array<Debug.DenseText>;
 
     fused: Array<Debug.Fused>;
+
+    reranked: Array<Debug.Reranked>;
+
+    reranker: Debug.Reranker;
+
+    selected_ordering: string;
 
     sparse: Array<Debug.Sparse>;
   }
@@ -123,6 +130,28 @@ export namespace SearchResponse {
       sparse_rank?: number | null;
     }
 
+    export interface Reranked {
+      asset_id: string;
+
+      fused_rank: number;
+
+      rank: number;
+
+      score: number | null;
+    }
+
+    export interface Reranker {
+      attempted: boolean;
+
+      duration_ms: number;
+
+      fallback_reason: string | null;
+
+      model_revision: string;
+
+      outcome: string;
+    }
+
     export interface Sparse {
       asset_id: string;
 
@@ -143,8 +172,9 @@ export interface SearchResultItem {
 
   /**
    * Best available dense-stage cosine distance (lower is more similar). This is
-   * attribution only: results are ordered by fused rank, not distance. Null for
-   * sparse-only and structured-filter-only matches.
+   * attribution only: text results use reranker order when reranking succeeds and
+   * RRF order on fallback; image-only results use RRF. Results are never ordered by
+   * this distance. Null for sparse-only and structured-filter-only matches.
    */
   distance: number | null;
 }
@@ -186,12 +216,6 @@ export interface SearchSearchParams {
    * data field above is null/absent until you request it.
    */
   include?: Array<string> | null;
-
-  /**
-   * Include per-stage dense/sparse ranks and scores plus fused attribution. Intended
-   * for debugging and evaluation; omitted from normal responses.
-   */
-  include_debug?: boolean;
 
   /**
    * Library to search. Optional if the user has a single library; required when they
@@ -292,12 +316,6 @@ export interface SearchSearchAssetsParams {
   album_id?: string | null;
 
   /**
-   * @deprecated Body param: Deprecated alias for `album_id`. Accepts a single album
-   * ID; supplying more than one is rejected.
-   */
-  album_ids?: Array<string> | null;
-
-  /**
    * Body param: Bounding-box (map viewport) location filter: four comma-separated
    * decimal-degree numbers `min_longitude,min_latitude,max_longitude,max_latitude`
    * (west,south,east,north), e.g. `-77.1,38.9,-77.0,39.0`. A box whose
@@ -305,16 +323,6 @@ export interface SearchSearchAssetsParams {
    * matches nothing — split it client-side.
    */
   bbox?: string | null;
-
-  /**
-   * @deprecated Body param: Deprecated alias for `local_datetime_after`.
-   */
-  captured_after?: string | null;
-
-  /**
-   * @deprecated Body param: Deprecated alias for `local_datetime_before`.
-   */
-  captured_before?: string | null;
 
   /**
    * Body param: Center point of a radius location filter: two comma-separated
@@ -329,13 +337,6 @@ export interface SearchSearchAssetsParams {
    * embeddings.
    */
   image?: Uploadable | null;
-
-  /**
-   * Body param: Include per-stage dense/sparse ranks and scores plus fused
-   * attribution. Intended for debugging and evaluation; omitted from normal
-   * responses.
-   */
-  include_debug?: boolean;
 
   /**
    * Body param: Library to search assets from (optional)
