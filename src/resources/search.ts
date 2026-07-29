@@ -189,8 +189,12 @@ export interface SearchSearchParams {
    * Bounding-box (map viewport) location filter: four comma-separated decimal-degree
    * numbers `min_longitude,min_latitude,max_longitude,max_latitude`
    * (west,south,east,north), e.g. `-77.1,38.9,-77.0,39.0`. A box whose
-   * `min_longitude` exceeds `max_longitude` (antimeridian-crossing) is accepted but
-   * matches nothing — split it client-side.
+   * `min_longitude` exceeds `max_longitude` crosses the antimeridian: it selects the
+   * band running east from `min_longitude` over ±180° to `max_longitude`, so there
+   * is no need to split it client-side. Longitude order is therefore significant —
+   * transposed corners read as a crossing viewport, not as an error. A viewport 360°
+   * or wider must be sent as the full range `-180,...,180,...`, which the wrapped
+   * form cannot express.
    */
   bbox?: string | null;
 
@@ -319,8 +323,12 @@ export interface SearchSearchAssetsParams {
    * Body param: Bounding-box (map viewport) location filter: four comma-separated
    * decimal-degree numbers `min_longitude,min_latitude,max_longitude,max_latitude`
    * (west,south,east,north), e.g. `-77.1,38.9,-77.0,39.0`. A box whose
-   * `min_longitude` exceeds `max_longitude` (antimeridian-crossing) is accepted but
-   * matches nothing — split it client-side.
+   * `min_longitude` exceeds `max_longitude` crosses the antimeridian: it selects the
+   * band running east from `min_longitude` over ±180° to `max_longitude`, so there
+   * is no need to split it client-side. Longitude order is therefore significant —
+   * transposed corners read as a crossing viewport, not as an error. A viewport 360°
+   * or wider must be sent as the full range `-180,...,180,...`, which the wrapped
+   * form cannot express.
    */
   bbox?: string | null;
 
