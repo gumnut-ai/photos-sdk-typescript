@@ -404,12 +404,12 @@ export interface AssetResponse {
   people?: Array<PeopleAPI.PersonResponse> | null;
 
   /**
-   * ID of the burst stack this asset belongs to (`asset_stack_` prefix), or `null`
-   * when the asset is not part of a stack. Group assets by this value to collapse a
-   * burst into a single tile; the stack's own cover and member count are not carried
-   * on the asset. Distinct from `metadata.auto_stack_id`, which is the camera's
-   * in-EXIF `MakerNotes:AutoStackID` string — this is the server-assigned foreign
-   * key to the asset's stack.
+   * ID of the stack this asset belongs to (`asset_stack_` prefix), or `null` when
+   * the asset is not part of a stack. Group assets by this value to collapse a stack
+   * into a single tile; the stack's own cover and member count are not carried on
+   * the asset. Distinct from `metadata.auto_stack_id`, which is the camera's in-EXIF
+   * `MakerNotes:AutoStackID` string — this is the server-assigned foreign key to the
+   * asset's stack.
    */
   stack_id?: string | null;
 
@@ -908,8 +908,8 @@ export interface AssetListParams extends CursorPageParams {
   radius?: number | null;
 
   /**
-   * Return only assets belonging to this burst stack (the `asset_stack_` ID carried
-   * by the `stack_id` field on every asset).
+   * Return only assets belonging to this stack (the `asset_stack_` ID carried by the
+   * `stack_id` field on every asset).
    */
   stack_id?: string | null;
 
