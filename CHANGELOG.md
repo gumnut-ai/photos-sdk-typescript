@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.148.1 (2026-07-31)
+
+Full Changelog: [v0.148.0...v0.148.1](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.148.0...v0.148.1)
+
+### Bug Fixes
+
+* **stlc:** stop hand-edited CI workflows from blocking seals and builds ([a9edde0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a9edde088de711afea983336e0639e3533614bad))
+
 ## 0.148.0 (2026-07-29)
 
 Full Changelog: [v0.147.0...v0.148.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.147.0...v0.148.0)
