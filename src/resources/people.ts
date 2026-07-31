@@ -78,6 +78,9 @@ export class People extends APIResource {
    * Use `update_face` with `person_id=null` to detach a specific face without
    * deleting the whole person. Use `delete_face` to remove a face detection
    * entirely.
+   *
+   * If a concurrent change to the person's faces collides with the deletion, it
+   * returns 409 and nothing is deleted; retry the request unchanged.
    */
   delete(personID: string, options?: RequestOptions): APIPromise<PersonDeleteResponse> {
     return this._client.delete(path`/api/people/${personID}`, options);
