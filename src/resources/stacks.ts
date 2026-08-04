@@ -12,7 +12,8 @@ export class Stacks extends APIResource {
    * loose, individual display. The photos themselves are untouched — nothing is
    * trashed or deleted from the library; like `remove_assets_from_album`, this only
    * removes an organizational grouping. Use `trash_assets` to soft-delete the
-   * underlying assets.
+   * underlying assets. If a concurrent mutation adds a frame mid-delete, returns 409
+   * and nothing is changed; retry the request.
    */
   delete(stackID: string, options?: RequestOptions): APIPromise<StackDeleteResponse> {
     return this._client.delete(path`/api/stacks/${stackID}`, options);
