@@ -44,6 +44,7 @@ export class Events extends APIResource {
    * - `face_created`, `face_updated`, `face_deleted`
    * - `album_asset_added`, `album_asset_removed`
    * - `metadata_updated`
+   * - `stack_created`, `stack_updated`, `stack_deleted`
    */
   get(query: EventGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<EventsResponse> {
     return this._client.get('/api/events', { query, ...options });
@@ -127,7 +128,7 @@ export interface EventGetParams {
 
   /**
    * Entity types to include (e.g., `asset`, `album`). Valid values: `asset`,
-   * `album`, `person`, `face`, `album_asset`, `metadata`. Accepts multiple
+   * `album`, `person`, `face`, `album_asset`, `metadata`, `stack`. Accepts multiple
    * `entity_types=` query params or a single comma-delimited value (e.g.,
    * `entity_types=asset,album`). Omit to receive events for all types.
    */
