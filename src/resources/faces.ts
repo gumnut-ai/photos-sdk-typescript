@@ -7,6 +7,9 @@ import { CursorPage, type CursorPageParams, PagePromise } from '../core/paginati
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Detected faces and their assignment to people.
+ */
 export class Faces extends APIResource {
   /**
    * Adds a user-drawn face box to an asset, for a face the detector missed. To

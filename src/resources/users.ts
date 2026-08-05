@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * The authenticated user's profile.
+ */
 export class Users extends APIResource {
   /**
    * Returns the profile of the authenticated user (the caller). Use this at the

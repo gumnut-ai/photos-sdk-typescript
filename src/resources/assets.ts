@@ -11,6 +11,9 @@ import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 import { path } from '../internal/utils/path';
 
+/**
+ * Photos and videos in a library: upload, list and filter, update metadata, trash and restore.
+ */
 export class Assets extends APIResource {
   /**
    * Uploads a new asset (image or video) and its metadata as multipart form data,

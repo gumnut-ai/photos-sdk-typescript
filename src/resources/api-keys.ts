@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Create and manage Gumnut API keys. Requires a first-party Gumnut app session — API keys and OAuth tokens cannot manage credentials.
+ */
 export class APIKeys extends APIResource {
   /**
    * Creates a new API key for the current user

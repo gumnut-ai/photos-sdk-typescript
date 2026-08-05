@@ -6,6 +6,9 @@ import { CursorPage, type CursorPageParams, PagePromise } from '../core/paginati
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Link records connecting albums to their member assets.
+ */
 export class AlbumAssets extends APIResource {
   /**
    * Returns paginated _link_ records (lightweight join rows between albums and
