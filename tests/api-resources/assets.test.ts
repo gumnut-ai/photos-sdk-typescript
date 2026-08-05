@@ -12,10 +12,10 @@ describe('resource assets', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.assets.create({
       asset_data: await toFile(Buffer.from('Example data'), 'README.md'),
-      device_asset_id: 'device_asset_id',
-      device_id: 'device_id',
-      file_created_at: '2019-12-27T18:11:19.117Z',
-      file_modified_at: '2019-12-27T18:11:19.117Z',
+      device_asset_id: 'IMG_0421',
+      device_id: 'teds-iphone',
+      file_created_at: '2026-05-04T10:30:00+10:00',
+      file_modified_at: '2026-05-04T10:30:00+10:00',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -30,11 +30,11 @@ describe('resource assets', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.assets.create({
       asset_data: await toFile(Buffer.from('Example data'), 'README.md'),
-      device_asset_id: 'device_asset_id',
-      device_id: 'device_id',
-      file_created_at: '2019-12-27T18:11:19.117Z',
-      file_modified_at: '2019-12-27T18:11:19.117Z',
-      library_id: 'library_id',
+      device_asset_id: 'IMG_0421',
+      device_id: 'teds-iphone',
+      file_created_at: '2026-05-04T10:30:00+10:00',
+      file_modified_at: '2026-05-04T10:30:00+10:00',
+      library_id: 'lib_2c6ihMLYJUt3vctZWi9SNP',
     });
   });
 
