@@ -6,6 +6,9 @@ import { CursorPage, type CursorPageParams, PagePromise } from '../core/paginati
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Groups of related shots of the same moment, presented as a single unit with a cover asset.
+ */
 export class Stacks extends APIResource {
   /**
    * Dissolves the stack: the grouping is removed and every member frame returns to

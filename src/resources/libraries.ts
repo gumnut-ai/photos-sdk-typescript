@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Top-level containers that own assets, albums, people, and everything else.
+ */
 export class Libraries extends APIResource {
   /**
    * Creates a new, empty photo library for the authenticated user. A library is the

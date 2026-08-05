@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Service health.
+ */
 export class Ping extends APIResource {
   /**
    * Unauthenticated health-check endpoint for uptime monitoring. Returns 'pong'.

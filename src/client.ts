@@ -888,19 +888,58 @@ export class Gumnut {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Create and manage Gumnut API keys. Requires a first-party Gumnut app session — API keys and OAuth tokens cannot manage credentials.
+   */
   apiKeys: API.APIKeys = new API.APIKeys(this);
+  /**
+   * Photos and videos in a library: upload, list and filter, update metadata, trash and restore.
+   */
   assets: API.Assets = new API.Assets(this);
+  /**
+   * User-curated collections of assets.
+   */
   albums: API.Albums = new API.Albums(this);
+  /**
+   * Link records connecting albums to their member assets.
+   */
   albumAssets: API.AlbumAssets = new API.AlbumAssets(this);
+  /**
+   * Change-event feed for keeping client state in sync.
+   */
   events: API.Events = new API.Events(this);
+  /**
+   * Detected faces and their assignment to people.
+   */
   faces: API.Faces = new API.Faces(this);
+  /**
+   * Top-level containers that own assets, albums, people, and everything else.
+   */
   libraries: API.Libraries = new API.Libraries(this);
+  /**
+   * OAuth flow endpoints for obtaining and refreshing access tokens.
+   */
   oauth: API.OAuth = new API.OAuth(this);
+  /**
+   * Named people, each built from clustered faces.
+   */
   people: API.People = new API.People(this);
+  /**
+   * Service health.
+   */
   ping: API.Ping = new API.Ping(this);
+  /**
+   * Content-based search over a library's assets, with the same filters as asset listing.
+   */
   search: API.Search = new API.Search(this);
+  /**
+   * Groups of related shots of the same moment, presented as a single unit with a cover asset.
+   */
   stacks: API.Stacks = new API.Stacks(this);
   tasks: API.Tasks = new API.Tasks(this);
+  /**
+   * The authenticated user's profile.
+   */
   users: API.Users = new API.Users(this);
 }
 
