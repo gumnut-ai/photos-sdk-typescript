@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * OAuth flow endpoints for obtaining and refreshing access tokens.
+ */
 export class OAuth extends APIResource {
   /**
    * Generate OAuth authorization URL with state and nonce for CSRF and replay attack

@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * User-curated collections of assets.
+ */
 export class AssetsAssociations extends APIResource {
   /**
    * Adds one or more existing assets to the specified album. Assets must already be

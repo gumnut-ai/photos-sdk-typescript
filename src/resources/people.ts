@@ -7,6 +7,9 @@ import { CursorPage, type CursorPageParams, PagePromise } from '../core/paginati
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Named people, each built from clustered faces.
+ */
 export class People extends APIResource {
   /**
    * Creates a new person record (a named identity for grouping faces). Most people

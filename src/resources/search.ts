@@ -7,6 +7,9 @@ import { type Uploadable } from '../core/uploads';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 
+/**
+ * Content-based search over a library's assets, with the same filters as asset listing.
+ */
 export class Search extends APIResource {
   /**
    * Searches for assets using rank fusion across dense visual retrieval and

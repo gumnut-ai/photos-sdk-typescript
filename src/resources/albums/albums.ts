@@ -16,6 +16,9 @@ import { CursorPage, type CursorPageParams, PagePromise } from '../../core/pagin
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * User-curated collections of assets.
+ */
 export class Albums extends APIResource {
   assetsAssociations: AssetsAssociationsAPI.AssetsAssociations = new AssetsAssociationsAPI.AssetsAssociations(
     this._client,

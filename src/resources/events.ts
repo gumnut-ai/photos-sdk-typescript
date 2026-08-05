@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Change-event feed for keeping client state in sync.
+ */
 export class Events extends APIResource {
   /**
    * Returns a paginated stream of change events (create/update/delete) for entities
