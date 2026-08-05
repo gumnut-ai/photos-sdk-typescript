@@ -417,6 +417,10 @@ export interface AssetLiteResponse {
 
 /**
  * Represents a photo or video asset with metadata and access URLs.
+ *
+ * Top-level fields describe the asset's current rendering (the version identified
+ * by `current_version_id`) unless they explicitly name the original upload, like
+ * `original_file_name` and the `file_data` group.
  */
 export interface AssetResponse {
   /**
@@ -430,17 +434,31 @@ export interface AssetResponse {
   created_at: string;
 
   /**
+   * ID (`asset_version_` prefix) of the current version, which the top-level
+   * rendering fields describe. Pass it as the expected current version on version
+   * writes so a racing write is rejected.
+   */
+  current_version_id: string;
+
+  /**
+   * What produced the current rendering: `original` (the upload), `edit` (a
+   * client-baked edit), or `external:<service>`. The namespace is open — derive
+   * edited-ness as `kind != "original"`.
+   */
+  kind: string;
+
+  /**
    * When the photo/video was taken, in the device's local timezone
    */
   local_datetime: string;
 
   /**
-   * MIME type of the file (e.g., 'image/jpeg', 'video/mp4')
+   * MIME type of the current rendering (e.g., 'image/jpeg', 'video/mp4').
    */
   mime_type: string;
 
   /**
-   * Original filename when the asset was uploaded
+   * Filename the asset was uploaded under.
    */
   original_file_name: string;
 
@@ -491,7 +509,7 @@ export interface AssetResponse {
   file_data?: FileDataResponse | null;
 
   /**
-   * Height of the asset in pixels
+   * Height of the current rendering in pixels.
    */
   height?: number;
 
@@ -538,7 +556,7 @@ export interface AssetResponse {
   trashed_at?: string | null;
 
   /**
-   * Width of the asset in pixels
+   * Width of the current rendering in pixels.
    */
   width?: number;
 }
@@ -579,7 +597,8 @@ export interface FileDataResponse {
   file_modified_at: string;
 
   /**
-   * File size of the asset in bytes.
+   * Size of the uploaded file in bytes. Each rendering's own size is on its row in
+   * the asset's version listing.
    */
   file_size_bytes: number;
 
@@ -924,15 +943,16 @@ export interface AssetRetrieveParams {
    * location names), `faces`, `people`, `metrics` (ML quality scores), `file_data`
    * (a group token populating the nested `file_data` object with the file/provenance
    * scalars `device_asset_id`, `device_id`, `file_created_at`, `file_modified_at`,
-   * `checksum`, `checksum_sha1`, `file_size_bytes`), and `variants` (the
-   * non-thumbnail `asset_urls` size variants; without it `asset_urls` carries only
-   * its lean rung — `thumbnail`, or `thumbnail_image` for a video with an extracted
-   * still, or `original` for a still-less video — so callers that render
-   * non-thumbnail variants must pass it). Accepts multiple `include=` query params
-   * or a single comma-delimited value (e.g. `include=faces,people`). Unknown values
-   * return 422. When omitted, only the lean core is returned (`id`, `mime_type`,
-   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`) and each
-   * data field above is null/absent until you request it.
+   * `checksum`, `checksum_sha1`, `file_size_bytes`), and `variants` (every
+   * `asset_urls` rung beyond the lean one. Without it `asset_urls` carries only its
+   * lean rung — `thumbnail` for an image, or `thumbnail_image` for a video — so
+   * callers that render non-thumbnail variants or download the current rendering
+   * must pass it). Accepts multiple `include=` query params or a single
+   * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
+   * When omitted, only the lean core is returned (`id`, `mime_type`,
+   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`, `kind`,
+   * `current_version_id`) and each data field above is null/absent until you request
+   * it.
    */
   include?: Array<string> | null;
 }
@@ -978,15 +998,16 @@ export interface AssetListParams extends CursorPageParams {
    * location names), `faces`, `people`, `metrics` (ML quality scores), `file_data`
    * (a group token populating the nested `file_data` object with the file/provenance
    * scalars `device_asset_id`, `device_id`, `file_created_at`, `file_modified_at`,
-   * `checksum`, `checksum_sha1`, `file_size_bytes`), and `variants` (the
-   * non-thumbnail `asset_urls` size variants; without it `asset_urls` carries only
-   * its lean rung — `thumbnail`, or `thumbnail_image` for a video with an extracted
-   * still, or `original` for a still-less video — so callers that render
-   * non-thumbnail variants must pass it). Accepts multiple `include=` query params
-   * or a single comma-delimited value (e.g. `include=faces,people`). Unknown values
-   * return 422. When omitted, only the lean core is returned (`id`, `mime_type`,
-   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`) and each
-   * data field above is null/absent until you request it.
+   * `checksum`, `checksum_sha1`, `file_size_bytes`), and `variants` (every
+   * `asset_urls` rung beyond the lean one. Without it `asset_urls` carries only its
+   * lean rung — `thumbnail` for an image, or `thumbnail_image` for a video — so
+   * callers that render non-thumbnail variants or download the current rendering
+   * must pass it). Accepts multiple `include=` query params or a single
+   * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
+   * When omitted, only the lean core is returned (`id`, `mime_type`,
+   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`, `kind`,
+   * `current_version_id`) and each data field above is null/absent until you request
+   * it.
    */
   include?: Array<string> | null;
 
