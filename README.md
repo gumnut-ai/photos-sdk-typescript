@@ -66,44 +66,44 @@ const client = new Gumnut();
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
 await client.assets.create({
   asset_data: fs.createReadStream('/path/to/file'),
-  device_asset_id: 'device_asset_id',
-  device_id: 'device_id',
-  file_created_at: '2019-12-27T18:11:19.117Z',
-  file_modified_at: '2019-12-27T18:11:19.117Z',
+  device_asset_id: 'IMG_0421',
+  device_id: 'teds-iphone',
+  file_created_at: '2026-05-04T10:30:00+10:00',
+  file_modified_at: '2026-05-04T10:30:00+10:00',
 });
 
 // Or if you have the web `File` API you can pass a `File` instance:
 await client.assets.create({
   asset_data: new File(['my bytes'], 'file'),
-  device_asset_id: 'device_asset_id',
-  device_id: 'device_id',
-  file_created_at: '2019-12-27T18:11:19.117Z',
-  file_modified_at: '2019-12-27T18:11:19.117Z',
+  device_asset_id: 'IMG_0421',
+  device_id: 'teds-iphone',
+  file_created_at: '2026-05-04T10:30:00+10:00',
+  file_modified_at: '2026-05-04T10:30:00+10:00',
 });
 
 // You can also pass a `fetch` `Response`:
 await client.assets.create({
   asset_data: await fetch('https://somesite/file'),
-  device_asset_id: 'device_asset_id',
-  device_id: 'device_id',
-  file_created_at: '2019-12-27T18:11:19.117Z',
-  file_modified_at: '2019-12-27T18:11:19.117Z',
+  device_asset_id: 'IMG_0421',
+  device_id: 'teds-iphone',
+  file_created_at: '2026-05-04T10:30:00+10:00',
+  file_modified_at: '2026-05-04T10:30:00+10:00',
 });
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
 await client.assets.create({
   asset_data: await toFile(Buffer.from('my bytes'), 'file'),
-  device_asset_id: 'device_asset_id',
-  device_id: 'device_id',
-  file_created_at: '2019-12-27T18:11:19.117Z',
-  file_modified_at: '2019-12-27T18:11:19.117Z',
+  device_asset_id: 'IMG_0421',
+  device_id: 'teds-iphone',
+  file_created_at: '2026-05-04T10:30:00+10:00',
+  file_modified_at: '2026-05-04T10:30:00+10:00',
 });
 await client.assets.create({
   asset_data: await toFile(new Uint8Array([0, 1, 2]), 'file'),
-  device_asset_id: 'device_asset_id',
-  device_id: 'device_id',
-  file_created_at: '2019-12-27T18:11:19.117Z',
-  file_modified_at: '2019-12-27T18:11:19.117Z',
+  device_asset_id: 'IMG_0421',
+  device_id: 'teds-iphone',
+  file_created_at: '2026-05-04T10:30:00+10:00',
+  file_modified_at: '2026-05-04T10:30:00+10:00',
 });
 ```
 

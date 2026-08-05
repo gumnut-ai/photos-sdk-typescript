@@ -13,7 +13,30 @@ import { path } from '../internal/utils/path';
 
 export class Assets extends APIResource {
   /**
-   * Uploads a new asset file (image or video) and its metadata.
+   * Uploads a new asset (image or video) and its metadata as multipart form data,
+   * returning the created asset with 201. Uploads are deduplicated per library by
+   * the file's SHA-256 checksum: re-uploading a file whose bytes already exist in
+   * the target library stores nothing and returns the existing asset with 200.
+   * Storage caps are checked before the duplicate lookup, so an upload is refused
+   * with 507 whenever the account or the target library is already at its storage
+   * cap — even when the bytes would have deduplicated to an existing asset. A
+   * transient upstream storage error returns 502 — retryable after the `Retry-After`
+   * interval. When `library_id` is omitted and no default library can be chosen (the
+   * account has multiple live libraries), the request is refused with 400. Image
+   * metadata is extracted before the response returns; the rest of processing
+   * (thumbnails, search indexing, face detection, and video metadata extraction)
+   * continues asynchronously after the response.
+   *
+   * @example
+   * ```ts
+   * const assetResponse = await client.assets.create({
+   *   asset_data: fs.createReadStream('path/to/file'),
+   *   device_asset_id: 'IMG_0421',
+   *   device_id: 'teds-iphone',
+   *   file_created_at: '2026-05-04T10:30:00+10:00',
+   *   file_modified_at: '2026-05-04T10:30:00+10:00',
+   * });
+   * ```
    */
   create(body: AssetCreateParams, options?: RequestOptions): APIPromise<AssetResponse> {
     return this._client.post('/api/assets', multipartFormRequestOptions({ body, ...options }, this._client));
@@ -26,6 +49,13 @@ export class Assets extends APIResource {
    * IDs, prefer `list_assets` with the `ids` parameter to avoid N round trips.
    * `asset_urls` are signed URLs for client rendering only; to visually inspect the
    * image pixels, call `view_asset` instead.
+   *
+   * @example
+   * ```ts
+   * const assetResponse = await client.assets.retrieve(
+   *   'asset_id',
+   * );
+   * ```
    */
   retrieve(
     assetID: string,
@@ -65,6 +95,14 @@ export class Assets extends APIResource {
    *
    * **Pagination** is cursor-based: while `has_more` is true, keep fetching with
    * `starting_after_id`.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const assetResponse of client.assets.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: AssetListParams | null | undefined = {},
@@ -82,6 +120,11 @@ export class Assets extends APIResource {
    * **Use `remove_assets_from_album` instead** when the user only wants to remove an
    * asset from a specific album but keep the file in their library. Use
    * `delete_album` to remove an album without deleting its assets.
+   *
+   * @example
+   * ```ts
+   * const asset = await client.assets.delete('asset_id');
+   * ```
    */
   delete(assetID: string, options?: RequestOptions): APIPromise<AssetDeleteResponse> {
     return this._client.delete(path`/api/assets/${assetID}`, options);
@@ -96,6 +139,18 @@ export class Assets extends APIResource {
    * Up to 200 items per request; over-cap requests return 422. For a single-asset
    * edit, prefer `update_asset` — semantically identical but slightly more concise
    * at the call site.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.bulkUpdateAssets({
+   *   updates: [
+   *     {
+   *       id: 'id',
+   *       change: {},
+   *     },
+   *   ],
+   * });
+   * ```
    */
   bulkUpdateAssets(
     body: AssetBulkUpdateAssetsParams,
@@ -108,6 +163,12 @@ export class Assets extends APIResource {
    * Checks which assets exist in the user's library based on checksums or device
    * identifiers. Provide exactly one of: checksums, checksum_sha1s, or (deviceId AND
    * deviceAssetIds). List parameters are limited to 5000 items.
+   *
+   * @example
+   * ```ts
+   * const assetExistenceResponse =
+   *   await client.assets.checkExistence();
+   * ```
    */
   checkExistence(
     params: AssetCheckExistenceParams,
@@ -129,6 +190,14 @@ export class Assets extends APIResource {
    * tighter bounding box over the same filters. Album and person filters compose
    * using AND. `person_id` is a deprecated alias for one `person_ids` value; do not
    * supply both person parameters.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.clusterByGeo({
+   *   bbox: 'bbox',
+   *   cell_size: 0,
+   * });
+   * ```
    */
   clusterByGeo(
     query: AssetClusterByGeoParams,
@@ -150,6 +219,11 @@ export class Assets extends APIResource {
    *
    * **Pagination:** When `has_more` is true, pass the last `time_bucket` value from
    * `data` as `local_datetime_before` to fetch the next page.
+   *
+   * @example
+   * ```ts
+   * const assetCountResponse = await client.assets.counts();
+   * ```
    */
   counts(
     query: AssetCountsParams | null | undefined = {},
@@ -165,6 +239,13 @@ export class Assets extends APIResource {
    * recovered.
    *
    * Up to 200 ids per request; over-cap requests return 422.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.deleteList({
+   *   ids: ['string'],
+   * });
+   * ```
    */
   deleteList(params: AssetDeleteListParams, options?: RequestOptions): APIPromise<AssetDeleteListResponse> {
     const { library_id, ...body } = params;
@@ -175,6 +256,11 @@ export class Assets extends APIResource {
    * Permanently deletes every trashed asset in the caller's library in one shot —
    * storage and CDN are cleaned up via the same outbox path as the scheduled purge
    * task. **Irreversible**. Deliberately not exposed as an MCP tool.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.emptyTrash();
+   * ```
    */
   emptyTrash(
     params: AssetEmptyTrashParams | null | undefined = {},
@@ -191,6 +277,13 @@ export class Assets extends APIResource {
    * Pairs with `trash_assets`: assets soft-deleted there can be brought back here
    * within the retention window. To restore a whole trashed library, use
    * `restore_library`.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.restore({
+   *   ids: ['string'],
+   * });
+   * ```
    */
   restore(params: AssetRestoreParams, options?: RequestOptions): APIPromise<AssetRestoreResponse> {
     const { library_id, ...body } = params;
@@ -205,6 +298,13 @@ export class Assets extends APIResource {
    * Use this for the user's standard 'delete' action — there is no MCP-exposed
    * permanent-delete tool, so trash is the only path. To trash an entire library at
    * once instead of enumerating asset IDs, use `trash_library`.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.trash({
+   *   ids: ['string'],
+   * });
+   * ```
    */
   trash(params: AssetTrashParams, options?: RequestOptions): APIPromise<AssetTrashResponse> {
     const { library_id, ...body } = params;
@@ -223,6 +323,13 @@ export class Assets extends APIResource {
    * names refresh against the new effective coordinates.
    *
    * For editing multiple assets in one round trip, prefer `bulk_update_assets`.
+   *
+   * @example
+   * ```ts
+   * const assetResponse = await client.assets.updateAsset(
+   *   'asset_id',
+   * );
+   * ```
    */
   updateAsset(
     assetID: string,
@@ -763,16 +870,39 @@ export interface AssetTrashResponse {}
 
 export interface AssetCreateParams {
   /**
-   * The asset file to upload
+   * The image or video file, sent as a binary multipart part with a filename. The
+   * file's MIME type is derived from the filename extension and must be an image or
+   * video type; files with an unrecognized or non-media extension are rejected
+   * with 422. The filename is stored as the asset's original file name (maximum 1024
+   * characters). The API imposes no fixed per-file size limit; uploads are
+   * constrained only by the storage caps.
    */
   asset_data: Uploadable;
 
+  /**
+   * Identifier of this asset on the uploading device, chosen by the client (for
+   * example, the device's local asset ID). Stored verbatim and usable for
+   * device-based existence checks; plays no part in upload-time duplicate detection.
+   */
   device_asset_id: string;
 
+  /**
+   * Identifier of the uploading device or client, chosen by the client. Paired with
+   * `device_asset_id` for device-based existence checks.
+   */
   device_id: string;
 
+  /**
+   * When the file was created on the uploading device, as an ISO 8601 datetime. Also
+   * serves as the fallback for the asset's local capture time when the file's
+   * embedded metadata carries no usable timestamp.
+   */
   file_created_at: string;
 
+  /**
+   * When the file was last modified on the uploading device, as an ISO 8601
+   * datetime.
+   */
   file_modified_at: string;
 
   /**
