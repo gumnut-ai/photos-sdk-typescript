@@ -228,8 +228,8 @@ export interface PersonCreateParams {
   is_hidden?: boolean | null;
 
   /**
-   * Library to create the person in. Optional if the user has a single library;
-   * required when they have multiple.
+   * Library to create the person in. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
@@ -313,8 +313,8 @@ export interface PersonListParams extends CursorPageParams {
   include?: Array<string> | null;
 
   /**
-   * Library to list from. Optional if the user has a single library; required when
-   * they have multiple.
+   * Library to list from. Optional if the user has a single live (non-trashed)
+   * library; required when they have multiple.
    */
   library_id?: string | null;
 

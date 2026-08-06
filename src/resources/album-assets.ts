@@ -99,8 +99,8 @@ export interface AlbumAssetListParams extends CursorPageParams {
   ids?: Array<string> | null;
 
   /**
-   * Library to list from. Optional if the user has a single library; required when
-   * they have multiple.
+   * Library to list from. Optional if the user has a single live (non-trashed)
+   * library; required when they have multiple.
    */
   library_id?: string | null;
 }

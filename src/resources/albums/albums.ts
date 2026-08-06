@@ -160,8 +160,8 @@ export interface AlbumCreateParams {
   description?: string | null;
 
   /**
-   * Library to create the album in. Optional if the user has a single library;
-   * required when they have multiple.
+   * Library to create the album in. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
@@ -207,8 +207,8 @@ export interface AlbumListParams extends CursorPageParams {
   ids?: Array<string> | null;
 
   /**
-   * Library to list albums from. Optional if the user has a single library; required
-   * when they have multiple.
+   * Library to list albums from. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 }

@@ -12,11 +12,12 @@ import { multipartFormRequestOptions } from '../internal/uploads';
  */
 export class Search extends APIResource {
   /**
-   * Searches for assets using rank fusion across dense visual retrieval and
-   * authoritative-metadata full-text retrieval, with typed structured filters on
-   * albums, people, and date range. Use this tool when the user describes _what's
-   * in_ the photos they want — subjects, scenes, places, activities, moods, objects
-   * — optionally narrowed by album, person, date, or location.
+   * Searches for assets by content, by typed structured filters on albums, people,
+   * date range, and location, or both. Content searches are ranked by relevance;
+   * filter-only searches return matches newest-first. Use this tool when the user
+   * describes _what's in_ the photos they want — subjects, scenes, places,
+   * activities, moods, objects — optionally narrowed by album, person, date, or
+   * location.
    *
    * Prefer typed filters for anything the request states exactly: `album_id` for
    * album membership, `person_ids` for people,
@@ -47,13 +48,16 @@ export class Search extends APIResource {
   }
 
   /**
-   * Searches for assets using Reciprocal Rank Fusion across independent dense-text,
-   * dense-image, and authoritative-metadata full-text stages plus structured
-   * filters. Results include asset metadata, faces, and people. At least one search
-   * criterion must be provided. Text and uploaded-image signals stay independent
-   * when both are provided. Location filtering is by coordinate in two
-   * mutually-exclusive modes: a radius (`center` + `radius`) or a bounding box
-   * (`bbox`); it narrows candidates and is not a search criterion on its own.
+   * Searches for assets by content, by typed structured filters on albums, people,
+   * date range, and location, or both. Content searches are ranked by relevance;
+   * filter-only searches return matches newest-first. An uploaded `image` adds
+   * visual-similarity search; text and uploaded-image signals stay independent when
+   * both are provided.
+   *
+   * At least one search criterion must be provided. Location filtering is by
+   * coordinate in two mutually-exclusive modes: a radius (`center` + `radius`) or a
+   * bounding box (`bbox`); it narrows candidates and is not a search criterion on
+   * its own.
    */
   searchAssets(
     params: SearchSearchAssetsParams | null | undefined = {},
@@ -226,8 +230,8 @@ export interface SearchSearchParams {
   include?: Array<string> | null;
 
   /**
-   * Library to search. Optional if the user has a single library; required when they
-   * have multiple.
+   * Library to search. Optional if the user has a single live (non-trashed) library;
+   * required when they have multiple.
    */
   library_id?: string | null;
 
@@ -256,10 +260,11 @@ export interface SearchSearchParams {
 
   /**
    * 1-indexed page number; increment it to fetch subsequent pages. `search_assets`
-   * pages by number rather than by cursor because it ranks a fixed top-200 fused
-   * candidate population by relevance, so pages beyond that population are empty.
-   * The sibling `list_assets` cursors with `starting_after_id` over a stable
-   * capture-time ordering.
+   * pages by number rather than by cursor. A search with a content criterion ranks a
+   * fixed top-200 candidate population by relevance, so pages beyond that population
+   * are empty. A structured-filter-only search (album, people, date range — no
+   * content criterion) returns the full matching set newest-first, paginated without
+   * that cap.
    */
   page?: number;
 
@@ -292,8 +297,8 @@ export interface SearchSearchParams {
 
   /**
    * @deprecated Deprecated compatibility parameter. Accepted and validated during
-   * the transition window but ignored because rank-fused results do not have one
-   * meaningful cosine-distance cutoff.
+   * the transition window but ignored: relevance-ranked results have no
+   * similarity-distance cutoff.
    */
   threshold?: number;
 }
@@ -351,12 +356,13 @@ export interface SearchSearchAssetsParams {
   image?: Uploadable | null;
 
   /**
-   * Body param: Library to search assets from (optional)
+   * Body param: Library to search. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
   /**
-   * Body param: Number of results per page (1-200)
+   * Body param: Maximum number of results per page (1–200). Defaults to 20.
    */
   limit?: number;
 
@@ -379,7 +385,12 @@ export interface SearchSearchAssetsParams {
   local_datetime_before?: string | null;
 
   /**
-   * Body param: Page number
+   * Body param: 1-indexed page number; increment it to fetch subsequent pages.
+   * `search_assets` pages by number rather than by cursor. A search with a content
+   * criterion ranks a fixed top-200 candidate population by relevance, so pages
+   * beyond that population are empty. A structured-filter-only search (album,
+   * people, date range — no content criterion) returns the full matching set
+   * newest-first, paginated without that cap.
    */
   page?: number;
 
@@ -407,8 +418,8 @@ export interface SearchSearchAssetsParams {
 
   /**
    * @deprecated Body param: Deprecated compatibility parameter. Accepted and
-   * validated but ignored because rank-fused results have no meaningful
-   * cosine-distance cutoff.
+   * validated during the transition window but ignored: relevance-ranked results
+   * have no similarity-distance cutoff.
    */
   threshold?: number;
 }
