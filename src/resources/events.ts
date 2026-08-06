@@ -138,8 +138,8 @@ export interface EventGetParams {
   entity_types?: Array<string> | null;
 
   /**
-   * Library to stream events from. Optional if the user has a single library;
-   * required when they have multiple.
+   * Library to stream events from. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
