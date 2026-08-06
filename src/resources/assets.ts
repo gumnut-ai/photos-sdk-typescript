@@ -409,8 +409,7 @@ export interface AssetLiteResponse {
   device_id: string;
 
   /**
-   * Base64-encoded SHA-1 hash for Immich client compatibility. May be null for older
-   * assets.
+   * Base64-encoded SHA-1 hash of the asset contents. May be null for older assets.
    */
   checksum_sha1?: string | null;
 }
@@ -603,8 +602,8 @@ export interface FileDataResponse {
   file_size_bytes: number;
 
   /**
-   * Base64-encoded SHA-1 hash for Immich client compatibility. `null` for older
-   * assets that have no SHA-1.
+   * Base64-encoded SHA-1 hash of the asset contents. `null` for older assets that
+   * have no SHA-1.
    */
   checksum_sha1?: string | null;
 }
@@ -1012,8 +1011,8 @@ export interface AssetListParams extends CursorPageParams {
   include?: Array<string> | null;
 
   /**
-   * Library to list assets from. Optional if the user has a single library; required
-   * when they have multiple.
+   * Library to list assets from. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
@@ -1154,13 +1153,13 @@ export namespace AssetBulkUpdateAssetsParams {
 
 export interface AssetCheckExistenceParams {
   /**
-   * Query param: Library to check assets in (optional)
+   * Query param: Library to check assets in. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
   /**
-   * Body param: List of base64-encoded SHA-1 checksums to check for existence (for
-   * Immich compatibility)
+   * Body param: List of base64-encoded SHA-1 checksums to check for existence
    */
   checksum_sha1s?: Array<string> | null;
 
@@ -1207,8 +1206,8 @@ export interface AssetClusterByGeoParams {
   album_id?: string | null;
 
   /**
-   * Library to cluster assets from. Optional if the user has a single library;
-   * required when they have multiple.
+   * Library to cluster assets from. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
@@ -1263,12 +1262,13 @@ export interface AssetCountsParams {
   group_by?: 'month';
 
   /**
-   * Library to count assets in (optional)
+   * Library to count assets in. Optional if the user has a single live (non-trashed)
+   * library; required when they have multiple.
    */
   library_id?: string | null;
 
   /**
-   * Maximum number of time buckets to return (1-200)
+   * Maximum number of time buckets to return per page (1–200). Defaults to 20.
    */
   limit?: number;
 
@@ -1291,7 +1291,7 @@ export interface AssetCountsParams {
   local_datetime_before?: string | null;
 
   /**
-   * Filter by assets associated with a specific person ID
+   * Count only assets containing a face belonging to this person.
    */
   person_id?: string | null;
 
@@ -1311,7 +1311,7 @@ export interface AssetDeleteListParams {
 
   /**
    * Query param: Library that owns the assets. Optional if the user has a single
-   * library; required when they have multiple.
+   * live (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 }
@@ -1319,7 +1319,7 @@ export interface AssetDeleteListParams {
 export interface AssetEmptyTrashParams {
   /**
    * Library whose trashed assets to permanently delete. Optional if the user has a
-   * single library; required when they have multiple.
+   * single live (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 }
@@ -1333,7 +1333,7 @@ export interface AssetRestoreParams {
 
   /**
    * Query param: Library that owns the assets. Optional if the user has a single
-   * library; required when they have multiple.
+   * live (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 }
@@ -1347,7 +1347,7 @@ export interface AssetTrashParams {
 
   /**
    * Query param: Library that owns the assets. Optional if the user has a single
-   * library; required when they have multiple.
+   * live (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 }

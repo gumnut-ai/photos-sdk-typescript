@@ -231,8 +231,8 @@ export interface FaceCreateParams {
   bounding_box: FaceCreateParams.BoundingBox;
 
   /**
-   * Library to create the face in. Optional if the user has a single library;
-   * required when they have multiple.
+   * Library to create the face in. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
@@ -280,16 +280,16 @@ export interface FaceRetrieveParams {
   include?: Array<string> | null;
 
   /**
-   * Library the face belongs to. Optional if the user has a single library; required
-   * when they have multiple.
+   * Library the face belongs to. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 }
 
 export interface FaceUpdateParams {
   /**
-   * Query param: Library the face belongs to. Optional if the user has a single
-   * library; required when they have multiple.
+   * Query param: Library the face belongs to. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 
@@ -324,8 +324,8 @@ export interface FaceListParams extends CursorPageParams {
   include?: Array<string> | null;
 
   /**
-   * Library to list from. Optional if the user has a single library; required when
-   * they have multiple.
+   * Library to list from. Optional if the user has a single live (non-trashed)
+   * library; required when they have multiple.
    */
   library_id?: string | null;
 
@@ -338,8 +338,8 @@ export interface FaceListParams extends CursorPageParams {
 
 export interface FaceDeleteParams {
   /**
-   * Library the face belongs to. Optional if the user has a single library; required
-   * when they have multiple.
+   * Library the face belongs to. Optional if the user has a single live
+   * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
 }
