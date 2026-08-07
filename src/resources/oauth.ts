@@ -39,6 +39,9 @@ export class OAuth extends APIResource {
  * Response containing OAuth authorization URL
  */
 export interface AuthURLResponse {
+  /**
+   * OAuth provider authorization URL to redirect the user to for consent
+   */
   url: string;
 }
 
@@ -46,31 +49,59 @@ export interface AuthURLResponse {
  * Response containing JWT and user info
  */
 export interface ExchangeResponse {
+  /**
+   * JWT to send as a Bearer token in the `Authorization` header on subsequent
+   * requests
+   */
   access_token: string;
 
   /**
-   * User information in token exchange response
+   * The authenticated user
    */
   user: ExchangeResponse.User;
 }
 
 export namespace ExchangeResponse {
   /**
-   * User information in token exchange response
+   * The authenticated user
    */
   export interface User {
+    /**
+     * Unique Gumnut user identifier with `intuser_` prefix
+     */
     id: string;
 
+    /**
+     * Identifier of the linked identity-provider account
+     */
     clerk_user_id: string | null;
 
+    /**
+     * Email address reported by the OAuth provider; null if not shared
+     */
     email: string | null;
 
+    /**
+     * Given name reported by the OAuth provider; null if not shared
+     */
     first_name: string | null;
 
+    /**
+     * Whether the account is active. A token exchange can still succeed for an
+     * inactive account, but subsequent authenticated API requests are rejected with
+     * 401
+     */
     is_active: boolean;
 
+    /**
+     * Whether the account is marked verified. An internal account flag, not proof of
+     * email verification — it can be true even when `email` is null
+     */
     is_verified: boolean;
 
+    /**
+     * Family name reported by the OAuth provider; null if not shared
+     */
     last_name: string | null;
   }
 }
@@ -79,6 +110,9 @@ export namespace ExchangeResponse {
  * Response containing OAuth provider logout endpoint
  */
 export interface LogoutEndpointResponse {
+  /**
+   * OAuth provider logout URL to redirect the user to after ending the local session
+   */
   logout_endpoint: string;
 }
 

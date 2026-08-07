@@ -79,96 +79,6 @@ export interface SearchResponse {
    * capture-date ordering.
    */
   data: Array<SearchResultItem>;
-
-  /**
-   * Opt-in per-stage ranks and scores for evaluation attribution.
-   */
-  debug?: SearchResponse.Debug | null;
-}
-
-export namespace SearchResponse {
-  /**
-   * Opt-in per-stage ranks and scores for evaluation attribution.
-   */
-  export interface Debug {
-    dense_image: Array<Debug.DenseImage>;
-
-    dense_text: Array<Debug.DenseText>;
-
-    fused: Array<Debug.Fused>;
-
-    reranked: Array<Debug.Reranked>;
-
-    reranker: Debug.Reranker;
-
-    selected_ordering: string;
-
-    sparse: Array<Debug.Sparse>;
-  }
-
-  export namespace Debug {
-    export interface DenseImage {
-      asset_id: string;
-
-      distance: number;
-
-      rank: number;
-    }
-
-    export interface DenseText {
-      asset_id: string;
-
-      distance: number;
-
-      rank: number;
-    }
-
-    export interface Fused {
-      asset_id: string;
-
-      rank: number;
-
-      score: number;
-
-      dense_image_rank?: number | null;
-
-      dense_text_rank?: number | null;
-
-      sparse_rank?: number | null;
-    }
-
-    export interface Reranked {
-      asset_id: string;
-
-      fused_rank: number;
-
-      rank: number;
-
-      score: number | null;
-    }
-
-    export interface Reranker {
-      attempted: boolean;
-
-      duration_ms: number;
-
-      fallback_reason: string | null;
-
-      model_revision: string;
-
-      outcome: string;
-    }
-
-    export interface Sparse {
-      asset_id: string;
-
-      matched_categories: Array<string>;
-
-      rank: number;
-
-      score: number;
-    }
-  }
 }
 
 export interface SearchResultItem {
@@ -294,13 +204,6 @@ export interface SearchSearchParams {
    * 50,000).
    */
   radius?: number | null;
-
-  /**
-   * @deprecated Deprecated compatibility parameter. Accepted and validated during
-   * the transition window but ignored: relevance-ranked results have no
-   * similarity-distance cutoff.
-   */
-  threshold?: number;
 }
 
 export interface SearchSearchAssetsParams {
@@ -415,13 +318,6 @@ export interface SearchSearchAssetsParams {
    * at most 50,000).
    */
   radius?: number | null;
-
-  /**
-   * @deprecated Body param: Deprecated compatibility parameter. Accepted and
-   * validated during the transition window but ignored: relevance-ranked results
-   * have no similarity-distance cutoff.
-   */
-  threshold?: number;
 }
 
 export declare namespace Search {

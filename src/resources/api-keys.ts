@@ -31,7 +31,8 @@ export class APIKeys extends APIResource {
   }
 
   /**
-   * Deletes a specific API key
+   * Revokes an API key so it can no longer authenticate. The key remains visible as
+   * inactive.
    */
   delete(keyID: string, options?: RequestOptions): APIPromise<APIKeyDeleteResponse> {
     return this._client.delete(path`/api/api-keys/${keyID}`, options);
@@ -68,11 +69,11 @@ export interface APIKeyResponse {
   last_used_at?: string | null;
 
   /**
-   * Which of the owner's libraries a grant covers.
+   * Which of the owner's libraries a credential covers.
    *
-   * `all_libraries` means all current and future live libraries owned by the grant's
-   * user. `selected_libraries` means only the libraries listed in
-   * `access_grant_libraries`, with no automatic expansion.
+   * `all_libraries` means all current and future live libraries owned by the user.
+   * `selected_libraries` means only explicitly selected libraries, with no automatic
+   * expansion.
    */
   library_scope_mode?: 'all_libraries' | 'selected_libraries' | null;
 
@@ -126,11 +127,11 @@ export interface APIKeyCreateResponse {
   last_used_at?: string | null;
 
   /**
-   * Which of the owner's libraries a grant covers.
+   * Which of the owner's libraries a credential covers.
    *
-   * `all_libraries` means all current and future live libraries owned by the grant's
-   * user. `selected_libraries` means only the libraries listed in
-   * `access_grant_libraries`, with no automatic expansion.
+   * `all_libraries` means all current and future live libraries owned by the user.
+   * `selected_libraries` means only explicitly selected libraries, with no automatic
+   * expansion.
    */
   library_scope_mode?: 'all_libraries' | 'selected_libraries' | null;
 
@@ -172,6 +173,9 @@ export interface APIKeyCreateParams {
    */
   library_scope_mode: 'all_libraries' | 'selected_libraries';
 
+  /**
+   * Descriptive name identifying this API key
+   */
   name: string;
 
   /**
@@ -182,6 +186,9 @@ export interface APIKeyCreateParams {
 }
 
 export interface APIKeyUpdateParams {
+  /**
+   * New name for the API key
+   */
   name: string;
 }
 
