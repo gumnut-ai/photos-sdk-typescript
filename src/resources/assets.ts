@@ -82,8 +82,7 @@ export class Assets extends APIResource {
    * viewport (how many photos fall in each area) rather than list them, use
    * `get_geo_clusters`.
    *
-   * Album and person filters compose using AND; do not supply both `person_id` and
-   * `person_ids`.
+   * Album and person filters compose using AND.
    *
    * **Use `search_assets` instead** when the request involves natural-language image
    * content ('photos of sunsets', 'pictures with my dog'), a place _name_ ('photos
@@ -191,8 +190,7 @@ export class Assets extends APIResource {
    * is too dense at the given `cell_size` returns 422 (coarsen `cell_size` or zoom
    * in). To list the individual assets behind a cell, call `list_assets` with a
    * tighter bounding box over the same filters. Album and person filters compose
-   * using AND. `person_id` is a deprecated alias for one `person_ids` value; do not
-   * supply both person parameters.
+   * using AND.
    *
    * @example
    * ```ts
@@ -1042,11 +1040,6 @@ export interface AssetListParams extends CursorPageParams {
   order?: 'asc' | 'desc';
 
   /**
-   * @deprecated Deprecated compatibility alias for a single `person_ids` value.
-   */
-  person_id?: string | null;
-
-  /**
    * Return only assets containing faces belonging to ALL of these people
    * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
    * query params or comma-delimited values. Person IDs are carried by the entries of
@@ -1228,11 +1221,6 @@ export interface AssetClusterByGeoParams {
    * `local_datetime_after`.
    */
   local_datetime_before?: string | null;
-
-  /**
-   * @deprecated Deprecated compatibility alias for a single `person_ids` value.
-   */
-  person_id?: string | null;
 
   /**
    * Cluster only assets containing faces belonging to ALL of these people

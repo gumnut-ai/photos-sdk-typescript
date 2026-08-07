@@ -12,10 +12,8 @@ import { path } from '../internal/utils/path';
  */
 export class People extends APIResource {
   /**
-   * Creates a new person record (a named identity for grouping faces). Most people
-   * are auto-created by face clustering, so this tool is typically used only when
-   * the user explicitly wants to introduce a new identity before any faces are
-   * attached.
+   * Creates a person record for grouping faces. The record may initially have no
+   * name and no faces.
    *
    * To assign an existing face to an existing person, use `update_face` with the
    * target `person_id`.
@@ -51,14 +49,12 @@ export class People extends APIResource {
   }
 
   /**
-   * Returns a paginated list of people (named identities that group one or more
-   * faces), ordered according to `sort` (newest first by default), optionally
-   * filtered by asset, album, name, or ID. Use this to enumerate who appears in the
-   * library, to resolve a user-typed name to a `person_id`, or to find who appears
-   * in a specific asset or album.
+   * Returns a paginated list of person records, which may be named or unnamed and
+   * may have zero or more faces, ordered according to `sort` (newest first by
+   * default), optionally filtered by asset, album, name, or ID.
    *
-   * By default only **named** people are returned; pass `name_filter=all` or
-   * `name_filter=unnamed` to include clusters that haven't been named yet.
+   * By default only people with a non-null name are returned; pass `name_filter=all`
+   * for every person or `name_filter=unnamed` for people whose name is null.
    *
    * To list the underlying faces for a specific person, use `list_faces` with
    * `person_id`.
@@ -96,8 +92,8 @@ export class People extends APIResource {
    * embedding is recalculated.
    *
    * In the degenerate case where the primary and all sources are unnamed and have
-   * zero faces, the primary is auto-deleted by the post-merge centroid recompute
-   * (GUM-681) and the response is `204 No Content`.
+   * zero faces, the primary is auto-deleted by the post-merge centroid recompute and
+   * the response is `204 No Content`.
    */
   merge(personID: string, body: PersonMergeParams, options?: RequestOptions): APIPromise<PersonResponse> {
     return this._client.post(path`/api/people/${personID}/merge`, { body, ...options });
@@ -300,7 +296,7 @@ export interface PersonListParams extends CursorPageParams {
    * Look up specific people by ID (max 200; each ID has the `person_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
    * `ids=person_1,person_2`). When set, `name_filter` defaults to `all` so unnamed
-   * clusters are included in the lookup.
+   * people are included in the lookup.
    */
   ids?: Array<string> | null;
 
@@ -326,9 +322,8 @@ export interface PersonListParams extends CursorPageParams {
   name?: string | null;
 
   /**
-   * Filter by name status: `named` returns only people with a name; `unnamed`
-   * returns only nameless face clusters awaiting a name; `all` returns both.
-   * Defaults to `named` (or `all` when `ids` is provided).
+   * Filter by name nullness. Defaults to `named` (non-null names), or `all` when
+   * `ids` is provided.
    */
   name_filter?: 'named' | 'unnamed' | 'all' | null;
 

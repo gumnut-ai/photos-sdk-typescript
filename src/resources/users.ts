@@ -44,7 +44,8 @@ export interface UserResponse {
   is_superuser: boolean;
 
   /**
-   * Whether this user's email is verified
+   * Whether the account is marked verified. An internal account flag, not proof of
+   * email verification — it can be true even when `email` is null
    */
   is_verified: boolean;
 
