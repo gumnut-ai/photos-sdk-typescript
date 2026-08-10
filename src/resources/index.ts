@@ -53,7 +53,7 @@ export {
   type AssetTrashParams,
   type AssetUpdateAssetParams,
   type AssetResponsesCursorPage,
-} from './assets';
+} from './assets/assets';
 export { Events, type EventsResponse, type EventGetParams } from './events';
 export {
   Faces,
