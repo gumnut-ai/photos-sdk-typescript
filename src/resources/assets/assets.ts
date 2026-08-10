@@ -148,9 +148,8 @@ export class Assets extends APIResource {
    * on different assets in the same request. Atomic: any per-item validation failure
    * or unknown / cross-user id rejects the whole batch and writes nothing.
    *
-   * Up to 200 items per request; over-cap requests return 422. For a single-asset
-   * edit, prefer `update_asset` — semantically identical but slightly more concise
-   * at the call site.
+   * For a single-asset edit, prefer `update_asset` — semantically identical but
+   * slightly more concise at the call site.
    *
    * @example
    * ```ts
@@ -249,8 +248,6 @@ export class Assets extends APIResource {
    * `trash_assets` for the user's standard delete action so accidents can be
    * recovered.
    *
-   * Up to 200 ids per request; over-cap requests return 422.
-   *
    * @example
    * ```ts
    * const response = await client.assets.deleteList({
@@ -264,9 +261,8 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Permanently deletes every trashed asset in the caller's library in one shot —
-   * storage and CDN are cleaned up via the same outbox path as the scheduled purge
-   * task. **Irreversible**. Deliberately not exposed as an MCP tool.
+   * Permanently deletes every trashed asset and its associated stored data from the
+   * caller's library. **Irreversible**.
    *
    * @example
    * ```ts
@@ -306,9 +302,8 @@ export class Assets extends APIResource {
    * list/search results and are purged after the configured retention window.
    * **Reversible** via `restore_assets` until purge.
    *
-   * Use this for the user's standard 'delete' action — there is no MCP-exposed
-   * permanent-delete tool, so trash is the only path. To trash an entire library at
-   * once instead of enumerating asset IDs, use `trash_library`.
+   * To trash an entire library at once instead of enumerating asset IDs, use
+   * `trash_library`.
    *
    * @example
    * ```ts
@@ -326,12 +321,12 @@ export class Assets extends APIResource {
    * Edits the user-editable metadata for a single asset — description, GPS
    * coordinates, and original capture datetime. Only fields included in the request
    * body are changed; others are left untouched. Passing `null` for a field removes
-   * a previously-set value; the response then falls back to the value embedded in
-   * the file when present. `latitude` and `longitude` must be set together (both
+   * a previously-set value; the effective response may still contain a value from
+   * another metadata source. `latitude` and `longitude` must be set together (both
    * written or both cleared).
    *
-   * Setting or clearing GPS coordinates re-enqueues reverse geocoding so location
-   * names refresh against the new effective coordinates.
+   * Setting or clearing GPS coordinates schedules an asynchronous refresh of derived
+   * location names.
    *
    * For editing multiple assets in one round trip, prefer `bulk_update_assets`.
    *
@@ -797,23 +792,12 @@ export interface MetadataResponse {
 }
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface AssetDeleteResponse {}
 
 /**
- * Acknowledgment body for `POST /api/assets/bulk-update`.
- *
- * Empty by design; exists so MCP tools generated from this endpoint have a real
- * `outputSchema`. Distinct from `DeletionResponse` because that name is
- * purpose-scoped to destructive operations — reusing it on a non-destructive
- * endpoint would misname the wire shape in OpenAPI and generated SDKs.
+ * Empty acknowledgment returned by `bulk_update_assets`.
  */
 export interface AssetBulkUpdateAssetsResponse {}
 
@@ -854,46 +838,22 @@ export namespace AssetClusterByGeoResponse {
 }
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface AssetDeleteListResponse {}
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface AssetEmptyTrashResponse {}
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface AssetRestoreResponse {}
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface AssetTrashResponse {}
 
@@ -1089,13 +1049,7 @@ export interface AssetBulkUpdateAssetsParams {
 
 export namespace AssetBulkUpdateAssetsParams {
   /**
-   * One item in a bulk-update request.
-   *
-   * Names the target asset and carries the per-asset change to apply. The `change`
-   * object is exactly the body shape that the single-asset
-   * `PATCH /api/assets/{asset_id}` endpoint accepts; the wrapper exists so
-   * operation-level metadata (`id`, future `if_match` / idempotency-key fields)
-   * stays in a namespace disjoint from the entity-field changes.
+   * One asset update in a bulk request.
    */
   export interface Update {
     /**
@@ -1119,10 +1073,10 @@ export namespace AssetBulkUpdateAssetsParams {
      */
     export interface Change {
       /**
-       * User-set description for the asset. Pass `null` to remove a previously-set value
-       * (the response then falls back to the description embedded in the file, if any).
-       * Omit to leave unchanged. Distinct from the AI-generated `description` field on
-       * the response — this writes to `metadata.description`.
+       * User-set description for the asset. Pass `null` to remove a previously-set
+       * value; the effective response may still contain a description from another
+       * metadata source. Omit to leave unchanged. Distinct from the AI-generated
+       * `description` field on the response — this writes to `metadata.description`.
        */
       description?: string | null;
 
@@ -1141,11 +1095,10 @@ export namespace AssetBulkUpdateAssetsParams {
       longitude?: number | null;
 
       /**
-       * When the asset was originally captured. Aware values store the offset from
-       * `utcoffset()` alongside; naive values store NULL offset. Pass `null` to remove a
-       * previously-set value — the response then falls back to the datetime embedded in
-       * the file when present, otherwise to the file's upload timestamp. Omit to leave
-       * unchanged.
+       * When the asset was originally captured. Timezone-aware values preserve their UTC
+       * offset; timezone-naive values have no offset. Pass `null` to remove a
+       * previously-set value; the effective response may still contain a datetime from
+       * another metadata source. Omit to leave unchanged.
        */
       original_datetime?: string | null;
 
@@ -1352,10 +1305,10 @@ export interface AssetTrashParams {
 
 export interface AssetUpdateAssetParams {
   /**
-   * User-set description for the asset. Pass `null` to remove a previously-set value
-   * (the response then falls back to the description embedded in the file, if any).
-   * Omit to leave unchanged. Distinct from the AI-generated `description` field on
-   * the response — this writes to `metadata.description`.
+   * User-set description for the asset. Pass `null` to remove a previously-set
+   * value; the effective response may still contain a description from another
+   * metadata source. Omit to leave unchanged. Distinct from the AI-generated
+   * `description` field on the response — this writes to `metadata.description`.
    */
   description?: string | null;
 
@@ -1374,11 +1327,10 @@ export interface AssetUpdateAssetParams {
   longitude?: number | null;
 
   /**
-   * When the asset was originally captured. Aware values store the offset from
-   * `utcoffset()` alongside; naive values store NULL offset. Pass `null` to remove a
-   * previously-set value — the response then falls back to the datetime embedded in
-   * the file when present, otherwise to the file's upload timestamp. Omit to leave
-   * unchanged.
+   * When the asset was originally captured. Timezone-aware values preserve their UTC
+   * offset; timezone-naive values have no offset. Pass `null` to remove a
+   * previously-set value; the effective response may still contain a datetime from
+   * another metadata source. Omit to leave unchanged.
    */
   original_datetime?: string | null;
 

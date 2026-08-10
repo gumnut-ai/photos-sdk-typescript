@@ -90,8 +90,6 @@ export class Stacks extends APIResource {
    * returning its remaining frames to loose display too. Trashed frames still count
    * as members for that threshold (unlike `asset_count`, which excludes them), so a
    * stack can survive with `asset_count` below 2.
-   *
-   * Up to 200 ids per request; over-cap requests return 422.
    */
   removeAssets(
     stackID: string,
@@ -133,13 +131,7 @@ export class Stacks extends APIResource {
 export type StackListStacksResponsesCursorPage = CursorPage<StackListStacksResponse>;
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface StackDeleteResponse {}
 
@@ -282,13 +274,7 @@ export interface StackListStacksResponse {
 }
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface StackRemoveAssetsResponse {}
 
