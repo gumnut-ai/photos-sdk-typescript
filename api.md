@@ -24,35 +24,47 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/assets.ts">AssetCountResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetExistenceResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetLiteResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetResponse</a></code>
-- <code><a href="./src/resources/assets.ts">FileDataResponse</a></code>
-- <code><a href="./src/resources/assets.ts">MetadataResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetDeleteResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetBulkUpdateAssetsResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetClusterByGeoResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetDeleteListResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetEmptyTrashResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetRestoreResponse</a></code>
-- <code><a href="./src/resources/assets.ts">AssetTrashResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetCountResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetExistenceResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetLiteResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">FileDataResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">MetadataResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetDeleteResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetBulkUpdateAssetsResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetClusterByGeoResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetDeleteListResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetEmptyTrashResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetRestoreResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetTrashResponse</a></code>
 
 Methods:
 
-- <code title="post /api/assets">client.assets.<a href="./src/resources/assets.ts">create</a>({ ...params }) -> AssetResponse</code>
-- <code title="get /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">retrieve</a>(assetID, { ...params }) -> AssetResponse</code>
-- <code title="get /api/assets">client.assets.<a href="./src/resources/assets.ts">list</a>({ ...params }) -> AssetResponsesCursorPage</code>
-- <code title="delete /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">delete</a>(assetID) -> AssetDeleteResponse</code>
-- <code title="post /api/assets/bulk-update">client.assets.<a href="./src/resources/assets.ts">bulkUpdateAssets</a>({ ...params }) -> AssetBulkUpdateAssetsResponse</code>
-- <code title="post /api/assets/exist">client.assets.<a href="./src/resources/assets.ts">checkExistence</a>({ ...params }) -> AssetExistenceResponse</code>
-- <code title="get /api/assets/geo-clusters">client.assets.<a href="./src/resources/assets.ts">clusterByGeo</a>({ ...params }) -> AssetClusterByGeoResponse</code>
-- <code title="get /api/assets/counts">client.assets.<a href="./src/resources/assets.ts">counts</a>({ ...params }) -> AssetCountResponse</code>
-- <code title="delete /api/assets">client.assets.<a href="./src/resources/assets.ts">deleteList</a>({ ...params }) -> AssetDeleteListResponse</code>
-- <code title="post /api/assets/empty-trash">client.assets.<a href="./src/resources/assets.ts">emptyTrash</a>({ ...params }) -> AssetEmptyTrashResponse</code>
-- <code title="post /api/assets/restore">client.assets.<a href="./src/resources/assets.ts">restore</a>({ ...params }) -> AssetRestoreResponse</code>
-- <code title="post /api/assets/trash">client.assets.<a href="./src/resources/assets.ts">trash</a>({ ...params }) -> AssetTrashResponse</code>
-- <code title="patch /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets.ts">updateAsset</a>(assetID, { ...params }) -> AssetResponse</code>
+- <code title="post /api/assets">client.assets.<a href="./src/resources/assets/assets.ts">create</a>({ ...params }) -> AssetResponse</code>
+- <code title="get /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets/assets.ts">retrieve</a>(assetID, { ...params }) -> AssetResponse</code>
+- <code title="get /api/assets">client.assets.<a href="./src/resources/assets/assets.ts">list</a>({ ...params }) -> AssetResponsesCursorPage</code>
+- <code title="delete /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets/assets.ts">delete</a>(assetID) -> AssetDeleteResponse</code>
+- <code title="post /api/assets/bulk-update">client.assets.<a href="./src/resources/assets/assets.ts">bulkUpdateAssets</a>({ ...params }) -> AssetBulkUpdateAssetsResponse</code>
+- <code title="post /api/assets/exist">client.assets.<a href="./src/resources/assets/assets.ts">checkExistence</a>({ ...params }) -> AssetExistenceResponse</code>
+- <code title="get /api/assets/geo-clusters">client.assets.<a href="./src/resources/assets/assets.ts">clusterByGeo</a>({ ...params }) -> AssetClusterByGeoResponse</code>
+- <code title="get /api/assets/counts">client.assets.<a href="./src/resources/assets/assets.ts">counts</a>({ ...params }) -> AssetCountResponse</code>
+- <code title="delete /api/assets">client.assets.<a href="./src/resources/assets/assets.ts">deleteList</a>({ ...params }) -> AssetDeleteListResponse</code>
+- <code title="post /api/assets/empty-trash">client.assets.<a href="./src/resources/assets/assets.ts">emptyTrash</a>({ ...params }) -> AssetEmptyTrashResponse</code>
+- <code title="post /api/assets/restore">client.assets.<a href="./src/resources/assets/assets.ts">restore</a>({ ...params }) -> AssetRestoreResponse</code>
+- <code title="post /api/assets/trash">client.assets.<a href="./src/resources/assets/assets.ts">trash</a>({ ...params }) -> AssetTrashResponse</code>
+- <code title="patch /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets/assets.ts">updateAsset</a>(assetID, { ...params }) -> AssetResponse</code>
+
+## Versions
+
+Types:
+
+- <code><a href="./src/resources/assets/versions.ts">VersionListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/assets/{asset_id}/versions">client.assets.versions.<a href="./src/resources/assets/versions.ts">list</a>(assetID, { ...params }) -> VersionListResponse</code>
+- <code title="delete /api/assets/{asset_id}/versions/{version_id}">client.assets.versions.<a href="./src/resources/assets/versions.ts">delete</a>(versionID, { ...params }) -> AssetResponse</code>
+- <code title="post /api/assets/{asset_id}/versions/{version_id}/revert">client.assets.versions.<a href="./src/resources/assets/versions.ts">revert</a>(versionID, { ...params }) -> AssetResponse</code>
 
 # Albums
 
