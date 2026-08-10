@@ -16,8 +16,6 @@ export class AssetsAssociations extends APIResource {
    * `duplicate_assets`; missing or different-library IDs are skipped and returned as
    * `not_found_assets`. Idempotent: calling with the same IDs twice leaves the album
    * in the same state.
-   *
-   * Up to 200 ids per request; over-cap requests return 422.
    */
   add(
     albumID: string,
@@ -33,8 +31,6 @@ export class AssetsAssociations extends APIResource {
    * soft-delete the asset entirely. To empty an album completely, call
    * `list_album_assets` to get the links and then remove them, or delete the album
    * itself with `delete_album`.
-   *
-   * Up to 200 ids per request; over-cap requests return 422.
    */
   remove(
     albumID: string,
@@ -73,13 +69,7 @@ export interface AssetsAssociationAddResponse {
 }
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface AssetsAssociationRemoveResponse {}
 

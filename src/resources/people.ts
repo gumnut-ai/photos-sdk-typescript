@@ -105,9 +105,7 @@ export type PersonResponsesCursorPage = CursorPage<PersonResponse>;
 /**
  * Cohesion metrics for a Person's face cluster — surfaced via
  * `include=cluster_metrics` on the people endpoints. These describe how tight the
- * cluster is in embedding space (lower = more cohesive) and drive both the
- * production face-assignment cohesion gate and the operator-facing face cleanup
- * dashboard.
+ * cluster is in embedding space (lower = more cohesive).
  */
 export interface ClusterMetricsResponse {
   /**
@@ -125,8 +123,7 @@ export interface ClusterMetricsResponse {
 
   /**
    * 90th-percentile pairwise cosine distance between faces in this person's cluster.
-   * Lower = more cohesive cluster; loose clusters (higher pairwise_p90) are gated
-   * out of the face-assignment path to prevent further drift.
+   * Lower = more cohesive cluster.
    */
   pairwise_p90: number;
 }
@@ -179,9 +176,7 @@ export interface PersonResponse {
   /**
    * Cohesion metrics for a Person's face cluster — surfaced via
    * `include=cluster_metrics` on the people endpoints. These describe how tight the
-   * cluster is in embedding space (lower = more cohesive) and drive both the
-   * production face-assignment cohesion gate and the operator-facing face cleanup
-   * dashboard.
+   * cluster is in embedding space (lower = more cohesive).
    */
   cluster_metrics?: ClusterMetricsResponse | null;
 
@@ -197,13 +192,7 @@ export interface PersonResponse {
 }
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface PersonDeleteResponse {}
 

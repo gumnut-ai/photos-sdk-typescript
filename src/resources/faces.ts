@@ -91,16 +91,13 @@ export type FaceResponsesCursorPage = CursorPage<FaceResponse>;
 /**
  * Per-face cluster-assignment diagnostics: how well the face fits its
  * currently-assigned Person, and which other Persons are nearby in embedding
- * space. Surfaced via `include=cluster_assignment` on the faces endpoints — used
- * by the operator-facing face cleanup dashboard to triage mis-clustered faces.
+ * space. Surfaced via `include=cluster_assignment` on the faces endpoints.
  */
 export interface ClusterAssignmentResponse {
   /**
-   * Persons in the same library that pass the same gate shape as production face
-   * assignment, surfaced with deliberately relaxed thresholds so the list is a
-   * superset of what the automated path would admit. Sorted ascending by distance.
+   * Eligible nearby Persons in the same library, sorted ascending by distance.
    * Excludes the face's currently-assigned Person (its distance is in
-   * `distance_to_person`). Empty when no eligible Persons pass the gate.
+   * `distance_to_person`). Empty when there are no eligible nearby Persons.
    */
   candidates?: Array<ClusterAssignmentResponse.Candidate>;
 
@@ -114,9 +111,7 @@ export interface ClusterAssignmentResponse {
 
 export namespace ClusterAssignmentResponse {
   /**
-   * A Person whose centroid is close enough to a given face's embedding that it
-   * would be considered for assignment — surfaced under
-   * `ClusterAssignmentResponse.candidates`.
+   * A nearby Person returned under `ClusterAssignmentResponse.candidates`.
    */
   export interface Candidate {
     /**
@@ -131,9 +126,7 @@ export namespace ClusterAssignmentResponse {
     person_id: string;
 
     /**
-     * Display name of the candidate Person, or null for unnamed clusters. Candidates
-     * surface the same Persons production assignment considers, which includes unnamed
-     * clusters.
+     * Display name of the candidate Person, or null for an unnamed Person.
      */
     name?: string | null;
   }
@@ -182,8 +175,7 @@ export interface FaceResponse {
   /**
    * Per-face cluster-assignment diagnostics: how well the face fits its
    * currently-assigned Person, and which other Persons are nearby in embedding
-   * space. Surfaced via `include=cluster_assignment` on the faces endpoints — used
-   * by the operator-facing face cleanup dashboard to triage mis-clustered faces.
+   * space. Surfaced via `include=cluster_assignment` on the faces endpoints.
    */
   cluster_assignment?: ClusterAssignmentResponse | null;
 
@@ -207,13 +199,7 @@ export interface FaceResponse {
 }
 
 /**
- * Acknowledgment body returned by destructive endpoints (delete / trash / restore
- * / permanently delete / remove-from-album / empty-trash).
- *
- * Carries no fields — the HTTP 200 + empty JSON object is itself the success
- * signal. Exists so MCP tools generated from these endpoints have a real
- * `outputSchema` (rather than the null schema FastMCP emits for 204 responses),
- * which ChatGPT's MCP submission tooling requires.
+ * Empty acknowledgment returned when an operation succeeds.
  */
 export interface FaceDeleteResponse {}
 
