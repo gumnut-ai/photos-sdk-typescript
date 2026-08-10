@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as AssetsAPI from './assets';
+import * as AssetsAPI from './assets/assets';
 import { APIPromise } from '../core/api-promise';
 import { type Uploadable } from '../core/uploads';
 import { RequestOptions } from '../internal/request-options';
