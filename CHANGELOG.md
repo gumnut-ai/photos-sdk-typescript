@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.157.0 (2026-08-11)
+
+Full Changelog: [v0.156.0...v0.157.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.156.0...v0.157.0)
+
+### Features
+
+* **api:** add task response model ([c98c737](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c98c73769386391d9f63be28f632ccd55ff8fc79))
+* **api:** task endpoints ([57d41d9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/57d41d942c5741cd54585f67acfb47161bc40271))
+
 ## 0.156.0 (2026-08-10)
 
 Full Changelog: [v0.155.0...v0.156.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.155.0...v0.156.0)
