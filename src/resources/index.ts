@@ -121,5 +121,11 @@ export {
   type StackSetCoverParams,
   type StackListStacksResponsesCursorPage,
 } from './stacks';
-export { Tasks } from './tasks';
+export {
+  Tasks,
+  type TaskListResponse,
+  type TaskGetResponse,
+  type TaskListForAssetResponse,
+  type TaskListParams,
+} from './tasks';
 export { Users, type UserResponse } from './users';
