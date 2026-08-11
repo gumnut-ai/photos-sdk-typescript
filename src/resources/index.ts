@@ -123,8 +123,8 @@ export {
 } from './stacks';
 export {
   Tasks,
+  type TaskResponse,
   type TaskListResponse,
-  type TaskGetResponse,
   type TaskListForAssetResponse,
   type TaskListParams,
 } from './tasks';

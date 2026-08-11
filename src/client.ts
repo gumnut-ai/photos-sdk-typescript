@@ -102,10 +102,10 @@ import {
   Stacks,
 } from './resources/stacks';
 import {
-  TaskGetResponse,
   TaskListForAssetResponse,
   TaskListParams,
   TaskListResponse,
+  TaskResponse,
   Tasks,
 } from './resources/tasks';
 import { UserResponse, Users } from './resources/users';
@@ -1107,8 +1107,8 @@ export declare namespace Gumnut {
 
   export {
     Tasks as Tasks,
+    type TaskResponse as TaskResponse,
     type TaskListResponse as TaskListResponse,
-    type TaskGetResponse as TaskGetResponse,
     type TaskListForAssetResponse as TaskListForAssetResponse,
     type TaskListParams as TaskListParams,
   };
