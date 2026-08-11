@@ -227,6 +227,18 @@ Methods:
 
 # Tasks
 
+Types:
+
+- <code><a href="./src/resources/tasks.ts">TaskListResponse</a></code>
+- <code><a href="./src/resources/tasks.ts">TaskGetResponse</a></code>
+- <code><a href="./src/resources/tasks.ts">TaskListForAssetResponse</a></code>
+
+Methods:
+
+- <code title="get /api/tasks/">client.tasks.<a href="./src/resources/tasks.ts">list</a>({ ...params }) -> TaskListResponse</code>
+- <code title="get /api/tasks/{task_id}">client.tasks.<a href="./src/resources/tasks.ts">get</a>(taskID) -> TaskGetResponse</code>
+- <code title="get /api/tasks/asset/{asset_id}">client.tasks.<a href="./src/resources/tasks.ts">listForAsset</a>(assetID) -> TaskListForAssetResponse</code>
+
 # Users
 
 Types:

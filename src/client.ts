@@ -101,7 +101,13 @@ import {
   StackSetCoverResponse,
   Stacks,
 } from './resources/stacks';
-import { Tasks } from './resources/tasks';
+import {
+  TaskGetResponse,
+  TaskListForAssetResponse,
+  TaskListParams,
+  TaskListResponse,
+  Tasks,
+} from './resources/tasks';
 import { UserResponse, Users } from './resources/users';
 import {
   AlbumCreateParams,
@@ -936,6 +942,9 @@ export class Gumnut {
    * Groups of related shots of the same moment, presented as a single unit with a cover asset.
    */
   stacks: API.Stacks = new API.Stacks(this);
+  /**
+   * Status of background processing tasks.
+   */
   tasks: API.Tasks = new API.Tasks(this);
   /**
    * The authenticated user's profile.
@@ -1096,7 +1105,13 @@ export declare namespace Gumnut {
     type StackSetCoverParams as StackSetCoverParams,
   };
 
-  export { Tasks as Tasks };
+  export {
+    Tasks as Tasks,
+    type TaskListResponse as TaskListResponse,
+    type TaskGetResponse as TaskGetResponse,
+    type TaskListForAssetResponse as TaskListForAssetResponse,
+    type TaskListParams as TaskListParams,
+  };
 
   export { Users as Users, type UserResponse as UserResponse };
 
