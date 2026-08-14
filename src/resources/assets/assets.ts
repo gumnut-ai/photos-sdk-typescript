@@ -219,8 +219,8 @@ export class Assets extends APIResource {
   /**
    * Counts assets bucketed by time period — use this to summarize a library (or a
    * filtered slice) without paging through the full timeline. Returns one row per
-   * bucket, ordered most-recent-first, with optional filtering by album, person,
-   * date range, or trash state.
+   * bucket, ordered most-recent-first, with optional filtering by album, album
+   * membership, person, date range, or trash state.
    *
    * To list the actual assets within a bucket, call `list_assets` with the same
    * filters and a `local_datetime_after` / `local_datetime_before` window matching
@@ -926,6 +926,13 @@ export interface AssetRetrieveParams {
 
 export interface AssetListParams extends CursorPageParams {
   /**
+   * Filter by album membership in general, rather than by membership of one specific
+   * album. This filter is independent of `album_id`, but combining `not_in_album`
+   * with `album_id` is contradictory and returns 422. Defaults to `all`.
+   */
+  album_filter?: 'all' | 'in_album' | 'not_in_album';
+
+  /**
    * Return only assets in this album — the album's `album_` ID, not its name. To
    * browse one album's full asset metadata, prefer this filter over
    * `list_album_assets`, which returns link records.
@@ -1201,6 +1208,13 @@ export interface AssetClusterByGeoParams {
 }
 
 export interface AssetCountsParams {
+  /**
+   * Filter by album membership in general, rather than by membership of one specific
+   * album. This filter is independent of `album_id`, but combining `not_in_album`
+   * with `album_id` is contradictory and returns 422. Defaults to `all`.
+   */
+  album_filter?: 'all' | 'in_album' | 'not_in_album';
+
   /**
    * Return only assets in this album — the album's `album_` ID, not its name.
    */
