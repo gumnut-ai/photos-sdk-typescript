@@ -80,6 +80,7 @@ describe('resource assets', () => {
     await expect(
       client.assets.list(
         {
+          album_filter: 'all',
           album_id: 'album_id',
           bbox: 'bbox',
           center: 'center',
@@ -205,6 +206,7 @@ describe('resource assets', () => {
     await expect(
       client.assets.counts(
         {
+          album_filter: 'all',
           album_id: 'album_id',
           group_by: 'month',
           library_id: 'library_id',
