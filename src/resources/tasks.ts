@@ -123,8 +123,9 @@ export interface TaskResponse {
    * (compute the blurred placeholder shown while a thumbnail loads),
    * `display_proxy_generation` (generate a browser-displayable rendition of an
    * original the image CDN cannot transform, such as an oversized or
-   * over-dimensioned file), or `burst_detection` (detect rapid-fire shots of the
-   * same moment and stack them).
+   * over-dimensioned file), `burst_detection` (detect rapid-fire shots of the same
+   * moment and stack them), or `product_update_subscription` (enroll an explicitly
+   * opted-in new user in product-update email delivery).
    */
   task_type:
     | 'image_quality'
@@ -139,7 +140,8 @@ export interface TaskResponse {
     | 'video_metadata_extract'
     | 'thumbhash'
     | 'display_proxy_generation'
-    | 'burst_detection';
+    | 'burst_detection'
+    | 'product_update_subscription';
 }
 
 export type TaskListResponse = Array<TaskResponse>;
@@ -180,6 +182,7 @@ export interface TaskListParams {
     | 'thumbhash'
     | 'display_proxy_generation'
     | 'burst_detection'
+    | 'product_update_subscription'
     | null;
 }
 
