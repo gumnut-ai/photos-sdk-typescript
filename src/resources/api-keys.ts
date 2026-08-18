@@ -54,12 +54,13 @@ export interface APIKeyResponse {
   created_at: string;
 
   /**
-   * Whether this API key is currently valid and can be used
+   * Whether this API-key row is enabled rather than explicitly disabled; effective
+   * usability also requires a linked, active, unexpired grant
    */
   is_active: boolean;
 
   /**
-   * Action verbs this key's grant allows; null for legacy keys
+   * Action verbs this key's grant allows; null when the key has no usable grant
    */
   actions?: Array<'read' | 'write' | 'delete' | 'delete_permanently'> | null;
 
@@ -112,12 +113,13 @@ export interface APIKeyCreateResponse {
   created_at: string;
 
   /**
-   * Whether this API key is currently valid and can be used
+   * Whether this API-key row is enabled rather than explicitly disabled; effective
+   * usability also requires a linked, active, unexpired grant
    */
   is_active: boolean;
 
   /**
-   * Action verbs this key's grant allows; null for legacy keys
+   * Action verbs this key's grant allows; null when the key has no usable grant
    */
   actions?: Array<'read' | 'write' | 'delete' | 'delete_permanently'> | null;
 
