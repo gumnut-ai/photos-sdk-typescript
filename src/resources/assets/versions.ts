@@ -35,18 +35,13 @@ export class Versions extends APIResource {
 
   /**
    * Irreversibly deletes the current non-original version and restores its
-   * predecessor. The original returns 422; a buried version or stale
-   * expected-current token returns 409.
+   * predecessor. The original returns 422; a buried version returns 409.
    *
    * @example
    * ```ts
    * const assetResponse = await client.assets.versions.delete(
    *   'version_id',
-   *   {
-   *     asset_id: 'asset_id',
-   *     expected_current_version_id:
-   *       'expected_current_version_id',
-   *   },
+   *   { asset_id: 'asset_id' },
    * );
    * ```
    */
@@ -55,27 +50,19 @@ export class Versions extends APIResource {
     params: VersionDeleteParams,
     options?: RequestOptions,
   ): APIPromise<AssetsAPI.AssetResponse> {
-    const { asset_id, expected_current_version_id } = params;
-    return this._client.delete(path`/api/assets/${asset_id}/versions/${versionID}`, {
-      query: { expected_current_version_id },
-      ...options,
-    });
+    const { asset_id } = params;
+    return this._client.delete(path`/api/assets/${asset_id}/versions/${versionID}`, options);
   }
 
   /**
    * Makes a retained version current and irreversibly deletes its descendants.
-   * Reverting to the current version is a no-op; a stale expected-current token
-   * returns 409.
+   * Reverting to the current version is a no-op.
    *
    * @example
    * ```ts
    * const assetResponse = await client.assets.versions.revert(
    *   'version_id',
-   *   {
-   *     asset_id: 'asset_id',
-   *     expected_current_version_id:
-   *       'expected_current_version_id',
-   *   },
+   *   { asset_id: 'asset_id' },
    * );
    * ```
    */
@@ -84,11 +71,8 @@ export class Versions extends APIResource {
     params: VersionRevertParams,
     options?: RequestOptions,
   ): APIPromise<AssetsAPI.AssetResponse> {
-    const { asset_id, expected_current_version_id } = params;
-    return this._client.post(path`/api/assets/${asset_id}/versions/${versionID}/revert`, {
-      query: { expected_current_version_id },
-      ...options,
-    });
+    const { asset_id } = params;
+    return this._client.post(path`/api/assets/${asset_id}/versions/${versionID}/revert`, options);
   }
 }
 
@@ -124,9 +108,9 @@ export namespace VersionListResponse {
     height: number;
 
     /**
-     * What produced this rendering: `original` (the upload), `edit` (a client-baked
-     * edit), or `external:<service>`. The namespace is open — treat an unrecognized
-     * kind as opaque rather than failing.
+     * What produced this rendering: `original` (the upload), `edit` (an edit rendered
+     * by the client), or `external:<service>`. The namespace is open — treat an
+     * unrecognized kind as opaque rather than failing.
      */
     kind: string;
 
@@ -174,28 +158,16 @@ export interface VersionListParams {
 
 export interface VersionDeleteParams {
   /**
-   * Path param: Asset ID (with `asset_` prefix) whose version to delete.
+   * Asset ID (with `asset_` prefix) whose version to delete.
    */
   asset_id: string;
-
-  /**
-   * Query param: Current version ID observed by the client. If stale, returns 409
-   * without changes; refetch the asset before retrying.
-   */
-  expected_current_version_id: string;
 }
 
 export interface VersionRevertParams {
   /**
-   * Path param: Asset ID (with `asset_` prefix) to revert.
+   * Asset ID (with `asset_` prefix) to revert.
    */
   asset_id: string;
-
-  /**
-   * Query param: Current version ID observed by the client. If stale, returns 409
-   * without changes; refetch the asset before retrying.
-   */
-  expected_current_version_id: string;
 }
 
 export declare namespace Versions {

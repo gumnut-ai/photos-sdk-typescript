@@ -34,10 +34,7 @@ describe('resource versions', () => {
 
   // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
-    const responsePromise = client.assets.versions.delete('version_id', {
-      asset_id: 'asset_id',
-      expected_current_version_id: 'expected_current_version_id',
-    });
+    const responsePromise = client.assets.versions.delete('version_id', { asset_id: 'asset_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -49,18 +46,12 @@ describe('resource versions', () => {
 
   // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.assets.versions.delete('version_id', {
-      asset_id: 'asset_id',
-      expected_current_version_id: 'expected_current_version_id',
-    });
+    const response = await client.assets.versions.delete('version_id', { asset_id: 'asset_id' });
   });
 
   // Mock server tests are disabled
   test.skip('revert: only required params', async () => {
-    const responsePromise = client.assets.versions.revert('version_id', {
-      asset_id: 'asset_id',
-      expected_current_version_id: 'expected_current_version_id',
-    });
+    const responsePromise = client.assets.versions.revert('version_id', { asset_id: 'asset_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -72,9 +63,6 @@ describe('resource versions', () => {
 
   // Mock server tests are disabled
   test.skip('revert: required and optional params', async () => {
-    const response = await client.assets.versions.revert('version_id', {
-      asset_id: 'asset_id',
-      expected_current_version_id: 'expected_current_version_id',
-    });
+    const response = await client.assets.versions.revert('version_id', { asset_id: 'asset_id' });
   });
 });
