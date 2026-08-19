@@ -220,7 +220,7 @@ export class Assets extends APIResource {
    * Counts assets bucketed by time period — use this to summarize a library (or a
    * filtered slice) without paging through the full timeline. Returns one row per
    * bucket, ordered most-recent-first, with optional filtering by album, album
-   * membership, person, date range, or trash state.
+   * membership, people, date range, or trash state.
    *
    * To list the actual assets within a bucket, call `list_assets` with the same
    * filters and a `local_datetime_after` / `local_datetime_before` window matching
@@ -1017,7 +1017,7 @@ export interface AssetListParams extends CursorPageParams {
   order?: 'asc' | 'desc';
 
   /**
-   * Return only assets containing faces belonging to ALL of these people
+   * Filter to assets containing faces belonging to ALL of these people
    * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
    * query params or comma-delimited values. Person IDs are carried by the entries of
    * an asset's `people` field (returned with `include=people`).
@@ -1164,6 +1164,13 @@ export interface AssetClusterByGeoParams {
   cell_size: number;
 
   /**
+   * Filter by album membership in general, rather than by membership of one specific
+   * album. This filter is independent of `album_id`, but combining `not_in_album`
+   * with `album_id` is contradictory and returns 422. Defaults to `all`.
+   */
+  album_filter?: 'all' | 'in_album' | 'not_in_album';
+
+  /**
    * Return only assets in this album — the album's `album_` ID, not its name.
    */
   album_id?: string | null;
@@ -1193,7 +1200,7 @@ export interface AssetClusterByGeoParams {
   local_datetime_before?: string | null;
 
   /**
-   * Cluster only assets containing faces belonging to ALL of these people
+   * Filter to assets containing faces belonging to ALL of these people
    * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
    * query params or comma-delimited values. Person IDs are carried by the entries of
    * an asset's `people` field (returned with `include=people`).
@@ -1256,9 +1263,18 @@ export interface AssetCountsParams {
   local_datetime_before?: string | null;
 
   /**
-   * Count only assets containing a face belonging to this person.
+   * @deprecated Deprecated compatibility alias for one `person_ids` value. Do not
+   * combine it with `person_ids`.
    */
   person_id?: string | null;
+
+  /**
+   * Filter to assets containing faces belonging to ALL of these people
+   * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
+   * query params or comma-delimited values. Person IDs are carried by the entries of
+   * an asset's `people` field (returned with `include=people`).
+   */
+  person_ids?: Array<string> | null;
 
   /**
    * Which set of assets to count: `live` (default — excludes trashed assets),
