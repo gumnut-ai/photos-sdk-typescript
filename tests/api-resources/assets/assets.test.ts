@@ -179,6 +179,7 @@ describe('resource assets', () => {
     const response = await client.assets.clusterByGeo({
       bbox: 'bbox',
       cell_size: 0,
+      album_filter: 'all',
       album_id: 'album_id',
       library_id: 'library_id',
       local_datetime_after: '2019-12-27T18:11:19.117Z',
@@ -214,6 +215,7 @@ describe('resource assets', () => {
           local_datetime_after: '2019-12-27T18:11:19.117Z',
           local_datetime_before: '2019-12-27T18:11:19.117Z',
           person_id: 'person_id',
+          person_ids: ['string', 'string'],
           state: 'live',
         },
         { path: '/_stainless_unknown_path' },
