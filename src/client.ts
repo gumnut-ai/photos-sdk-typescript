@@ -935,7 +935,7 @@ export class Gumnut {
    */
   ping: API.Ping = new API.Ping(this);
   /**
-   * Content-based search over a library's assets, with the same filters as asset listing.
+   * Content-based search over a library's assets, with album, person, date, and location filters.
    */
   search: API.Search = new API.Search(this);
   /**

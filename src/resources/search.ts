@@ -8,7 +8,7 @@ import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 
 /**
- * Content-based search over a library's assets, with the same filters as asset listing.
+ * Content-based search over a library's assets, with album, person, date, and location filters.
  */
 export class Search extends APIResource {
   /**
@@ -30,8 +30,10 @@ export class Search extends APIResource {
    * `local_datetime_before=2025-09-01`.
    *
    * **Use `list_assets` instead** for a plain structured browse that album, person,
-   * date-range, location, or asset-ID filters can answer with no content `query` —
-   * it's cheaper and more deterministic than semantic search.
+   * media-type, date-range, location, or asset-ID filters can answer with no content
+   * `query` — it's cheaper and more deterministic than semantic search. There is no
+   * media-type filter here, so 'show me all my videos' is a `list_assets` browse
+   * with `media_type=video`.
    *
    * **Location filtering is by coordinate,** in two mutually-exclusive modes: a
    * radius (`center` + `radius`) or a bounding box (`bbox`).
