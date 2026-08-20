@@ -27,7 +27,7 @@ jobs:
     env:
       PRODUCTION_REPO: gumnut-ai/photos-sdk-typescript
     steps:
-      - name: "Mint promote token (Contents + Workflows: write on production)"
+      - name: 'Mint promote token (Contents + Workflows: write on production)'
         # Workflows: write because a promote carries .github/workflows/** to
         # production (release-please, publish, and these two files).
         id: token

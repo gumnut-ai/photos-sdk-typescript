@@ -36,7 +36,7 @@ jobs:
     env:
       PRODUCTION_REPO: gumnut-ai/photos-sdk-typescript
     steps:
-      - name: "Mint sync token (Contents: write on staging + production; production is only read)"
+      - name: 'Mint sync token (Contents: write on staging + production; production is only read)'
         id: token
         uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
         with:
