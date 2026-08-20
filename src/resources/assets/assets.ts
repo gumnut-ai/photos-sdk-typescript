@@ -766,12 +766,18 @@ export interface MetadataResponse {
   rating?: number | null;
 
   /**
-   * Pre-rotation raw height; null when not available
+   * Height in pixels of the original encoded image, before the EXIF `orientation` is
+   * applied. When both raw dimensions are positive, combine them with `orientation`
+   * to derive the original upload's display dimensions. Null or zero means
+   * unavailable; videos do not have raw dimensions.
    */
   raw_height?: number | null;
 
   /**
-   * Pre-rotation raw width; null when not available
+   * Width in pixels of the original encoded image, before the EXIF `orientation` is
+   * applied. When both raw dimensions are positive, combine them with `orientation`
+   * to derive the original upload's display dimensions. Null or zero means
+   * unavailable; videos do not have raw dimensions.
    */
   raw_width?: number | null;
 
