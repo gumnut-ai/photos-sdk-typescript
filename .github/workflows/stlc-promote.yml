@@ -1,0 +1,90 @@
+name: Promote SDK
+
+# Promote staging to production by fast-forwarding production main up to staging,
+# preserving SHAs so the trunks stay identical and linear (nothing to heal on the
+# next stlc build). Manual dispatch by design: a maintainer promotes the accumulated
+# batch to cut a release; release-please then opens its version PR on production.
+#
+# This file lives in both the staging and production repo (stlc preserves
+# .github/workflows/ across regeneration); the job self-routes so it only runs
+# on staging. Adapted from the stlc sdk-repo example; the PAT is replaced by a
+# short-lived gumnut-sdk-pipeline app token minted per run.
+#
+# If the promote refuses with "production/main is not an ancestor": production
+# advanced on its own (a release, or a direct push) and has not been back-synced.
+# Run the "Sync SDK repos" workflow here (or wait for its twice-hourly poll), then
+# re-run the promote. Never force-push either trunk.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    if: github.repository == 'gumnut-ai/photos-typescript-staging'
+    env:
+      PRODUCTION_REPO: gumnut-ai/photos-sdk-typescript
+    steps:
+      - name: "Mint promote token (Contents + Workflows: write on production)"
+        # Workflows: write because a promote carries .github/workflows/** to
+        # production (release-please, publish, and these two files).
+        id: token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ secrets.GUMNUT_SDK_PIPELINE_APP_ID }}
+          private-key: ${{ secrets.GUMNUT_SDK_PIPELINE_PRIVATE_KEY }}
+          owner: gumnut-ai
+          repositories: photos-sdk-typescript
+          permission-contents: write
+          permission-workflows: write
+
+      - name: Check out staging
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Fetch production main
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+        run: |
+          git remote add production \
+            "https://x-access-token:${GH_TOKEN}@github.com/${PRODUCTION_REPO}.git"
+          git fetch production main
+
+      - name: Check whether production already has staging's content
+        id: diff
+        run: |
+          # After a release, production has release-please commits staging lacks, so compare trees.
+          MERGED=$(git merge-tree --write-tree production/main origin/main) || MERGED=conflict
+          PRODUCTION_TREE=$(git rev-parse 'production/main^{tree}')
+          if [ "$MERGED" = "$PRODUCTION_TREE" ]; then
+            echo "Production already contains staging's content. Nothing to promote."
+            echo "synced=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "synced=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Promote staging to production (fast-forward)
+        if: steps.diff.outputs.synced == 'false'
+        run: |
+          # Refuse unless production is an ancestor of staging: otherwise the trunks
+          # have forked (production advanced without a back-sync) and FF is unsafe.
+          if ! git merge-base --is-ancestor production/main origin/main; then
+            echo "::error title=Promote blocked::production/main is not an ancestor of staging main. Back-sync production into staging first (run the Sync SDK repos workflow), then re-run."
+            exit 1
+          fi
+          git push production origin/main:refs/heads/main
+          echo "Fast-forwarded production/main to staging/main."
+
+      - name: Report failure
+        if: failure()
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          REPO: ${{ github.repository }}
+        run: |
+          msg="stlc promote failed in ${REPO}. A stalled promote or back-sync lets custom-code tracking drift, which later builds refuse on — investigate before the next build. Run: ${RUN_URL}"
+          echo "::error title=stlc workflow failed::$msg"
+          { echo "### ⚠️ stlc workflow failed"; echo ""; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
