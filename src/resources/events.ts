@@ -5,7 +5,7 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
 /**
- * Change-event feed for keeping client state in sync.
+ * Change events (create/update/delete) for entities in a library, for synchronising a local copy or auditing recent activity. Events reference entities by type and ID; fetch full data with the corresponding resource.
  */
 export class Events extends APIResource {
   /**

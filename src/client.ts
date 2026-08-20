@@ -911,7 +911,7 @@ export class Gumnut {
    */
   albumAssets: API.AlbumAssets = new API.AlbumAssets(this);
   /**
-   * Change-event feed for keeping client state in sync.
+   * Change events (create/update/delete) for entities in a library, for synchronising a local copy or auditing recent activity. Events reference entities by type and ID; fetch full data with the corresponding resource.
    */
   events: API.Events = new API.Events(this);
   /**
