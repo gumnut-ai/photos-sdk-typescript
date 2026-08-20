@@ -90,6 +90,7 @@ describe('resource assets', () => {
           limit: 1,
           local_datetime_after: '2019-12-27T18:11:19.117Z',
           local_datetime_before: '2019-12-27T18:11:19.117Z',
+          media_type: 'image',
           order: 'asc',
           person_ids: ['string', 'string'],
           radius: 0,
