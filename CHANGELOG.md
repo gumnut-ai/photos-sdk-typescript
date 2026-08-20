@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.163.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.162.0...v0.163.0) (2026-08-20)
+
+
+### Features
+
+* add promote, sync and release-please workflows ([8e560a8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8e560a8e0fd6e7bbd60f3d4e2ca77ef33c531caf))
+* configure release-please ([22b3294](https://github.com/gumnut-ai/photos-sdk-typescript/commit/22b3294699c218992d91c708a597fa1e34bfc054))
+* initial stlc build ([b1bdd05](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b1bdd05e5af8c9a1f2a55b6e5d4022fc71284e6d))
+
+
+### Styles
+
+* quote workflow step names the way prettier wants ([2228f3a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2228f3aa5377460fe753a95b80dd451663123aaa))
+
 ## 0.162.0 (2026-08-20)
 
 Full Changelog: [v0.161.0...v0.162.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.161.0...v0.162.0)
