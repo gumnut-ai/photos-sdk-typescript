@@ -58,12 +58,15 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/assets/versions.ts">AssetVersionResponse</a></code>
 - <code><a href="./src/resources/assets/versions.ts">VersionListResponse</a></code>
 
 Methods:
 
 - <code title="get /api/assets/{asset_id}/versions">client.assets.versions.<a href="./src/resources/assets/versions.ts">list</a>(assetID, { ...params }) -> VersionListResponse</code>
 - <code title="delete /api/assets/{asset_id}/versions/{version_id}">client.assets.versions.<a href="./src/resources/assets/versions.ts">delete</a>(versionID, { ...params }) -> AssetResponse</code>
+- <code title="post /api/assets/{asset_id}/versions">client.assets.versions.<a href="./src/resources/assets/versions.ts">append</a>(assetID, { ...params }) -> AssetVersionResponse</code>
+- <code title="post /api/assets/{asset_id}/versions/{version_id}/replace">client.assets.versions.<a href="./src/resources/assets/versions.ts">replace</a>(versionID, { ...params }) -> AssetVersionResponse</code>
 - <code title="post /api/assets/{asset_id}/versions/{version_id}/revert">client.assets.versions.<a href="./src/resources/assets/versions.ts">revert</a>(versionID, { ...params }) -> AssetResponse</code>
 
 # Albums

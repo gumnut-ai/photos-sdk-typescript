@@ -31,8 +31,11 @@ export {
 } from './assets';
 export {
   Versions,
+  type AssetVersionResponse,
   type VersionListResponse,
   type VersionListParams,
   type VersionDeleteParams,
+  type VersionAppendParams,
+  type VersionReplaceParams,
   type VersionRevertParams,
 } from './versions';

@@ -6,9 +6,12 @@ import * as PeopleAPI from '../people';
 import * as Shared from '../shared';
 import * as VersionsAPI from './versions';
 import {
+  AssetVersionResponse,
+  VersionAppendParams,
   VersionDeleteParams,
   VersionListParams,
   VersionListResponse,
+  VersionReplaceParams,
   VersionRevertParams,
   Versions,
 } from './versions';
@@ -1413,9 +1416,12 @@ export declare namespace Assets {
 
   export {
     Versions as Versions,
+    type AssetVersionResponse as AssetVersionResponse,
     type VersionListResponse as VersionListResponse,
     type VersionListParams as VersionListParams,
     type VersionDeleteParams as VersionDeleteParams,
+    type VersionAppendParams as VersionAppendParams,
+    type VersionReplaceParams as VersionReplaceParams,
     type VersionRevertParams as VersionRevertParams,
   };
 }
