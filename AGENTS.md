@@ -18,6 +18,12 @@ The following directories are preserved between generations and can be safely ed
 - `src/lib/` - Custom library code
 - `examples/` - Example usage code
 
+## Hand-Maintained Tooling
+
+`.agents/daemons/` holds Charlie daemon definitions — repo-authored operating roles, not
+generated output. It is outside the generator's preserved set but has persisted across
+regeneration; leave it in place. See [`.agents/daemons/AGENTS.md`](.agents/daemons/AGENTS.md).
+
 ## If Changes Are Needed
 
 If the SDK needs changes (new endpoints, bug fixes, type corrections):
