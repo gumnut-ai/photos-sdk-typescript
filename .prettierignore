@@ -5,3 +5,9 @@ CHANGELOG.md
 
 # don't format tsc output, will break source maps
 /dist
+
+# Charlie daemon policy, kept byte-identical across every gumnut-ai repo that has it.
+# This repo pins prettier 3.1.1, which wants blank lines between nested list items where
+# prettier 3.7 wants them removed — the two versions cannot both be satisfied, so the
+# shared files stay canonical and this repo does not reformat them.
+/.agents
