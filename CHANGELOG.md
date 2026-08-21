@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.165.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.164.0...v0.165.0) (2026-08-21)
+
+
+### Features
+
+* **api:** expose asset version append and replace ([8576d54](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8576d54f84ed3170cf40c983593e0043d9e27d11))
+
 ## [0.164.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.163.0...v0.164.0) (2026-08-20)
 
 
