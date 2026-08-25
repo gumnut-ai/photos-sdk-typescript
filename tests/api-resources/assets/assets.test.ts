@@ -186,6 +186,7 @@ describe('resource assets', () => {
       library_id: 'library_id',
       local_datetime_after: '2019-12-27T18:11:19.117Z',
       local_datetime_before: '2019-12-27T18:11:19.117Z',
+      media_type: 'image',
       person_ids: ['string', 'string'],
       state: 'live',
     });
@@ -216,6 +217,7 @@ describe('resource assets', () => {
           limit: 1,
           local_datetime_after: '2019-12-27T18:11:19.117Z',
           local_datetime_before: '2019-12-27T18:11:19.117Z',
+          media_type: 'image',
           person_id: 'person_id',
           person_ids: ['string', 'string'],
           state: 'live',

@@ -202,7 +202,7 @@ export class Assets extends APIResource {
    * is too dense at the given `cell_size` returns 422 (coarsen `cell_size` or zoom
    * in). To list the individual assets behind a cell, call `list_assets` with a
    * tighter bounding box over the same filters. Album and person filters compose
-   * using AND.
+   * using AND. Media type can further restrict the cluster to images or videos.
    *
    * @example
    * ```ts
@@ -223,7 +223,7 @@ export class Assets extends APIResource {
    * Counts assets bucketed by time period — use this to summarize a library (or a
    * filtered slice) without paging through the full timeline. Returns one row per
    * bucket, ordered most-recent-first, with optional filtering by album, album
-   * membership, people, date range, or trash state.
+   * membership, people, media type, date range, or trash state.
    *
    * To list the actual assets within a bucket, call `list_assets` with the same
    * filters and a `local_datetime_after` / `local_datetime_before` window matching
@@ -1022,7 +1022,8 @@ export interface AssetListParams extends CursorPageParams {
   local_datetime_before?: string | null;
 
   /**
-   * Return only assets of this media class. Omit to return both.
+   * Filter to one media class (`image` or `video`). Omit to include both images and
+   * videos.
    */
   media_type?: 'image' | 'video' | null;
 
@@ -1225,6 +1226,12 @@ export interface AssetClusterByGeoParams {
   local_datetime_before?: string | null;
 
   /**
+   * Filter to one media class (`image` or `video`). Omit to include both images and
+   * videos.
+   */
+  media_type?: 'image' | 'video' | null;
+
+  /**
    * Filter to assets containing faces belonging to ALL of these people
    * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
    * query params or comma-delimited values. Person IDs are carried by the entries of
@@ -1286,6 +1293,12 @@ export interface AssetCountsParams {
    * `local_datetime_after`.
    */
   local_datetime_before?: string | null;
+
+  /**
+   * Filter to one media class (`image` or `video`). Omit to include both images and
+   * videos.
+   */
+  media_type?: 'image' | 'video' | null;
 
   /**
    * @deprecated Deprecated compatibility alias for one `person_ids` value. Do not
