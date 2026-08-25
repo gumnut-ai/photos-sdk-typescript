@@ -34,6 +34,12 @@ export interface UserResponse {
   created_at: string;
 
   /**
+   * The user's effective favorite/rating display mode, defaulting to `favorite` when
+   * they have never selected one.
+   */
+  favorite_display_mode: 'favorite' | 'rating';
+
+  /**
    * Whether this user account is currently active
    */
   is_active: boolean;

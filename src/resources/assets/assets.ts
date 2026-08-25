@@ -321,12 +321,13 @@ export class Assets extends APIResource {
   }
 
   /**
-   * Edits the user-editable metadata for a single asset — description, GPS
-   * coordinates, and original capture datetime. Only fields included in the request
-   * body are changed; others are left untouched. Passing `null` for a field removes
-   * a previously-set value; the effective response may still contain a value from
-   * another metadata source. `latitude` and `longitude` must be set together (both
-   * written or both cleared).
+   * Edits the user-editable metadata for a single asset — description, rating, GPS
+   * coordinates, and original capture datetime. Rating accepts 0-5, where 0
+   * explicitly marks the asset unrated; passing null clears the USER override. Only
+   * fields included in the request body are changed; others are left untouched.
+   * Passing `null` for a field removes a previously-set value; the effective
+   * response may still contain a value from another metadata source. `latitude` and
+   * `longitude` must be set together (both written or both cleared).
    *
    * Setting or clearing GPS coordinates schedules an asynchronous refresh of derived
    * location names.
@@ -764,7 +765,8 @@ export interface MetadataResponse {
   projection_type?: string | null;
 
   /**
-   * User or camera rating (typically 1-5 stars)
+   * Effective user-or-camera rating from `0` to `5` stars. `0` means unrated; values
+   * outside this range are normalized to `0`.
    */
   rating?: number | null;
 
@@ -1124,6 +1126,14 @@ export namespace AssetBulkUpdateAssetsParams {
        */
       original_datetime?: string | null;
 
+      /**
+       * Star rating, `0`-`5`. `5` is the value a favorite carries. `0` explicitly marks
+       * the asset unrated, masking any rating embedded in the file. Pass `null` to
+       * remove a previously-set value and let the file's embedded rating (if any) show
+       * through; omit to leave unchanged. Values outside `0`-`5` are rejected.
+       */
+      rating?: number | null;
+
       [k: string]: unknown;
     }
   }
@@ -1378,6 +1388,14 @@ export interface AssetUpdateAssetParams {
    * another metadata source. Omit to leave unchanged.
    */
   original_datetime?: string | null;
+
+  /**
+   * Star rating, `0`-`5`. `5` is the value a favorite carries. `0` explicitly marks
+   * the asset unrated, masking any rating embedded in the file. Pass `null` to
+   * remove a previously-set value and let the file's embedded rating (if any) show
+   * through; omit to leave unchanged. Values outside `0`-`5` are rejected.
+   */
+  rating?: number | null;
 
   [k: string]: unknown;
 }
