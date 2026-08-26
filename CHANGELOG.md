@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.166.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.165.0...v0.166.0) (2026-08-25)
+
+
+### Features
+
+* **api:** add media-type filtering to asset listing, counts, and geo clusters ([fe39929](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fe399291d7e85879da327316252ebffd3632bff6))
+* **api:** add favorite/rating writes and rating metadata responses ([2e0f6da](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2e0f6dadf308b2c0dc0edf9be33da3d7a390eb00))
+
 ## [0.165.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.164.0...v0.165.0) (2026-08-21)
 
 
