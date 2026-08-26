@@ -5,7 +5,7 @@
 
 ### Features
 
-* **api:** api update ([87d245b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/87d245b5d358771fcd010e881e907c635a6d0090))
+* **assets:** add day, week, month, and year count buckets with timezone-naive bounds ([87d245b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/87d245b5d358771fcd010e881e907c635a6d0090))
 
 ## [0.166.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.165.0...v0.166.0) (2026-08-25)
 
