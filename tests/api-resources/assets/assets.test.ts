@@ -212,7 +212,7 @@ describe('resource assets', () => {
         {
           album_filter: 'all',
           album_id: 'album_id',
-          group_by: 'month',
+          group_by: 'day',
           library_id: 'library_id',
           limit: 1,
           local_datetime_after: '2019-12-27T18:11:19.117Z',

@@ -231,7 +231,9 @@ export class Assets extends APIResource {
    * search use `search_assets`.
    *
    * **Pagination:** When `has_more` is true, pass the last `time_bucket` value from
-   * `data` as `local_datetime_before` to fetch the next page.
+   * `data` as `local_datetime_before`. Repeat the same `group_by`,
+   * `local_datetime_after`, and non-date filters. Count bounds and returned bucket
+   * starts are timezone-naive local-calendar values.
    *
    * @example
    * ```ts
@@ -361,7 +363,8 @@ export interface AssetCountResponse {
   /**
    * True if there are more time buckets. To fetch the next page, pass the last
    * `time_bucket` value as `local_datetime_before` (exclusive — buckets starting
-   * before that value are returned).
+   * before that value are returned). Repeat the same `group_by`,
+   * `local_datetime_after`, and non-date filters.
    */
   has_more: boolean;
 }
@@ -1260,10 +1263,9 @@ export interface AssetCountsParams {
   album_id?: string | null;
 
   /**
-   * Time period to group counts by. Only `month` is supported; other values
-   * return 422.
+   * Calendar period to use for each count bucket.
    */
-  group_by?: 'month';
+  group_by?: 'day' | 'week' | 'month' | 'year';
 
   /**
    * Library to count assets in. Optional if the user has a single live (non-trashed)
@@ -1277,20 +1279,18 @@ export interface AssetCountsParams {
   limit?: number;
 
   /**
-   * Only include assets captured strictly after this instant (ISO 8601; exclusive).
-   * Convert a relative or natural-language date phrase ('in 2023') into an explicit
-   * bound before sending. `local_datetime` is the photo's wall-clock time in the
-   * device's own timezone. Naive values compare directly against `local_datetime`.
-   * Timezone-aware values: assets with a known offset are compared in UTC
-   * (`local_datetime - offset`); assets without an offset fall back to wall-clock
-   * comparison against `local_datetime`.
+   * Only include assets captured strictly after this local wall-clock datetime (ISO
+   * 8601; exclusive). Asset counts accept timezone-naive values only; a `Z` suffix
+   * or timezone offset returns 422. Repeat this bound unchanged on every pagination
+   * page.
    */
   local_datetime_after?: string | null;
 
   /**
-   * Only include assets captured strictly before this instant (ISO 8601; exclusive).
-   * Same conversion requirement and awareness/offset semantics as
-   * `local_datetime_after`.
+   * Only include assets captured strictly before this local wall-clock datetime (ISO
+   * 8601; exclusive). Asset counts accept timezone-naive values only; a `Z` suffix
+   * or timezone offset returns 422. When `has_more` is true, replace this bound with
+   * the last returned `time_bucket` to fetch the next page.
    */
   local_datetime_before?: string | null;
 
