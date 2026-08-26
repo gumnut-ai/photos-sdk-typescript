@@ -84,10 +84,10 @@ export class Assets extends APIResource {
   /**
    * Returns a paginated list of assets ordered by local capture time (or trash time
    * for trashed assets), newest first by default, optionally filtered by album,
-   * person, media type, date range, geographic area, or asset ID. Use this tool for
-   * structured browsing and filtering — when the request can be expressed as exact
-   * filters on album membership, people, media type, date range, geographic
-   * coordinates, or specific asset IDs.
+   * person, rating, media type, date range, geographic area, or asset ID. Use this
+   * tool for structured browsing and filtering — when the request can be expressed
+   * as exact filters on album membership, people, rating, media type, date range,
+   * geographic coordinates, or specific asset IDs.
    *
    * **Location filtering is by coordinate:** pass a radius (`center` + `radius`) or
    * a bounding box (`bbox`) to restrict results to a geographic area. The two modes
@@ -202,7 +202,7 @@ export class Assets extends APIResource {
    * is too dense at the given `cell_size` returns 422 (coarsen `cell_size` or zoom
    * in). To list the individual assets behind a cell, call `list_assets` with a
    * tighter bounding box over the same filters. Album and person filters compose
-   * using AND. Media type can further restrict the cluster to images or videos.
+   * using AND. Rating and media type can further restrict the cluster.
    *
    * @example
    * ```ts
@@ -223,7 +223,7 @@ export class Assets extends APIResource {
    * Counts assets bucketed by time period — use this to summarize a library (or a
    * filtered slice) without paging through the full timeline. Returns one row per
    * bucket, ordered most-recent-first, with optional filtering by album, album
-   * membership, people, media type, date range, or trash state.
+   * membership, people, rating, media type, date range, or trash state.
    *
    * To list the actual assets within a bucket, call `list_assets` with the same
    * filters and a `local_datetime_after` / `local_datetime_before` window matching
@@ -977,8 +977,8 @@ export interface AssetListParams extends CursorPageParams {
    * Look up specific assets by ID (max 200; each ID has the `asset_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
    * `ids=asset_1,asset_2`). Combines with other filters (album_id, person_ids,
-   * stack_id, media_type, datetime range) using AND logic — the result is the
-   * intersection.
+   * stack_id, media_type, ratings, datetime range) using AND logic — the result is
+   * the intersection.
    */
   ids?: Array<string> | null;
 
@@ -1050,6 +1050,15 @@ export interface AssetListParams extends CursorPageParams {
    * 50000).
    */
   radius?: number | null;
+
+  /**
+   * Return assets whose effective rating is one of these exact values. Values must
+   * be integers from `0` through `5`; `5` is a favorite. `0` matches every unrated
+   * form: an explicit zero, a null or legacy out-of-range effective rating, or an
+   * asset with no metadata. Accepts repeated `ratings=` parameters or one
+   * comma-delimited value. Omit the parameter for no rating filter.
+   */
+  ratings?: Array<number> | null;
 
   /**
    * Return only assets belonging to this stack (the `asset_stack_` ID carried by the
@@ -1243,6 +1252,15 @@ export interface AssetClusterByGeoParams {
   person_ids?: Array<string> | null;
 
   /**
+   * Return assets whose effective rating is one of these exact values. Values must
+   * be integers from `0` through `5`; `5` is a favorite. `0` matches every unrated
+   * form: an explicit zero, a null or legacy out-of-range effective rating, or an
+   * asset with no metadata. Accepts repeated `ratings=` parameters or one
+   * comma-delimited value. Omit the parameter for no rating filter.
+   */
+  ratings?: Array<number> | null;
+
+  /**
    * Which set of assets to cluster: `live` (default — excludes trashed assets),
    * `trashed` (only trashed assets), or `all` (both).
    */
@@ -1313,6 +1331,15 @@ export interface AssetCountsParams {
    * an asset's `people` field (returned with `include=people`).
    */
   person_ids?: Array<string> | null;
+
+  /**
+   * Return assets whose effective rating is one of these exact values. Values must
+   * be integers from `0` through `5`; `5` is a favorite. `0` matches every unrated
+   * form: an explicit zero, a null or legacy out-of-range effective rating, or an
+   * asset with no metadata. Accepts repeated `ratings=` parameters or one
+   * comma-delimited value. Omit the parameter for no rating filter.
+   */
+  ratings?: Array<number> | null;
 
   /**
    * Which set of assets to count: `live` (default — excludes trashed assets),

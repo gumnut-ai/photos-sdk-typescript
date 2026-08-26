@@ -16,31 +16,31 @@ export class Search extends APIResource {
    * date range, and location, or both. Content searches are ranked by relevance;
    * filter-only searches return matches newest-first. Use this tool when the user
    * describes _what's in_ the photos they want — subjects, scenes, places,
-   * activities, moods, objects — optionally narrowed by album, person, date, or
-   * location.
+   * activities, moods, objects — optionally narrowed by album, person, rating, date,
+   * or location.
    *
    * Prefer typed filters for anything the request states exactly: `album_id` for
-   * album membership, `person_ids` for people,
-   * `local_datetime_before`/`local_datetime_after` for date ranges, and `center` +
-   * `radius` or `bbox` for location. There is no typed camera or place-name filter —
-   * pass those terms in the free-text `query`; the metadata full-text stage can
-   * match those terms, while dense retrieval adds visual-semantic matches. For
-   * example, 'photos of my kids at the beach last summer' becomes
-   * `query='kids at the beach'` + `local_datetime_after=2025-06-01` +
-   * `local_datetime_before=2025-09-01`.
+   * album membership, `person_ids` for people, `ratings` for exact effective
+   * ratings, `local_datetime_before`/`local_datetime_after` for date ranges, and
+   * `center` + `radius` or `bbox` for location. There is no typed camera or
+   * place-name filter — pass those terms in the free-text `query`; the metadata
+   * full-text stage can match those terms, while dense retrieval adds
+   * visual-semantic matches. For example, 'photos of my kids at the beach last
+   * summer' becomes `query='kids at the beach'` +
+   * `local_datetime_after=2025-06-01` + `local_datetime_before=2025-09-01`.
    *
    * **Use `list_assets` instead** for a plain structured browse that album, person,
-   * media-type, date-range, location, or asset-ID filters can answer with no content
-   * `query` — it's cheaper and more deterministic than semantic search. There is no
-   * media-type filter here, so 'show me all my videos' is a `list_assets` browse
-   * with `media_type=video`.
+   * rating, media-type, date-range, location, or asset-ID filters can answer with no
+   * content `query` — it's cheaper and more deterministic than semantic search.
+   * There is no media-type filter here, so 'show me all my videos' is a
+   * `list_assets` browse with `media_type=video`.
    *
    * **Location filtering is by coordinate,** in two mutually-exclusive modes: a
    * radius (`center` + `radius`) or a bounding box (`bbox`).
    *
-   * At least one of `query`, `album_id`, `person_ids`, `local_datetime_before`, or
-   * `local_datetime_after` must be provided; a location filter only narrows those
-   * results and is not a search criterion on its own.
+   * At least one of `query`, `album_id`, `person_ids`, `ratings`,
+   * `local_datetime_before`, or `local_datetime_after` must be provided; a location
+   * filter only narrows those results and is not a search criterion on its own.
    */
   search(
     query: SearchSearchParams | null | undefined = {},
@@ -56,10 +56,10 @@ export class Search extends APIResource {
    * visual-similarity search; text and uploaded-image signals stay independent when
    * both are provided.
    *
-   * At least one search criterion must be provided. Location filtering is by
-   * coordinate in two mutually-exclusive modes: a radius (`center` + `radius`) or a
-   * bounding box (`bbox`); it narrows candidates and is not a search criterion on
-   * its own.
+   * At least one search criterion, including `ratings`, must be provided. Location
+   * filtering is by coordinate in two mutually-exclusive modes: a radius (`center` +
+   * `radius`) or a bounding box (`bbox`); it narrows candidates and is not a search
+   * criterion on its own.
    */
   searchAssets(
     params: SearchSearchAssetsParams | null | undefined = {},
@@ -206,6 +206,15 @@ export interface SearchSearchParams {
    * 50,000).
    */
   radius?: number | null;
+
+  /**
+   * Return assets whose effective rating is one of these exact values. Values must
+   * be integers from `0` through `5`; `5` is a favorite. `0` matches every unrated
+   * form: an explicit zero, a null or legacy out-of-range effective rating, or an
+   * asset with no metadata. Accepts repeated `ratings=` parameters or one
+   * comma-delimited value. Omit the parameter for no rating filter.
+   */
+  ratings?: Array<number> | null;
 }
 
 export interface SearchSearchAssetsParams {
@@ -320,6 +329,15 @@ export interface SearchSearchAssetsParams {
    * at most 50,000).
    */
   radius?: number | null;
+
+  /**
+   * Body param: Return assets whose effective rating is one of these exact values.
+   * Values must be integers from `0` through `5`; `5` is a favorite. `0` matches
+   * every unrated form: an explicit zero, a null or legacy out-of-range effective
+   * rating, or an asset with no metadata. Accepts repeated `ratings=` parameters or
+   * one comma-delimited value. Omit the parameter for no rating filter.
+   */
+  ratings?: Array<number> | null;
 }
 
 export declare namespace Search {

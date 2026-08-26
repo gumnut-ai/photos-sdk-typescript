@@ -94,6 +94,7 @@ describe('resource assets', () => {
           order: 'asc',
           person_ids: ['string', 'string'],
           radius: 0,
+          ratings: [0, 0],
           stack_id: 'stack_id',
           starting_after_id: 'starting_after_id',
           state: 'live',
@@ -188,6 +189,7 @@ describe('resource assets', () => {
       local_datetime_before: '2019-12-27T18:11:19.117Z',
       media_type: 'image',
       person_ids: ['string', 'string'],
+      ratings: [0, 0],
       state: 'live',
     });
   });
@@ -220,6 +222,7 @@ describe('resource assets', () => {
           media_type: 'image',
           person_id: 'person_id',
           person_ids: ['string', 'string'],
+          ratings: [0, 0],
           state: 'live',
         },
         { path: '/_stainless_unknown_path' },
