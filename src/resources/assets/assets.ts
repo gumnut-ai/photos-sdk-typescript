@@ -222,18 +222,19 @@ export class Assets extends APIResource {
   /**
    * Counts assets bucketed by time period — use this to summarize a library (or a
    * filtered slice) without paging through the full timeline. Returns one row per
-   * bucket, ordered most-recent-first, with optional filtering by album, album
-   * membership, people, rating, media type, date range, or trash state.
+   * bucket, newest-first by default or oldest-first when `order=asc`, with optional
+   * filtering by album, album membership, people, rating, media type, date range, or
+   * trash state.
    *
    * To list the actual assets within a bucket, call `list_assets` with the same
    * filters and a `local_datetime_after` / `local_datetime_before` window matching
    * the bucket. Does not filter by image content or location; for content-based
    * search use `search_assets`.
    *
-   * **Pagination:** When `has_more` is true, pass the last `time_bucket` value from
-   * `data` as `local_datetime_before`. Repeat the same `group_by`,
-   * `local_datetime_after`, and non-date filters. Count bounds and returned bucket
-   * starts are timezone-naive local-calendar values.
+   * **Pagination:** When `has_more` is true, pass the last `time_bucket` from `data`
+   * as `starting_after_bucket`. Repeat the same `group_by`, `order`, date bounds,
+   * and non-date filters. Count bounds, the cursor, and returned bucket starts are
+   * timezone-naive local-calendar values.
    *
    * @example
    * ```ts
@@ -356,15 +357,14 @@ export type AssetResponsesCursorPage = CursorPage<AssetResponse>;
 
 export interface AssetCountResponse {
   /**
-   * Time bucket and count pairs, ordered by time bucket descending
+   * Time bucket and count pairs in the requested direction
    */
   data: Array<AssetCountResponse.Data>;
 
   /**
    * True if there are more time buckets. To fetch the next page, pass the last
-   * `time_bucket` value as `local_datetime_before` (exclusive — buckets starting
-   * before that value are returned). Repeat the same `group_by`,
-   * `local_datetime_after`, and non-date filters.
+   * `time_bucket` as `starting_after_bucket`. Keep the library scope, `group_by`,
+   * `order`, `state`, date bounds, and every population filter unchanged.
    */
   has_more: boolean;
 }
@@ -1307,8 +1307,8 @@ export interface AssetCountsParams {
   /**
    * Only include assets captured strictly before this local wall-clock datetime (ISO
    * 8601; exclusive). Asset counts accept timezone-naive values only; a `Z` suffix
-   * or timezone offset returns 422. When `has_more` is true, replace this bound with
-   * the last returned `time_bucket` to fetch the next page.
+   * or timezone offset returns 422. Repeat this bound unchanged on every pagination
+   * page.
    */
   local_datetime_before?: string | null;
 
@@ -1317,6 +1317,12 @@ export interface AssetCountsParams {
    * videos.
    */
   media_type?: 'image' | 'video' | null;
+
+  /**
+   * Sort direction for capture-date buckets: `desc` returns newest buckets first;
+   * `asc` returns oldest buckets first.
+   */
+  order?: 'asc' | 'desc';
 
   /**
    * @deprecated Deprecated compatibility alias for one `person_ids` value. Do not
@@ -1340,6 +1346,13 @@ export interface AssetCountsParams {
    * comma-delimited value. Omit the parameter for no rating filter.
    */
   ratings?: Array<number> | null;
+
+  /**
+   * Cursor for time-bucket pagination. Pass the last returned `time_bucket`
+   * unchanged; buckets after it in the requested `order` are returned. Omit for the
+   * first page.
+   */
+  starting_after_bucket?: string | null;
 
   /**
    * Which set of assets to count: `live` (default — excludes trashed assets),
