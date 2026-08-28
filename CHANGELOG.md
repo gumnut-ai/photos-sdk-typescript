@@ -5,7 +5,7 @@
 
 ### Features
 
-* **api:** api update ([171090f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/171090f0c668ffc26b75ec6a61cfa44fe7c29ff9))
+* **assets:** add `bbox` and `center`/`radius` location filters to time-bucket counts ([171090f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/171090f0c668ffc26b75ec6a61cfa44fe7c29ff9))
 
 ## [0.168.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.167.0...v0.168.0) (2026-08-28)
 
