@@ -5,8 +5,8 @@
 
 ### Features
 
-* **api:** api update ([58dc5fe](https://github.com/gumnut-ai/photos-sdk-typescript/commit/58dc5fe6939945db12d1bd348493db09b53a609a))
-* **api:** api update ([cda9a6b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cda9a6b782aa88274bd59deaaf9f0e02f64244fb))
+* **assets:** add `order` and `starting_after_bucket` to time-bucket counts ([58dc5fe](https://github.com/gumnut-ai/photos-sdk-typescript/commit/58dc5fe6939945db12d1bd348493db09b53a609a))
+* **assets:** add exact `ratings` filters to listing, geo clusters, counts, and search ([cda9a6b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cda9a6b782aa88274bd59deaaf9f0e02f64244fb))
 
 ## [0.167.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.166.0...v0.167.0) (2026-08-26)
 
