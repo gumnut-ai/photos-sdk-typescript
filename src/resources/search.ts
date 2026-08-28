@@ -120,6 +120,7 @@ export interface SearchSearchParams {
   /**
    * Center point of a radius location filter: two comma-separated decimal-degree
    * numbers `longitude,latitude`, e.g. `-77.05,38.95`. Supply with `radius`.
+   * Mutually exclusive with `bbox`.
    */
   center?: string | null;
 
@@ -203,7 +204,7 @@ export interface SearchSearchParams {
 
   /**
    * Radius of the `center` location filter, in meters (greater than 0, at most
-   * 50,000).
+   * 50,000). Supply with `center`. Mutually exclusive with `bbox`.
    */
   radius?: number | null;
 
@@ -258,7 +259,7 @@ export interface SearchSearchAssetsParams {
   /**
    * Body param: Center point of a radius location filter: two comma-separated
    * decimal-degree numbers `longitude,latitude`, e.g. `-77.05,38.95`. Supply with
-   * `radius`.
+   * `radius`. Mutually exclusive with `bbox`.
    */
   center?: string | null;
 
@@ -326,7 +327,7 @@ export interface SearchSearchAssetsParams {
 
   /**
    * Body param: Radius of the `center` location filter, in meters (greater than 0,
-   * at most 50,000).
+   * at most 50,000). Supply with `center`. Mutually exclusive with `bbox`.
    */
   radius?: number | null;
 

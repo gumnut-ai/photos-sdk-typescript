@@ -214,6 +214,8 @@ describe('resource assets', () => {
         {
           album_filter: 'all',
           album_id: 'album_id',
+          bbox: 'bbox',
+          center: 'center',
           group_by: 'day',
           library_id: 'library_id',
           limit: 1,
@@ -223,6 +225,7 @@ describe('resource assets', () => {
           order: 'asc',
           person_id: 'person_id',
           person_ids: ['string', 'string'],
+          radius: 0,
           ratings: [0, 0],
           starting_after_bucket: '2019-12-27T18:11:19.117Z',
           state: 'live',

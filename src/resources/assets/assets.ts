@@ -223,13 +223,13 @@ export class Assets extends APIResource {
    * Counts assets bucketed by time period — use this to summarize a library (or a
    * filtered slice) without paging through the full timeline. Returns one row per
    * bucket, newest-first by default or oldest-first when `order=asc`, with optional
-   * filtering by album, album membership, people, rating, media type, date range, or
-   * trash state.
+   * filtering by album, album membership, people, rating, media type, date range,
+   * location, or trash state.
    *
    * To list the actual assets within a bucket, call `list_assets` with the same
    * filters and a `local_datetime_after` / `local_datetime_before` window matching
-   * the bucket. Does not filter by image content or location; for content-based
-   * search use `search_assets`.
+   * the bucket. Does not filter by image content; for content-based search use
+   * `search_assets`.
    *
    * **Pagination:** When `has_more` is true, pass the last `time_bucket` from `data`
    * as `starting_after_bucket`. Repeat the same `group_by`, `order`, date bounds,
@@ -1047,7 +1047,7 @@ export interface AssetListParams extends CursorPageParams {
 
   /**
    * Radius of the `center` location filter, in meters (greater than 0, at most
-   * 50000).
+   * 50,000). Supply with `center`. Mutually exclusive with `bbox`.
    */
   radius?: number | null;
 
@@ -1281,6 +1281,26 @@ export interface AssetCountsParams {
   album_id?: string | null;
 
   /**
+   * Bounding-box (map viewport) location filter: four comma-separated decimal-degree
+   * numbers `min_longitude,min_latitude,max_longitude,max_latitude`
+   * (west,south,east,north), e.g. `-77.1,38.9,-77.0,39.0`. A box whose
+   * `min_longitude` exceeds `max_longitude` crosses the antimeridian: it selects the
+   * band running east from `min_longitude` over ±180° to `max_longitude`, so there
+   * is no need to split it client-side. Longitude order is therefore significant —
+   * transposed corners read as a crossing viewport, not as an error. A viewport 360°
+   * or wider must be sent as the full range `-180,...,180,...`, which the wrapped
+   * form cannot express. Mutually exclusive with `center`/`radius`.
+   */
+  bbox?: string | null;
+
+  /**
+   * Center point of a radius location filter: two comma-separated decimal-degree
+   * numbers `longitude,latitude`, e.g. `-77.05,38.95`. Supply with `radius`.
+   * Mutually exclusive with `bbox`.
+   */
+  center?: string | null;
+
+  /**
    * Calendar period to use for each count bucket.
    */
   group_by?: 'day' | 'week' | 'month' | 'year';
@@ -1337,6 +1357,12 @@ export interface AssetCountsParams {
    * an asset's `people` field (returned with `include=people`).
    */
   person_ids?: Array<string> | null;
+
+  /**
+   * Radius of the `center` location filter, in meters (greater than 0, at most
+   * 50,000). Supply with `center`. Mutually exclusive with `bbox`.
+   */
+  radius?: number | null;
 
   /**
    * Return assets whose effective rating is one of these exact values. Values must
