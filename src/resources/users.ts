@@ -34,6 +34,11 @@ export interface UserResponse {
   created_at: string;
 
   /**
+   * Whether demo-mode person-name presentation is enabled. Defaults to false.
+   */
+  demo_mode_enabled: boolean;
+
+  /**
    * The user's effective favorite/rating display mode, defaulting to `favorite` when
    * they have never selected one.
    */
