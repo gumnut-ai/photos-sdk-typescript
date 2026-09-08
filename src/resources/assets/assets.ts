@@ -450,6 +450,14 @@ export interface AssetResponse {
   current_version_id: string;
 
   /**
+   * Size of the current rendering in bytes: the exact byte count the
+   * `asset_urls.original` download serves. For an unedited asset this equals the
+   * upload's `file_data.file_size_bytes`; for an edited asset it is the derived
+   * rendering's size.
+   */
+  file_size_bytes: number;
+
+  /**
    * What produced the current rendering: `original` (the upload), `edit` (an edit
    * rendered by the client), or `external:<service>`. The namespace is open — derive
    * edited-ness as `kind != "original"`.
@@ -606,8 +614,8 @@ export interface FileDataResponse {
   file_modified_at: string;
 
   /**
-   * Size of the uploaded file in bytes. Each rendering's own size is on its row in
-   * the asset's version listing.
+   * Size of the uploaded file in bytes. The current rendering's size is the
+   * top-level `file_size_bytes`; the two differ once the asset is edited.
    */
   file_size_bytes: number;
 
@@ -931,9 +939,9 @@ export interface AssetRetrieveParams {
    * must pass it). Accepts multiple `include=` query params or a single
    * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
    * When omitted, only the lean core is returned (`id`, `mime_type`,
-   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`, `kind`,
-   * `current_version_id`) and each data field above is null/absent until you request
-   * it.
+   * `local_datetime`, dimensions, `file_size_bytes`, `description`, `thumbhash`,
+   * `asset_urls`, `kind`, `current_version_id`) and each data field above is
+   * null/absent until you request it.
    */
   include?: Array<string> | null;
 }
@@ -994,9 +1002,9 @@ export interface AssetListParams extends CursorPageParams {
    * must pass it). Accepts multiple `include=` query params or a single
    * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
    * When omitted, only the lean core is returned (`id`, `mime_type`,
-   * `local_datetime`, dimensions, `description`, `thumbhash`, `asset_urls`, `kind`,
-   * `current_version_id`) and each data field above is null/absent until you request
-   * it.
+   * `local_datetime`, dimensions, `file_size_bytes`, `description`, `thumbhash`,
+   * `asset_urls`, `kind`, `current_version_id`) and each data field above is
+   * null/absent until you request it.
    */
   include?: Array<string> | null;
 
