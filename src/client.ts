@@ -108,7 +108,7 @@ import {
   TaskResponse,
   Tasks,
 } from './resources/tasks';
-import { UserResponse, Users } from './resources/users';
+import { UserResponse, UserUpdateParams, Users } from './resources/users';
 import {
   AlbumCreateParams,
   AlbumDeleteResponse,
@@ -1113,7 +1113,7 @@ export declare namespace Gumnut {
     type TaskListParams as TaskListParams,
   };
 
-  export { Users as Users, type UserResponse as UserResponse };
+  export { Users as Users, type UserResponse as UserResponse, type UserUpdateParams as UserUpdateParams };
 
   export type AssetVariant = API.AssetVariant;
 }

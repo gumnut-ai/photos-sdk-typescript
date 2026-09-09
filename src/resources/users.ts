@@ -9,6 +9,15 @@ import { RequestOptions } from '../internal/request-options';
  */
 export class Users extends APIResource {
   /**
+   * Updates preferences on the authenticated user's own account. Only the fields
+   * included in the request body are changed. This endpoint does not accept a user
+   * ID; it always updates the authenticated caller.
+   */
+  update(body: UserUpdateParams, options?: RequestOptions): APIPromise<UserResponse> {
+    return this._client.patch('/api/users/me', { body, ...options });
+  }
+
+  /**
    * Returns the profile of the authenticated user (the caller). Use this at the
    * start of a session to ground subsequent calls (e.g., to confirm the caller's
    * identity before making destructive changes). This tool does not accept a user
@@ -97,6 +106,22 @@ export interface UserResponse {
   timezone?: string | null;
 }
 
+export interface UserUpdateParams {
+  /**
+   * Enable demo-mode person-name presentation. Omit to leave unchanged; send false
+   * to disable. Explicit null is not accepted.
+   */
+  demo_mode_enabled?: boolean;
+
+  /**
+   * Presentation a user prefers for the favorite/rating control.
+   *
+   * - `favorite`: a heart — filled at the top rating, empty otherwise.
+   * - `rating`: a 0-5 star control.
+   */
+  favorite_display_mode?: 'favorite' | 'rating' | null;
+}
+
 export declare namespace Users {
-  export { type UserResponse as UserResponse };
+  export { type UserResponse as UserResponse, type UserUpdateParams as UserUpdateParams };
 }

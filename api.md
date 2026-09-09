@@ -250,4 +250,5 @@ Types:
 
 Methods:
 
+- <code title="patch /api/users/me">client.users.<a href="./src/resources/users.ts">update</a>({ ...params }) -> UserResponse</code>
 - <code title="get /api/users/me">client.users.<a href="./src/resources/users.ts">me</a>() -> UserResponse</code>

@@ -128,4 +128,4 @@ export {
   type TaskListForAssetResponse,
   type TaskListParams,
 } from './tasks';
-export { Users, type UserResponse } from './users';
+export { Users, type UserResponse, type UserUpdateParams } from './users';
