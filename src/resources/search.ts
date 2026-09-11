@@ -81,6 +81,14 @@ export interface SearchResponse {
    * capture-date ordering.
    */
   data: Array<SearchResultItem>;
+
+  /**
+   * Whether another page remains in this search's result population. For content
+   * searches, this refers to the bounded ranked candidate population, not every
+   * potentially matching asset in the library. While true, increment `page` and
+   * repeat the same search criteria, filters, and `limit`.
+   */
+  has_more: boolean;
 }
 
 export interface SearchResultItem {
@@ -172,12 +180,13 @@ export interface SearchSearchParams {
   local_datetime_before?: string | null;
 
   /**
-   * 1-indexed page number; increment it to fetch subsequent pages. `search_assets`
-   * pages by number rather than by cursor. A search with a content criterion ranks a
-   * fixed top-200 candidate population by relevance, so pages beyond that population
-   * are empty. A structured-filter-only search (album, people, date range — no
-   * content criterion) returns the full matching set newest-first, paginated without
-   * that cap.
+   * 1-indexed page number; increment it to fetch subsequent pages. Stop when
+   * `has_more` is false, even if the current page is full. `search_assets` pages by
+   * number rather than by cursor. A search with a content criterion ranks a fixed
+   * top-200 candidate population by relevance, so pages beyond that population are
+   * empty. A structured-filter-only search (album, people, date range — no content
+   * criterion) returns the full matching set newest-first, paginated without that
+   * cap.
    */
   page?: number;
 
@@ -300,12 +309,13 @@ export interface SearchSearchAssetsParams {
   local_datetime_before?: string | null;
 
   /**
-   * Body param: 1-indexed page number; increment it to fetch subsequent pages.
-   * `search_assets` pages by number rather than by cursor. A search with a content
-   * criterion ranks a fixed top-200 candidate population by relevance, so pages
-   * beyond that population are empty. A structured-filter-only search (album,
-   * people, date range — no content criterion) returns the full matching set
-   * newest-first, paginated without that cap.
+   * Body param: 1-indexed page number; increment it to fetch subsequent pages. Stop
+   * when `has_more` is false, even if the current page is full. `search_assets`
+   * pages by number rather than by cursor. A search with a content criterion ranks a
+   * fixed top-200 candidate population by relevance, so pages beyond that population
+   * are empty. A structured-filter-only search (album, people, date range — no
+   * content criterion) returns the full matching set newest-first, paginated without
+   * that cap.
    */
   page?: number;
 
