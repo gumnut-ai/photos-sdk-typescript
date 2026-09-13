@@ -19,7 +19,9 @@ export class OAuth extends APIResource {
   /**
    * Exchange OAuth authorization code for application JWT after validating state,
    * nonce, and ID token signature. User is retrieved from or created in the database
-   * and details added to the JWT.
+   * and details added to the JWT. First-time provisioning returns 401 if the Clerk
+   * identity was deleted, or 503 if it cannot be verified; restart sign-in later
+   * after a 503.
    */
   exchange(body: OAuthExchangeParams, options?: RequestOptions): APIPromise<ExchangeResponse> {
     return this._client.post('/api/oauth/exchange', { body, ...options });
