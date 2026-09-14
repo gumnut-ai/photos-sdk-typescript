@@ -93,6 +93,9 @@ export class Libraries extends APIResource {
    * Idempotent — a second call on an already-trashed library no-ops. To trash
    * individual assets without trashing the whole library, use `trash_assets`
    * instead.
+   *
+   * Returns 409 if this is the user's last live library — every user keeps at least
+   * one. Retrying does not clear it; create another library first.
    */
   trash(libraryID: string, options?: RequestOptions): APIPromise<LibraryTrashResponse> {
     return this._client.post(path`/api/libraries/${libraryID}/trash`, options);
