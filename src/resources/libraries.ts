@@ -21,7 +21,7 @@ export class Libraries extends APIResource {
 
   /**
    * Fetches one library's metadata by ID. Returns the library regardless of trash
-   * state.
+   * state for owners; members can only access live libraries.
    */
   retrieve(libraryID: string, options?: RequestOptions): APIPromise<LibraryResponse> {
     return this._client.get(path`/api/libraries/${libraryID}`, options);
@@ -41,10 +41,11 @@ export class Libraries extends APIResource {
   }
 
   /**
-   * Returns libraries owned by the authenticated user (no pagination — users
-   * typically have one or a handful). Call this when another tool's `library_id`
-   * parameter is required but you don't yet know which libraries exist. A
-   * single-library user can usually omit `library_id` on other tools entirely.
+   * Returns owned and joined libraries accessible to the authenticated user (no
+   * pagination — users typically have one or a handful). Call this when another
+   * tool's `library_id` parameter is required but you don't yet know which libraries
+   * exist. A single-library user can usually omit `library_id` on other tools
+   * entirely.
    *
    * By default trashed libraries are excluded. Pass `state=trashed` to list the
    * trash drawer (ordered by most recently trashed) or `state=all` for both.
@@ -126,6 +127,10 @@ export interface LibraryResponse {
    */
   name: string;
 
+  owner: LibraryResponse.Owner;
+
+  role: 'owner' | 'viewer' | 'collaborator';
+
   /**
    * Bytes of assets currently stored in this library
    */
@@ -150,6 +155,20 @@ export interface LibraryResponse {
    * Maximum bytes this library may store, or null if no per-library limit applies
    */
   storage_limit_bytes?: number | null;
+}
+
+export namespace LibraryResponse {
+  export interface Owner {
+    /**
+     * User identifier
+     */
+    id: string;
+
+    /**
+     * Public display name, when available
+     */
+    display_name: string | null;
+  }
 }
 
 export type LibraryListResponse = Array<LibraryResponse>;

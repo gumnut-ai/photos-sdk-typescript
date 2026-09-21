@@ -151,7 +151,7 @@ export type TaskListForAssetResponse = Array<TaskResponse>;
 export interface TaskListParams {
   /**
    * Restrict results to tasks owned by this library. When omitted, returns tasks
-   * across every library the authenticated user owns.
+   * across every library the authenticated user can access.
    */
   library_id?: string | null;
 

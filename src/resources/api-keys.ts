@@ -70,9 +70,10 @@ export interface APIKeyResponse {
   last_used_at?: string | null;
 
   /**
-   * Which of the owner's libraries a credential covers.
+   * Which of the caller's accessible libraries a credential covers.
    *
-   * `all_libraries` means all current and future live libraries owned by the user.
+   * `all_libraries` means all current and future accessible libraries, including
+   * active joined libraries. Current membership role still bounds every operation.
    * `selected_libraries` means only explicitly selected libraries, with no automatic
    * expansion.
    */
@@ -129,9 +130,10 @@ export interface APIKeyCreateResponse {
   last_used_at?: string | null;
 
   /**
-   * Which of the owner's libraries a credential covers.
+   * Which of the caller's accessible libraries a credential covers.
    *
-   * `all_libraries` means all current and future live libraries owned by the user.
+   * `all_libraries` means all current and future accessible libraries, including
+   * active joined libraries. Current membership role still bounds every operation.
    * `selected_libraries` means only explicitly selected libraries, with no automatic
    * expansion.
    */
