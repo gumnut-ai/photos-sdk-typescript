@@ -34,14 +34,14 @@ export class Assets extends APIResource {
    * the file's SHA-256 checksum: re-uploading a file whose bytes already exist in
    * the target library stores nothing and returns the existing asset with 200.
    * Storage caps are checked before the duplicate lookup, so an upload is refused
-   * with 507 whenever the account or the target library is already at its storage
-   * cap — even when the bytes would have deduplicated to an existing asset. A
-   * transient upstream storage error returns 502 — retryable after the `Retry-After`
-   * interval. When `library_id` is omitted and no default library can be chosen (the
-   * account has multiple live libraries), the request is refused with 400. Image
-   * metadata is extracted before the response returns; the rest of processing
-   * (thumbnails, search indexing, face detection, and video metadata extraction)
-   * continues asynchronously after the response.
+   * with 507 whenever the library owner or the target library is already at its
+   * storage cap — even when the bytes would have deduplicated to an existing asset.
+   * A transient upstream storage error returns 502 — retryable after the
+   * `Retry-After` interval. When `library_id` is omitted and no default library can
+   * be chosen (the account has multiple live libraries), the request is refused
+   * with 400. Image metadata is extracted before the response returns; the rest of
+   * processing (thumbnails, search indexing, face detection, and video metadata
+   * extraction) continues asynchronously after the response.
    *
    * @example
    * ```ts
