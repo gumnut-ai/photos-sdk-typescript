@@ -12,33 +12,34 @@ import { multipartFormRequestOptions } from '../internal/uploads';
  */
 export class Search extends APIResource {
   /**
-   * Searches for assets by content, by typed structured filters on albums, people,
-   * date range, and location, or both. Content searches are ranked by relevance;
-   * filter-only searches return matches newest-first. Use this tool when the user
-   * describes _what's in_ the photos they want — subjects, scenes, places,
-   * activities, moods, objects — optionally narrowed by album, person, rating, date,
-   * or location.
+   * Searches for assets by content, by typed structured filters, or both. Content
+   * searches are ranked by relevance; filter-only searches return matches
+   * newest-first. Use this tool when the user describes _what's in_ the photos they
+   * want — subjects, scenes, places, activities, moods, objects — optionally
+   * narrowed by album, person, rating, media type, date, or location.
    *
    * Prefer typed filters for anything the request states exactly: `album_id` for
    * album membership, `person_ids` for people, `ratings` for exact effective
-   * ratings, `local_datetime_before`/`local_datetime_after` for date ranges, and
-   * `center` + `radius` or `bbox` for location. There is no typed camera or
-   * place-name filter — pass those terms in the free-text `query`; the metadata
-   * full-text stage can match those terms, while dense retrieval adds
-   * visual-semantic matches. For example, 'photos of my kids at the beach last
-   * summer' becomes `query='kids at the beach'` +
-   * `local_datetime_after=2025-06-01` + `local_datetime_before=2025-09-01`.
+   * ratings, `media_type` for images or videos,
+   * `local_datetime_before`/`local_datetime_after` for date ranges, and `center` +
+   * `radius` or `bbox` for location. There is no typed camera or place-name filter —
+   * pass those terms in the free-text `query`; the metadata full-text stage can
+   * match those terms, while dense retrieval adds visual-semantic matches. For
+   * example, 'photos of my kids at the beach last summer' becomes
+   * `query='kids at the beach'` + `local_datetime_after=2025-06-01` +
+   * `local_datetime_before=2025-09-01`.
    *
    * **Use `list_assets` instead** for a plain structured browse that album, person,
    * rating, media-type, date-range, location, or asset-ID filters can answer with no
    * content `query` — it's cheaper and more deterministic than semantic search.
-   * There is no media-type filter here, so 'show me all my videos' is a
-   * `list_assets` browse with `media_type=video`.
+   * 'Show me all my videos' is a `list_assets` browse with `media_type=video`;
+   * 'videos of the beach' is a search here — videos match through text only (file
+   * name, metadata, and person or album names), not visual content.
    *
    * **Location filtering is by coordinate,** in two mutually-exclusive modes: a
    * radius (`center` + `radius`) or a bounding box (`bbox`).
    *
-   * At least one of `query`, `album_id`, `person_ids`, `ratings`,
+   * At least one of `query`, `album_id`, `person_ids`, `ratings`, `media_type`,
    * `local_datetime_before`, or `local_datetime_after` must be provided; a location
    * filter only narrows those results and is not a search criterion on its own.
    */
@@ -50,16 +51,15 @@ export class Search extends APIResource {
   }
 
   /**
-   * Searches for assets by content, by typed structured filters on albums, people,
-   * date range, and location, or both. Content searches are ranked by relevance;
-   * filter-only searches return matches newest-first. An uploaded `image` adds
-   * visual-similarity search; text and uploaded-image signals stay independent when
-   * both are provided.
+   * Searches for assets by content, by typed structured filters, or both. Content
+   * searches are ranked by relevance; filter-only searches return matches
+   * newest-first. An uploaded `image` adds visual-similarity search; text and
+   * uploaded-image signals stay independent when both are provided.
    *
-   * At least one search criterion, including `ratings`, must be provided. Location
-   * filtering is by coordinate in two mutually-exclusive modes: a radius (`center` +
-   * `radius`) or a bounding box (`bbox`); it narrows candidates and is not a search
-   * criterion on its own.
+   * At least one search criterion, including `ratings` or `media_type`, must be
+   * provided. Location filtering is by coordinate in two mutually-exclusive modes: a
+   * radius (`center` + `radius`) or a bounding box (`bbox`); it narrows candidates
+   * and is not a search criterion on its own.
    */
   searchAssets(
     params: SearchSearchAssetsParams | null | undefined = {},
@@ -180,13 +180,18 @@ export interface SearchSearchParams {
   local_datetime_before?: string | null;
 
   /**
+   * Filter to one media class (`image` or `video`). Omit to include both images and
+   * videos.
+   */
+  media_type?: 'image' | 'video' | null;
+
+  /**
    * 1-indexed page number; increment it to fetch subsequent pages. Stop when
    * `has_more` is false, even if the current page is full. `search_assets` pages by
    * number rather than by cursor. A search with a content criterion ranks a fixed
    * top-200 candidate population by relevance, so pages beyond that population are
-   * empty. A structured-filter-only search (album, people, date range — no content
-   * criterion) returns the full matching set newest-first, paginated without that
-   * cap.
+   * empty. A structured-filter-only search (no content criterion) returns the full
+   * matching set newest-first, paginated without that cap.
    */
   page?: number;
 
@@ -309,13 +314,21 @@ export interface SearchSearchAssetsParams {
   local_datetime_before?: string | null;
 
   /**
+   * Body param: Which media class an asset belongs to.
+   *
+   * Every image format is `image` and every video format is `video`. An asset's
+   * class is fixed by the file originally uploaded, so an edited photo is still
+   * `image`.
+   */
+  media_type?: 'image' | 'video' | null;
+
+  /**
    * Body param: 1-indexed page number; increment it to fetch subsequent pages. Stop
    * when `has_more` is false, even if the current page is full. `search_assets`
    * pages by number rather than by cursor. A search with a content criterion ranks a
    * fixed top-200 candidate population by relevance, so pages beyond that population
-   * are empty. A structured-filter-only search (album, people, date range — no
-   * content criterion) returns the full matching set newest-first, paginated without
-   * that cap.
+   * are empty. A structured-filter-only search (no content criterion) returns the
+   * full matching set newest-first, paginated without that cap.
    */
   page?: number;
 
