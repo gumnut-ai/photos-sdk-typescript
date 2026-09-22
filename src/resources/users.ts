@@ -11,7 +11,9 @@ export class Users extends APIResource {
   /**
    * Updates preferences on the authenticated user's own account. Only the fields
    * included in the request body are changed. This endpoint does not accept a user
-   * ID; it always updates the authenticated caller.
+   * ID; it always updates the authenticated caller. Returns 404, without changing
+   * anything, when `immich_library_id` names a library the caller cannot choose; the
+   * response is the same whether or not that library exists.
    */
   update(body: UserUpdateParams, options?: RequestOptions): APIPromise<UserResponse> {
     return this._client.patch('/api/users/me', { body, ...options });
@@ -95,6 +97,13 @@ export interface UserResponse {
   first_name?: string | null;
 
   /**
+   * The user's stored preferred library, or null to use the default. Reported as
+   * stored: the library may since have been trashed, or the user's access to it may
+   * have changed.
+   */
+  immich_library_id?: string | null;
+
+  /**
    * User's last name
    */
   last_name?: string | null;
@@ -120,6 +129,14 @@ export interface UserUpdateParams {
    * - `rating`: a 0-5 star control.
    */
   favorite_display_mode?: 'favorite' | 'rating' | null;
+
+  /**
+   * Preferred library. Must be a live library the caller owns or has the
+   * collaborator role in, and that the request's credential can access; any other id
+   * returns 404. Omit to leave unchanged; send `null` to clear the preference and
+   * use the default.
+   */
+  immich_library_id?: string | null;
 }
 
 export declare namespace Users {
