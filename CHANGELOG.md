@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.171.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.170.0...v0.171.0) (2026-09-22)
+
+
+### Features
+
+* **api:** api update ([8b87246](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8b8724690b812b4b51fa045d6a20d87723aaf1c3))
+* **api:** api update ([67f9c59](https://github.com/gumnut-ai/photos-sdk-typescript/commit/67f9c594927986e2a6f34793b032453308a6c235))
+* **api:** api update ([697ae46](https://github.com/gumnut-ai/photos-sdk-typescript/commit/697ae46c682abd1827c4e5e131621eea3aa7d490))
+* **api:** api update ([29d73da](https://github.com/gumnut-ai/photos-sdk-typescript/commit/29d73da67eaa06dce59a5f56170a376a149b6c90))
+* **api:** api update ([177a66a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/177a66a696b4b096bcb56c403d38333569137ac3))
+* **api:** api update ([58b323c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/58b323cb1fae75213633d5aa8ec64ba8c515646c))
+* **api:** api update ([72afe66](https://github.com/gumnut-ai/photos-sdk-typescript/commit/72afe66385981e5c758d41ad13ea82777783f465))
+* **api:** api update ([cebda59](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cebda5982df2d6a4a092cdc1c7f3a3d4da05cdf3))
+* **api:** map current-user preference updates ([3df5791](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3df5791b0066602accad1a7297804b12f6d7bf6a))
+
+
+### Chores
+
+* **stlc:** seal custom-code tracking files ([bfc923d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/bfc923d90119d8a5562d630da6d5cc033af63b3a))
+
 ## [0.170.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.169.0...v0.170.0) (2026-09-08)
 
 
