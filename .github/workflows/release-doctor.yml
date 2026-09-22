@@ -3,7 +3,11 @@ on:
   pull_request:
     branches:
       - main
+    types: [opened, reopened, synchronize, edited]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   release_doctor:
@@ -13,6 +17,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Check Release Please PR body
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'release-please--')
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import sys
+
+          with open(os.environ['GITHUB_EVENT_PATH'], encoding='utf-8') as event:
+              pr = json.load(event)['pull_request']
+          lines = (pr.get('body') or '').replace('\r\n', '\n').strip().split('\n')
+          separators = [index for index, line in enumerate(lines) if line == '---']
+          notes = '\n'.join(lines[separators[0] + 1:separators[-1]]).strip() if len(separators) >= 2 else ''
+          version = re.fullmatch(r'release: (\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)', pr['title'])
+          if not version or not notes.startswith(f'## [{version.group(1)}]'):
+              print('Release Please PR body must keep both --- separators and start its release notes with the version heading matching the PR title.', file=sys.stderr)
+              sys.exit(1)
+          PY
 
       - name: Check release environment
         run: |
