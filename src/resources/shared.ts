@@ -19,3 +19,15 @@ export interface AssetVariant {
    */
   width?: number | null;
 }
+
+export interface UserSummary {
+  /**
+   * User identifier
+   */
+  id: string;
+
+  /**
+   * Public display name, when available
+   */
+  display_name: string | null;
+}

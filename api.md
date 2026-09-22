@@ -3,6 +3,7 @@
 Types:
 
 - <code><a href="./src/resources/shared.ts">AssetVariant</a></code>
+- <code><a href="./src/resources/shared.ts">UserSummary</a></code>
 
 # APIKeys
 
@@ -138,20 +139,53 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/libraries.ts">LibraryResponse</a></code>
-- <code><a href="./src/resources/libraries.ts">LibraryListResponse</a></code>
-- <code><a href="./src/resources/libraries.ts">LibraryDeleteResponse</a></code>
-- <code><a href="./src/resources/libraries.ts">LibraryTrashResponse</a></code>
+- <code><a href="./src/resources/libraries/libraries.ts">LibraryResponse</a></code>
+- <code><a href="./src/resources/libraries/libraries.ts">LibraryListResponse</a></code>
+- <code><a href="./src/resources/libraries/libraries.ts">LibraryDeleteResponse</a></code>
+- <code><a href="./src/resources/libraries/libraries.ts">LibraryTrashResponse</a></code>
 
 Methods:
 
-- <code title="post /api/libraries">client.libraries.<a href="./src/resources/libraries.ts">create</a>({ ...params }) -> LibraryResponse</code>
-- <code title="get /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">retrieve</a>(libraryID) -> LibraryResponse</code>
-- <code title="patch /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">update</a>(libraryID, { ...params }) -> LibraryResponse</code>
-- <code title="get /api/libraries">client.libraries.<a href="./src/resources/libraries.ts">list</a>({ ...params }) -> LibraryListResponse</code>
-- <code title="delete /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries.ts">delete</a>(libraryID) -> LibraryDeleteResponse</code>
-- <code title="post /api/libraries/{library_id}/restore">client.libraries.<a href="./src/resources/libraries.ts">restore</a>(libraryID) -> LibraryResponse</code>
-- <code title="post /api/libraries/{library_id}/trash">client.libraries.<a href="./src/resources/libraries.ts">trash</a>(libraryID) -> LibraryTrashResponse</code>
+- <code title="post /api/libraries">client.libraries.<a href="./src/resources/libraries/libraries.ts">create</a>({ ...params }) -> LibraryResponse</code>
+- <code title="get /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries/libraries.ts">retrieve</a>(libraryID) -> LibraryResponse</code>
+- <code title="patch /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries/libraries.ts">update</a>(libraryID, { ...params }) -> LibraryResponse</code>
+- <code title="get /api/libraries">client.libraries.<a href="./src/resources/libraries/libraries.ts">list</a>({ ...params }) -> LibraryListResponse</code>
+- <code title="delete /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries/libraries.ts">delete</a>(libraryID) -> LibraryDeleteResponse</code>
+- <code title="post /api/libraries/{library_id}/restore">client.libraries.<a href="./src/resources/libraries/libraries.ts">restore</a>(libraryID) -> LibraryResponse</code>
+- <code title="post /api/libraries/{library_id}/trash">client.libraries.<a href="./src/resources/libraries/libraries.ts">trash</a>(libraryID) -> LibraryTrashResponse</code>
+
+## Members
+
+Types:
+
+- <code><a href="./src/resources/libraries/members.ts">MembershipPage</a></code>
+- <code><a href="./src/resources/libraries/members.ts">MembershipResponse</a></code>
+
+Methods:
+
+- <code title="patch /api/libraries/{library_id}/members/{user_id}">client.libraries.members.<a href="./src/resources/libraries/members.ts">update</a>(userID, { ...params }) -> MembershipResponse</code>
+- <code title="get /api/libraries/{library_id}/members">client.libraries.members.<a href="./src/resources/libraries/members.ts">list</a>(libraryID, { ...params }) -> MembershipResponsesCursorPage</code>
+- <code title="post /api/libraries/{library_id}/leave">client.libraries.members.<a href="./src/resources/libraries/members.ts">leave</a>(libraryID) -> MembershipResponse</code>
+- <code title="delete /api/libraries/{library_id}/members/{user_id}">client.libraries.members.<a href="./src/resources/libraries/members.ts">remove</a>(userID, { ...params }) -> MembershipResponse</code>
+
+## Invitations
+
+Types:
+
+- <code><a href="./src/resources/libraries/invitations.ts">InvitationJoinResponse</a></code>
+- <code><a href="./src/resources/libraries/invitations.ts">InvitationLinkResponse</a></code>
+- <code><a href="./src/resources/libraries/invitations.ts">InvitationPage</a></code>
+- <code><a href="./src/resources/libraries/invitations.ts">InvitationPreviewResponse</a></code>
+- <code><a href="./src/resources/libraries/invitations.ts">InvitationResponse</a></code>
+
+Methods:
+
+- <code title="post /api/libraries/invitations">client.libraries.invitations.<a href="./src/resources/libraries/invitations.ts">create</a>({ ...params }) -> InvitationLinkResponse</code>
+- <code title="get /api/libraries/invitations">client.libraries.invitations.<a href="./src/resources/libraries/invitations.ts">list</a>({ ...params }) -> InvitationResponsesCursorPage</code>
+- <code title="post /api/libraries/invitations/{invitation_id}/disable">client.libraries.invitations.<a href="./src/resources/libraries/invitations.ts">disable</a>(invitationID) -> InvitationResponse</code>
+- <code title="post /api/libraries/invitations/{invitation_id}/join">client.libraries.invitations.<a href="./src/resources/libraries/invitations.ts">join</a>(invitationID, { ...params }) -> InvitationJoinResponse</code>
+- <code title="get /api/libraries/invitations/{invitation_id}/link">client.libraries.invitations.<a href="./src/resources/libraries/invitations.ts">link</a>(invitationID) -> InvitationLinkResponse</code>
+- <code title="post /api/libraries/invitations/{invitation_id}/preview">client.libraries.invitations.<a href="./src/resources/libraries/invitations.ts">preview</a>(invitationID, { ...params }) -> InvitationPreviewResponse</code>
 
 # OAuth
 

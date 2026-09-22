@@ -48,16 +48,6 @@ import {
   Faces,
 } from './resources/faces';
 import {
-  Libraries,
-  LibraryCreateParams,
-  LibraryDeleteResponse,
-  LibraryListParams,
-  LibraryListResponse,
-  LibraryResponse,
-  LibraryTrashResponse,
-  LibraryUpdateParams,
-} from './resources/libraries';
-import {
   AuthURLResponse,
   ExchangeResponse,
   LogoutEndpointResponse,
@@ -147,6 +137,16 @@ import {
   FileDataResponse,
   MetadataResponse,
 } from './resources/assets/assets';
+import {
+  Libraries,
+  LibraryCreateParams,
+  LibraryDeleteResponse,
+  LibraryListParams,
+  LibraryListResponse,
+  LibraryResponse,
+  LibraryTrashResponse,
+  LibraryUpdateParams,
+} from './resources/libraries/libraries';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -1116,4 +1116,5 @@ export declare namespace Gumnut {
   export { Users as Users, type UserResponse as UserResponse, type UserUpdateParams as UserUpdateParams };
 
   export type AssetVariant = API.AssetVariant;
+  export type UserSummary = API.UserSummary;
 }

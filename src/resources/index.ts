@@ -76,7 +76,7 @@ export {
   type LibraryCreateParams,
   type LibraryUpdateParams,
   type LibraryListParams,
-} from './libraries';
+} from './libraries/libraries';
 export {
   OAuth,
   type AuthURLResponse,
