@@ -181,7 +181,8 @@ export interface PersonResponse {
   cluster_metrics?: ClusterMetricsResponse | null;
 
   /**
-   * Optional name assigned to this person
+   * Name assigned to this person, or null when unnamed. Names supplied as text on
+   * create or update are trimmed and must not be blank.
    */
   name?: string | null;
 
@@ -220,7 +221,8 @@ export interface PersonCreateParams {
 
   /**
    * Display name for the new person (e.g., 'Alice'). Optional — unnamed people can
-   * be named later via `update_person`.
+   * be named later via `update_person`. If supplied, it must not be blank;
+   * surrounding whitespace is trimmed.
    */
   name?: string | null;
 
@@ -257,7 +259,8 @@ export interface PersonUpdateParams {
   is_hidden?: boolean | null;
 
   /**
-   * New display name. Omit to leave unchanged.
+   * New display name; must not be blank. Surrounding whitespace is trimmed. Omit to
+   * leave unchanged; pass `null` to clear the name.
    */
   name?: string | null;
 

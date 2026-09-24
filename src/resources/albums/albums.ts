@@ -105,7 +105,8 @@ export interface AlbumResponse {
   created_at: string;
 
   /**
-   * Display name of the album
+   * Display name of the album. Names supplied as text on create or update are
+   * trimmed and must not be blank.
    */
   name: string;
 
@@ -161,7 +162,8 @@ export interface AlbumCreateParams {
 
   /**
    * Display name for the new album. Optional; callers that need to name an album can
-   * set it here or via `update_album` after creation.
+   * set it here or via `update_album` after creation. If supplied, it must not be
+   * blank; surrounding whitespace is trimmed.
    */
   name?: string | null;
 }
@@ -181,7 +183,8 @@ export interface AlbumUpdateParams {
   description?: string | null;
 
   /**
-   * New display name for the album. Omit to leave unchanged.
+   * New display name for the album; must not be blank. Surrounding whitespace is
+   * trimmed. Omit or pass `null` to leave unchanged.
    */
   name?: string | null;
 }
