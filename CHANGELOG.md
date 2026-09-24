@@ -3,9 +3,9 @@
 ## [0.173.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.172.0...v0.173.0) (2026-09-24)
 
 
-### Features
+### Documentation
 
-* **api:** api update ([23d663f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/23d663ff6476c945dcaa4d2a710505f875ac237a))
+* **libraries:** document that `client.libraries.create()` and `client.libraries.update()` reject a blank or whitespace-only `name` — the API now returns `422` — and trim surrounding whitespace from it. `update()` still leaves the name unchanged when `name` is omitted or `null`. ([23d663f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/23d663ff6476c945dcaa4d2a710505f875ac237a))
 
 ## [0.172.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.171.0...v0.172.0) (2026-09-22)
 
