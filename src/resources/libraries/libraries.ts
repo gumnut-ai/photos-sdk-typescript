@@ -199,7 +199,8 @@ export interface LibraryTrashResponse {}
 
 export interface LibraryCreateParams {
   /**
-   * Display name for the new library. Required.
+   * Display name for the new library. Required; must not be blank. Surrounding
+   * whitespace is trimmed.
    */
   name: string;
 
@@ -216,7 +217,8 @@ export interface LibraryUpdateParams {
   description?: string | null;
 
   /**
-   * New display name for the library. Omit to leave unchanged.
+   * New display name for the library; must not be blank. Surrounding whitespace is
+   * trimmed. Omit or send `null` to leave unchanged.
    */
   name?: string | null;
 }
