@@ -48,6 +48,11 @@ export class Events extends APIResource {
    * - `album_asset_added`, `album_asset_removed`
    * - `metadata_updated`
    * - `stack_created`, `stack_updated`, `stack_deleted`
+   *
+   * **People and faces:** `person_updated` fires only when a person's own fields
+   * change — name, birth date, hidden, favorite, or thumbnail face. A person's face
+   * count, asset count, and cluster metrics follow its faces, so their changes
+   * arrive as `face_*` events only; refetch the person when a face event names it.
    */
   get(query: EventGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<EventsResponse> {
     return this._client.get('/api/events', { query, ...options });
