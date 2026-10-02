@@ -39,9 +39,9 @@ export class Events extends APIResource {
    * so it can trail its commit. Events are not in commit order: two changes to one
    * entity can arrive out of order, which is why step 3 re-reads state.
    *
-   * Returns 400 for an unknown entity type or a malformed cursor, and for a cursor
-   * ahead of the database, as after a restore that went back in time. None clears on
-   * retry; after a cursor error, resync from no cursor.
+   * Returns 400 for an unknown entity type, a malformed cursor or `as_of`, and for a
+   * cursor or `as_of` ahead of the database, as after a restore that went back in
+   * time. None clears on retry; after a cursor error, resync from no cursor.
    *
    * **Handling deletions:** when `event_type` ends with `_deleted` or `_removed`,
    * the entity no longer exists — remove it from the local cache. Some deletion
@@ -77,6 +77,12 @@ export class Events extends APIResource {
  * Response containing a page of events.
  */
 export interface EventsResponse {
+  /**
+   * Opaque bound this read stopped at. Pass as `as_of` to the other reads in the
+   * same sync, such as other entity types, so they all stop at the same point.
+   */
+  as_of: string;
+
   /**
    * Events in feed order, which is not commit order.
    */
@@ -143,6 +149,14 @@ export interface EventGetParams {
    * first sync.
    */
   after_cursor?: string | null;
+
+  /**
+   * Opaque bound from an earlier response's `as_of` in the same sync. Returns only
+   * events that were ready at that point, so several reads share one bound, such as
+   * one feed per entity type. A row can still precede the row it refers to when its
+   * transaction began writing first. Use it for one sync only; never store it.
+   */
+  as_of?: string | null;
 
   /**
    * Only return events created at or after this timestamp (ISO 8601). A display

@@ -27,6 +27,7 @@ describe('resource events', () => {
       client.events.get(
         {
           after_cursor: 'after_cursor',
+          as_of: 'as_of',
           created_at_gte: '2019-12-27T18:11:19.117Z',
           created_at_lt: '2019-12-27T18:11:19.117Z',
           entity_types: ['string', 'string'],
