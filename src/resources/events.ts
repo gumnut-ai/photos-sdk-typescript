@@ -46,12 +46,25 @@ export class Events extends APIResource {
    * **Handling deletions:** when `event_type` ends with `_deleted` or `_removed`,
    * the entity no longer exists — remove it from the local cache. Some deletion
    * events include a `payload` field with context (e.g., `album_asset_removed`
-   * carries `album_id` and `asset_id` since the junction row is gone).
+   * carries `album_id` and `asset_id` since the junction row is gone). Permanently
+   * deleting an asset also records an `album_asset_removed` for each of its
+   * memberships. Deleting an album does not: `album_deleted` means the album's
+   * memberships are gone too, so remove them along with the album.
+   *
+   * **Trash and restore:** `asset_trashed` moves an asset to the trash and
+   * `asset_restored` brings it back. Trashing hides the asset's faces and album
+   * memberships from default reads and lowers its people's and stack's counts;
+   * restoring reverses that. Those related changes get no events of their own. On
+   * either event, re-read the asset's faces and album memberships by `asset_id` (a
+   * trashed asset returns none), and refetch by ID the people and stack that your
+   * copy of its faces and of the asset names.
    *
    * **Event types:**
    *
-   * - `asset_created`, `asset_updated`, `asset_deleted`
+   * - `asset_created`, `asset_updated`, `asset_trashed`, `asset_restored`,
+   *   `asset_deleted`
    * - `album_created`, `album_updated`, `album_deleted`
+   * - `library_trashed`, `library_restored`
    * - `person_created`, `person_updated`, `person_deleted`
    * - `face_created`, `face_updated`, `face_deleted`
    * - `album_asset_added`, `album_asset_removed`
