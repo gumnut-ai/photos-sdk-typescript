@@ -5,14 +5,16 @@
 
 ### Features
 
-* **api:** api update ([33b8af6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/33b8af65a33b523946f8de3f0609e4dbecea1c5c))
-* **api:** api update ([5ea3dca](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5ea3dcab93aa332e23a360c3857c48d67e3bf3a7))
-* **api:** api update ([b92459e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b92459eb5bea18cff2e4fa8c433af9e62f12aa6f))
-* **api:** api update ([4babdf0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/4babdf0cf44de519d6269d6731c2c350d4758695))
-* **api:** api update ([8bb1e30](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8bb1e30153848fc6c62552a62e6010e073c464a8))
-* **api:** api update ([f412305](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f4123056dc1fe83b7f79f28d1b40ea754e5652d5))
-* **api:** api update ([33a29c4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/33a29c432977875f2fa47367262780cd346c85c5))
-* **api:** api update ([a31d9ba](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a31d9ba3e3ebef6d5c92d78fb1d214b785566009))
+* **stacks:** add an `include` parameter to `client.stacks.listStacks()` and an `asset_ids` field to stack responses. With `include: ['asset_ids']`, each listed stack carries the IDs of its live members, earliest capture time first, so a client can pick a representative frame without one member read per stack. The field is `null` unless requested; an unknown `include` value returns `422`. ([33b8af6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/33b8af65a33b523946f8de3f0609e4dbecea1c5c))
+* **events:** add `EventsResponse.next_cursor`; store it after applying a page and pass it as `after_cursor` to continue. The feed is now commit-safe: reading forward from a stored cursor returns every committed event after it, each once, in feed order rather than commit order. `created_at_lt` is deprecated and ignored, and `created_at` is for display only, not a sync checkpoint. ([4babdf0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/4babdf0cf44de519d6269d6731c2c350d4758695))
+* **events:** add `EventsResponse.as_of` and an `as_of` parameter to `client.events.get()`, so several reads in one sync, such as one per entity type, stop at the same point. Use it for one sync only; never store it. ([b92459e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b92459eb5bea18cff2e4fa8c433af9e62f12aa6f))
+
+### Documentation
+
+* **events:** document `asset_trashed`, `asset_restored`, `library_trashed` and `library_restored`. Trashing or restoring an asset changes its faces, album memberships and its people's and stack's counts without separate events, so re-read them on either event. Permanently deleting an asset records an `album_asset_removed` per membership; `album_deleted` does not, so drop the album's memberships with it. ([5ea3dca](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5ea3dcab93aa332e23a360c3857c48d67e3bf3a7))
+* **albums, people, libraries:** document that `create()` reuses an existing record whose name matches, ignoring case and surrounding whitespace (`200` instead of `201`), returns `409` when another supplied field differs, and that renaming onto another record's name returns `409`; trashed library names stay reserved until purged. ([8bb1e30](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8bb1e30153848fc6c62552a62e6010e073c464a8))
+* **albums, people:** document that a supplied `name` must not be blank and is trimmed of surrounding whitespace. ([a31d9ba](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a31d9ba3e3ebef6d5c92d78fb1d214b785566009))
+* **events:** document that `person_updated` fires only for a person's own fields, and that `face_updated` and `face_deleted` payloads carry `previous_person_id`; refetch both persons and handle a `404` for one deleted in the same change. ([33a29c4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/33a29c432977875f2fa47367262780cd346c85c5), [f412305](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f4123056dc1fe83b7f79f28d1b40ea754e5652d5))
 
 ## [0.173.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.172.0...v0.173.0) (2026-09-24)
 
