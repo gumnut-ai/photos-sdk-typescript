@@ -172,6 +172,14 @@ export interface StackAddAssetsToStackResponse {
   updated_at: string;
 
   /**
+   * IDs of the stack's live members, earliest capture time first — the order
+   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
+   * members, like `asset_count`. Only populated by `list_stacks` with
+   * `include=asset_ids`; null otherwise.
+   */
+  asset_ids?: Array<string> | null;
+
+  /**
    * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
    * Null for an auto-detected burst unless a user has since pinned a cover — there
    * is no server-selected default, so a client showing a stack with no pinned cover
@@ -218,6 +226,14 @@ export interface StackCreateStackResponse {
   updated_at: string;
 
   /**
+   * IDs of the stack's live members, earliest capture time first — the order
+   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
+   * members, like `asset_count`. Only populated by `list_stacks` with
+   * `include=asset_ids`; null otherwise.
+   */
+  asset_ids?: Array<string> | null;
+
+  /**
    * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
    * Null for an auto-detected burst unless a user has since pinned a cover — there
    * is no server-selected default, so a client showing a stack with no pinned cover
@@ -262,6 +278,14 @@ export interface StackListStacksResponse {
    * When this stack was last updated
    */
   updated_at: string;
+
+  /**
+   * IDs of the stack's live members, earliest capture time first — the order
+   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
+   * members, like `asset_count`. Only populated by `list_stacks` with
+   * `include=asset_ids`; null otherwise.
+   */
+  asset_ids?: Array<string> | null;
 
   /**
    * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
@@ -315,6 +339,14 @@ export interface StackRetrieveStackResponse {
   updated_at: string;
 
   /**
+   * IDs of the stack's live members, earliest capture time first — the order
+   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
+   * members, like `asset_count`. Only populated by `list_stacks` with
+   * `include=asset_ids`; null otherwise.
+   */
+  asset_ids?: Array<string> | null;
+
+  /**
    * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
    * Null for an auto-detected burst unless a user has since pinned a cover — there
    * is no server-selected default, so a client showing a stack with no pinned cover
@@ -359,6 +391,14 @@ export interface StackSetCoverResponse {
    * When this stack was last updated
    */
   updated_at: string;
+
+  /**
+   * IDs of the stack's live members, earliest capture time first — the order
+   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
+   * members, like `asset_count`. Only populated by `list_stacks` with
+   * `include=asset_ids`; null otherwise.
+   */
+  asset_ids?: Array<string> | null;
 
   /**
    * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
@@ -406,6 +446,13 @@ export interface StackListStacksParams extends CursorPageParams {
    * `ids=asset_stack_1,asset_stack_2`).
    */
   ids?: Array<string> | null;
+
+  /**
+   * Opt-in expansion fields. Supported values: `asset_ids` (each stack's live member
+   * IDs). Accepts multiple `include=` query params or a single comma-delimited
+   * value. Unknown values return 422.
+   */
+  include?: Array<string> | null;
 
   /**
    * Library to list stacks from. Optional if the user has a single live

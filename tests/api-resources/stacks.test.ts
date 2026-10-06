@@ -77,6 +77,7 @@ describe('resource stacks', () => {
       client.stacks.listStacks(
         {
           ids: ['string', 'string'],
+          include: ['string', 'string'],
           library_id: 'library_id',
           limit: 1,
           origin: 'auto_burst',
