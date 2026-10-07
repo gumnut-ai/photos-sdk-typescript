@@ -12,7 +12,7 @@ export class Events extends APIResource {
    * Returns a paginated stream of change events (create/update/delete) for entities
    * in the library. Each event is a lightweight record — `entity_type`, `entity_id`,
    * `event_type`, and timestamps — pointing at a concrete entity that has changed.
-   * Follow up with `get_asset`, `get_album`, `get_person`, or `get_face` to fetch
+   * Follow up with `list_assets`, `get_album`, `get_person`, or `get_face` to fetch
    * full entity data when needed.
    *
    * **Use this tool** when the user wants to synchronise a local copy of their
@@ -27,7 +27,8 @@ export class Events extends APIResource {
    * 3. Treat each event as "this changed": re-read the current state of the entity
    *    it names and upsert it, or drop it when the read returns not-found. For
    *    `album_asset_*` events, re-read that album's membership rather than applying
-   *    the add or remove directly.
+   *    the add or remove directly. For an `entity_id` that is an asset ID, and for
+   *    faces, see **Library membership**.
    * 4. After applying the page, store its `next_cursor`.
    * 5. Repeat until `has_more` is false. The client is then caught up; the next sync
    *    resumes at step 1.
@@ -51,6 +52,27 @@ export class Events extends APIResource {
    * memberships. Deleting an album does not: `album_deleted` means the album's
    * memberships are gone too, so remove them along with the album.
    *
+   * **Library membership:** an asset can move to another library and keep its ID,
+   * and its faces move with it and keep theirs. `get_asset` is not scoped to a
+   * library, so it still returns an asset that moved to another library you can
+   * read. Never decide membership with it. Re-read assets with `list_assets`,
+   * passing this feed's `library_id`, the `ids`, and `state=all`, and read every
+   * page. Do this for every event whose `entity_id` is an asset ID: every event with
+   * `entity_type` `asset` or `metadata`, whatever its `event_type`. Read faces with
+   * this feed's `library_id` too; `list_faces` and `get_face` both take it. Upsert
+   * what the read returns into your copy of this library. Remove what it omits, and
+   * what your copy relates to it, from your copy of this library only; a permanently
+   * deleted asset is omitted too. The people that your copy of a removed asset's
+   * faces names lose them with no events of their own, so refetch them by ID;
+   * neither a person nor a stack moves between libraries. A failed or partial read
+   * is not an omission: retry it from the first page, and store no cursor past it.
+   *
+   * **Moves between libraries:** a move records `asset_moved_out` in the library the
+   * asset left and `asset_moved_in` in the library it joined. Neither has a
+   * `payload` or names the other library. `asset_moved_out` is not a deletion: the
+   * asset may have moved back by the time you read the event, so apply **Library
+   * membership** instead of removing it outright.
+   *
    * **Trash and restore:** `asset_trashed` moves an asset to the trash and
    * `asset_restored` brings it back. Trashing hides the asset's faces and album
    * memberships from default reads and lowers its people's and stack's counts;
@@ -63,6 +85,7 @@ export class Events extends APIResource {
    *
    * - `asset_created`, `asset_updated`, `asset_trashed`, `asset_restored`,
    *   `asset_deleted`
+   * - `asset_moved_out`, `asset_moved_in`
    * - `album_created`, `album_updated`, `album_deleted`
    * - `library_trashed`, `library_restored`
    * - `person_created`, `person_updated`, `person_deleted`
