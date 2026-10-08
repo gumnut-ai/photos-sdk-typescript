@@ -5,8 +5,11 @@
 
 ### Features
 
-* **api:** api update ([9260c0b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9260c0b4d587bb2f29e78f04841d2c0ddcacc91b))
-* **api:** map asset move endpoint ([0f788b9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0f788b9879d630d7d2ec5fd2977fec37e6759a00))
+* **assets:** add `client.assets.move()`, which moves assets from one library to another, keeping their IDs and stored files. Pass `asset_ids`, `source_library_id` and `destination_library_id`. The caller must own the source library and own or collaborate on the destination; a scoped credential must cover both libraries and allow both `write` and `delete_permanently`. Moved assets leave the source library's albums, people and stacks. `AssetMoveResponse.data` holds one result per distinct asset ID, in request order: an `outcome` of `moved`, `already_in_destination` (a success, so repeating a request is safe) or `failed`, with a `failure` of `unavailable`, `changed_source`, `duplicate`, `quota` or `busy`. A `409` means a concurrent change interrupted the request and nothing moved, so retry it unchanged; a `503` means moving assets is turned off, so retry later. ([0f788b9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0f788b9879d630d7d2ec5fd2977fec37e6759a00))
+
+### Documentation
+
+* **events:** document `asset_moved_out` and `asset_moved_in`, recorded in the library an asset left and the library it joined; neither has a `payload` or names the other library. An asset keeps its ID when it moves and its faces move with it, and `client.assets.retrieve()` is not scoped to a library, so never decide library membership with it. For every event whose `entity_id` is an asset ID, re-read with `client.assets.list()`, passing the feed's `library_id`, the `ids` and `state: 'all'`, and read faces with the feed's `library_id` too. Upsert what the read returns, and remove what it omits from your copy of that library only. `asset_moved_out` is not a deletion: the asset may have moved back by the time you read the event. ([9260c0b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9260c0b4d587bb2f29e78f04841d2c0ddcacc91b))
 
 ## [0.174.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.173.0...v0.174.0) (2026-10-06)
 
