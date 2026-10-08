@@ -36,6 +36,7 @@ Types:
 - <code><a href="./src/resources/assets/assets.ts">AssetClusterByGeoResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetDeleteListResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetEmptyTrashResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetMoveResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetRestoreResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetTrashResponse</a></code>
 
@@ -51,6 +52,7 @@ Methods:
 - <code title="get /api/assets/counts">client.assets.<a href="./src/resources/assets/assets.ts">counts</a>({ ...params }) -> AssetCountResponse</code>
 - <code title="delete /api/assets">client.assets.<a href="./src/resources/assets/assets.ts">deleteList</a>({ ...params }) -> AssetDeleteListResponse</code>
 - <code title="post /api/assets/empty-trash">client.assets.<a href="./src/resources/assets/assets.ts">emptyTrash</a>({ ...params }) -> AssetEmptyTrashResponse</code>
+- <code title="post /api/assets/move">client.assets.<a href="./src/resources/assets/assets.ts">move</a>({ ...params }) -> AssetMoveResponse</code>
 - <code title="post /api/assets/restore">client.assets.<a href="./src/resources/assets/assets.ts">restore</a>({ ...params }) -> AssetRestoreResponse</code>
 - <code title="post /api/assets/trash">client.assets.<a href="./src/resources/assets/assets.ts">trash</a>({ ...params }) -> AssetTrashResponse</code>
 - <code title="patch /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets/assets.ts">updateAsset</a>(assetID, { ...params }) -> AssetResponse</code>

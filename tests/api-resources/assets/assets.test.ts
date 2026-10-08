@@ -273,6 +273,31 @@ describe('resource assets', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('move: only required params', async () => {
+    const responsePromise = client.assets.move({
+      asset_ids: ['string'],
+      destination_library_id: 'destination_library_id',
+      source_library_id: 'source_library_id',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('move: required and optional params', async () => {
+    const response = await client.assets.move({
+      asset_ids: ['string'],
+      destination_library_id: 'destination_library_id',
+      source_library_id: 'source_library_id',
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('restore: only required params', async () => {
     const responsePromise = client.assets.restore({ ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();

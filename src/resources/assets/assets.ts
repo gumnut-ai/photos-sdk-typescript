@@ -284,6 +284,35 @@ export class Assets extends APIResource {
   }
 
   /**
+   * Moves the given assets from one library to another, keeping their IDs and stored
+   * files. The caller must own the source library and either own the destination
+   * library or be a collaborator on it. A scoped credential must cover both
+   * libraries and allow both `delete_permanently` and `write`. Moved assets leave
+   * the source library's albums, people, and stacks.
+   *
+   * Returns 200 with one result per asset even when some assets could not be moved.
+   * Each result describes the asset's state when the request ran, so repeating a
+   * request is safe: an asset already in the destination library is reported as a
+   * success.
+   *
+   * Returns 409 when a concurrent change interrupted the request; nothing was moved,
+   * so retry it unchanged. Returns 503 while moving assets is turned off; retry
+   * later.
+   *
+   * @example
+   * ```ts
+   * const response = await client.assets.move({
+   *   asset_ids: ['string'],
+   *   destination_library_id: 'destination_library_id',
+   *   source_library_id: 'source_library_id',
+   * });
+   * ```
+   */
+  move(body: AssetMoveParams, options?: RequestOptions): APIPromise<AssetMoveResponse> {
+    return this._client.post('/api/assets/move', { body, ...options });
+  }
+
+  /**
    * Restores trashed assets so they reappear in default list/search results.
    * Idempotent — assets that are already live are silently skipped.
    *
@@ -869,6 +898,45 @@ export interface AssetDeleteListResponse {}
  */
 export interface AssetEmptyTrashResponse {}
 
+export interface AssetMoveResponse {
+  /**
+   * One result per distinct requested asset ID, in request order.
+   */
+  data: Array<AssetMoveResponse.Data>;
+}
+
+export namespace AssetMoveResponse {
+  export interface Data {
+    /**
+     * Requested asset ID.
+     */
+    asset_id: string;
+
+    /**
+     * What a move request did with one asset.
+     *
+     * - `moved`: the asset is now in the destination library.
+     * - `already_in_destination`: the asset was already in the destination library, so
+     *   nothing changed. This is a success.
+     * - `failed`: the asset was not moved; `failure` says why.
+     */
+    outcome: 'moved' | 'already_in_destination' | 'failed';
+
+    /**
+     * Why an asset was not moved.
+     *
+     * - `unavailable`: the asset does not exist, is in the trash, or is not
+     *   accessible.
+     * - `changed_source`: the asset is no longer in the source library.
+     * - `duplicate`: the destination library already holds an asset with the same
+     *   original file, possibly in its trash.
+     * - `quota`: the destination library has no storage room for the asset.
+     * - `busy`: another operation is changing the asset. Retry the request.
+     */
+    failure?: 'unavailable' | 'changed_source' | 'duplicate' | 'quota' | 'busy' | null;
+  }
+}
+
 /**
  * Empty acknowledgment returned when an operation succeeds.
  */
@@ -1417,6 +1485,24 @@ export interface AssetEmptyTrashParams {
   library_id?: string | null;
 }
 
+export interface AssetMoveParams {
+  /**
+   * Asset IDs (each with the `asset_` prefix) to move.
+   */
+  asset_ids: Array<string>;
+
+  /**
+   * Library to move the assets into. The caller must own it or be a collaborator on
+   * it. Must differ from `source_library_id`.
+   */
+  destination_library_id: string;
+
+  /**
+   * Library the assets are in now. The caller must own it.
+   */
+  source_library_id: string;
+}
+
 export interface AssetRestoreParams {
   /**
    * Body param: Asset IDs (each with the `asset_` prefix) to operate on. Up to 200
@@ -1502,6 +1588,7 @@ export declare namespace Assets {
     type AssetClusterByGeoResponse as AssetClusterByGeoResponse,
     type AssetDeleteListResponse as AssetDeleteListResponse,
     type AssetEmptyTrashResponse as AssetEmptyTrashResponse,
+    type AssetMoveResponse as AssetMoveResponse,
     type AssetRestoreResponse as AssetRestoreResponse,
     type AssetTrashResponse as AssetTrashResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
@@ -1514,6 +1601,7 @@ export declare namespace Assets {
     type AssetCountsParams as AssetCountsParams,
     type AssetDeleteListParams as AssetDeleteListParams,
     type AssetEmptyTrashParams as AssetEmptyTrashParams,
+    type AssetMoveParams as AssetMoveParams,
     type AssetRestoreParams as AssetRestoreParams,
     type AssetTrashParams as AssetTrashParams,
     type AssetUpdateAssetParams as AssetUpdateAssetParams,
