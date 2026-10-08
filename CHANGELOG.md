@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.175.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.174.0...v0.175.0) (2026-10-08)
+
+
+### Features
+
+* **api:** api update ([9260c0b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9260c0b4d587bb2f29e78f04841d2c0ddcacc91b))
+* **api:** map asset move endpoint ([0f788b9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0f788b9879d630d7d2ec5fd2977fec37e6759a00))
+
 ## [0.174.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.173.0...v0.174.0) (2026-10-06)
 
 
