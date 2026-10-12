@@ -565,8 +565,8 @@ export interface AssetResponse {
   metadata?: MetadataResponse | null;
 
   /**
-   * ML-generated quality scores and other metrics. `null` when not requested via
-   * `include=metrics`.
+   * @deprecated Deprecated and will be removed: use the top-level `quality_score`
+   * instead. `null` when not requested via `include=metrics`.
    */
   metrics?: { [key: string]: number | null } | null;
 
@@ -576,6 +576,15 @@ export interface AssetResponse {
    * identified.
    */
   people?: Array<PeopleAPI.PersonResponse> | null;
+
+  /**
+   * Photographic quality judged from the image alone (focus, exposure, noise,
+   * composition, capture flaws), from 0 (worst) to 1 (best) on a fixed scale that is
+   * comparable across photos and libraries. Scores take a few distinct values, so
+   * photos of similar quality tie. It does not reflect who is pictured. `null` means
+   * the asset has no score.
+   */
+  quality_score?: number | null;
 
   /**
    * ID of the stack this asset belongs to (`asset_stack_` prefix), or `null` when
@@ -997,9 +1006,10 @@ export interface AssetCreateParams {
 export interface AssetRetrieveParams {
   /**
    * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
-   * location names), `faces`, `people`, `metrics` (ML quality scores), `file_data`
-   * (a group token populating the nested `file_data` object with the file/provenance
-   * scalars `device_asset_id`, `device_id`, `file_created_at`, `file_modified_at`,
+   * location names), `faces`, `people`, `metrics` (deprecated and will be removed:
+   * use the default `quality_score` field instead), `file_data` (a group token
+   * populating the nested `file_data` object with the file/provenance scalars
+   * `device_asset_id`, `device_id`, `file_created_at`, `file_modified_at`,
    * `checksum`, `checksum_sha1`, `file_size_bytes`), and `variants` (every
    * `asset_urls` rung beyond the lean one. Without it `asset_urls` carries only its
    * lean rung — `thumbnail` for an image, or `thumbnail_image` for a video — so
@@ -1007,9 +1017,9 @@ export interface AssetRetrieveParams {
    * must pass it). Accepts multiple `include=` query params or a single
    * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
    * When omitted, only the lean core is returned (`id`, `mime_type`,
-   * `local_datetime`, dimensions, `file_size_bytes`, `description`, `thumbhash`,
-   * `asset_urls`, `kind`, `current_version_id`) and each data field above is
-   * null/absent until you request it.
+   * `local_datetime`, dimensions, `file_size_bytes`, `description`, `quality_score`,
+   * `thumbhash`, `asset_urls`, `kind`, `current_version_id`) and each data field
+   * above is null/absent until you request it.
    */
   include?: Array<string> | null;
 }
@@ -1060,9 +1070,10 @@ export interface AssetListParams extends CursorPageParams {
 
   /**
    * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
-   * location names), `faces`, `people`, `metrics` (ML quality scores), `file_data`
-   * (a group token populating the nested `file_data` object with the file/provenance
-   * scalars `device_asset_id`, `device_id`, `file_created_at`, `file_modified_at`,
+   * location names), `faces`, `people`, `metrics` (deprecated and will be removed:
+   * use the default `quality_score` field instead), `file_data` (a group token
+   * populating the nested `file_data` object with the file/provenance scalars
+   * `device_asset_id`, `device_id`, `file_created_at`, `file_modified_at`,
    * `checksum`, `checksum_sha1`, `file_size_bytes`), and `variants` (every
    * `asset_urls` rung beyond the lean one. Without it `asset_urls` carries only its
    * lean rung — `thumbnail` for an image, or `thumbnail_image` for a video — so
@@ -1070,9 +1081,9 @@ export interface AssetListParams extends CursorPageParams {
    * must pass it). Accepts multiple `include=` query params or a single
    * comma-delimited value (e.g. `include=faces,people`). Unknown values return 422.
    * When omitted, only the lean core is returned (`id`, `mime_type`,
-   * `local_datetime`, dimensions, `file_size_bytes`, `description`, `thumbhash`,
-   * `asset_urls`, `kind`, `current_version_id`) and each data field above is
-   * null/absent until you request it.
+   * `local_datetime`, dimensions, `file_size_bytes`, `description`, `quality_score`,
+   * `thumbhash`, `asset_urls`, `kind`, `current_version_id`) and each data field
+   * above is null/absent until you request it.
    */
   include?: Array<string> | null;
 
