@@ -125,8 +125,9 @@ export interface TaskResponse {
    * original the image CDN cannot transform, such as an oversized or
    * over-dimensioned file), `burst_detection` (detect rapid-fire shots of the same
    * moment and stack them), `product_update_subscription` (enroll an explicitly
-   * opted-in new user in product-update email delivery), or `person_metrics_refresh`
-   * (recompute the face-matching summary of one person after their faces change).
+   * opted-in new user in product-update email delivery), `person_metrics_refresh`
+   * (recompute the face-matching summary of one person after their faces change), or
+   * `quality_scoring` (rate an image's photographic quality).
    */
   task_type:
     | 'image_quality'
@@ -143,7 +144,8 @@ export interface TaskResponse {
     | 'display_proxy_generation'
     | 'burst_detection'
     | 'product_update_subscription'
-    | 'person_metrics_refresh';
+    | 'person_metrics_refresh'
+    | 'quality_scoring';
 }
 
 export type TaskListResponse = Array<TaskResponse>;
@@ -186,6 +188,7 @@ export interface TaskListParams {
     | 'burst_detection'
     | 'product_update_subscription'
     | 'person_metrics_refresh'
+    | 'quality_scoring'
     | null;
 }
 
