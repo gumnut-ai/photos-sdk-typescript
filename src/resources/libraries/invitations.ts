@@ -16,8 +16,8 @@ export class Invitations extends APIResource {
   /**
    * Issue an invitation for one library. An identical active policy returns the same
    * link with 200; a new policy returns 201. A matching inactive invitation returns
-   * 409 without a link; retry with a new policy. Admission disabled returns 503;
-   * retry after it becomes available.
+   * 409 without a link; retry with a new policy. Authentication provider outages
+   * return 503; retry sign-in later.
    */
   create(body: InvitationCreateParams, options?: RequestOptions): APIPromise<InvitationLinkResponse> {
     return this._client.post('/api/libraries/invitations', { body, ...options });
@@ -50,8 +50,8 @@ export class Invitations extends APIResource {
    * an uncertain join unchanged consumes no additional place. Invalid secrets or
    * unavailable libraries return a generic 404; retry with a valid, available link.
    * Expired, disabled, exhausted, or removal-cutoff invitations return 409; request
-   * a new invitation. Admission disabled returns 503; retry after it becomes
-   * available.
+   * a new invitation. Authentication provider outages return 503; retry sign-in
+   * later.
    */
   join(
     invitationID: string,
