@@ -5,7 +5,11 @@
 
 ### Features
 
-* **api:** api update ([577065d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/577065d3572aa40e276fdd2483e26b75723e5e5e))
+* **people:** add `include_hidden` to `client.people.list()`. Listings now leave out people marked hidden (`is_hidden`) by default; pass `include_hidden: true` to include them. When you pass `ids`, `include_hidden` defaults to `true` (as `name_filter` defaults to `all`), so lookups by ID still return hidden people. `client.people.retrieve()` and people embedded in asset responses are unchanged. ([577065d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/577065d3572aa40e276fdd2483e26b75723e5e5e))
+
+### Documentation
+
+* **faces:** document that `ClusterAssignmentResponse.candidates` leaves out hidden people. ([577065d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/577065d3572aa40e276fdd2483e26b75723e5e5e))
 
 ## [0.176.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.175.0...v0.176.0) (2026-10-13)
 
