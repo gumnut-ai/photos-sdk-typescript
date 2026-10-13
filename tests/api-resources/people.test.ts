@@ -78,6 +78,7 @@ describe('resource people', () => {
           asset_id: 'asset_id',
           ids: ['string', 'string'],
           include: ['string', 'string'],
+          include_hidden: true,
           library_id: 'library_id',
           limit: 1,
           name: 'name',

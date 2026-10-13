@@ -64,8 +64,9 @@ export class People extends APIResource {
    * may have zero or more faces, ordered according to `sort` (newest first by
    * default), optionally filtered by asset, album, name, or ID.
    *
-   * By default only people with a non-null name are returned; pass `name_filter=all`
-   * for every person or `name_filter=unnamed` for people whose name is null.
+   * By default only named people who are not hidden are returned; pass
+   * `name_filter=all` to include unnamed people (or `name_filter=unnamed` for only
+   * those), and `include_hidden=true` to include hidden people.
    *
    * To list the underlying faces for a specific person, use `list_faces` with
    * `person_id`.
@@ -298,8 +299,9 @@ export interface PersonListParams extends CursorPageParams {
   /**
    * Look up specific people by ID (max 200; each ID has the `person_` prefix).
    * Accepts multiple `ids=` query params or a single comma-delimited value (e.g.,
-   * `ids=person_1,person_2`). When set, `name_filter` defaults to `all` so unnamed
-   * people are included in the lookup.
+   * `ids=person_1,person_2`). When set, `name_filter` defaults to `all` and
+   * `include_hidden` defaults to `true` so unnamed and hidden people are included in
+   * the lookup.
    */
   ids?: Array<string> | null;
 
@@ -310,6 +312,12 @@ export interface PersonListParams extends CursorPageParams {
    * or a single comma-delimited value. Unknown values return 422.
    */
   include?: Array<string> | null;
+
+  /**
+   * Include people marked hidden (`is_hidden`). Defaults to `false`, or to `true`
+   * when `ids` is provided, so lookups by ID still return hidden people.
+   */
+  include_hidden?: boolean | null;
 
   /**
    * Library to list from. Optional if the user has a single live (non-trashed)
