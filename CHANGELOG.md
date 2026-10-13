@@ -5,10 +5,12 @@
 
 ### Features
 
-* **api:** api update ([e6e2802](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e6e280202bbd4ab17950c120e939647c618b0540))
-* **api:** api update ([34680e8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/34680e837f7be40dbb117b3644fda879d01fe595))
-* **api:** api update ([c0bcc82](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c0bcc82e686b2dc46b8909ea05ea3ff8fdda3f0f))
-* **api:** api update ([cf66cbf](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cf66cbfbad15035a74bfe42816d1d033d7797de4))
+* **assets:** add `AssetResponse.quality_score`, a photographic quality score from 0 (worst) to 1 (best), judged from the image alone: focus, exposure, noise, composition and capture flaws. It is returned by default from `client.assets.retrieve()`, `client.assets.list()` and both search methods, with no `include` value needed. The scale is fixed, so scores are comparable across photos and libraries. Scores take a few distinct values, so photos of similar quality tie. It does not reflect who is pictured, and it is `null` when the asset has no score. `AssetResponse.metrics` and `include: ['metrics']` are deprecated and will be removed; use `quality_score` instead. ([e6e2802](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e6e280202bbd4ab17950c120e939647c618b0540))
+* **tasks:** add the task types `quality_scoring` (rate an image's photographic quality) and `person_metrics_refresh` (recompute one person's face-matching summary after their faces change) to `TaskResponse.task_type` and the `task_type` parameter of `client.tasks.list()`. ([34680e8](https://github.com/gumnut-ai/photos-sdk-typescript/commit/34680e837f7be40dbb117b3644fda879d01fe595)), ([cf66cbf](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cf66cbfbad15035a74bfe42816d1d033d7797de4))
+
+### Documentation
+
+* **albums, libraries, people:** document on `create()` and `update()` that creating reuses a matching record without changing it and never deletes existing records, and that an update overwrites the supplied fields with no automatic undo while leaving omitted fields unchanged. ([c0bcc82](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c0bcc82e686b2dc46b8909ea05ea3ff8fdda3f0f))
 
 ## [0.175.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.174.0...v0.175.0) (2026-10-08)
 
