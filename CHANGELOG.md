@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.179.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.178.0...v0.179.0) (2026-10-14)
+
+
+### Features
+
+* **people:** add `client.people.bulkUpdatePeople()`, which applies up to 200 per-person changes in one atomic request. Each item in `updates` has a person `id` and a `change` with the same fields as `client.people.update()` (name, birth date, `is_hidden`, `is_favorite`, thumbnail face), so different people can get different changes. A duplicate ID returns `422`. An unknown or inaccessible ID returns `404`. Any failing item rejects the whole batch, and nothing is written. Items apply in request order, and each rename is checked against the names left by earlier items, so swapping two people's names or giving two people the same name returns `409`. ([b0e5497](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b0e549755fbe27f032345f973d5b0526875d602d)), ([b7a0073](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b7a007356bf006056eabb1f540da2c05363145df))
+
+### Bug Fixes
+
+* **people:** `is_hidden` and `is_favorite` on `client.people.update()` are now typed as `boolean`; they no longer accept `null`. An explicit null previously caused a server error; the API now rejects it with a `422`. Omit a field to leave it unchanged. ([b0e5497](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b0e549755fbe27f032345f973d5b0526875d602d))
+
+### Documentation
+
+* **libraries:** on `client.libraries.invitations.create()` and `client.libraries.invitations.join()`, document `503` as an authentication-provider outage (retry sign-in later), not as invitations being turned off. ([335aed2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/335aed2a73f4bf130e502d76543389fe521d4a06))
+
 ## [0.178.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.177.0...v0.178.0) (2026-10-13)
 
 
