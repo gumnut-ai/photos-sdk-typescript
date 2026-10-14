@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.179.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.178.0...v0.179.0) (2026-10-14)
+
+
+### Features
+
+* **api:** api update ([b0e5497](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b0e549755fbe27f032345f973d5b0526875d602d))
+* **api:** api update ([335aed2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/335aed2a73f4bf130e502d76543389fe521d4a06))
+* **api:** map bulk people update endpoint ([b7a0073](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b7a007356bf006056eabb1f540da2c05363145df))
+
 ## [0.178.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.177.0...v0.178.0) (2026-10-13)
 
 
