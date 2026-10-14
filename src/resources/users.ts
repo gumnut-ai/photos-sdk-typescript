@@ -13,7 +13,14 @@ export class Users extends APIResource {
    * included in the request body are changed. This endpoint does not accept a user
    * ID; it always updates the authenticated caller. Returns 404, without changing
    * anything, when `immich_library_id` names a library the caller cannot choose; the
-   * response is the same whether or not that library exists.
+   * response is the same whether or not that library exists. `home_country`,
+   * `home_subdivision` and `face_detection_preference` can be changed only from a
+   * signed-in app session: an API key or OAuth credential that sends any of them
+   * gets 403 and nothing changes. Setting `face_detection_preference` to true
+   * returns 409, which is not retryable, when automatic face detection is not
+   * available for the home region. Declaring such a home region sets the preference
+   * to false and, like turning it off, permanently removes the stored face
+   * recognition data of every library the user owns.
    */
   update(body: UserUpdateParams, options?: RequestOptions): APIPromise<UserResponse> {
     return this._client.patch('/api/users/me', { body, ...options });
@@ -48,6 +55,20 @@ export interface UserResponse {
    * Whether demo-mode person-name presentation is enabled. Defaults to false.
    */
   demo_mode_enabled: boolean;
+
+  /**
+   * Whether automatic face detection can be turned on for this user. False when the
+   * declared home region is one where it is not offered; `face_detection_preference`
+   * is then false and cannot be set to true.
+   */
+  face_detection_available: boolean;
+
+  /**
+   * Whether automatic face detection is on for the libraries this user owns: true is
+   * on, false is off, null means the user has not chosen yet. Faces are detected
+   * automatically only when this is true.
+   */
+  face_detection_preference: boolean | null;
 
   /**
    * The user's effective favorite/rating display mode, defaulting to `favorite` when
@@ -97,6 +118,18 @@ export interface UserResponse {
   first_name?: string | null;
 
   /**
+   * The user's declared home country as an ISO 3166-1 alpha-2 code (e.g. 'US'); null
+   * until declared
+   */
+  home_country?: string | null;
+
+  /**
+   * The user's declared home state or province: an ISO 3166-2 code without its
+   * country prefix (e.g. 'CA' for US-CA); null when not declared
+   */
+  home_subdivision?: string | null;
+
+  /**
    * The user's stored preferred library, or null to use the default. Reported as
    * stored: the library may since have been trashed, or the user's access to it may
    * have changed.
@@ -123,12 +156,34 @@ export interface UserUpdateParams {
   demo_mode_enabled?: boolean;
 
   /**
+   * Turn automatic face detection on (true) or off (false) for the libraries the
+   * user owns. Omit to leave unchanged; explicit null is not accepted. Turning it
+   * off permanently removes the stored face recognition data of every library the
+   * user owns; detected face boxes and their people are kept.
+   */
+  face_detection_preference?: boolean | null;
+
+  /**
    * Presentation a user prefers for the favorite/rating control.
    *
    * - `favorite`: a heart — filled at the top rating, empty otherwise.
    * - `rating`: a 0-5 star control.
    */
   favorite_display_mode?: 'favorite' | 'rating' | null;
+
+  /**
+   * Home country as an uppercase ISO 3166-1 alpha-2 code (e.g. 'US'). Omit to leave
+   * unchanged; explicit null is not accepted. Changing the country clears
+   * `home_subdivision` unless the same request sets it.
+   */
+  home_country?: string | null;
+
+  /**
+   * Home state or province: an ISO 3166-2 code without its country prefix (e.g. 'CA'
+   * for US-CA). Required when the home country is 'US'. Omit to leave unchanged;
+   * send `null` to clear it.
+   */
+  home_subdivision?: string | null;
 
   /**
    * Preferred library. Must be a live library the caller owns or has the
