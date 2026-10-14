@@ -58,6 +58,8 @@ import {
 import {
   ClusterMetricsResponse,
   People,
+  PersonBulkUpdatePeopleParams,
+  PersonBulkUpdatePeopleResponse,
   PersonCreateParams,
   PersonDeleteResponse,
   PersonListParams,
@@ -1074,11 +1076,13 @@ export declare namespace Gumnut {
     type ClusterMetricsResponse as ClusterMetricsResponse,
     type PersonResponse as PersonResponse,
     type PersonDeleteResponse as PersonDeleteResponse,
+    type PersonBulkUpdatePeopleResponse as PersonBulkUpdatePeopleResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,
     type PersonRetrieveParams as PersonRetrieveParams,
     type PersonUpdateParams as PersonUpdateParams,
     type PersonListParams as PersonListParams,
+    type PersonBulkUpdatePeopleParams as PersonBulkUpdatePeopleParams,
     type PersonMergeParams as PersonMergeParams,
   };
 

@@ -100,6 +100,28 @@ export class People extends APIResource {
   }
 
   /**
+   * Updates name, birth date, visibility, favorite status, or thumbnail on multiple
+   * people in one transactional call. Each item carries the target person id and the
+   * per-person change — different fields can be changed on different people in the
+   * same request. Atomic: a duplicate id, an unknown or inaccessible id, or any
+   * per-item failure rejects the whole batch and writes nothing.
+   *
+   * Items apply in request order, and each rename is checked against the names left
+   * by earlier items: swapping two people's names, or giving two people the same
+   * name, returns 409. Renaming to another record's name in the same library,
+   * including hidden people, also returns 409. Names ignore case and surrounding
+   * whitespace; retrying the same collision does not resolve it.
+   *
+   * `update_person` edits a single person.
+   */
+  bulkUpdatePeople(
+    body: PersonBulkUpdatePeopleParams,
+    options?: RequestOptions,
+  ): APIPromise<PersonBulkUpdatePeopleResponse> {
+    return this._client.post('/api/people/bulk-update', { body, ...options });
+  }
+
+  /**
    * Merges one or more source people into the primary person identified by the URL.
    * All faces from source people are reassigned to the primary person. Source people
    * are permanently deleted (this cannot be undone). The primary person's centroid
@@ -210,6 +232,11 @@ export interface PersonResponse {
  * Empty acknowledgment returned when an operation succeeds.
  */
 export interface PersonDeleteResponse {}
+
+/**
+ * Empty acknowledgment returned by `bulk_update_people`.
+ */
+export interface PersonBulkUpdatePeopleResponse {}
 
 export interface PersonCreateParams {
   /**
@@ -356,6 +383,70 @@ export interface PersonListParams extends CursorPageParams {
     | 'asset_count_asc';
 }
 
+export interface PersonBulkUpdatePeopleParams {
+  /**
+   * List of per-person updates. Each item carries the target person id and the
+   * change to apply to it; different fields can be changed on different people in
+   * the same request. Up to 200 items per request.
+   */
+  updates: Array<PersonBulkUpdatePeopleParams.Update>;
+}
+
+export namespace PersonBulkUpdatePeopleParams {
+  /**
+   * One person update in a bulk request.
+   */
+  export interface Update {
+    /**
+     * Person ID (with the `person_` prefix) to apply this change to.
+     */
+    id: string;
+
+    /**
+     * The change to apply to this person. Same shape as the body of the single-person
+     * `update_person` endpoint — same fields, same validation; omitted fields are
+     * unchanged.
+     */
+    change: Update.Change;
+  }
+
+  export namespace Update {
+    /**
+     * The change to apply to this person. Same shape as the body of the single-person
+     * `update_person` endpoint — same fields, same validation; omitted fields are
+     * unchanged.
+     */
+    export interface Change {
+      /**
+       * New birth date (ISO 8601 date). Omit to leave unchanged.
+       */
+      birth_date?: string | null;
+
+      /**
+       * Mark or unmark this person as a favorite. Omit to leave unchanged.
+       */
+      is_favorite?: boolean;
+
+      /**
+       * Hide or unhide this person. Omit to leave unchanged.
+       */
+      is_hidden?: boolean;
+
+      /**
+       * New display name; must not be blank. Surrounding whitespace is trimmed. Omit to
+       * leave unchanged; pass `null` to clear the name.
+       */
+      name?: string | null;
+
+      /**
+       * New thumbnail face ID for this person. Omit to leave unchanged. Enumerate a
+       * person's faces with `list_faces` and `person_id`.
+       */
+      thumbnail_face_id?: string | null;
+    }
+  }
+}
+
 export interface PersonMergeParams {
   /**
    * IDs of the people to merge into the primary person. These people will be deleted
@@ -369,11 +460,13 @@ export declare namespace People {
     type ClusterMetricsResponse as ClusterMetricsResponse,
     type PersonResponse as PersonResponse,
     type PersonDeleteResponse as PersonDeleteResponse,
+    type PersonBulkUpdatePeopleResponse as PersonBulkUpdatePeopleResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,
     type PersonRetrieveParams as PersonRetrieveParams,
     type PersonUpdateParams as PersonUpdateParams,
     type PersonListParams as PersonListParams,
+    type PersonBulkUpdatePeopleParams as PersonBulkUpdatePeopleParams,
     type PersonMergeParams as PersonMergeParams,
   };
 }

@@ -104,6 +104,43 @@ describe('resource people', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('bulkUpdatePeople: only required params', async () => {
+    const responsePromise = client.people.bulkUpdatePeople({
+      updates: [
+        {
+          id: 'id',
+          change: {},
+        },
+      ],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('bulkUpdatePeople: required and optional params', async () => {
+    const response = await client.people.bulkUpdatePeople({
+      updates: [
+        {
+          id: 'id',
+          change: {
+            birth_date: '2019-12-27',
+            is_favorite: true,
+            is_hidden: true,
+            name: 'x',
+            thumbnail_face_id: 'thumbnail_face_id',
+          },
+        },
+      ],
+    });
+  });
+
+  // Mock server tests are disabled
   test.skip('merge: only required params', async () => {
     const responsePromise = client.people.merge('person_id', { source_person_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();

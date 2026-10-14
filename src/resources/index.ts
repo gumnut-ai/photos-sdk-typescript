@@ -92,10 +92,12 @@ export {
   type ClusterMetricsResponse,
   type PersonResponse,
   type PersonDeleteResponse,
+  type PersonBulkUpdatePeopleResponse,
   type PersonCreateParams,
   type PersonRetrieveParams,
   type PersonUpdateParams,
   type PersonListParams,
+  type PersonBulkUpdatePeopleParams,
   type PersonMergeParams,
   type PersonResponsesCursorPage,
 } from './people';

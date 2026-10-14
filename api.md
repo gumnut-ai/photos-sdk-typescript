@@ -210,6 +210,7 @@ Types:
 - <code><a href="./src/resources/people.ts">ClusterMetricsResponse</a></code>
 - <code><a href="./src/resources/people.ts">PersonResponse</a></code>
 - <code><a href="./src/resources/people.ts">PersonDeleteResponse</a></code>
+- <code><a href="./src/resources/people.ts">PersonBulkUpdatePeopleResponse</a></code>
 
 Methods:
 
@@ -218,6 +219,7 @@ Methods:
 - <code title="patch /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">update</a>(personID, { ...params }) -> PersonResponse</code>
 - <code title="get /api/people">client.people.<a href="./src/resources/people.ts">list</a>({ ...params }) -> PersonResponsesCursorPage</code>
 - <code title="delete /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">delete</a>(personID) -> PersonDeleteResponse</code>
+- <code title="post /api/people/bulk-update">client.people.<a href="./src/resources/people.ts">bulkUpdatePeople</a>({ ...params }) -> PersonBulkUpdatePeopleResponse</code>
 - <code title="post /api/people/{person_id}/merge">client.people.<a href="./src/resources/people.ts">merge</a>(personID, { ...params }) -> PersonResponse</code>
 
 # Ping
