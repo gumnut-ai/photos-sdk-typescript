@@ -54,6 +54,8 @@ export class People extends APIResource {
    *
    * This tool does not move faces between people — use `update_face` with a new
    * `person_id` for that.
+   *
+   * `bulk_update_people` applies changes to multiple people in one call.
    */
   update(personID: string, body: PersonUpdateParams, options?: RequestOptions): APIPromise<PersonResponse> {
     return this._client.patch(path`/api/people/${personID}`, { body, ...options });
@@ -263,12 +265,12 @@ export interface PersonUpdateParams {
   /**
    * Mark or unmark this person as a favorite. Omit to leave unchanged.
    */
-  is_favorite?: boolean | null;
+  is_favorite?: boolean;
 
   /**
    * Hide or unhide this person. Omit to leave unchanged.
    */
-  is_hidden?: boolean | null;
+  is_hidden?: boolean;
 
   /**
    * New display name; must not be blank. Surrounding whitespace is trimmed. Omit to
