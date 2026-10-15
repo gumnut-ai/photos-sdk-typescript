@@ -47,6 +47,7 @@ import {
   FaceUpdateParams,
   Faces,
 } from './resources/faces';
+import { Feedback, FeedbackResult, FeedbackSubmitParams } from './resources/feedback';
 import {
   AuthURLResponse,
   ExchangeResponse,
@@ -899,6 +900,10 @@ export class Gumnut {
   static toFile = Uploads.toFile;
 
   /**
+   * Reports of friction using Gumnut.
+   */
+  feedback: API.Feedback = new API.Feedback(this);
+  /**
    * Create and manage Gumnut API keys. Requires a first-party Gumnut app session — API keys and OAuth tokens cannot manage credentials.
    */
   apiKeys: API.APIKeys = new API.APIKeys(this);
@@ -956,6 +961,7 @@ export class Gumnut {
   users: API.Users = new API.Users(this);
 }
 
+Gumnut.Feedback = Feedback;
 Gumnut.APIKeys = APIKeys;
 Gumnut.Assets = Assets;
 Gumnut.Albums = Albums;
@@ -976,6 +982,12 @@ export declare namespace Gumnut {
 
   export import CursorPage = Pagination.CursorPage;
   export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
+
+  export {
+    Feedback as Feedback,
+    type FeedbackResult as FeedbackResult,
+    type FeedbackSubmitParams as FeedbackSubmitParams,
+  };
 
   export {
     APIKeys as APIKeys,

@@ -5,6 +5,16 @@ Types:
 - <code><a href="./src/resources/shared.ts">AssetVariant</a></code>
 - <code><a href="./src/resources/shared.ts">UserSummary</a></code>
 
+# Feedback
+
+Types:
+
+- <code><a href="./src/resources/feedback.ts">FeedbackResult</a></code>
+
+Methods:
+
+- <code title="post /api/feedback">client.feedback.<a href="./src/resources/feedback.ts">submit</a>({ ...params }) -> FeedbackResult</code>
+
 # APIKeys
 
 Types:

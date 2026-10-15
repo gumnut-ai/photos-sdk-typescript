@@ -69,6 +69,7 @@ export {
   type FaceDeleteParams,
   type FaceResponsesCursorPage,
 } from './faces';
+export { Feedback, type FeedbackResult, type FeedbackSubmitParams } from './feedback';
 export {
   Libraries,
   type LibraryResponse,
