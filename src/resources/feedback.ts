@@ -25,7 +25,7 @@ export class Feedback extends APIResource {
    * task regardless of the feedback outcome.
    */
   submit(body: FeedbackSubmitParams, options?: RequestOptions): APIPromise<FeedbackResult> {
-    return this._client.post('/api/feedback', { body, maxRetries: 0, ...options });
+    return this._client.post('/api/feedback', { body, ...options });
   }
 }
 
