@@ -19,8 +19,7 @@ export class Users extends APIResource {
    * gets 403 and nothing changes. Setting `face_detection_preference` to true
    * returns 409, which is not retryable, when automatic face detection is not
    * available for the home region. Declaring such a home region sets the preference
-   * to false and, like turning it off, permanently removes the stored face
-   * recognition data of every library the user owns.
+   * to false. Changing these settings keeps face data already stored.
    */
   update(body: UserUpdateParams, options?: RequestOptions): APIPromise<UserResponse> {
     return this._client.patch('/api/users/me', { body, ...options });
@@ -157,9 +156,8 @@ export interface UserUpdateParams {
 
   /**
    * Turn automatic face detection on (true) or off (false) for the libraries the
-   * user owns. Omit to leave unchanged; explicit null is not accepted. Turning it
-   * off permanently removes the stored face recognition data of every library the
-   * user owns; detected face boxes and their people are kept.
+   * user owns. Omit to leave unchanged; explicit null is not accepted. The setting
+   * applies to photos processed from then on; face data already stored is kept.
    */
   face_detection_preference?: boolean | null;
 
