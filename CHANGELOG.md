@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.181.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.180.0...v0.181.0) (2026-10-15)
+
+
+### Features
+
+* **api:** add feedback submission ([90ce557](https://github.com/gumnut-ai/photos-sdk-typescript/commit/90ce55796ebe10ad94a44aef3224c15f67eda5af))
+* **api:** api update ([0e9a7a9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0e9a7a96eb629e3f5477ea05dec852d02ad299b5))
+* **api:** api update ([c1fdefd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c1fdefd06ed0acb271f95cba1d771440d201d57d))
+
 ## [0.180.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.179.0...v0.180.0) (2026-10-14)
 
 
