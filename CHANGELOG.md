@@ -5,9 +5,12 @@
 
 ### Features
 
-* **api:** add feedback submission ([90ce557](https://github.com/gumnut-ai/photos-sdk-typescript/commit/90ce55796ebe10ad94a44aef3224c15f67eda5af))
-* **api:** api update ([0e9a7a9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0e9a7a96eb629e3f5477ea05dec852d02ad299b5))
-* **api:** api update ([c1fdefd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c1fdefd06ed0acb271f95cba1d771440d201d57d))
+* **feedback:** add `client.feedback.submit()`, which reports friction met while using Gumnut: a blocked or failed task, a missing capability, confusing behavior or results, a workaround, or a suggestion, even when the task ultimately succeeds. `feedback_type` (`'bug'`, `'missing_capability'`, `'confusing_behavior'`, `'suggestion'` or `'other'`) and `message` (1 to 4,000 characters) are required; `task_completed` and `tool_names` are optional. It requires write access. The returned `FeedbackResult` has `status: 'submitted'`, which confirms intake only, not review or a fix. Leave credentials, photos, signed URLs, personal or library names, precise locations and other private content out of the report. The method does not retry by default (`maxRetries: 0`): a server error or a lost response may mean the report was already delivered, and resubmitting can create a duplicate. ([90ce557](https://github.com/gumnut-ai/photos-sdk-typescript/commit/90ce55796ebe10ad94a44aef3224c15f67eda5af)), ([0e9a7a9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/0e9a7a96eb629e3f5477ea05dec852d02ad299b5))
+
+### Documentation
+
+* **users:** `client.users.update()` now documents that changing `face_detection_preference`, `home_country` or `home_subdivision` keeps face data already stored. The API no longer removes the stored face recognition data of the user's libraries when the preference is turned off or a home region without face detection is declared; the preference applies to photos processed from then on. Declaring such a home region still sets the preference to `false`. The 0.180.0 notes describe the earlier behavior. ([c1fdefd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c1fdefd06ed0acb271f95cba1d771440d201d57d))
+* **tasks:** the `face_template_removal` task type on `TaskResponse.task_type` is now described as removing the stored face templates of every library an owner owns, without tying it to turning face detection off. ([c1fdefd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c1fdefd06ed0acb271f95cba1d771440d201d57d))
 
 ## [0.180.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.179.0...v0.180.0) (2026-10-14)
 
