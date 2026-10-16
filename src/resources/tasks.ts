@@ -56,8 +56,7 @@ export interface TaskResponse {
   asset_id: string | null;
 
   /**
-   * Application-generated delivery identifier supplied to the task queue. Also
-   * accepted by `get_task_status` in place of `id`.
+   * @deprecated Deprecated alternate task identifier. Use `id` instead.
    */
   celery_task_id: string;
 
@@ -78,6 +77,21 @@ export interface TaskResponse {
    * succeeded. Null if no attempt has failed
    */
   error_message: string | null;
+
+  /**
+   * Stable outcome code whose meaning depends on `task_type`. For a successful
+   * `face_detection` task: `ran` means detection ran, possibly finding no faces;
+   * `skipped_photo_location` means automatic detection is not offered at the photo's
+   * location; `skipped_location_unread` means the photo has no location and its
+   * file's metadata has not been read; `skipped_owner_off` means the library owner
+   * had not turned detection on when the photo was processed; `skipped_owner_region`
+   * means detection is not offered in the owner's home region. Turning detection on
+   * later does not process earlier photos. Null for other task types, tasks that
+   * have not succeeded, and skips with no explanation, such as files that are not
+   * images. Each task reports its own run. Codes may be added for any task type;
+   * treat an unrecognized code as no explanation.
+   */
+  outcome: string | null;
 
   /**
    * Result summary produced by a completed task; null until success
