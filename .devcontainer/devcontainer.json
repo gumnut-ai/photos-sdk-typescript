@@ -2,11 +2,11 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/debian
 {
   "name": "Development",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:latest",
+  "build": { "dockerfile": "Dockerfile" },
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {}
+    "ghcr.io/devcontainers/features/node:1": { "version": "24" }
   },
-  "postCreateCommand": "yarn install",
+  "postCreateCommand": "./scripts/bootstrap",
   "customizations": {
     "vscode": {
       "extensions": ["biomejs.biome", "esbenp.prettier-vscode"]
