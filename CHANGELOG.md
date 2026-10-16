@@ -3,15 +3,14 @@
 ## [0.182.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.181.0...v0.182.0) (2026-10-16)
 
 
-### Features
-
-* **api:** api update ([ebc1b47](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ebc1b47fa644a698a2a799f44114088a3d9bf46a))
-* **api:** api update ([2cb53c9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2cb53c94f2ce60fcd20e08d86ec1c479e0e0176e))
-
-
 ### Bug Fixes
 
-* inherit client retry settings for feedback submissions ([514aadc](https://github.com/gumnut-ai/photos-sdk-typescript/commit/514aadc37ca18d1b43b5cda076feae779bec77d7))
+* **feedback:** `client.feedback.submit()` now follows the client's retry settings instead of never retrying (it previously forced `maxRetries: 0`), so by default (`maxRetries: 2`) a submission that fails with a retryable error, such as a lost connection or a `5xx`, is retried up to twice. A server error or a lost response may mean the report was already delivered, so a retry can deliver the same report more than once. To keep the earlier single attempt, pass `{ maxRetries: 0 }` as the request options. The 0.181.0 notes describe the earlier behavior. ([514aadc](https://github.com/gumnut-ai/photos-sdk-typescript/commit/514aadc37ca18d1b43b5cda076feae779bec77d7))
+
+### Documentation
+
+* **feedback:** the `client.feedback.submit()` description no longer asks for one report per distinct problem or advises against retrying or resubmitting. It still says that a server error or a lost response may mean the report was already delivered. ([2cb53c9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2cb53c94f2ce60fcd20e08d86ec1c479e0e0176e))
+* **faces:** document that `ClusterAssignmentResponse.distance_to_person` is `null` and `ClusterAssignmentResponse.candidates` is empty when the library owner's settings do not allow automatic face detection. ([ebc1b47](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ebc1b47fa644a698a2a799f44114088a3d9bf46a))
 
 ## [0.181.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.180.0...v0.181.0) (2026-10-15)
 
