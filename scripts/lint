@@ -4,11 +4,11 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-echo "==> Running prettier --check"
-./node_modules/.bin/prettier --check .
+echo "==> Running Biome"
+./node_modules/.bin/biome check .
 
-echo "==> Running eslint"
-./node_modules/.bin/eslint .
+echo "==> Checking Markdown and YAML formatting"
+./node_modules/.bin/prettier --check "**/*.{md,mdx,yaml,yml}"
 
 echo "==> Building"
 ./scripts/build

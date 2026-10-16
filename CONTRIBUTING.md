@@ -71,8 +71,12 @@ $ yarn run test
 
 ## Linting and formatting
 
-This repository uses [prettier](https://www.npmjs.com/package/prettier) and
-[eslint](https://www.npmjs.com/package/eslint) to format the code in the repository.
+This repository uses [Biome](https://biomejs.dev/) to lint and format TypeScript, JavaScript, and JSON.
+[Prettier](https://prettier.io/) formats Markdown and YAML. `yarn lint` also builds the package and checks
+types and package exports.
+
+Development uses TypeScript 6 because the dual CommonJS/ESM package builder requires its compiler API.
+The published library continues to support TypeScript 4.9 and later.
 
 To lint:
 

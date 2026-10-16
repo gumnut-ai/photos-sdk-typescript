@@ -4,8 +4,8 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-echo "==> Running eslint --fix"
-./node_modules/.bin/eslint --fix .
+echo "==> Running Biome --write --unsafe"
+./node_modules/.bin/biome check --write --unsafe .
 
-echo "==> Running prettier --write"
-./node_modules/.bin/prettier --write --cache --cache-strategy metadata .
+echo "==> Formatting Markdown and YAML"
+./node_modules/.bin/prettier --write --cache --cache-strategy metadata "**/*.{md,mdx,yaml,yml}"
