@@ -6,6 +6,10 @@
     "lib": ["es2020"],
     "module": "commonjs",
     "moduleResolution": "node",
+    // tsc-multi still uses node10 resolution; migrate the package build before TypeScript 7.
+    "ignoreDeprecations": "6.0",
+    "rootDir": ".",
+    "types": ["node", "jest"],
     "esModuleInterop": true,
     "paths": {
       "gumnut-sdk/*": ["./src/*"],

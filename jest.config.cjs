@@ -1,7 +1,6 @@
-import type { JestConfigWithTsJest } from 'ts-jest';
+/** @type {import('jest').Config} */
 
-const config: JestConfigWithTsJest = {
-  preset: 'ts-jest/presets/default-esm',
+const config = {
   testEnvironment: 'node',
   transform: {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
@@ -20,4 +19,4 @@ const config: JestConfigWithTsJest = {
   testPathIgnorePatterns: ['scripts'],
 };
 
-export default config;
+module.exports = config;
