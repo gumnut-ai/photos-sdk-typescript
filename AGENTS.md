@@ -1,36 +1,20 @@
 # AI Agent Instructions
 
-## Important: This is a Generated SDK
+## Generated SDK and Custom Changes
 
-This SDK is **auto-generated** by [Stainless](https://www.stainless.com/) from an OpenAPI specification. Do not manually edit generated files—your changes will be overwritten on the next generation.
+This SDK is generated from an OpenAPI specification. Make endpoint and request/response
+schema changes in the specification or generator configuration.
 
-## What You Should NOT Do
-
-- Do not modify files outside of the safe directories listed below
-- Do not refactor, reorganize, or "improve" generated code
-- Do not add new API methods or modify existing ones directly
-- Do not update type definitions for API responses/requests
-
-## Safe Directories (Not Overwritten by Generator)
-
-The following directories are preserved between generations and can be safely edited:
-
-- `src/lib/` - Custom library code
-- `examples/` - Example usage code
+Development-tooling fixes and other intentional custom changes are persisted and replayed
+between generations, as described in [CONTRIBUTING.md](./CONTRIBUTING.md). They may conflict
+with future generator changes; verify regeneration preserves them. `src/lib/` and
+`examples/` are never modified by the generator.
 
 ## Hand-Maintained Tooling
 
 `.agents/daemons/` holds Charlie daemon definitions — repo-authored operating roles, not
 generated output. It is outside the generator's preserved set but has persisted across
 regeneration; leave it in place. See [`.agents/daemons/AGENTS.md`](.agents/daemons/AGENTS.md).
-
-## If Changes Are Needed
-
-If the SDK needs changes (new endpoints, bug fixes, type corrections):
-
-1. Changes should be made to the **OpenAPI specification** or **Stainless configuration**, not this repository directly
-2. The SDK will be regenerated with the updates
-3. See the [Stainless documentation](https://www.stainless.com/docs/) for how SDK generation works
 
 ## Contributing
 
