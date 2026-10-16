@@ -98,14 +98,16 @@ export interface ClusterAssignmentResponse {
    * Eligible nearby Persons in the same library, sorted ascending by distance.
    * Excludes the face's currently-assigned Person (its distance is in
    * `distance_to_person`) and people marked hidden (`is_hidden`). Empty when there
-   * are no eligible nearby Persons.
+   * are no eligible nearby Persons, or when the library owner's settings do not
+   * allow automatic face detection.
    */
   candidates?: Array<ClusterAssignmentResponse.Candidate>;
 
   /**
    * Cosine distance from the face's embedding to its currently-assigned Person's
-   * centroid. Lower = better fit. Null when the face is unassigned or when the
-   * assigned Person has no centroid.
+   * centroid. Lower = better fit. Null when the face is unassigned, when the
+   * assigned Person has no centroid, or when the library owner's settings do not
+   * allow automatic face detection.
    */
   distance_to_person?: number | null;
 }
