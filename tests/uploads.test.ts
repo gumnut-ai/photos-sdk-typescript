@@ -1,6 +1,4 @@
 import fs from 'fs';
-import { vi } from 'vitest';
-
 import type { ResponseLike } from 'gumnut-sdk/internal/to-file';
 import { toFile } from 'gumnut-sdk/core/uploads';
 
@@ -21,14 +19,14 @@ describe('toFile', () => {
       // @ts-expect-error intentionally mismatched type
       toFile({ foo: 'string' }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unexpected data type: object; constructor: Object; props: ["foo"]]`,
+      `"Unexpected data type: object; constructor: Object; props: ["foo"]"`,
     );
 
     await expect(
       // @ts-expect-error intentionally mismatched type
       toFile(new MyClass()),
     ).rejects.toThrowErrorMatchingInlineSnapshot(
-      `[Error: Unexpected data type: object; constructor: MyClass; props: ["name"]]`,
+      `"Unexpected data type: object; constructor: MyClass; props: ["name"]"`,
     );
   });
 
@@ -80,7 +78,7 @@ describe('missing File error message', () => {
   beforeEach(() => {
     // The file shim captures the global File object when it's first imported.
     // Reset modules before each test so we can test the error thrown when it's undefined.
-    vi.resetModules();
+    jest.resetModules();
     const buffer = require('node:buffer');
     // @ts-ignore
     prevGlobalFile = globalThis.File;
@@ -94,7 +92,7 @@ describe('missing File error message', () => {
     // @ts-ignore
     globalThis.File = prevGlobalFile;
     require('node:buffer').File = prevNodeFile;
-    vi.resetModules();
+    jest.resetModules();
   });
 
   test('is thrown', async () => {

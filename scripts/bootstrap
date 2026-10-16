@@ -19,10 +19,8 @@ if [ -f "Brewfile" ] && [ "$(uname -s)" = "Darwin" ] && [ "${SKIP_BREW:-}" != "1
   }
 fi
 
-if ! command -v bun >/dev/null 2>&1; then
-  echo "Install Bun $(cat .bun-version) before running bootstrap: https://bun.com/docs/installation" >&2
-  exit 1
-fi
+echo "==> Installing Node dependencies…"
 
-echo "==> Installing dependencies with Bun"
-bun install --frozen-lockfile "$@"
+PACKAGE_MANAGER=$(command -v yarn >/dev/null 2>&1 && echo "yarn" || echo "npm")
+
+$PACKAGE_MANAGER install "$@"

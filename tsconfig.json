@@ -9,7 +9,7 @@
     // tsc-multi still uses node10 resolution; migrate the package build before TypeScript 7.
     "ignoreDeprecations": "6.0",
     "rootDir": ".",
-    "types": ["node", "vitest/globals"],
+    "types": ["node", "jest"],
     "esModuleInterop": true,
     "paths": {
       "gumnut-sdk/*": ["./src/*"],

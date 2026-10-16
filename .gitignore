@@ -10,6 +10,3 @@ dist-deno
 .idea/
 .eslintcache
 oidc
-
-# Generated package-check report
-.attw.json

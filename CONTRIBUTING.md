@@ -1,16 +1,16 @@
 ## Setting up the environment
 
-Development uses [Bun](https://bun.com/) (the version in `.bun-version`) to manage dependencies
-and run commands, and Node.js 24 to build the package and run Vitest.
+This repository uses [`yarn@v1`](https://classic.yarnpkg.com/lang/en/docs/install).
+Other package managers may work but are not officially supported for development.
+
+To set up the repository, run:
 
 ```sh
-$ ./scripts/bootstrap
-$ bun run build
+$ yarn
+$ yarn build
 ```
 
-Bootstrap installs the committed `bun.lock` without changing it. To intentionally change dependencies,
-use `bun add --dev <package>` or `bun install` and commit the updated lockfile. New dependency
-resolutions have a 14-day minimum release age, configured in `bunfig.toml`.
+This will install all the required dependencies and build output files to `dist/`.
 
 ## Modifying/Adding code
 
@@ -25,14 +25,14 @@ All files in the `examples/` directory are not modified by the generator and can
 ```ts
 // add an example to examples/<your-example>.ts
 
-#!/usr/bin/env bun
+#!/usr/bin/env -S npm run tsn -T
 …
 ```
 
 ```sh
 $ chmod +x examples/<your-example>.ts
 # run the example against your api
-$ bun run examples/<your-example>.ts
+$ yarn tsn -T examples/<your-example>.ts
 ```
 
 ## Using the repository from source
@@ -52,24 +52,27 @@ Alternatively, to link a local copy of the repo:
 $ git clone https://www.github.com/gumnut-ai/photos-sdk-typescript
 $ cd photos-sdk-typescript
 
-$ bun link
+# With yarn
+$ yarn link
 $ cd ../my-package
-$ bun link gumnut-sdk
+$ yarn link gumnut-sdk
+
+# With pnpm
+$ pnpm link --global
+$ cd ../my-package
+$ pnpm link --global gumnut-sdk
 ```
 
 ## Running tests
 
-Tests use [Vitest](https://vitest.dev/) in Node.js. Run once with the command below;
-use `bun run test --watch` for watch mode.
-
 ```sh
-$ bun run test
+$ yarn run test
 ```
 
 ## Linting and formatting
 
 This repository uses [Biome](https://biomejs.dev/) to lint and format TypeScript, JavaScript, and JSON.
-[Prettier](https://prettier.io/) formats Markdown and YAML. `bun run lint` also builds the package and checks
+[Prettier](https://prettier.io/) formats Markdown and YAML. `yarn lint` also builds the package and checks
 types and package exports.
 
 Development uses TypeScript 6 because the dual CommonJS/ESM package builder requires its compiler API.
@@ -78,13 +81,13 @@ The published library continues to support TypeScript 4.9 and later.
 To lint:
 
 ```sh
-$ bun run lint
+$ yarn lint
 ```
 
 To format and fix all lint issues automatically:
 
 ```sh
-$ bun run fix
+$ yarn fix
 ```
 
 ## Publishing and releases
