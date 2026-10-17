@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource search', () => {
-  // Mock server tests are disabled
-  test.skip('search', async () => {
+  test('search', async () => {
     const responsePromise = client.search.search();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,8 +19,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('search: request options and params are passed correctly', async () => {
+  test('search: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.search.search(
@@ -46,8 +44,7 @@ describe('resource search', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('searchAssets', async () => {
+  test('searchAssets', async () => {
     const responsePromise = client.search.searchAssets();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -58,8 +55,7 @@ describe('resource search', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('searchAssets: request options and params are passed correctly', async () => {
+  test('searchAssets: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.search.searchAssets(

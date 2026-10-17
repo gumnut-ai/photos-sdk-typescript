@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource albumAssets', () => {
-  // Mock server tests are disabled
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.albumAssets.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,8 +19,7 @@ describe('resource albumAssets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.albumAssets.list(
@@ -38,8 +36,7 @@ describe('resource albumAssets', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('get', async () => {
+  test('get', async () => {
     const responsePromise = client.albumAssets.get('album_asset_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

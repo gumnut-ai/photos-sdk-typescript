@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource versions', () => {
-  // Mock server tests are disabled
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.assets.versions.list('asset_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,8 +19,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.assets.versions.list(
@@ -32,8 +30,7 @@ describe('resource versions', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('delete: only required params', async () => {
+  test('delete: only required params', async () => {
     const responsePromise = client.assets.versions.delete('version_id', { asset_id: 'asset_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -44,13 +41,11 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('delete: required and optional params', async () => {
+  test('delete: required and optional params', async () => {
     const response = await client.assets.versions.delete('version_id', { asset_id: 'asset_id' });
   });
 
-  // Mock server tests are disabled
-  test.skip('append: only required params', async () => {
+  test('append: only required params', async () => {
     const responsePromise = client.assets.versions.append('asset_id', {
       file: await toFile(Buffer.from('Example data'), 'README.md'),
       kind: 'kind',
@@ -65,8 +60,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('append: required and optional params', async () => {
+  test('append: required and optional params', async () => {
     const response = await client.assets.versions.append('asset_id', {
       file: await toFile(Buffer.from('Example data'), 'README.md'),
       kind: 'kind',
@@ -75,8 +69,7 @@ describe('resource versions', () => {
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('replace: only required params', async () => {
+  test('replace: only required params', async () => {
     const responsePromise = client.assets.versions.replace('version_id', {
       asset_id: 'asset_id',
       file: await toFile(Buffer.from('Example data'), 'README.md'),
@@ -92,8 +85,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('replace: required and optional params', async () => {
+  test('replace: required and optional params', async () => {
     const response = await client.assets.versions.replace('version_id', {
       asset_id: 'asset_id',
       file: await toFile(Buffer.from('Example data'), 'README.md'),
@@ -103,8 +95,7 @@ describe('resource versions', () => {
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('revert: only required params', async () => {
+  test('revert: only required params', async () => {
     const responsePromise = client.assets.versions.revert('version_id', { asset_id: 'asset_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -115,8 +106,7 @@ describe('resource versions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('revert: required and optional params', async () => {
+  test('revert: required and optional params', async () => {
     const response = await client.assets.versions.revert('version_id', { asset_id: 'asset_id' });
   });
 });

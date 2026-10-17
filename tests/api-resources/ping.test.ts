@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource ping', () => {
-  // Mock server tests are disabled
-  test.skip('get', async () => {
+  test('get', async () => {
     const responsePromise = client.ping.get();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource assetsAssociations', () => {
-  // Mock server tests are disabled
-  test.skip('add: only required params', async () => {
+  test('add: only required params', async () => {
     const responsePromise = client.albums.assetsAssociations.add('album_id', { asset_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,13 +19,11 @@ describe('resource assetsAssociations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('add: required and optional params', async () => {
+  test('add: required and optional params', async () => {
     const response = await client.albums.assetsAssociations.add('album_id', { asset_ids: ['string'] });
   });
 
-  // Mock server tests are disabled
-  test.skip('remove: only required params', async () => {
+  test('remove: only required params', async () => {
     const responsePromise = client.albums.assetsAssociations.remove('album_id', { asset_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -37,8 +34,7 @@ describe('resource assetsAssociations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('remove: required and optional params', async () => {
+  test('remove: required and optional params', async () => {
     const response = await client.albums.assetsAssociations.remove('album_id', { asset_ids: ['string'] });
   });
 });

@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource events', () => {
-  // Mock server tests are disabled
-  test.skip('get', async () => {
+  test('get', async () => {
     const responsePromise = client.events.get();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,8 +19,7 @@ describe('resource events', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('get: request options and params are passed correctly', async () => {
+  test('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.events.get(

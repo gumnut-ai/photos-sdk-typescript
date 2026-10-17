@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource feedback', () => {
-  // Mock server tests are disabled
-  test.skip('submit: only required params', async () => {
+  test('submit: only required params', async () => {
     const responsePromise = client.feedback.submit({ feedback_type: 'bug', message: 'x' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,8 +19,7 @@ describe('resource feedback', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('submit: required and optional params', async () => {
+  test('submit: required and optional params', async () => {
     const response = await client.feedback.submit({
       feedback_type: 'bug',
       message: 'x',

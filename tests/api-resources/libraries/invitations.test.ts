@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource invitations', () => {
-  // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
+  test('create: only required params', async () => {
     const responsePromise = client.libraries.invitations.create({
       expires_at: '2019-12-27T18:11:19.117Z',
       library_id: 'library_id',
@@ -25,8 +24,7 @@ describe('resource invitations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
+  test('create: required and optional params', async () => {
     const response = await client.libraries.invitations.create({
       expires_at: '2019-12-27T18:11:19.117Z',
       library_id: 'library_id',
@@ -35,8 +33,7 @@ describe('resource invitations', () => {
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.libraries.invitations.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -47,8 +44,7 @@ describe('resource invitations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.libraries.invitations.list(
@@ -63,8 +59,7 @@ describe('resource invitations', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('disable', async () => {
+  test('disable', async () => {
     const responsePromise = client.libraries.invitations.disable('invitation_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -75,8 +70,7 @@ describe('resource invitations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('join: only required params', async () => {
+  test('join: only required params', async () => {
     const responsePromise = client.libraries.invitations.join('invitation_id', { secret: 'x' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -87,13 +81,11 @@ describe('resource invitations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('join: required and optional params', async () => {
+  test('join: required and optional params', async () => {
     const response = await client.libraries.invitations.join('invitation_id', { secret: 'x' });
   });
 
-  // Mock server tests are disabled
-  test.skip('link', async () => {
+  test('link', async () => {
     const responsePromise = client.libraries.invitations.link('invitation_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -104,8 +96,7 @@ describe('resource invitations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('preview: only required params', async () => {
+  test('preview: only required params', async () => {
     const responsePromise = client.libraries.invitations.preview('invitation_id', { secret: 'x' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -116,8 +107,7 @@ describe('resource invitations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('preview: required and optional params', async () => {
+  test('preview: required and optional params', async () => {
     const response = await client.libraries.invitations.preview('invitation_id', { secret: 'x' });
   });
 });
