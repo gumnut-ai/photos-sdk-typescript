@@ -1,4 +1,4 @@
-import Gumnut, { toFile } from 'gumnut-sdk';
+import Gumnut, { BadRequestError, toFile } from 'gumnut-sdk';
 
 const client = new Gumnut({
   apiKey: 'mock-only',
@@ -20,5 +20,5 @@ test('the mock rejects a request that violates the specification', async () => {
     .create({ name: 123 as unknown as string })
     .catch((error: unknown) => error);
   expect(error).toBeInstanceOf(Gumnut.BadRequestError);
-  expect((error as Gumnut.BadRequestError).headers.get('x-steady-request-valid')).toBe('false');
+  expect((error as BadRequestError).headers.get('x-steady-request-valid')).toBe('false');
 });

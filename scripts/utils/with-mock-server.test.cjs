@@ -130,22 +130,43 @@ async function readEventually(file) {
   throw new Error(`Timed out waiting for ${file}`);
 }
 
+function isLinuxDeadProcess(stat) {
+  // The parenthesized command may contain spaces and closing parentheses.
+  const state = stat.slice(stat.lastIndexOf(')') + 2).split(' ', 1)[0];
+  return state === 'Z' || state === 'X';
+}
+
 async function assertStopped(pids) {
   for (let attempt = 0; attempt < 100; attempt++) {
-    const live = pids.filter((pid) => {
-      try {
-        process.kill(pid, 0);
-        return true;
-      } catch (error) {
-        if (error.code === 'ESRCH') return false;
-        throw error;
-      }
-    });
-    if (!live.length) return;
+    const live = await Promise.all(
+      pids.map(async (pid) => {
+        try {
+          process.kill(pid, 0);
+          if (process.platform === 'linux') {
+            // A terminated orphan may remain a zombie until container PID 1 reaps it.
+            return !isLinuxDeadProcess(await fs.readFile(`/proc/${pid}/stat`, 'utf8'));
+          }
+          return true;
+        } catch (error) {
+          if (error.code === 'ESRCH' || error.code === 'ENOENT') return false;
+          throw error;
+        }
+      }),
+    );
+    if (!live.some(Boolean)) return;
     await delay(25);
   }
   assert.fail(`Processes still alive: ${pids.join(', ')}`);
 }
+
+test('Linux process state distinguishes terminated processes from live ones', () => {
+  for (const state of ['Z', 'X']) {
+    assert.equal(isLinuxDeadProcess(`123 (worker (child)) ${state} 1 2 3`), true);
+  }
+  for (const state of ['R', 'S', 'D', 'T', 'I']) {
+    assert.equal(isLinuxDeadProcess(`123 (worker (child)) ${state} 1 2 3`), false);
+  }
+});
 
 test('uses an installed, healthy loopback mock and removes remote overrides', {
   timeout: 10_000,

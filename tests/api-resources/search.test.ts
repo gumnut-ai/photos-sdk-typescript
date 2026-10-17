@@ -56,9 +56,17 @@ describe('resource search', () => {
   });
 
   test('searchAssets: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    // Steady replies to unknown paths before consuming multipart uploads, which
+    // can cause EPIPE on Linux. Inspect forwarding here; valid uploads use Steady.
+    const mockFetch = Object.assign(
+      vi.fn<typeof fetch>(async () => new Response(null, { status: 404 })),
+      {
+        Response,
+      },
+    );
+    const requestClient = client.withOptions({ fetch: mockFetch });
     await expect(
-      client.search.searchAssets(
+      requestClient.search.searchAssets(
         {
           include: ['string', 'string'],
           album_id: 'album_id',
@@ -79,5 +87,17 @@ describe('resource search', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Gumnut.NotFoundError);
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    const [url, options] = mockFetch.mock.calls[0]!;
+    const requestURL = new URL(url as string);
+    expect(requestURL.pathname).toBe('/_stainless_unknown_path');
+    expect(requestURL.searchParams.getAll('include')).toEqual(['string', 'string']);
+    expect(options?.method).toBe('POST');
+    expect(options?.body).toBeInstanceOf(FormData);
+    const form = options?.body as FormData;
+    expect(form.getAll('person_ids[]')).toEqual(['string']);
+    expect(form.getAll('ratings[]')).toEqual(['0']);
+    expect(form.get('image')).toBeInstanceOf(File);
   });
 });
