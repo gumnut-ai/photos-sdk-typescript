@@ -142,8 +142,9 @@ export interface TaskResponse {
    * opted-in new user in product-update email delivery), `person_metrics_refresh`
    * (recompute the face-matching summary of one person after their faces change),
    * `quality_scoring` (rate an image's photographic quality), or
-   * `face_template_removal` (remove the stored face templates of every library an
-   * owner owns).
+   * `face_template_removal` (historical only — removed the stored face templates of
+   * every library an owner owns; this task type is retired and no longer
+   * dispatched).
    */
   task_type:
     | 'image_quality'
