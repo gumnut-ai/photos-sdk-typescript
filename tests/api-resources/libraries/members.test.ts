@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource members', () => {
-  // Mock server tests are disabled
-  test.skip('update: only required params', async () => {
+  test('update: only required params', async () => {
     const responsePromise = client.libraries.members.update('user_id', {
       library_id: 'library_id',
       role: 'viewer',
@@ -23,16 +22,14 @@ describe('resource members', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('update: required and optional params', async () => {
+  test('update: required and optional params', async () => {
     const response = await client.libraries.members.update('user_id', {
       library_id: 'library_id',
       role: 'viewer',
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.libraries.members.list('library_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -43,8 +40,7 @@ describe('resource members', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.libraries.members.list(
@@ -59,8 +55,7 @@ describe('resource members', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('leave', async () => {
+  test('leave', async () => {
     const responsePromise = client.libraries.members.leave('library_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -71,8 +66,7 @@ describe('resource members', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('remove: only required params', async () => {
+  test('remove: only required params', async () => {
     const responsePromise = client.libraries.members.remove('user_id', { library_id: 'library_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -83,8 +77,7 @@ describe('resource members', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('remove: required and optional params', async () => {
+  test('remove: required and optional params', async () => {
     const response = await client.libraries.members.remove('user_id', { library_id: 'library_id' });
   });
 });

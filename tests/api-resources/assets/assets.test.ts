@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource assets', () => {
-  // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
+  test('create: only required params', async () => {
     const responsePromise = client.assets.create({
       asset_data: await toFile(Buffer.from('Example data'), 'README.md'),
       device_asset_id: 'IMG_0421',
@@ -26,8 +25,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
+  test('create: required and optional params', async () => {
     const response = await client.assets.create({
       asset_data: await toFile(Buffer.from('Example data'), 'README.md'),
       device_asset_id: 'IMG_0421',
@@ -38,8 +36,7 @@ describe('resource assets', () => {
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('retrieve', async () => {
+  test('retrieve', async () => {
     const responsePromise = client.assets.retrieve('asset_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -50,8 +47,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
+  test('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.assets.retrieve(
@@ -62,8 +58,7 @@ describe('resource assets', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.assets.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -74,8 +69,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.assets.list(
@@ -104,8 +98,7 @@ describe('resource assets', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('delete', async () => {
+  test('delete', async () => {
     const responsePromise = client.assets.delete('asset_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -116,8 +109,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('bulkUpdateAssets: only required params', async () => {
+  test('bulkUpdateAssets: only required params', async () => {
     const responsePromise = client.assets.bulkUpdateAssets({
       updates: [
         {
@@ -135,8 +127,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('bulkUpdateAssets: required and optional params', async () => {
+  test('bulkUpdateAssets: required and optional params', async () => {
     const response = await client.assets.bulkUpdateAssets({
       updates: [
         {
@@ -153,8 +144,7 @@ describe('resource assets', () => {
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('checkExistence', async () => {
+  test('checkExistence', async () => {
     const responsePromise = client.assets.checkExistence({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -165,8 +155,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('clusterByGeo: only required params', async () => {
+  test('clusterByGeo: only required params', async () => {
     const responsePromise = client.assets.clusterByGeo({ bbox: 'bbox', cell_size: 0 });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -177,8 +166,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('clusterByGeo: required and optional params', async () => {
+  test('clusterByGeo: required and optional params', async () => {
     const response = await client.assets.clusterByGeo({
       bbox: 'bbox',
       cell_size: 0,
@@ -194,8 +182,7 @@ describe('resource assets', () => {
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('counts', async () => {
+  test('counts', async () => {
     const responsePromise = client.assets.counts();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -206,8 +193,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('counts: request options and params are passed correctly', async () => {
+  test('counts: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.assets.counts(
@@ -235,8 +221,7 @@ describe('resource assets', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('deleteList: only required params', async () => {
+  test('deleteList: only required params', async () => {
     const responsePromise = client.assets.deleteList({ ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -247,13 +232,11 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('deleteList: required and optional params', async () => {
+  test('deleteList: required and optional params', async () => {
     const response = await client.assets.deleteList({ ids: ['string'], library_id: 'library_id' });
   });
 
-  // Mock server tests are disabled
-  test.skip('emptyTrash', async () => {
+  test('emptyTrash', async () => {
     const responsePromise = client.assets.emptyTrash();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -264,16 +247,14 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('emptyTrash: request options and params are passed correctly', async () => {
+  test('emptyTrash: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.assets.emptyTrash({ library_id: 'library_id' }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('move: only required params', async () => {
+  test('move: only required params', async () => {
     const responsePromise = client.assets.move({
       asset_ids: ['string'],
       destination_library_id: 'destination_library_id',
@@ -288,8 +269,7 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('move: required and optional params', async () => {
+  test('move: required and optional params', async () => {
     const response = await client.assets.move({
       asset_ids: ['string'],
       destination_library_id: 'destination_library_id',
@@ -297,8 +277,7 @@ describe('resource assets', () => {
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('restore: only required params', async () => {
+  test('restore: only required params', async () => {
     const responsePromise = client.assets.restore({ ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -309,13 +288,11 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('restore: required and optional params', async () => {
+  test('restore: required and optional params', async () => {
     const response = await client.assets.restore({ ids: ['string'], library_id: 'library_id' });
   });
 
-  // Mock server tests are disabled
-  test.skip('trash: only required params', async () => {
+  test('trash: only required params', async () => {
     const responsePromise = client.assets.trash({ ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -326,13 +303,11 @@ describe('resource assets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('trash: required and optional params', async () => {
+  test('trash: required and optional params', async () => {
     const response = await client.assets.trash({ ids: ['string'], library_id: 'library_id' });
   });
 
-  // Mock server tests are disabled
-  test.skip('updateAsset', async () => {
+  test('updateAsset', async () => {
     const responsePromise = client.assets.updateAsset('asset_id', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);

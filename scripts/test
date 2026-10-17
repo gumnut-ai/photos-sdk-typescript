@@ -4,5 +4,6 @@ set -e
 
 cd "$(dirname "$0")/.."
 
+node --test scripts/utils/with-mock-server.test.cjs
 echo "==> Running tests"
-./node_modules/.bin/vitest run "$@"
+exec node scripts/utils/with-mock-server.cjs ./node_modules/.bin/vitest run "$@"

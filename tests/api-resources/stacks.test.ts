@@ -8,8 +8,7 @@ const client = new Gumnut({
 });
 
 describe('resource stacks', () => {
-  // Mock server tests are disabled
-  test.skip('delete', async () => {
+  test('delete', async () => {
     const responsePromise = client.stacks.delete('stack_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,8 +19,7 @@ describe('resource stacks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('addAssetsToStack: only required params', async () => {
+  test('addAssetsToStack: only required params', async () => {
     const responsePromise = client.stacks.addAssetsToStack('stack_id', { asset_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -32,13 +30,11 @@ describe('resource stacks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('addAssetsToStack: required and optional params', async () => {
+  test('addAssetsToStack: required and optional params', async () => {
     const response = await client.stacks.addAssetsToStack('stack_id', { asset_ids: ['string'] });
   });
 
-  // Mock server tests are disabled
-  test.skip('createStack: only required params', async () => {
+  test('createStack: only required params', async () => {
     const responsePromise = client.stacks.createStack({ asset_ids: ['string', 'string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -49,8 +45,7 @@ describe('resource stacks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('createStack: required and optional params', async () => {
+  test('createStack: required and optional params', async () => {
     const response = await client.stacks.createStack({
       asset_ids: ['string', 'string'],
       library_id: 'library_id',
@@ -58,8 +53,7 @@ describe('resource stacks', () => {
     });
   });
 
-  // Mock server tests are disabled
-  test.skip('listStacks', async () => {
+  test('listStacks', async () => {
     const responsePromise = client.stacks.listStacks();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -70,8 +64,7 @@ describe('resource stacks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('listStacks: request options and params are passed correctly', async () => {
+  test('listStacks: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.stacks.listStacks(
@@ -89,8 +82,7 @@ describe('resource stacks', () => {
     ).rejects.toThrow(Gumnut.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('removeAssets: only required params', async () => {
+  test('removeAssets: only required params', async () => {
     const responsePromise = client.stacks.removeAssets('stack_id', { asset_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -101,13 +93,11 @@ describe('resource stacks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('removeAssets: required and optional params', async () => {
+  test('removeAssets: required and optional params', async () => {
     const response = await client.stacks.removeAssets('stack_id', { asset_ids: ['string'] });
   });
 
-  // Mock server tests are disabled
-  test.skip('retrieveStack', async () => {
+  test('retrieveStack', async () => {
     const responsePromise = client.stacks.retrieveStack('stack_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -118,8 +108,7 @@ describe('resource stacks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('setCover: only required params', async () => {
+  test('setCover: only required params', async () => {
     const responsePromise = client.stacks.setCover('stack_id', { primary_asset_id: 'primary_asset_id' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -130,8 +119,7 @@ describe('resource stacks', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('setCover: required and optional params', async () => {
+  test('setCover: required and optional params', async () => {
     const response = await client.stacks.setCover('stack_id', { primary_asset_id: 'primary_asset_id' });
   });
 });
