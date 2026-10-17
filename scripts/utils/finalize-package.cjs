@@ -2,9 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const distDir = process.env['DIST_PATH']
-  ? path.resolve(process.env['DIST_PATH'])
-  : path.resolve(__dirname, '..', '..', 'dist');
+const distDir = path.resolve(__dirname, '..', '..', 'dist');
 
 async function* walk(dir) {
   for await (const d of await fs.promises.opendir(dir)) {
@@ -14,7 +12,7 @@ async function* walk(dir) {
   }
 }
 
-async function postprocess() {
+async function finalizePackage() {
   for await (const file of walk(distDir)) {
     if (!/(\.d)?[cm]?ts$/.test(file)) continue;
 
@@ -81,20 +79,36 @@ async function postprocess() {
       };
     }
   }
+  // Add the legacy require('gumnut-sdk') constructor after the emitted code.
+  // Inserting it near the top would invalidate the compiler's source-map positions.
+  const indexPath = path.join(distDir, 'index.js');
+  const index = await fs.promises.readFile(indexPath, 'utf8');
+  const mapOffset = index.lastIndexOf('//# sourceMappingURL=');
+  if (mapOffset < 0) throw new Error('Compiled index.js is missing its source-map reference');
+  const constructorShim = `const namespace = module.exports;
+module.exports = function (...args) { return new module.exports.default(...args); };
+Object.defineProperties(module.exports, Object.getOwnPropertyDescriptors(namespace));
+`;
   await fs.promises.writeFile(
-    'dist/package.json',
-    JSON.stringify(
-      Object.assign(
-        /** @type {Record<String, unknown>} */ (
-          JSON.parse(await fs.promises.readFile('dist/package.json', 'utf-8'))
-        ),
-        {
-          exports: newExports,
-        },
-      ),
-      null,
-      2,
-    ),
+    indexPath,
+    index.slice(0, mapOffset) + constructorShim + index.slice(mapOffset),
+  );
+
+  const packageJson = JSON.parse(
+    await fs.promises.readFile(path.join(distDir, '..', 'package.json'), 'utf8'),
+  );
+  for (const key of ['types', 'main', 'module']) {
+    if (typeof packageJson[key] === 'string') {
+      packageJson[key] = packageJson[key].replace(/^(\.\/)?dist\//, './');
+    }
+  }
+  delete packageJson.devDependencies;
+  for (const hook of ['prepack', 'prepublishOnly', 'prepare']) delete packageJson.scripts[hook];
+  packageJson.exports = newExports;
+  await fs.promises.writeFile(
+    path.join(distDir, 'package.json'),
+    JSON.stringify(packageJson, null, 2) + '\n',
   );
 }
-postprocess();
+
+finalizePackage();
