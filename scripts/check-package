@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+echo "==> Running Are The Types Wrong?"
+./node_modules/.bin/attw --pack dist -f json >.attw.json || true
+node scripts/utils/attw-report.cjs
+
+echo "==> Running publint"
+./node_modules/.bin/publint dist
+
+echo "==> Checking the installed npm tarball"
+node scripts/utils/check-installed-package.cjs

@@ -39,7 +39,7 @@ jobs:
       - name: Bootstrap
         run: ./scripts/bootstrap
 
-      - name: Check types
+      - name: Lint and check types
         run: ./scripts/lint
 
   build:
@@ -68,6 +68,9 @@ jobs:
 
       - name: Check build
         run: ./scripts/build
+
+      - name: Check package exports and installed consumers
+        run: ./scripts/check-package
 
       - name: Get GitHub OIDC Token
         if: |-

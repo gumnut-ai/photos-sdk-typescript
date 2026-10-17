@@ -73,8 +73,9 @@ $ bun run test
 ## Linting and formatting
 
 This repository uses [Biome](https://biomejs.dev/) to lint and format TypeScript, JavaScript, and JSON.
-[Prettier](https://prettier.io/) formats Markdown and YAML. `bun run lint` also builds the package and checks
-types and package exports.
+[Prettier](https://prettier.io/) formats Markdown and YAML. `bun run lint` checks source formatting and
+types without building the package. CI builds once in the build job, then runs `bun run check-package`
+against that output to check package exports and installed consumers.
 
 Development uses TypeScript 6 because the dual CommonJS/ESM package builder requires its compiler API.
 The published library continues to support TypeScript 4.9 and later.
@@ -84,6 +85,22 @@ To lint:
 ```sh
 $ bun run lint
 ```
+
+To run the full source and package checks locally:
+
+```sh
+$ bun run lint
+$ bun run build
+$ bun run check-package
+```
+
+Package checks preserve Are The Types Wrong? and publint validation. They also use Node.js 24 and npm
+to pack `dist`, install the tarball outside the checkout without development dependencies or lifecycle
+scripts, and construct clients through CommonJS and ESM root and resource imports. A separate temporary
+installation of the pinned TypeScript 4.9.5 compiler checks root, resource, and promise type imports
+with legacy Node, Node16 CommonJS, and Node16 ESM resolution. The compiler download needs npm registry
+access; its pinned release predates the dependency cooldown. These checks make no API requests.
+Temporary packages are removed after success or failure.
 
 To format and fix all lint issues automatically:
 
