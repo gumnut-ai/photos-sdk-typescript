@@ -61,6 +61,7 @@ describe('resource albums', () => {
           ids: ['string', 'string'],
           library_id: 'library_id',
           limit: 1,
+          name: 'name',
           starting_after_id: 'starting_after_id',
         },
         { path: '/_stainless_unknown_path' },

@@ -66,8 +66,8 @@ export class Albums extends APIResource {
 
   /**
    * Returns a paginated list of albums ordered by creation time (newest first),
-   * optionally filtered by asset membership or ID. Use this to enumerate a user's
-   * albums or to find which albums contain a specific asset (via `asset_id`).
+   * optionally filtered by name, asset membership or ID. Use this to enumerate a
+   * user's albums or to find which albums contain a specific asset (via `asset_id`).
    *
    * `list_albums` returns album metadata only — to list the assets inside a
    * particular album, use `list_album_assets` or `list_assets` with `album_id`.
@@ -218,6 +218,13 @@ export interface AlbumListParams extends CursorPageParams {
    * (non-trashed) library; required when they have multiple.
    */
   library_id?: string | null;
+
+  /**
+   * Filter by name using case-insensitive substring matching. Surrounding whitespace
+   * is trimmed; blank values apply no name filter. Characters such as `%` and `_`
+   * are matched literally.
+   */
+  name?: string | null;
 }
 
 Albums.AssetsAssociations = AssetsAssociations;
