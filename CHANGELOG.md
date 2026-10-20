@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.183.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.182.0...v0.183.0) (2026-10-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tasks:** remove `'image_quality'` and `'face_template_removal'` from `TaskResponse.task_type` and the `task_type` parameter of `tasks.list()`. Both task types were retired and no longer ran, and the API has deleted their old task records, so no task returns either value. Filtering `tasks.list()` on either value now returns `422`. ([786b014](https://github.com/gumnut-ai/photos-sdk-typescript/commit/786b01428b8a4cee472c7eae022389e031ad5957))
+
+### Features
+
+* **albums:** add a `name` parameter to `albums.list()`, which filters albums by case-insensitive substring match on their name. Surrounding whitespace is trimmed, a blank value applies no name filter, and characters such as `%` and `_` are matched literally. ([a76fddb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a76fddbd070063d9e4ac70737ce6c509eaa3d2ee))
+* **tasks:** add `TaskResponse.outcome`, a stable outcome code whose meaning depends on `task_type`. For a successful `face_detection` task it is `ran` (detection ran, possibly finding no faces), `skipped_photo_location`, `skipped_location_unread`, `skipped_owner_off` or `skipped_owner_region`. It is `null` for other task types, for tasks that have not succeeded, and for skips with no explanation. More codes may be added for any task type; treat an unrecognized code as no explanation. ([d49f56f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d49f56fd1602a52bbc1c5b99a0682543f5d63641))
+
+### Deprecations
+
+* **tasks:** `TaskResponse.celery_task_id` is deprecated; use `id`. `tasks.get()` documents its task ID argument as the task's `id`, and still accepts the legacy identifier for compatibility. ([d49f56f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d49f56fd1602a52bbc1c5b99a0682543f5d63641))
+
+### Bug Fixes
+
+* **package:** source maps for the CommonJS entry point (`require('gumnut-sdk')`) now point at the right lines; the legacy constructor shim is appended after the compiled code instead of shifting it. ([8ef5d69](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8ef5d697952246d7a7710ce4a0bd90e6c84431df))
+* **package:** the `tsconfig` shipped with the package's TypeScript sources now uses `node16` module resolution, which TypeScript 6 requires. ([217a898](https://github.com/gumnut-ai/photos-sdk-typescript/commit/217a89807d896f46594d6ff52826252ab72cde96))
+
+### Documentation
+
+* **tasks:** the `face_template_removal` task type was described as historical only before this release removed it. ([57f5c8c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/57f5c8cd74b01284dfcba173acebdf518f1b7b9e))
+
 ## [0.182.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.181.0...v0.182.0) (2026-10-16)
 
 
