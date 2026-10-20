@@ -122,11 +122,9 @@ export interface TaskResponse {
   status: 'pending' | 'started' | 'success' | 'failure';
 
   /**
-   * Kind of background processing a task performs: `image_quality` (historical only
-   * — scored an image's technical quality; this task type is retired and no longer
-   * dispatched, the value appears only on old task rows), `embedding` (compute the
-   * content embedding that powers search), `face_detection` (detect faces in an
-   * asset), `face_clustering` (group a library's detected faces into people),
+   * Kind of background processing a task performs: `embedding` (compute the content
+   * embedding that powers search), `face_detection` (detect faces in an asset),
+   * `face_clustering` (group a library's detected faces into people),
    * `asset_description` (generate a natural-language description of an asset),
    * `asset_storage_cleanup` (remove stored files left behind by a permanently
    * deleted asset), `asset_version_storage_cleanup` (remove stored files of a
@@ -140,14 +138,10 @@ export interface TaskResponse {
    * over-dimensioned file), `burst_detection` (detect rapid-fire shots of the same
    * moment and stack them), `product_update_subscription` (enroll an explicitly
    * opted-in new user in product-update email delivery), `person_metrics_refresh`
-   * (recompute the face-matching summary of one person after their faces change),
-   * `quality_scoring` (rate an image's photographic quality), or
-   * `face_template_removal` (historical only — removed the stored face templates of
-   * every library an owner owns; this task type is retired and no longer
-   * dispatched).
+   * (recompute the face-matching summary of one person after their faces change), or
+   * `quality_scoring` (rate an image's photographic quality).
    */
   task_type:
-    | 'image_quality'
     | 'embedding'
     | 'face_detection'
     | 'face_clustering'
@@ -162,8 +156,7 @@ export interface TaskResponse {
     | 'burst_detection'
     | 'product_update_subscription'
     | 'person_metrics_refresh'
-    | 'quality_scoring'
-    | 'face_template_removal';
+    | 'quality_scoring';
 }
 
 export type TaskListResponse = Array<TaskResponse>;
@@ -191,7 +184,6 @@ export interface TaskListParams {
    * Return only tasks of this type.
    */
   task_type?:
-    | 'image_quality'
     | 'embedding'
     | 'face_detection'
     | 'face_clustering'
@@ -207,7 +199,6 @@ export interface TaskListParams {
     | 'product_update_subscription'
     | 'person_metrics_refresh'
     | 'quality_scoring'
-    | 'face_template_removal'
     | null;
 }
 

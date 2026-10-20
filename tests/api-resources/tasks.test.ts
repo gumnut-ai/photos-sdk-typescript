@@ -27,7 +27,7 @@ describe('resource tasks', () => {
           library_id: 'library_id',
           limit: 1,
           status: 'pending',
-          task_type: 'image_quality',
+          task_type: 'embedding',
         },
         { path: '/_stainless_unknown_path' },
       ),
