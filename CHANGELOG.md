@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.183.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.182.0...v0.183.0) (2026-10-20)
+
+
+### Features
+
+* **api:** api update ([786b014](https://github.com/gumnut-ai/photos-sdk-typescript/commit/786b01428b8a4cee472c7eae022389e031ad5957))
+* **api:** api update ([a76fddb](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a76fddbd070063d9e4ac70737ce6c509eaa3d2ee))
+* **api:** api update ([57f5c8c](https://github.com/gumnut-ai/photos-sdk-typescript/commit/57f5c8cd74b01284dfcba173acebdf518f1b7b9e))
+* **api:** api update ([d49f56f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d49f56fd1602a52bbc1c5b99a0682543f5d63641))
+
+
+### Bug Fixes
+
+* keep published source config compatible with TypeScript 6 (GUM-3248) ([217a898](https://github.com/gumnut-ai/photos-sdk-typescript/commit/217a89807d896f46594d6ff52826252ab72cde96))
+* migrate changed-file formatter to Biome (GUM-3248) ([cd8c23a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cd8c23ac1ef3135c54f7505a17fff37ba34b95b7))
+
+
+### Chores
+
+* **deps:** refresh SDK dependencies ([e35ee70](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e35ee70897b449064e6830de5d51057f893398ad))
+* modernize TypeScript SDK tooling (GUM-3248) ([ef9073b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ef9073b33a1db86446c39230514c02db853576b1))
+
 ## [0.182.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.181.0...v0.182.0) (2026-10-16)
 
 
