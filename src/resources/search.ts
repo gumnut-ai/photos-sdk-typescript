@@ -76,8 +76,9 @@ export class Search extends APIResource {
 export interface SearchResponse {
   /**
    * Text-query matches use the configured reranker over the first 50 Reciprocal Rank
-   * Fusion candidates, with fail-open RRF ordering. Image-only matches use RRF
-   * across available stages. Structured-filter-only searches retain newest-first
+   * Fusion candidates, falling back to a secondary reranker where one is configured
+   * and to RRF ordering when none succeeds. Image-only matches use RRF across
+   * available stages. Structured-filter-only searches retain newest-first
    * capture-date ordering.
    */
   data: Array<SearchResultItem>;
@@ -99,9 +100,9 @@ export interface SearchResultItem {
 
   /**
    * Best available dense-stage cosine distance (lower is more similar). This is
-   * attribution only: text results use reranker order when reranking succeeds and
-   * RRF order on fallback; image-only results use RRF. Results are never ordered by
-   * this distance. Null for sparse-only and structured-filter-only matches.
+   * attribution only: text results use reranker order, or RRF order when no reranker
+   * succeeds; image-only results use RRF. Results are never ordered by this
+   * distance. Null for sparse-only and structured-filter-only matches.
    */
   distance: number | null;
 }
