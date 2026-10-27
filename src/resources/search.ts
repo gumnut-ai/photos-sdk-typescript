@@ -23,11 +23,10 @@ export class Search extends APIResource {
    * ratings, `media_type` for images or videos,
    * `local_datetime_before`/`local_datetime_after` for date ranges, and `center` +
    * `radius` or `bbox` for location. There is no typed camera or place-name filter —
-   * pass those terms in the free-text `query`; the metadata full-text stage can
-   * match those terms, while dense retrieval adds visual-semantic matches. For
-   * example, 'photos of my kids at the beach last summer' becomes
-   * `query='kids at the beach'` + `local_datetime_after=2025-06-01` +
-   * `local_datetime_before=2025-09-01`.
+   * pass those terms in the free-text `query`, which matches metadata text as well
+   * as what's visible in the photo. For example, 'photos of my kids at the beach
+   * last summer' becomes `query='kids at the beach'` +
+   * `local_datetime_after=2025-06-01` + `local_datetime_before=2025-09-01`.
    *
    * **Use `list_assets` instead** for a plain structured browse that album, person,
    * rating, media-type, date-range, location, or asset-ID filters can answer with no
@@ -53,13 +52,13 @@ export class Search extends APIResource {
   /**
    * Searches for assets by content, by typed structured filters, or both. Content
    * searches are ranked by relevance; filter-only searches return matches
-   * newest-first. An uploaded `image` adds visual-similarity search; text and
-   * uploaded-image signals stay independent when both are provided.
+   * newest-first. An uploaded `image` finds visually similar photos; when `query` is
+   * also provided, both count toward relevance.
    *
    * At least one search criterion, including `ratings` or `media_type`, must be
    * provided. Location filtering is by coordinate in two mutually-exclusive modes: a
-   * radius (`center` + `radius`) or a bounding box (`bbox`); it narrows candidates
-   * and is not a search criterion on its own.
+   * radius (`center` + `radius`) or a bounding box (`bbox`); it narrows results and
+   * is not a search criterion on its own.
    */
   searchAssets(
     params: SearchSearchAssetsParams | null | undefined = {},
@@ -75,19 +74,21 @@ export class Search extends APIResource {
 
 export interface SearchResponse {
   /**
-   * Text-query matches use the configured reranker over the first 50 Reciprocal Rank
-   * Fusion candidates, falling back to a secondary reranker where one is configured
-   * and to RRF ordering when none succeeds. Image-only matches use RRF across
-   * available stages. Structured-filter-only searches retain newest-first
-   * capture-date ordering.
+   * Matching assets for this page. Content searches are ordered by relevance;
+   * structured-filter-only searches are ordered newest-first by capture date. A text
+   * `query` search can return fewer than `limit` results, or none. When the first
+   * page of a text `query` search is empty, nothing within the given filters closely
+   * matches that wording: rephrase or broaden the `query`, or change the filters,
+   * rather than requesting another page.
    */
   data: Array<SearchResultItem>;
 
   /**
-   * Whether another page remains in this search's result population. For content
-   * searches, this refers to the bounded ranked candidate population, not every
-   * potentially matching asset in the library. While true, increment `page` and
-   * repeat the same search criteria, filters, and `limit`.
+   * Whether another page of results remains for this search. For a content search,
+   * false means this search has no more results to return, not that every matching
+   * asset in the library was returned. This can be false after a short or empty
+   * page. While true, increment `page` and repeat the same search criteria, filters,
+   * and `limit`.
    */
   has_more: boolean;
 }
@@ -99,10 +100,10 @@ export interface SearchResultItem {
   asset: AssetsAPI.AssetResponse;
 
   /**
-   * Best available dense-stage cosine distance (lower is more similar). This is
-   * attribution only: text results use reranker order, or RRF order when no reranker
-   * succeeds; image-only results use RRF. Results are never ordered by this
-   * distance. Null for sparse-only and structured-filter-only matches.
+   * Similarity distance between the asset's visual content and the search text or
+   * image (lower is closer), for attribution only; don't rely on it for result
+   * order. Null when the asset matched without a visual match, such as through
+   * metadata text only, or in a structured-filter-only search.
    */
   distance: number | null;
 }
@@ -188,10 +189,10 @@ export interface SearchSearchParams {
   /**
    * 1-indexed page number; increment it to fetch subsequent pages. Stop when
    * `has_more` is false, even if the current page is full. `search_assets` pages by
-   * number rather than by cursor. A search with a content criterion ranks a fixed
-   * top-200 candidate population by relevance, so pages beyond that population are
-   * empty. A structured-filter-only search (no content criterion) returns the full
-   * matching set newest-first, paginated without that cap.
+   * number rather than by cursor. A search with a content criterion returns only a
+   * limited number of the most relevant matches, not every match in the library. A
+   * structured-filter-only search (no content criterion) returns every match,
+   * newest-first.
    */
   page?: number;
 
@@ -204,10 +205,9 @@ export interface SearchSearchParams {
   person_ids?: Array<string> | null;
 
   /**
-   * Natural-language search text. It runs independently through dense visual
-   * retrieval and authoritative-metadata full-text retrieval, then the ranked lists
-   * are fused. Concrete visual concepts work well in the dense stage, while exact
-   * metadata terms can match through full-text search.
+   * Natural-language search text. Describe what's visible in the photo — subjects,
+   * scenes, objects, activities; metadata text such as captions, camera names,
+   * places, and file names also matches.
    *
    * Resolve album and people names to IDs and pass them as `album_id` and
    * `person_ids`; convert date phrases like 'in 2023' into ISO 8601 bounds on
@@ -278,9 +278,8 @@ export interface SearchSearchAssetsParams {
   center?: string | null;
 
   /**
-   * Body param: Image file for an independent dense-image retrieval stage. When text
-   * is also provided, the stage ranks are fused rather than blending their
-   * embeddings.
+   * Body param: Image to search by; finds visually similar photos. When `query` is
+   * also provided, both the text and the image count toward relevance.
    */
   image?: Uploadable | null;
 
@@ -325,10 +324,10 @@ export interface SearchSearchAssetsParams {
   /**
    * Body param: 1-indexed page number; increment it to fetch subsequent pages. Stop
    * when `has_more` is false, even if the current page is full. `search_assets`
-   * pages by number rather than by cursor. A search with a content criterion ranks a
-   * fixed top-200 candidate population by relevance, so pages beyond that population
-   * are empty. A structured-filter-only search (no content criterion) returns the
-   * full matching set newest-first, paginated without that cap.
+   * pages by number rather than by cursor. A search with a content criterion returns
+   * only a limited number of the most relevant matches, not every match in the
+   * library. A structured-filter-only search (no content criterion) returns every
+   * match, newest-first.
    */
   page?: number;
 
@@ -341,10 +340,10 @@ export interface SearchSearchAssetsParams {
   person_ids?: Array<string> | null;
 
   /**
-   * Body param: Natural-language search text, matched against image embeddings and
-   * authoritative metadata. Album and people names belong in `album_id` and
-   * `person_ids`, and date ranges in `local_datetime_before`/`local_datetime_after`,
-   * not here.
+   * Body param: Natural-language search text, matched against what's visible in the
+   * photo and metadata text such as captions, camera names, places, and file names.
+   * Album and people names belong in `album_id` and `person_ids`, and date ranges in
+   * `local_datetime_before`/`local_datetime_after`, not here.
    */
   query?: string | null;
 
