@@ -3,12 +3,11 @@
 ## [0.184.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.183.0...v0.184.0) (2026-10-27)
 
 
-### Features
+### Documentation
 
-* **api:** api update ([ef4a8c1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ef4a8c1252a35619409964f111afae9abd9bfde6))
-* **api:** api update ([f8038ab](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f8038ab7960e10fea22e3847dbb97afd38d7aeb8))
-* **api:** api update ([3202278](https://github.com/gumnut-ai/photos-sdk-typescript/commit/320227854a9ad73565d83a151a63efc22f4c79ad))
-* **api:** api update ([61576cd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/61576cde602b5917dd893973683c36e64b762f43))
+* **search:** the `search.search()` and `search.searchAssets()` descriptions now state what a search returns instead of how results are retrieved and ranked, and no longer describe a fixed top-200 candidate population. A search with a content criterion returns a limited number of the most relevant matches, not every match in the library; a structured-filter-only search returns every match, newest-first. A text `query` search can return fewer than `limit` results, or none. An empty first page means nothing within the given filters closely matches that wording: rephrase or broaden the `query`, or change the filters, rather than requesting another page. `SearchResponse.has_more` can be `false` after a short or empty page; stop paging when it is `false`. `SearchResultItem.distance` is a similarity distance for attribution only, not the result order, and is `null` when the asset matched without a visual match. ([ef4a8c1](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ef4a8c1252a35619409964f111afae9abd9bfde6)), ([f8038ab](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f8038ab7960e10fea22e3847dbb97afd38d7aeb8))
+* **faces:** `faces.update()` documents that sending the face's current `person_id` confirms the assignment as manual without changing the person. ([3202278](https://github.com/gumnut-ai/photos-sdk-typescript/commit/320227854a9ad73565d83a151a63efc22f4c79ad))
+* **users:** `UserResponse.face_detection_preference` now documents that faces are currently detected automatically when it is `true` or `null`, not only when it is `true`. ([61576cd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/61576cde602b5917dd893973683c36e64b762f43))
 
 ## [0.183.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.182.0...v0.183.0) (2026-10-20)
 
