@@ -131,6 +131,45 @@ Methods:
 
 - <code title="get /api/events">client.events.<a href="./src/resources/events.ts">get</a>({ ...params }) -> EventsResponse</code>
 
+# Sync
+
+## ProjectionReads
+
+Types:
+
+- <code><a href="./src/resources/sync/projection-reads.ts">AlbumAssetProjection</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">AlbumAssetProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">AlbumProjection</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">AlbumProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">AssetProjection</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">AssetProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">BaselineFamilyTokens</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">CurrentUserProjection</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">CurrentUserProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">EntityProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">FaceProjection</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">FaceProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">FaceProjectionValue</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">GumnutProjectionScope</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">PersonProjection</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">PersonProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">ProjectionBaselineStart</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">ProjectionEnumeration</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">ProjectionErrorDetail</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">ProjectionErrorResponse</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">ProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">ProjectionProfile</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">ProjectionReadResponse</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">ProjectionRootResult</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">RelationSelector</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">StackProjection</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">StackProjectionKey</a></code>
+- <code><a href="./src/resources/sync/projection-reads.ts">TypedProjection</a></code>
+
+Methods:
+
+- <code title="post /api/sync/projection-reads">client.sync.projectionReads.<a href="./src/resources/sync/projection-reads.ts">read</a>({ ...params }) -> ProjectionReadResponse</code>
+
 # Faces
 
 Types:

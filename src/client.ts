@@ -152,6 +152,7 @@ import {
   LibraryTrashResponse,
   LibraryUpdateParams,
 } from './resources/libraries/libraries';
+import { Sync } from './resources/sync/sync';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -922,6 +923,7 @@ export class Gumnut {
    * Change events (create/update/delete) for entities in a library, for synchronising a local copy or auditing recent activity. Events reference entities by type and ID; fetch full data with the corresponding resource.
    */
   events: API.Events = new API.Events(this);
+  sync: API.Sync = new API.Sync(this);
   /**
    * Detected faces and their assignment to people.
    */
@@ -966,6 +968,7 @@ Gumnut.Assets = Assets;
 Gumnut.Albums = Albums;
 Gumnut.AlbumAssets = AlbumAssets;
 Gumnut.Events = Events;
+Gumnut.Sync = Sync;
 Gumnut.Faces = Faces;
 Gumnut.Libraries = Libraries;
 Gumnut.OAuth = OAuth;
@@ -1048,6 +1051,8 @@ export declare namespace Gumnut {
   };
 
   export { Events as Events, type EventsResponse as EventsResponse, type EventGetParams as EventGetParams };
+
+  export { Sync as Sync };
 
   export {
     Faces as Faces,
