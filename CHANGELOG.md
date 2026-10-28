@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.185.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.184.0...v0.185.0) (2026-10-28)
+
+### Features
+
+* **sync:** add `client.sync.projectionReads.read()` with typed `roots`, `baseline_begin`, `baseline_page` and `relation_page` requests for the immutable `gumnut-library` version 1 contract. The exported types cover root keys and outcomes, complete projection bundles, current library scope, semantic schema/hash, finite enumeration metadata and structured error details. Face projections include their original coordinate-frame dimensions. ([17ab837](https://github.com/gumnut-ai/photos-sdk-typescript/commit/17ab8375df4097a1352657d26781f4359c6ad6b9))
+
+### Documentation
+
+* **sync:** explain that each content response comes from one current read-only source snapshot. Enumeration tokens bound a finite selection; they do not retain a snapshot or grant authorization. Consumers must install complete bundles and their progress atomically and reconcile changes through the event feed. The SDK supplies typed requests and responses, rather than implementing local storage or a reconciliation engine. ([17ab837](https://github.com/gumnut-ai/photos-sdk-typescript/commit/17ab8375df4097a1352657d26781f4359c6ad6b9))
+* **assets:** document `large` image and `large_image` video-still variants in `AssetResponse.asset_urls`; the existing variant dictionary type is unchanged. ([05c58e6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/05c58e66c4c43185cd3e65da44e61c08f8d43029))
+* **faces:** clarify assigning/removing a person and retaining versus deleting a face detection. Existing method signatures are unchanged. ([03dea1e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/03dea1e111f2628fa8fc8c9933bc261aff6cb2bf))
+
 ## [0.184.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.183.0...v0.184.0) (2026-10-27)
 
 
