@@ -12,11 +12,12 @@ import { multipartFormRequestOptions } from '../internal/uploads';
  */
 export class Search extends APIResource {
   /**
-   * Searches for assets by content, by typed structured filters, or both. Content
-   * searches are ranked by relevance; filter-only searches return matches
-   * newest-first. Use this tool when the user describes _what's in_ the photos they
-   * want — subjects, scenes, places, activities, moods, objects — optionally
-   * narrowed by album, person, rating, media type, date, or location.
+   * Searches for assets by content, ranked by relevance and optionally narrowed by
+   * structured filters. Use `list_assets` (GET /api/assets) to browse by structured
+   * filters without search text or an image. Use this tool when the user describes
+   * _what's in_ the photos they want — subjects, scenes, places, activities, moods,
+   * objects — optionally narrowed by album, person, rating, media type, date, or
+   * location.
    *
    * Prefer typed filters for anything the request states exactly: `album_id` for
    * album membership, `person_ids` for people, `ratings` for exact effective
@@ -38,9 +39,9 @@ export class Search extends APIResource {
    * **Location filtering is by coordinate,** in two mutually-exclusive modes: a
    * radius (`center` + `radius`) or a bounding box (`bbox`).
    *
-   * At least one of `query`, `album_id`, `person_ids`, `ratings`, `media_type`,
-   * `local_datetime_before`, or `local_datetime_after` must be provided; a location
-   * filter only narrows those results and is not a search criterion on its own.
+   * Returns 422 if `query` is missing or blank. A nonblank `query` is required.
+   * Structured filters only narrow content matches; use `list_assets` (GET
+   * /api/assets) for filter-only browsing.
    */
   search(
     query: SearchSearchParams | null | undefined = {},
@@ -50,15 +51,16 @@ export class Search extends APIResource {
   }
 
   /**
-   * Searches for assets by content, by typed structured filters, or both. Content
-   * searches are ranked by relevance; filter-only searches return matches
-   * newest-first. An uploaded `image` finds visually similar photos; when `query` is
-   * also provided, both count toward relevance.
+   * Searches for assets by content, ranked by relevance and optionally narrowed by
+   * structured filters. Use `list_assets` (GET /api/assets) to browse by structured
+   * filters without search text or an image. An uploaded `image` finds visually
+   * similar photos; when `query` is also provided, both count toward relevance.
    *
-   * At least one search criterion, including `ratings` or `media_type`, must be
-   * provided. Location filtering is by coordinate in two mutually-exclusive modes: a
-   * radius (`center` + `radius`) or a bounding box (`bbox`); it narrows results and
-   * is not a search criterion on its own.
+   * Returns 422 unless a nonblank `query`, an uploaded `image`, or both are
+   * provided. Structured filters only narrow content matches; use `list_assets` (GET
+   * /api/assets) for filter-only browsing. Location filtering is by coordinate in
+   * two mutually-exclusive modes: a radius (`center` + `radius`) or a bounding box
+   * (`bbox`); it narrows results and is not a search criterion on its own.
    */
   searchAssets(
     params: SearchSearchAssetsParams | null | undefined = {},
@@ -74,21 +76,19 @@ export class Search extends APIResource {
 
 export interface SearchResponse {
   /**
-   * Matching assets for this page. Content searches are ordered by relevance;
-   * structured-filter-only searches are ordered newest-first by capture date. A text
-   * `query` search can return fewer than `limit` results, or none. When the first
-   * page of a text `query` search is empty, nothing within the given filters closely
-   * matches that wording: rephrase or broaden the `query`, or change the filters,
-   * rather than requesting another page.
+   * Matching assets for this page, ordered by relevance. A text `query` search can
+   * return fewer than `limit` results, or none. When the first page of a text
+   * `query` search is empty, nothing within the given filters closely matches that
+   * wording: rephrase or broaden the `query`, or change the filters, rather than
+   * requesting another page.
    */
   data: Array<SearchResultItem>;
 
   /**
-   * Whether another page of results remains for this search. For a content search,
-   * false means this search has no more results to return, not that every matching
-   * asset in the library was returned. This can be false after a short or empty
-   * page. While true, increment `page` and repeat the same search criteria, filters,
-   * and `limit`.
+   * Whether another page of results remains for this search. False means this search
+   * has no more results to return, not that every matching asset in the library was
+   * returned. This can be false after a short or empty page. While true, increment
+   * `page` and repeat the same search criteria, filters, and `limit`.
    */
   has_more: boolean;
 }
@@ -103,7 +103,7 @@ export interface SearchResultItem {
    * Similarity distance between the asset's visual content and the search text or
    * image (lower is closer), for attribution only; don't rely on it for result
    * order. Null when the asset matched without a visual match, such as through
-   * metadata text only, or in a structured-filter-only search.
+   * metadata text only.
    */
   distance: number | null;
 }
@@ -189,10 +189,8 @@ export interface SearchSearchParams {
   /**
    * 1-indexed page number; increment it to fetch subsequent pages. Stop when
    * `has_more` is false, even if the current page is full. `search_assets` pages by
-   * number rather than by cursor. A search with a content criterion returns only a
-   * limited number of the most relevant matches, not every match in the library. A
-   * structured-filter-only search (no content criterion) returns every match,
-   * newest-first.
+   * number rather than by cursor. A search returns only a limited number of the most
+   * relevant matches, not every match in the library.
    */
   page?: number;
 
@@ -205,9 +203,9 @@ export interface SearchSearchParams {
   person_ids?: Array<string> | null;
 
   /**
-   * Natural-language search text. Describe what's visible in the photo — subjects,
-   * scenes, objects, activities; metadata text such as captions, camera names,
-   * places, and file names also matches.
+   * Required nonblank natural-language search text. Describe what's visible in the
+   * photo — subjects, scenes, objects, activities; metadata text such as captions,
+   * camera names, places, and file names also matches.
    *
    * Resolve album and people names to IDs and pass them as `album_id` and
    * `person_ids`; convert date phrases like 'in 2023' into ISO 8601 bounds on
@@ -324,10 +322,8 @@ export interface SearchSearchAssetsParams {
   /**
    * Body param: 1-indexed page number; increment it to fetch subsequent pages. Stop
    * when `has_more` is false, even if the current page is full. `search_assets`
-   * pages by number rather than by cursor. A search with a content criterion returns
-   * only a limited number of the most relevant matches, not every match in the
-   * library. A structured-filter-only search (no content criterion) returns every
-   * match, newest-first.
+   * pages by number rather than by cursor. A search returns only a limited number of
+   * the most relevant matches, not every match in the library.
    */
   page?: number;
 
@@ -340,9 +336,10 @@ export interface SearchSearchAssetsParams {
   person_ids?: Array<string> | null;
 
   /**
-   * Body param: Natural-language search text, matched against what's visible in the
-   * photo and metadata text such as captions, camera names, places, and file names.
-   * Album and people names belong in `album_id` and `person_ids`, and date ranges in
+   * Body param: Natural-language search text; required and nonblank unless `image`
+   * is provided. Matched against what's visible in the photo and metadata text such
+   * as captions, camera names, places, and file names. Album and people names belong
+   * in `album_id` and `person_ids`, and date ranges in
    * `local_datetime_before`/`local_datetime_after`, not here.
    */
   query?: string | null;
