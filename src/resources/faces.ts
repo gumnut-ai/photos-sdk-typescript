@@ -177,6 +177,15 @@ export interface FaceResponse {
   asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
+   * How a face's current person assignment was set.
+   *
+   * Manual records explicit client assignment, confirmation, or manual person merge.
+   * It does not establish individual human review. This is independent of how the
+   * face box was created.
+   */
+  assignment_source?: 'assigned' | 'clustered' | 'auto_merged' | 'manual' | null;
+
+  /**
    * Per-face cluster-assignment diagnostics: how well the face fits its
    * currently-assigned Person, and which other Persons are nearby in embedding
    * space. Surfaced via `include=cluster_assignment` on the faces endpoints.
