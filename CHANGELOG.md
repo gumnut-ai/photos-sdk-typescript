@@ -3,12 +3,19 @@
 ## [0.186.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.185.0...v0.186.0) (2026-10-30)
 
 
+### ⚠ BREAKING CHANGES
+
+* **search:** searches now require content, so a filter-only search returns 422. `search.search()` needs a nonblank `query`, and `search.searchAssets()` needs a nonblank `query`, an `image`, or both. Structured filters only narrow content matches; use `assets.list()` to browse by filters alone. The parameter types are unchanged. ([cbc13dd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cbc13dda38ca57daefc37bd833701380019a6689))
+
 ### Features
 
-* **api:** api update ([1147412](https://github.com/gumnut-ai/photos-sdk-typescript/commit/114741200d9f84ec59f9d673d0e512061ec7baad))
-* **api:** api update ([c0b7627](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c0b762769e39eacfaacc0af3a776f703316c07c9))
-* **api:** api update ([a4f39ef](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a4f39efaed5abd0493cba29e7fe3936a5888e3cf))
-* **api:** api update ([cbc13dd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cbc13dda38ca57daefc37bd833701380019a6689))
+* **search:** add `SearchResultItem.match_strength`: `best`, `possible` or `null`. `best` results are strong matches and come first; `possible` results follow and are often unrelated. It is `null` when the search did not judge the result, such as an image search. ([1147412](https://github.com/gumnut-ai/photos-sdk-typescript/commit/114741200d9f84ec59f9d673d0e512061ec7baad))
+* **faces:** add `FaceResponse.assignment_source`, which says how a face's current person was assigned: `assigned`, `clustered`, `auto_merged` or `manual`. `manual` records an explicit client assignment, confirmation or manual person merge; it does not establish individual human review, and it is independent of how the face box was created. ([a4f39ef](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a4f39efaed5abd0493cba29e7fe3936a5888e3cf))
+* **faces:** `ClusterAssignmentResponse.candidates` now contains named people only. ([c0b7627](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c0b762769e39eacfaacc0af3a776f703316c07c9))
+
+### Documentation
+
+* **search:** `SearchResponse.data` documents that `best` matches come before `possible` ones when `match_strength` is set. ([1147412](https://github.com/gumnut-ai/photos-sdk-typescript/commit/114741200d9f84ec59f9d673d0e512061ec7baad))
 
 ## [0.185.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.184.0...v0.185.0) (2026-10-28)
 
