@@ -91,12 +91,12 @@ export type FaceResponsesCursorPage = CursorPage<FaceResponse>;
 
 /**
  * Per-face cluster-assignment diagnostics: how well the face fits its
- * currently-assigned Person, and which other Persons are nearby in embedding
+ * currently-assigned Person, and which other named Persons are nearby in embedding
  * space. Surfaced via `include=cluster_assignment` on the faces endpoints.
  */
 export interface ClusterAssignmentResponse {
   /**
-   * Eligible nearby Persons in the same library, sorted ascending by distance.
+   * Eligible nearby named Persons in the same library, sorted ascending by distance.
    * Excludes the face's currently-assigned Person (its distance is in
    * `distance_to_person`) and people marked hidden (`is_hidden`). Empty when there
    * are no eligible nearby Persons, or when the library owner's settings do not
@@ -115,7 +115,7 @@ export interface ClusterAssignmentResponse {
 
 export namespace ClusterAssignmentResponse {
   /**
-   * A nearby Person returned under `ClusterAssignmentResponse.candidates`.
+   * A nearby named Person returned under `ClusterAssignmentResponse.candidates`.
    */
   export interface Candidate {
     /**
@@ -130,7 +130,7 @@ export namespace ClusterAssignmentResponse {
     person_id: string;
 
     /**
-     * Display name of the candidate Person, or null for an unnamed Person.
+     * Display name of the named candidate Person.
      */
     name?: string | null;
   }
@@ -187,7 +187,7 @@ export interface FaceResponse {
 
   /**
    * Per-face cluster-assignment diagnostics: how well the face fits its
-   * currently-assigned Person, and which other Persons are nearby in embedding
+   * currently-assigned Person, and which other named Persons are nearby in embedding
    * space. Surfaced via `include=cluster_assignment` on the faces endpoints.
    */
   cluster_assignment?: ClusterAssignmentResponse | null;
@@ -317,7 +317,7 @@ export interface FaceListParams extends CursorPageParams {
   /**
    * Opt-in expansion fields. Supported values: `cluster_assignment` (adds the nested
    * `cluster_assignment` object — `distance_to_person` and a top-K `candidates` list
-   * of nearby Persons). Accepts multiple `include=` query params or a single
+   * of nearby named Persons). Accepts multiple `include=` query params or a single
    * comma-delimited value (e.g., `include=cluster_assignment`).
    */
   include?: Array<string> | null;
