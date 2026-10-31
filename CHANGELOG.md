@@ -3,9 +3,9 @@
 ## [0.187.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.186.0...v0.187.0) (2026-10-31)
 
 
-### Features
+### Deprecations
 
-* **api:** api update ([c8c65e7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c8c65e71a1fca909c8bacab76304233bdd3427a8))
+* **search:** deprecate `SearchResultItem.distance` with a `@deprecated` tag; use `match_strength` to judge how closely a text search result matches. The field is still returned with the same type. ([c8c65e7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c8c65e71a1fca909c8bacab76304233bdd3427a8))
 
 ## [0.186.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.185.0...v0.186.0) (2026-10-30)
 
