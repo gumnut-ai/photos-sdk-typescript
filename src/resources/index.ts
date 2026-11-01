@@ -126,7 +126,6 @@ export {
   type StackSetCoverParams,
   type StackListStacksResponsesCursorPage,
 } from './stacks';
-export { Sync } from './sync/sync';
 export {
   Tasks,
   type TaskResponse,
