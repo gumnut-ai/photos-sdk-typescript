@@ -33,8 +33,9 @@ export class Search extends APIResource {
    * rating, media-type, date-range, location, or asset-ID filters can answer with no
    * content `query` — it's cheaper and more deterministic than semantic search.
    * 'Show me all my videos' is a `list_assets` browse with `media_type=video`;
-   * 'videos of the beach' is a search here — videos match through text only (file
-   * name, metadata, and person or album names), not visual content.
+   * 'videos of the beach' is a search here — indexed videos can match visible
+   * content in their stored display frame, as well as text (file name, metadata, and
+   * person or album names). This does not analyze audio, motion, or the full clip.
    *
    * **Location filtering is by coordinate,** in two mutually-exclusive modes: a
    * radius (`center` + `radius`) or a bounding box (`bbox`).
