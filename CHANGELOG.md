@@ -5,13 +5,11 @@
 
 ### ⚠ BREAKING CHANGES
 
-* **api:** remove catalog projection reads
+* **sync:** remove `client.sync`, including `client.sync.projectionReads.read()` and its exported types. `POST /api/sync/projection-reads` is now a private first-party route, outside the public API. Earlier SDK versions can still send it, but it can change without notice. ([a5305d9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a5305d9c96cd61480f9dfe052244105c831bfa1d))
 
-### Features
+### Documentation
 
-* **api:** api update ([87ee2ca](https://github.com/gumnut-ai/photos-sdk-typescript/commit/87ee2ca6cd1105140143df3c9903614e04872995))
-* **api:** api update ([6ed7ecd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6ed7ecd3e57b23a731d96075005480060479bc8a))
-* **api:** remove catalog projection reads ([a5305d9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a5305d9c96cd61480f9dfe052244105c831bfa1d))
+* **search:** `search.search()` documents that indexed videos can match visible content in their stored display frame as well as text. Audio, motion and the full clip are not analyzed. ([6ed7ecd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6ed7ecd3e57b23a731d96075005480060479bc8a))
 
 ## [0.187.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.186.0...v0.187.0) (2026-10-31)
 
