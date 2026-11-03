@@ -9,7 +9,7 @@ name: Sync SDK repos
 # on staging. Adapted from the stlc sdk-repo example, with the PAT replaced by a
 # short-lived gumnut-sdk-pipeline app token. The example's eager
 # notify-back-sync and seal-dispatch jobs are deliberately omitted (no dispatch
-# tokens in our setup — the hourly poll is the background sync).
+# tokens in our setup — the six-hour poll is the background sync).
 #
 # If the back-sync refuses with "staging main is not an ancestor": the trunks
 # forked — something landed on staging main while production was ahead. Resolve
@@ -17,9 +17,10 @@ name: Sync SDK repos
 # force), push, then let the poll confirm. Never force-push either trunk.
 on:
   schedule:
-    # Background convergence; main generation reconciles staging before building.
+    # Background convergence between the six-hour main generation runs.
+    # Main generation also reconciles staging before building.
     # Manual dispatch remains available when immediate alignment is needed.
-    - cron: '37 * * * *'
+    - cron: '37 3,9,15,21 * * *'
   workflow_dispatch: {}
 
 permissions:
