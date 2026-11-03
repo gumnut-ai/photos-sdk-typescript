@@ -12,7 +12,7 @@ name: Promote SDK
 #
 # If the promote refuses with "production/main is not an ancestor": production
 # advanced on its own (a release, or a direct push) and has not been back-synced.
-# Run the "Sync SDK repos" workflow here (or wait for its twice-hourly poll), then
+# Run the "Sync SDK repos" workflow here (or wait for its next scheduled poll), then
 # re-run the promote. Never force-push either trunk.
 on:
   workflow_dispatch: {}

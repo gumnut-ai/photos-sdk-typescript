@@ -2,14 +2,14 @@ name: Sync SDK repos
 
 # Keeps the staging and production trunks in sync: fast-forwards production main
 # back onto staging after a release (or any other production-side commit) so the
-# trunks stay identical and the next stlc build is not held.
+# trunks converge after a release. Main generation also reconciles before building.
 #
 # This file lives in both the staging and production repo (stlc preserves
 # .github/workflows/ across regeneration); the job self-routes so it only runs
 # on staging. Adapted from the stlc sdk-repo example, with the PAT replaced by a
 # short-lived gumnut-sdk-pipeline app token. The example's eager
 # notify-back-sync and seal-dispatch jobs are deliberately omitted (no dispatch
-# tokens in our setup — the twice-hourly poll is the sync; see the design doc).
+# tokens in our setup — the hourly poll is the background sync).
 #
 # If the back-sync refuses with "staging main is not an ancestor": the trunks
 # forked — something landed on staging main while production was ahead. Resolve
@@ -17,9 +17,9 @@ name: Sync SDK repos
 # force), push, then let the poll confirm. Never force-push either trunk.
 on:
   schedule:
-    # back-sync poll: a cheap pure-git check, twice hourly so an unsynced production
-    # change can't hold codegen for long.
-    - cron: '7,37 * * * *'
+    # Background convergence; main generation reconciles staging before building.
+    # Manual dispatch remains available when immediate alignment is needed.
+    - cron: '37 * * * *'
   workflow_dispatch: {}
 
 permissions:
@@ -28,7 +28,7 @@ permissions:
 jobs:
   back-sync:
     # Fast-forward production main back onto staging so the trunks stay identical.
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     if: github.repository == 'gumnut-ai/photos-typescript-staging'
     concurrency:
       group: stlc-back-sync
