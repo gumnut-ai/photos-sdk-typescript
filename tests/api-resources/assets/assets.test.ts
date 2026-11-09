@@ -133,6 +133,7 @@ describe('resource assets', () => {
         {
           id: 'id',
           change: {
+            altitude: 0,
             description: 'description',
             latitude: 0,
             longitude: 0,

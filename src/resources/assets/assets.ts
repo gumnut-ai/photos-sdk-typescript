@@ -354,9 +354,9 @@ export class Assets extends APIResource {
 
   /**
    * Edits the user-editable metadata for a single asset — description, rating, GPS
-   * coordinates, and original capture datetime. Rating accepts 0-5, where 0
-   * explicitly marks the asset unrated; passing null clears the USER override. Only
-   * fields included in the request body are changed; others are left untouched.
+   * coordinates, altitude, and original capture datetime. Rating accepts 0-5, where
+   * 0 explicitly marks the asset unrated; passing null clears the USER override.
+   * Only fields included in the request body are changed; others are left untouched.
    * Passing `null` for a field removes a previously-set value; the effective
    * response may still contain a value from another metadata source. `latitude` and
    * `longitude` must be set together (both written or both cleared).
@@ -1188,6 +1188,15 @@ export namespace AssetBulkUpdateAssetsParams {
      */
     export interface Change {
       /**
+       * GPS altitude in meters. Must be finite; zero and negative values are valid.
+       * Independent of latitude/longitude: setting or clearing coordinates leaves
+       * omitted altitude unchanged, and altitude edits do not refresh location names.
+       * Pass `null` to remove the USER override and reveal a lower-priority value; omit
+       * to leave unchanged.
+       */
+      altitude?: number | null;
+
+      /**
        * User-set description for the asset. Pass `null` to remove a previously-set
        * value; the effective response may still contain a description from another
        * metadata source. Omit to leave unchanged. Distinct from the AI-generated
@@ -1534,6 +1543,15 @@ export interface AssetTrashParams {
 }
 
 export interface AssetUpdateAssetParams {
+  /**
+   * GPS altitude in meters. Must be finite; zero and negative values are valid.
+   * Independent of latitude/longitude: setting or clearing coordinates leaves
+   * omitted altitude unchanged, and altitude edits do not refresh location names.
+   * Pass `null` to remove the USER override and reveal a lower-priority value; omit
+   * to leave unchanged.
+   */
+  altitude?: number | null;
+
   /**
    * User-set description for the asset. Pass `null` to remove a previously-set
    * value; the effective response may still contain a description from another
