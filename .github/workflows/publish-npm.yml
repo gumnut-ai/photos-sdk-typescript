@@ -14,16 +14,23 @@ permissions:
 jobs:
   publish:
     name: publish
+    if: github.repository == 'gumnut-ai/photos-sdk-typescript'
     runs-on: ubuntu-latest
+    # Publishing waits until a reviewer approves the deployment. The protected
+    # `release` environment is configured in this repository's settings.
+    environment: release
     permissions:
       contents: read
       id-token: write
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Set up Node
-        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
+        # v3 caches only when `cache:` is set, and it is not set here.
+        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1 # zizmor: ignore[cache-poisoning]
         with:
           node-version: '24'
 
