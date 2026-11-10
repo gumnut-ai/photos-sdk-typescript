@@ -287,7 +287,8 @@ export interface SearchSearchAssetsParams {
 
   /**
    * Body param: Image to search by; finds visually similar photos. When `query` is
-   * also provided, both the text and the image count toward relevance.
+   * also provided, both the text and the image count toward relevance. At most 25
+   * MiB.
    */
   image?: Uploadable | null;
 
