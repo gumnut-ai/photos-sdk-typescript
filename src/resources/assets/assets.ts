@@ -355,11 +355,12 @@ export class Assets extends APIResource {
   /**
    * Edits the user-editable metadata for a single asset — description, rating, GPS
    * coordinates, altitude, and original capture datetime. Rating accepts 0-5, where
-   * 0 explicitly marks the asset unrated; passing null clears the USER override.
-   * Only fields included in the request body are changed; others are left untouched.
-   * Passing `null` for a field removes a previously-set value; the effective
-   * response may still contain a value from another metadata source. `latitude` and
-   * `longitude` must be set together (both written or both cleared).
+   * 0 explicitly marks the asset unrated; passing null clears the chosen source
+   * contribution. The optional source is user (default) or import; user edits win
+   * over imports. Only fields included in the request body are changed; others are
+   * left untouched. Passing `null` for a field removes a previously-set value; the
+   * effective response may still contain a value from another metadata source.
+   * `latitude` and `longitude` must be set together (both written or both cleared).
    *
    * Setting or clearing GPS coordinates schedules an asynchronous refresh of derived
    * location names.
@@ -1191,8 +1192,8 @@ export namespace AssetBulkUpdateAssetsParams {
        * GPS altitude in meters. Must be finite; zero and negative values are valid.
        * Independent of latitude/longitude: setting or clearing coordinates leaves
        * omitted altitude unchanged, and altitude edits do not refresh location names.
-       * Pass `null` to remove the USER override and reveal a lower-priority value; omit
-       * to leave unchanged.
+       * Pass `null` to remove the selected source’s contribution and reveal a
+       * lower-priority value; omit to leave unchanged.
        */
       altitude?: number | null;
 
@@ -1220,9 +1221,11 @@ export namespace AssetBulkUpdateAssetsParams {
 
       /**
        * When the asset was originally captured. Timezone-aware values preserve their UTC
-       * offset; timezone-naive values have no offset. Pass `null` to remove a
-       * previously-set value; the effective response may still contain a datetime from
-       * another metadata source. Omit to leave unchanged.
+       * offset for USER. For IMPORT, aware values denote an instant; capture-local time
+       * is inferred from file evidence or effective coordinates, otherwise provisionally
+       * displayed in UTC without a capture-zone offset. Naive values carry an unknown
+       * zone. Pass `null` to remove a previously-set value; the effective response may
+       * still contain a datetime from another metadata source. Omit to leave unchanged.
        */
       original_datetime?: string | null;
 
@@ -1233,6 +1236,12 @@ export namespace AssetBulkUpdateAssetsParams {
        * through; omit to leave unchanged. Values outside `0`-`5` are rejected.
        */
       rating?: number | null;
+
+      /**
+       * Metadata layer to write: user (default) or import. User edits take precedence
+       * over imported values.
+       */
+      source?: 'user' | 'import';
 
       [k: string]: unknown;
     }
@@ -1547,8 +1556,8 @@ export interface AssetUpdateAssetParams {
    * GPS altitude in meters. Must be finite; zero and negative values are valid.
    * Independent of latitude/longitude: setting or clearing coordinates leaves
    * omitted altitude unchanged, and altitude edits do not refresh location names.
-   * Pass `null` to remove the USER override and reveal a lower-priority value; omit
-   * to leave unchanged.
+   * Pass `null` to remove the selected source’s contribution and reveal a
+   * lower-priority value; omit to leave unchanged.
    */
   altitude?: number | null;
 
@@ -1576,9 +1585,11 @@ export interface AssetUpdateAssetParams {
 
   /**
    * When the asset was originally captured. Timezone-aware values preserve their UTC
-   * offset; timezone-naive values have no offset. Pass `null` to remove a
-   * previously-set value; the effective response may still contain a datetime from
-   * another metadata source. Omit to leave unchanged.
+   * offset for USER. For IMPORT, aware values denote an instant; capture-local time
+   * is inferred from file evidence or effective coordinates, otherwise provisionally
+   * displayed in UTC without a capture-zone offset. Naive values carry an unknown
+   * zone. Pass `null` to remove a previously-set value; the effective response may
+   * still contain a datetime from another metadata source. Omit to leave unchanged.
    */
   original_datetime?: string | null;
 
@@ -1589,6 +1600,12 @@ export interface AssetUpdateAssetParams {
    * through; omit to leave unchanged. Values outside `0`-`5` are rejected.
    */
   rating?: number | null;
+
+  /**
+   * Metadata layer to write: user (default) or import. User edits take precedence
+   * over imported values.
+   */
+  source?: 'user' | 'import';
 
   [k: string]: unknown;
 }

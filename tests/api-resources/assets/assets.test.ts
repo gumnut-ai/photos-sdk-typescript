@@ -139,6 +139,7 @@ describe('resource assets', () => {
             longitude: 0,
             original_datetime: '2019-12-27T18:11:19.117Z',
             rating: 0,
+            source: 'user',
           },
         },
       ],
