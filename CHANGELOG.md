@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.189.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.188.0...v0.189.0) (2026-11-11)
+
+
+### Features
+
+* **api:** api update ([6fdb415](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6fdb4153e20c8f4ce9573e02d938e0db0c1d9d96))
+* **api:** api update ([168da9b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/168da9b24fae6da5aa1cf0e6af5165e0e5a19f57))
+* **api:** api update ([52e29e3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/52e29e310aa0ebad65a053546cad6398a694f301))
+* **api:** api update ([19412a3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/19412a334e60ead2d3a2ccac04997c8d68d68563))
+
+
+### Documentation
+
+* align SDK back-sync recovery timing ([409b64a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/409b64aae0d8fd8bc5979e2eb5b5c6c0c91800fc))
+
 ## [0.188.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.187.0...v0.188.0) (2026-11-01)
 
 
