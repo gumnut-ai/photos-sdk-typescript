@@ -527,6 +527,13 @@ export interface AssetResponse {
   asset_urls?: { [key: string]: Shared.AssetVariant } | null;
 
   /**
+   * People found in this asset without a face record, each a `body`: a box and its
+   * person, if linked. `null` when not requested via `include=bodies`; `[]` when
+   * requested but the asset has none.
+   */
+  bodies?: Array<AssetResponse.Body> | null;
+
+  /**
    * AI-generated description of the asset's content, quality, and composition. null
    * means description generation has not yet run; empty string means the model
    * refused to describe the asset. Distinct from metadata.description
@@ -610,6 +617,50 @@ export interface AssetResponse {
    * Width of the current rendering in pixels.
    */
   width?: number;
+}
+
+export namespace AssetResponse {
+  /**
+   * A person found in an asset without a face record.
+   */
+  export interface Body {
+    /**
+     * Unique body identifier with 'body\_' prefix
+     */
+    id: string;
+
+    /**
+     * ID of the asset containing this body
+     */
+    asset_id: string;
+
+    /**
+     * How a body's person was set: by automatic naming or by a person.
+     */
+    assignment_source: 'automatic' | 'manual' | null;
+
+    /**
+     * Where the person is, as {x, y, w, h} in pixels: (x, y) is the box's top-left
+     * corner and w, h its size, on the image as displayed (EXIF orientation applied),
+     * so they match the asset's `width` and `height`
+     */
+    bounding_box: { [key: string]: number };
+
+    /**
+     * When this body was detected
+     */
+    created_at: string;
+
+    /**
+     * ID of the person this body is linked to, or `null` when it has none yet.
+     */
+    person_id: string | null;
+
+    /**
+     * When this body record was last updated
+     */
+    updated_at: string;
+  }
 }
 
 /**
@@ -1002,9 +1053,10 @@ export interface AssetCreateParams {
 export interface AssetRetrieveParams {
   /**
    * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
-   * location names), `faces`, `people`, `file_data` (a group token populating the
-   * nested `file_data` object with the file/provenance scalars `device_asset_id`,
-   * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
+   * location names), `faces`, `bodies` (people found without a face record),
+   * `people`, `file_data` (a group token populating the nested `file_data` object
+   * with the file/provenance scalars `device_asset_id`, `device_id`,
+   * `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
    * `file_size_bytes`), and `variants` (every `asset_urls` rung beyond the lean one.
    * Without it `asset_urls` carries only its lean rung — `thumbnail` for an image,
    * or `thumbnail_image` for a video — so callers that render non-thumbnail variants
@@ -1064,9 +1116,10 @@ export interface AssetListParams extends CursorPageParams {
 
   /**
    * Opt-in expansion fields. Supported values: `metadata` (camera/EXIF/GPS and
-   * location names), `faces`, `people`, `file_data` (a group token populating the
-   * nested `file_data` object with the file/provenance scalars `device_asset_id`,
-   * `device_id`, `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
+   * location names), `faces`, `bodies` (people found without a face record),
+   * `people`, `file_data` (a group token populating the nested `file_data` object
+   * with the file/provenance scalars `device_asset_id`, `device_id`,
+   * `file_created_at`, `file_modified_at`, `checksum`, `checksum_sha1`,
    * `file_size_bytes`), and `variants` (every `asset_urls` rung beyond the lean one.
    * Without it `asset_urls` carries only its lean rung — `thumbnail` for an image,
    * or `thumbnail_image` for a video — so callers that render non-thumbnail variants
