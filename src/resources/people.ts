@@ -315,14 +315,14 @@ export interface PersonUpdateParams {
 
 export interface PersonListParams extends CursorPageParams {
   /**
-   * Return only people who appear in at least one asset of this album. Useful for
-   * 'who is in this album?'.
+   * Return only people who appear in at least one asset of this album, by a face or
+   * a body linked to them. Useful for 'who is in this album?'.
    */
   album_id?: string | null;
 
   /**
-   * Return only people who have at least one face in this asset. Useful for 'who is
-   * in this photo?'.
+   * Return only people in this asset, by a face or a body linked to them. Useful for
+   * 'who is in this photo?'.
    */
   asset_id?: string | null;
 

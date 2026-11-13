@@ -574,9 +574,8 @@ export interface AssetResponse {
   metadata?: MetadataResponse | null;
 
   /**
-   * All unique people identified in this asset (deduplicated from faces). `null`
-   * when not requested via `include=people`; `[]` when requested but none are
-   * identified.
+   * Each person in this asset once, linked by a face, a body or both. `null` when
+   * not requested via `include=people`; `[]` when requested but none are identified.
    */
   people?: Array<PeopleAPI.PersonResponse> | null;
 
