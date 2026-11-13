@@ -206,12 +206,21 @@ export interface SearchSearchParams {
   page?: number;
 
   /**
-   * Filter to assets containing ALL of these person IDs (intersection, not union).
-   * Accepts multiple `person_ids=` query params or a single comma-delimited value
-   * (e.g., `person_123,person_abc`). Person IDs are carried by the entries of an
-   * asset's `people` field (returned with `include=people`).
+   * Filter to assets where ALL of these people appear (intersection, not union), by
+   * a face or a body linked to them unless `person_link` says otherwise. Accepts
+   * multiple `person_ids=` query params or a single comma-delimited value (e.g.,
+   * `person_123,person_abc`). Person IDs are carried by the entries of an asset's
+   * `people` field (returned with `include=people`). A body match may not show their
+   * face, so when choosing photos of someone, prefer `person_link=face`.
    */
   person_ids?: Array<string> | null;
+
+  /**
+   * How every person in `person_ids` must appear: `any` (a face or a linked body),
+   * `face` (photos where their face was detected), or `body` (a linked body only).
+   * Requires `person_ids`. Defaults to `any`.
+   */
+  person_link?: 'any' | 'face' | 'body';
 
   /**
    * Required nonblank natural-language search text. Describe what's visible in the
@@ -340,12 +349,21 @@ export interface SearchSearchAssetsParams {
   page?: number;
 
   /**
-   * Body param: Filter to assets containing ALL of these person IDs (intersection,
-   * not union). Accepts multiple `person_ids=` form fields or a single
-   * comma-delimited value (e.g., `person_123,person_abc`). Person IDs are carried by
-   * the entries of an asset's `people` field (returned with `include=people`).
+   * Body param: Filter to assets where ALL of these people appear (intersection, not
+   * union), by a face or a body linked to them unless `person_link` says otherwise.
+   * Accepts multiple `person_ids=` form fields or a single comma-delimited value
+   * (e.g., `person_123,person_abc`). Person IDs are carried by the entries of an
+   * asset's `people` field (returned with `include=people`). A body match may not
+   * show their face, so when choosing photos of someone, prefer `person_link=face`.
    */
   person_ids?: Array<string> | null;
+
+  /**
+   * Body param: How every person in `person_ids` must appear: `any` (a face or a
+   * linked body), `face` (photos where their face was detected), or `body` (a linked
+   * body only). Requires `person_ids`. Defaults to `any`.
+   */
+  person_link?: 'any' | 'face' | 'body';
 
   /**
    * Body param: Natural-language search text; required and nonblank unless `image`

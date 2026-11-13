@@ -87,6 +87,7 @@ describe('resource assets', () => {
           media_type: 'image',
           order: 'asc',
           person_ids: ['string', 'string'],
+          person_link: 'any',
           radius: 0,
           ratings: [0, 0],
           stack_id: 'stack_id',
@@ -179,6 +180,7 @@ describe('resource assets', () => {
       local_datetime_before: '2019-12-27T18:11:19.117Z',
       media_type: 'image',
       person_ids: ['string', 'string'],
+      person_link: 'any',
       ratings: [0, 0],
       state: 'live',
     });
@@ -213,6 +215,7 @@ describe('resource assets', () => {
           order: 'asc',
           person_id: 'person_id',
           person_ids: ['string', 'string'],
+          person_link: 'any',
           radius: 0,
           ratings: [0, 0],
           starting_after_bucket: '2019-12-27T18:11:19.117Z',

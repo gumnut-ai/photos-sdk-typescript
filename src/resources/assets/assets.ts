@@ -1170,12 +1170,21 @@ export interface AssetListParams extends CursorPageParams {
   order?: 'asc' | 'desc';
 
   /**
-   * Filter to assets containing faces belonging to ALL of these people
-   * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
-   * query params or comma-delimited values. Person IDs are carried by the entries of
-   * an asset's `people` field (returned with `include=people`).
+   * Filter to assets where ALL of these people appear (intersection, not union), by
+   * a face or a body linked to them unless `person_link` says otherwise. Accepts up
+   * to 200 IDs across repeated `person_ids=` query params or comma-delimited values.
+   * Person IDs are carried by the entries of an asset's `people` field (returned
+   * with `include=people`). A body match may not show their face, so when choosing
+   * photos of someone, prefer `person_link=face`.
    */
   person_ids?: Array<string> | null;
+
+  /**
+   * How every person in `person_ids` must appear: `any` (a face or a linked body),
+   * `face` (photos where their face was detected), or `body` (a linked body only).
+   * Requires `person_ids`. Defaults to `any`.
+   */
+  person_link?: 'any' | 'face' | 'body';
 
   /**
    * Radius of the `center` location filter, in meters (greater than 0, at most
@@ -1393,12 +1402,20 @@ export interface AssetClusterByGeoParams {
   media_type?: 'image' | 'video' | null;
 
   /**
-   * Filter to assets containing faces belonging to ALL of these people
-   * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
-   * query params or comma-delimited values. Person IDs are carried by the entries of
-   * an asset's `people` field (returned with `include=people`).
+   * Filter to assets where ALL of these people appear (intersection, not union), by
+   * a face or a body linked to them unless `person_link` says otherwise. Accepts up
+   * to 200 IDs across repeated `person_ids=` query params or comma-delimited values.
+   * Person IDs are carried by the entries of an asset's `people` field (returned
+   * with `include=people`).
    */
   person_ids?: Array<string> | null;
+
+  /**
+   * How every person in `person_ids` must appear: `any` (a face or a linked body),
+   * `face` (photos where their face was detected), or `body` (a linked body only).
+   * Requires `person_ids`. Defaults to `any`.
+   */
+  person_link?: 'any' | 'face' | 'body';
 
   /**
    * Return assets whose effective rating is one of these exact values. Values must
@@ -1500,12 +1517,20 @@ export interface AssetCountsParams {
   person_id?: string | null;
 
   /**
-   * Filter to assets containing faces belonging to ALL of these people
-   * (intersection, not union). Accepts up to 200 IDs across repeated `person_ids=`
-   * query params or comma-delimited values. Person IDs are carried by the entries of
-   * an asset's `people` field (returned with `include=people`).
+   * Filter to assets where ALL of these people appear (intersection, not union), by
+   * a face or a body linked to them unless `person_link` says otherwise. Accepts up
+   * to 200 IDs across repeated `person_ids=` query params or comma-delimited values.
+   * Person IDs are carried by the entries of an asset's `people` field (returned
+   * with `include=people`).
    */
   person_ids?: Array<string> | null;
+
+  /**
+   * How every person in `person_ids` must appear: `any` (a face or a linked body),
+   * `face` (photos where their face was detected), or `body` (a linked body only).
+   * Requires `person_ids`. Defaults to `any`.
+   */
+  person_link?: 'any' | 'face' | 'body';
 
   /**
    * Radius of the `center` location filter, in meters (greater than 0, at most
