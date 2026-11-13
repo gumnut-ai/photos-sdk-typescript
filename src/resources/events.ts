@@ -12,8 +12,8 @@ export class Events extends APIResource {
    * Returns a paginated stream of change events (create/update/delete) for entities
    * in the library. Each event is a lightweight record — `entity_type`, `entity_id`,
    * `event_type`, and timestamps — pointing at a concrete entity that has changed.
-   * Follow up with `list_assets`, `get_album`, `get_person`, or `get_face` to fetch
-   * full entity data when needed.
+   * Follow up with `list_assets`, `get_album`, `get_person`, `get_face`, or
+   * `get_body` to fetch full entity data when needed.
    *
    * **Use this tool** when the user wants to synchronise a local copy of their
    * library, audit recent activity, or detect deletions. **Don't use it** for
@@ -28,7 +28,7 @@ export class Events extends APIResource {
    *    it names and upsert it, or drop it when the read returns not-found. For
    *    `album_asset_*` events, re-read that album's membership rather than applying
    *    the add or remove directly. For an `entity_id` that is an asset ID, and for
-   *    faces, see **Library membership**.
+   *    faces and bodies, see **Library membership**.
    * 4. After applying the page, store its `next_cursor`.
    * 5. Repeat until `has_more` is false. The client is then caught up; the next sync
    *    resumes at step 1.
@@ -49,23 +49,25 @@ export class Events extends APIResource {
    * events include a `payload` field with context (e.g., `album_asset_removed`
    * carries `album_id` and `asset_id` since the junction row is gone). Permanently
    * deleting an asset also records an `album_asset_removed` for each of its
-   * memberships. Deleting an album does not: `album_deleted` means the album's
-   * memberships are gone too, so remove them along with the album.
+   * memberships; its faces and bodies get no events. Deleting an album records no
+   * `album_asset_removed`: `album_deleted` means the album's memberships are gone
+   * too, so remove them along with the album.
    *
    * **Library membership:** an asset can move to another library and keep its ID,
-   * and its faces move with it and keep theirs. `get_asset` is not scoped to a
-   * library, so it still returns an asset that moved to another library you can
+   * and its faces and bodies move with it and keep theirs. `get_asset` is not scoped
+   * to a library, so it still returns an asset that moved to another library you can
    * read. Never decide membership with it. Re-read assets with `list_assets`,
    * passing this feed's `library_id`, the `ids`, and `state=all`, and read every
    * page. Do this for every event whose `entity_id` is an asset ID: every event with
-   * `entity_type` `asset` or `metadata`, whatever its `event_type`. Read faces with
-   * this feed's `library_id` too; `list_faces` and `get_face` both take it. Upsert
-   * what the read returns into your copy of this library. Remove what it omits, and
-   * what your copy relates to it, from your copy of this library only; a permanently
-   * deleted asset is omitted too. The people that your copy of a removed asset's
-   * faces names lose them with no events of their own, so refetch them by ID;
-   * neither a person nor a stack moves between libraries. A failed or partial read
-   * is not an omission: retry it from the first page, and store no cursor past it.
+   * `entity_type` `asset` or `metadata`, whatever its `event_type`. Read faces and
+   * bodies with this feed's `library_id` too; `list_faces`, `get_face`,
+   * `list_bodies` and `get_body` all take it. Upsert what the read returns into your
+   * copy of this library. Remove what it omits, and what your copy relates to it,
+   * from your copy of this library only; a permanently deleted asset is omitted too.
+   * The people that your copy of a removed asset's faces and bodies name lose them
+   * with no events of their own, so refetch them by ID; neither a person nor a stack
+   * moves between libraries. A failed or partial read is not an omission: retry it
+   * from the first page, and store no cursor past it.
    *
    * **Moves between libraries:** a move records `asset_moved_out` in the library the
    * asset left and `asset_moved_in` in the library it joined. Neither has a
@@ -74,12 +76,12 @@ export class Events extends APIResource {
    * membership** instead of removing it outright.
    *
    * **Trash and restore:** `asset_trashed` moves an asset to the trash and
-   * `asset_restored` brings it back. Trashing hides the asset's faces and album
-   * memberships from default reads and lowers its people's and stack's counts;
+   * `asset_restored` brings it back. Trashing hides the asset's faces, bodies and
+   * album memberships from default reads and lowers its people's and stack's counts;
    * restoring reverses that. Those related changes get no events of their own. On
-   * either event, re-read the asset's faces and album memberships by `asset_id` (a
-   * trashed asset returns none), and refetch by ID the people and stack that your
-   * copy of its faces and of the asset names.
+   * either event, re-read the asset's faces, bodies and album memberships by
+   * `asset_id` (a trashed asset returns none), and refetch by ID the people and
+   * stack that your copy of its faces and of the asset names.
    *
    * **Event types:**
    *
@@ -90,6 +92,7 @@ export class Events extends APIResource {
    * - `library_trashed`, `library_restored`
    * - `person_created`, `person_updated`, `person_deleted`
    * - `face_created`, `face_updated`, `face_deleted`
+   * - `body_created`, `body_updated`, `body_deleted`
    * - `album_asset_added`, `album_asset_removed`
    * - `metadata_updated`
    * - `stack_created`, `stack_updated`, `stack_deleted`
@@ -103,6 +106,12 @@ export class Events extends APIResource {
    * Refetch both persons when they're non-null. A `previous_person_id` may name a
    * person that was deleted in the same change (a merge or a person deletion), so
    * handle a 404 on the refetch.
+   *
+   * **Bodies:** a body is a person found in a photo without a face record. Every
+   * body gets events, linked to a person or not and including those on trashed
+   * photos, except the ones detection filtered out, which clients never see.
+   * `body_updated` and `body_deleted` carry the same payloads as their face
+   * counterparts; refetch the people they name, as for face events.
    */
   get(query: EventGetParams | null | undefined = {}, options?: RequestOptions): APIPromise<EventsResponse> {
     return this._client.get('/api/events', { query, ...options });
@@ -209,8 +218,8 @@ export interface EventGetParams {
 
   /**
    * Entity types to include (e.g., `asset`, `album`). Valid values: `asset`,
-   * `album`, `person`, `face`, `album_asset`, `metadata`, `stack`. Accepts multiple
-   * `entity_types=` query params or a single comma-delimited value (e.g.,
+   * `album`, `person`, `face`, `body`, `album_asset`, `metadata`, `stack`. Accepts
+   * multiple `entity_types=` query params or a single comma-delimited value (e.g.,
    * `entity_types=asset,album`). Omit to receive events for all types.
    */
   entity_types?: Array<string> | null;
