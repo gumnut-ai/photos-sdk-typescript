@@ -1511,12 +1511,6 @@ export interface AssetCountsParams {
   order?: 'asc' | 'desc';
 
   /**
-   * @deprecated Deprecated compatibility alias for one `person_ids` value. Do not
-   * combine it with `person_ids`.
-   */
-  person_id?: string | null;
-
-  /**
    * Filter to assets where ALL of these people appear (intersection, not union), by
    * a face or a body linked to them unless `person_link` says otherwise. Accepts up
    * to 200 IDs across repeated `person_ids=` query params or comma-delimited values.

@@ -213,7 +213,6 @@ describe('resource assets', () => {
           local_datetime_before: '2019-12-27T18:11:19.117Z',
           media_type: 'image',
           order: 'asc',
-          person_id: 'person_id',
           person_ids: ['string', 'string'],
           person_link: 'any',
           radius: 0,

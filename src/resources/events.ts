@@ -211,12 +211,6 @@ export interface EventGetParams {
   created_at_gte?: string | null;
 
   /**
-   * @deprecated Ignored. Reads are bounded by `next_cursor`; a timestamp bound could
-   * skip events.
-   */
-  created_at_lt?: string | null;
-
-  /**
    * Entity types to include (e.g., `asset`, `album`). Valid values: `asset`,
    * `album`, `person`, `face`, `body`, `album_asset`, `metadata`, `stack`. Accepts
    * multiple `entity_types=` query params or a single comma-delimited value (e.g.,
