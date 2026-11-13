@@ -54,9 +54,10 @@ export class Faces extends APIResource {
    * will have many face rows.
    *
    * **Use `list_people` instead** when the user wants the grouped identities ('list
-   * everyone in my library') rather than individual face detections. This tool is
-   * useful for curating clustering results, finding unassigned faces, or picking a
-   * thumbnail face for a person via `update_person.thumbnail_face_id`.
+   * everyone in my library') rather than individual face detections, and
+   * `list_bodies` for people in a photo without a face. This tool is useful for
+   * curating clustering results, finding unassigned faces, or picking a thumbnail
+   * face for a person via `update_person.thumbnail_face_id`.
    *
    * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
    * last face in `data` as `starting_after_id` to fetch the next page.
