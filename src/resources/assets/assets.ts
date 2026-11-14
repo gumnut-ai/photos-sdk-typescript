@@ -659,6 +659,32 @@ export namespace AssetResponse {
      * When this body record was last updated
      */
     updated_at: string;
+
+    /**
+     * Named people who may be the person in this body, best match first, at most 5;
+     * never its current person. Link one with `update_body`. Populated only when
+     * `list_bodies` or `get_body` is called with `include=candidates`; `null`
+     * otherwise. `[]` when there are none, including while the library owner's
+     * settings do not allow automatic face detection.
+     */
+    candidates?: Array<Body.Candidate> | null;
+  }
+
+  export namespace Body {
+    /**
+     * A named person who may be the one in a body.
+     */
+    export interface Candidate {
+      /**
+       * The person's name.
+       */
+      name: string;
+
+      /**
+       * Person ID (with 'person\_' prefix).
+       */
+      person_id: string;
+    }
   }
 }
 
