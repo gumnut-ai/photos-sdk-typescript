@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.190.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.189.0...v0.190.0) (2026-11-13)
+
+### ⚠ BREAKING CHANGES
+
+* **events:** remove `created_at_lt` from `events.get()`. Drop the argument when upgrading. Store `next_cursor` and pass it as `after_cursor` to resume. Use `as_of` to give several reads the same bound. ([65f639d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/65f639d43f220c9a42a75589269339c37068429a))
+* **assets:** remove `person_id` from `assets.counts()`. Pass `person_ids` with a one-element list to count assets for one person. ([65f639d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/65f639d43f220c9a42a75589269339c37068429a))
+* **people filters:** `person_ids` now matches assets through either a detected face or a linked body by default. Set `person_link` to `face` to keep face-only matching, or `body` for linked-body matches. The option is available on asset listing, counts, geo clusters, and both search methods. Person `asset_count` now includes distinct assets linked by a body. ([1976681](https://github.com/gumnut-ai/photos-sdk-typescript/commit/197668124d7c16f9895835f411355f28f3a050c1))
+
+### Features
+
+* **assets:** request `include=bodies` when listing, retrieving, or searching assets to get boxes for people detected without a face record, with a person ID when linked. ([a5ec4ac](https://github.com/gumnut-ai/photos-sdk-typescript/commit/a5ec4ac39e9ee07f5ec98913d90585c9f22385f1))
+* **events:** the feed accepts `body` in `entity_types` and can return `body_created`, `body_updated`, and `body_deleted`. ([b05d046](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b05d04603acdbf6a9819fcc3781857200118b509))
+
+### Documentation
+
+* **people:** describe how merges reassign bodies and how deleting a person leaves their bodies unassigned. ([e7a20ba](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e7a20ba020f93f45fbd13f270920ff4df012796b))
+* **users:** document the 403 response when a selected-library credential sets `immich_library_id` outside its grant. ([b8235dc](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b8235dc974be32570422ca27276aafcf3485af75))
+
 ## [0.189.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.188.0...v0.189.0) (2026-11-11)
 
 
