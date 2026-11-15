@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.191.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.190.0...v0.191.0) (2026-11-15)
+
+
+### Features
+
+* **api:** api update ([c113ec6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c113ec636b0a45b0799c47fe64cf46fc764a4364))
+* **api:** map the bodies resource ([fefd206](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fefd206b85ef24439da0043f56792c97b2414f9e))
+
 ## [0.190.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.189.0...v0.190.0) (2026-11-13)
 
 ### ⚠ BREAKING CHANGES
