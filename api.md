@@ -147,6 +147,20 @@ Methods:
 - <code title="get /api/faces">client.faces.<a href="./src/resources/faces.ts">list</a>({ ...params }) -> FaceResponsesCursorPage</code>
 - <code title="delete /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">delete</a>(faceID, { ...params }) -> FaceDeleteResponse</code>
 
+# Bodies
+
+Types:
+
+- <code><a href="./src/resources/bodies.ts">BodyResponse</a></code>
+- <code><a href="./src/resources/bodies.ts">BodyDeleteResponse</a></code>
+
+Methods:
+
+- <code title="get /api/bodies/{body_id}">client.bodies.<a href="./src/resources/bodies.ts">retrieve</a>(bodyID, { ...params }) -> BodyResponse</code>
+- <code title="patch /api/bodies/{body_id}">client.bodies.<a href="./src/resources/bodies.ts">update</a>(bodyID, { ...params }) -> BodyResponse</code>
+- <code title="get /api/bodies">client.bodies.<a href="./src/resources/bodies.ts">list</a>({ ...params }) -> BodyResponsesCursorPage</code>
+- <code title="delete /api/bodies/{body_id}">client.bodies.<a href="./src/resources/bodies.ts">delete</a>(bodyID, { ...params }) -> BodyDeleteResponse</code>
+
 # Libraries
 
 Types:

@@ -34,6 +34,16 @@ import {
   APIKeyUpdateParams,
   APIKeys,
 } from './resources/api-keys';
+import {
+  Bodies,
+  BodyDeleteParams,
+  BodyDeleteResponse,
+  BodyListParams,
+  BodyResponse,
+  BodyResponsesCursorPage,
+  BodyRetrieveParams,
+  BodyUpdateParams,
+} from './resources/bodies';
 import { EventGetParams, Events, EventsResponse } from './resources/events';
 import {
   ClusterAssignmentResponse,
@@ -927,6 +937,10 @@ export class Gumnut {
    */
   faces: API.Faces = new API.Faces(this);
   /**
+   * People found in photos without a face record.
+   */
+  bodies: API.Bodies = new API.Bodies(this);
+  /**
    * Top-level containers that own assets, albums, people, and everything else.
    */
   libraries: API.Libraries = new API.Libraries(this);
@@ -967,6 +981,7 @@ Gumnut.Albums = Albums;
 Gumnut.AlbumAssets = AlbumAssets;
 Gumnut.Events = Events;
 Gumnut.Faces = Faces;
+Gumnut.Bodies = Bodies;
 Gumnut.Libraries = Libraries;
 Gumnut.OAuth = OAuth;
 Gumnut.People = People;
@@ -1060,6 +1075,17 @@ export declare namespace Gumnut {
     type FaceUpdateParams as FaceUpdateParams,
     type FaceListParams as FaceListParams,
     type FaceDeleteParams as FaceDeleteParams,
+  };
+
+  export {
+    Bodies as Bodies,
+    type BodyResponse as BodyResponse,
+    type BodyDeleteResponse as BodyDeleteResponse,
+    type BodyResponsesCursorPage as BodyResponsesCursorPage,
+    type BodyRetrieveParams as BodyRetrieveParams,
+    type BodyUpdateParams as BodyUpdateParams,
+    type BodyListParams as BodyListParams,
+    type BodyDeleteParams as BodyDeleteParams,
   };
 
   export {

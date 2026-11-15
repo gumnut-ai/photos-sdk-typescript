@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as BodiesAPI from '../bodies';
 import * as FacesAPI from '../faces';
 import * as PeopleAPI from '../people';
 import * as Shared from '../shared';
@@ -531,7 +532,7 @@ export interface AssetResponse {
    * person, if linked. `null` when not requested via `include=bodies`; `[]` when
    * requested but the asset has none.
    */
-  bodies?: Array<AssetResponse.Body> | null;
+  bodies?: Array<BodiesAPI.BodyResponse> | null;
 
   /**
    * AI-generated description of the asset's content, quality, and composition. null
@@ -616,76 +617,6 @@ export interface AssetResponse {
    * Width of the current rendering in pixels.
    */
   width?: number;
-}
-
-export namespace AssetResponse {
-  /**
-   * A person found in an asset without a face record.
-   */
-  export interface Body {
-    /**
-     * Unique body identifier with 'body\_' prefix
-     */
-    id: string;
-
-    /**
-     * ID of the asset containing this body
-     */
-    asset_id: string;
-
-    /**
-     * How a body's person was set: by automatic naming or by a person.
-     */
-    assignment_source: 'automatic' | 'manual' | null;
-
-    /**
-     * Where the person is, as {x, y, w, h} in pixels: (x, y) is the box's top-left
-     * corner and w, h its size, on the image as displayed (EXIF orientation applied),
-     * so they match the asset's `width` and `height`
-     */
-    bounding_box: { [key: string]: number };
-
-    /**
-     * When this body was detected
-     */
-    created_at: string;
-
-    /**
-     * ID of the person this body is linked to, or `null` when it has none yet.
-     */
-    person_id: string | null;
-
-    /**
-     * When this body record was last updated
-     */
-    updated_at: string;
-
-    /**
-     * Named people who may be the person in this body, best match first, at most 5;
-     * never its current person. Link one with `update_body`. Populated only when
-     * `list_bodies` or `get_body` is called with `include=candidates`; `null`
-     * otherwise. `[]` when there are none, including while the library owner's
-     * settings do not allow automatic face detection.
-     */
-    candidates?: Array<Body.Candidate> | null;
-  }
-
-  export namespace Body {
-    /**
-     * A named person who may be the one in a body.
-     */
-    export interface Candidate {
-      /**
-       * The person's name.
-       */
-      name: string;
-
-      /**
-       * Person ID (with 'person\_' prefix).
-       */
-      person_id: string;
-    }
-  }
 }
 
 /**

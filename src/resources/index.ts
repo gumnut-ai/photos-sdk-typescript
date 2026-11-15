@@ -56,6 +56,16 @@ export {
   type AssetUpdateAssetParams,
   type AssetResponsesCursorPage,
 } from './assets/assets';
+export {
+  Bodies,
+  type BodyResponse,
+  type BodyDeleteResponse,
+  type BodyRetrieveParams,
+  type BodyUpdateParams,
+  type BodyListParams,
+  type BodyDeleteParams,
+  type BodyResponsesCursorPage,
+} from './bodies';
 export { Events, type EventsResponse, type EventGetParams } from './events';
 export {
   Faces,
