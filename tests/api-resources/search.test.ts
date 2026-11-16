@@ -98,8 +98,8 @@ describe('resource search', () => {
     expect(options?.method).toBe('POST');
     expect(options?.body).toBeInstanceOf(FormData);
     const form = options?.body as FormData;
-    expect(form.getAll('person_ids[]')).toEqual(['string']);
-    expect(form.getAll('ratings[]')).toEqual(['0']);
+    expect(form.getAll('person_ids')).toEqual(['string']);
+    expect(form.getAll('ratings')).toEqual(['0']);
     expect(form.get('image')).toBeInstanceOf(File);
   });
 });
