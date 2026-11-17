@@ -2,10 +2,13 @@
 
 ## [0.192.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.191.0...v0.192.0) (2026-11-17)
 
-
 ### Features
 
-* **api:** api update ([98426ae](https://github.com/gumnut-ai/photos-sdk-typescript/commit/98426aee320d480d07d2bc987c99795d78e414db))
+* **search:** pass `asset_id` to `search.search()` or `search.searchAssets()` to find photos that look like one already in the library, as an uploaded `image` would. A `query` is then optional; `searchAssets()` accepts `image` or `asset_id`, not both. ([98426ae](https://github.com/gumnut-ai/photos-sdk-typescript/commit/98426aee320d480d07d2bc987c99795d78e414db))
+
+### Bug Fixes
+
+* **search:** `searchAssets()` now sends array fields such as `person_ids` and `ratings` as repeated form fields. They were sent as `person_ids[]` and `ratings[]`, which the API ignored, so those filters were silently dropped. ([34b56dc](https://github.com/gumnut-ai/photos-sdk-typescript/commit/34b56dcaaa35cdc6c5adeb50ee6508a1e1a2c74a))
 
 ## [0.191.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.190.0...v0.191.0) (2026-11-15)
 
