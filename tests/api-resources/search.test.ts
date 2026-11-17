@@ -25,6 +25,7 @@ describe('resource search', () => {
       client.search.search(
         {
           album_id: 'album_id',
+          asset_id: 'asset_id',
           bbox: 'bbox',
           center: 'center',
           include: ['string', 'string'],
@@ -71,6 +72,7 @@ describe('resource search', () => {
         {
           include: ['string', 'string'],
           album_id: 'album_id',
+          asset_id: 'asset_id',
           bbox: 'bbox',
           center: 'center',
           image: await toFile(Buffer.from('Example data'), 'README.md'),
