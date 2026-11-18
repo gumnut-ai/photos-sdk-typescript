@@ -424,20 +424,15 @@ We are keen for your feedback; please open an [issue](https://www.github.com/gum
 
 ## Requirements
 
-TypeScript >= 4.9 is supported.
+TypeScript >= 4.9 is supported, including TypeScript 7.
 
 The following runtimes are supported:
 
 - Web browsers (Up-to-date Chrome, Firefox, Safari, Edge, and more)
 - Node.js 22 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
-- Deno v1.28.0 or higher.
-- Bun 1.0 or later.
-- Cloudflare Workers.
-- Vercel Edge Runtime.
-- Jest 28 or greater with the `"node"` environment (`"jsdom"` is not supported at this time).
-- Nitro v2.6 or greater.
+- Bun 1.4 or later.
 
-Note that React Native is not supported at this time.
+React Native isn't tested. A React Native app uses the SDK's JSON API requests and error classes, passing the client its own `fetch`; pagination helpers and file uploads through the SDK are untested there.
 
 If you are interested in other runtime environments, please open or upvote an issue on GitHub.
 

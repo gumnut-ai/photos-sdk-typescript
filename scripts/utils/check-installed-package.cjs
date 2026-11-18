@@ -20,6 +20,27 @@ function run(command, args, cwd = consumer, capture = false) {
   });
 }
 
+function typeCheck(tsc, extension, module, moduleResolution) {
+  fs.writeFileSync(
+    path.join(consumer, 'tsconfig.json'),
+    JSON.stringify({
+      compilerOptions: {
+        strict: true,
+        noEmit: true,
+        target: 'ES2020',
+        lib: ['ES2020', 'DOM', 'DOM.Iterable'],
+        module,
+        moduleResolution,
+        esModuleInterop: true,
+        types: [],
+        skipLibCheck: false,
+      },
+      files: [`consumer.${extension}`],
+    }),
+  );
+  run(process.execPath, [tsc, '--project', 'tsconfig.json']);
+}
+
 try {
   assert(!temporary.startsWith(`${root}${path.sep}`), 'Consumer must be outside the checkout');
   fs.mkdirSync(consumer);
@@ -85,6 +106,9 @@ assert(client.albums instanceof Albums);
   );
   run(process.execPath, ['consumer.cjs']);
   run(process.execPath, ['consumer.mjs']);
+  // The README lists Bun as a supported runtime, so load the same entry points there.
+  run('bun', ['consumer.cjs']);
+  run('bun', ['consumer.mjs']);
 
   let javascriptMaps = 0;
   let declarationMaps = 0;
@@ -176,27 +200,29 @@ void mjsAlbums;
 `
           : ''),
     );
-    fs.writeFileSync(
-      path.join(consumer, 'tsconfig.json'),
-      JSON.stringify({
-        compilerOptions: {
-          strict: true,
-          noEmit: true,
-          target: 'ES2020',
-          lib: ['ES2020', 'DOM', 'DOM.Iterable'],
-          module,
-          moduleResolution,
-          esModuleInterop: true,
-          types: [],
-          skipLibCheck: false,
-        },
-        files: [`consumer.${extension}`],
-      }),
-    );
-    run(process.execPath, [tsc, '--project', 'tsconfig.json']);
+    typeCheck(tsc, extension, module, moduleResolution);
+  }
+
+  // TypeScript 7 removed the legacy `node` resolver; check the Node and bundler resolvers it keeps.
+  const compiler7 = path.join(temporary, 'compiler-7');
+  fs.mkdirSync(compiler7);
+  fs.writeFileSync(path.join(compiler7, 'package.json'), JSON.stringify({ private: true }));
+  run(
+    'npm',
+    ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'typescript@7.0.2'],
+    compiler7,
+  );
+  const tsc7 = path.join(compiler7, 'node_modules/typescript/bin/tsc');
+  assert.equal(run(process.execPath, [tsc7, '--version'], consumer, true).trim(), 'Version 7.0.2');
+  for (const [extension, module, moduleResolution] of [
+    ['cts', 'Node16', 'node16'],
+    ['mts', 'Node16', 'node16'],
+    ['ts', 'ESNext', 'bundler'],
+  ]) {
+    typeCheck(tsc7, extension, module, moduleResolution);
   }
   console.log(
-    'Installed package passed CommonJS, ESM, import aliases, source maps, and TypeScript 4.9 checks.',
+    'Installed package passed CommonJS, ESM, Bun, import aliases, source maps, and TypeScript 4.9 and 7 checks.',
   );
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
