@@ -14,6 +14,11 @@ name: Promote SDK
 # advanced on its own (a release, or another merged PR) and has not been back-synced.
 # Run the "Sync SDK repos" workflow here (or wait for its next scheduled poll), then
 # re-run the promote. Never force-push either trunk.
+#
+# If the promote refuses with "Staging CI not green": the CI workflow's run for
+# the staging main commit being promoted is missing, still running, or failed.
+# Wait for a running CI to finish, or fix the failure (re-run a flaky job),
+# then re-run the promote.
 on:
   workflow_dispatch: {}
 
@@ -24,9 +29,11 @@ jobs:
   promote:
     runs-on: ubuntu-latest
     if: github.repository == 'gumnut-ai/photos-typescript-staging'
-    # issues: write is for the failure-issue step at the end.
+    # actions: read is for the CI check before the push; issues: write is
+    # for the failure-issue step at the end.
     permissions:
       contents: read
+      actions: read
       issues: write
     env:
       PRODUCTION_REPO: gumnut-ai/photos-sdk-typescript
@@ -77,6 +84,33 @@ jobs:
           else
             echo "synced=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Require green CI on the commit being promoted
+        # Production receives exactly this commit, so the CI workflow's newest
+        # run for it on main must have completed successfully. A just-pushed
+        # commit is refused until its CI finishes.
+        if: steps.diff.outputs.synced == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          sha=$(git rev-parse origin/main)
+          run=$(gh api "repos/${REPO}/actions/workflows/ci.yml/runs?head_sha=${sha}&branch=main&event=push&per_page=100" \
+            --jq '.workflow_runs | max_by(.run_number) // empty | [.status, (.conclusion // "none"), .html_url] | @tsv')
+          if [ -z "$run" ]; then
+            echo "::error title=Staging CI not green::no CI run found for staging main ${sha}. Find out why CI did not run on that push before promoting it."
+            exit 1
+          fi
+          IFS=$'\t' read -r status conclusion url <<< "$run"
+          if [ "$status" != completed ]; then
+            echo "::error title=Staging CI not green::CI for staging main ${sha} is ${status}: ${url}. Wait for it to finish, then re-run this workflow."
+            exit 1
+          fi
+          if [ "$conclusion" != success ]; then
+            echo "::error title=Staging CI not green::CI for staging main ${sha} concluded ${conclusion}: ${url}. Fix it (or re-run a flaky job), then re-run this workflow."
+            exit 1
+          fi
+          echo "CI passed for staging main ${sha}: ${url}"
 
       - name: Promote staging to production (fast-forward)
         if: steps.diff.outputs.synced == 'false'
