@@ -5,6 +5,8 @@ on:
       - '**'
       # The retired Stainless SaaS may still push this branch.
       - '!generated'
+      # Generated previews; the pipeline that pushes them runs these checks.
+      - '!stlc-preview/**'
   pull_request:
 
 permissions:
