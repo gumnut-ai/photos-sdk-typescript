@@ -15,7 +15,7 @@ export class Ping extends APIResource {
   get(options?: RequestOptions): APIPromise<string> {
     return this._client.get('/api/server/ping', {
       ...options,
-      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+      headers: buildHeaders([{ Authorization: null, Accept: 'text/plain' }, options?.headers]),
     });
   }
 }

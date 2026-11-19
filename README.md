@@ -46,6 +46,28 @@ const userResponse: Gumnut.UserResponse = await client.users.me();
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
 
+## OAuth tokens
+
+An app can sign people in with OAuth and call the API as them, without
+an API key. `client.oauth.authURL()`, `client.oauth.exchange()`,
+`client.oauth.logoutEndpoint()` and `client.ping.get()` need no
+credentials and send no `Authorization` header. Pass the
+`access_token` that `exchange()` returns as `apiKey`:
+
+```ts
+import Gumnut from 'gumnut-sdk';
+
+export async function signIn(code: string, state: string, code_verifier: string): Promise<Gumnut> {
+  const token = await new Gumnut().oauth.exchange({ code, state, code_verifier });
+  return new Gumnut({ apiKey: token.access_token });
+}
+```
+
+The token is short-lived. When it nears expiry, a successful response
+carries a replacement in its `x-new-access-token` header, which
+`.withResponse()` exposes. Once it expires, requests throw
+`Gumnut.AuthenticationError` until the person signs in again.
+
 ## File uploads
 
 Request parameters that correspond to file uploads can be passed in many different forms:

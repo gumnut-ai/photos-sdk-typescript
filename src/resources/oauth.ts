@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 
 /**
@@ -13,7 +14,11 @@ export class OAuth extends APIResource {
    * protection. State is stored with TTL for validation.
    */
   authURL(query: OAuthAuthURLParams, options?: RequestOptions): APIPromise<AuthURLResponse> {
-    return this._client.get('/api/oauth/auth-url', { query, ...options });
+    return this._client.get('/api/oauth/auth-url', {
+      query,
+      ...options,
+      headers: buildHeaders([{ Authorization: null }, options?.headers]),
+    });
   }
 
   /**
@@ -26,7 +31,11 @@ export class OAuth extends APIResource {
    * a 503.
    */
   exchange(body: OAuthExchangeParams, options?: RequestOptions): APIPromise<ExchangeResponse> {
-    return this._client.post('/api/oauth/exchange', { body, ...options });
+    return this._client.post('/api/oauth/exchange', {
+      body,
+      ...options,
+      headers: buildHeaders([{ Authorization: null }, options?.headers]),
+    });
   }
 
   /**
@@ -35,7 +44,10 @@ export class OAuth extends APIResource {
    * locally.
    */
   logoutEndpoint(options?: RequestOptions): APIPromise<LogoutEndpointResponse> {
-    return this._client.get('/api/oauth/logout-endpoint', options);
+    return this._client.get('/api/oauth/logout-endpoint', {
+      ...options,
+      headers: buildHeaders([{ Authorization: null }, options?.headers]),
+    });
   }
 }
 
