@@ -31,6 +31,10 @@ jobs:
     # Fast-forward production main back onto staging so the trunks stay identical.
     runs-on: ubuntu-slim
     if: github.repository == 'gumnut-ai/photos-typescript-staging'
+    # issues: write is for the failure-issue step at the end.
+    permissions:
+      contents: read
+      issues: write
     concurrency:
       group: stlc-back-sync
       cancel-in-progress: true
@@ -98,3 +102,39 @@ jobs:
           msg="stlc back-sync (sync from production) failed in ${REPO}. A stalled back-sync lets custom-code tracking drift, which later builds refuse on — investigate before the next build. Run: ${RUN_URL}"
           echo "::error title=stlc workflow failed::$msg"
           { echo "### ⚠️ stlc workflow failed"; echo ""; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open, update or close this workflow's failure issue
+        # While this workflow fails, keep one open issue for it in this repo,
+        # marked in its body; its next successful run closes that issue. The
+        # label and title match the SDK pipeline's other failure issues.
+        # continue-on-error: a reporting hiccup must not turn a successful
+        # back-sync red, and a failed run is already red.
+        if: success() || failure()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          JOB_STATUS: ${{ job.status }}
+          MARKER: '<!-- sdk-pipeline-failure: stlc-sync.yml -->'
+        run: |
+          label=sdk-pipeline-failure
+          # The REST list reads current state; `gh issue list --label` uses the
+          # search index, which can lag a just-created issue.
+          issues=$(gh api "repos/$REPO/issues?labels=$label&state=open&per_page=100" \
+            --jq '.[] | select(.pull_request | not) | select((.body // "") | contains($ENV.MARKER)) | .number')
+          if [ "$JOB_STATUS" = success ]; then
+            for issue in $issues; do
+              gh issue close "$issue" --repo "$REPO" --reason completed --comment "Back-sync from production passed: ${RUN_URL}"
+            done
+          elif [ -n "$issues" ]; then
+            gh issue comment "$(printf '%s\n' "$issues" | head -n 1)" --repo "$REPO" --body "Back-sync from production failed: ${RUN_URL}"
+          else
+            gh label create "$label" --repo "$REPO" --force --color B60205 \
+              --description "An SDK pipeline run failed; closed by the next successful run"
+            gh issue create --repo "$REPO" --title "SDK pipeline is failing" --label "$label" --body "Back-sync from production failed: ${RUN_URL}
+
+          Later failures of this workflow comment here; its next successful run closes this issue.
+
+          ${MARKER}"
+          fi
