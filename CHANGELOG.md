@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.193.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.192.0...v0.193.0) (2026-11-19)
+
+### Features
+
+* **uploads:** `client.assets.create()`, `client.assets.versions.append()`, and `client.assets.versions.replace()` no longer retry by default. They time out after 10 minutes, or after the file's upload time at 125,000 bytes per second if that is longer. Before, a large upload could hit the 60-second default timeout and then be uploaded again from the start. To override this, set `maxRetries` or `timeout` on the client or on the request. See "Method defaults" in the README. ([042db54](https://github.com/gumnut-ai/photos-sdk-typescript/commit/042db54d46d9386156b034fe8081b02823649b92)), ([d7ccbd3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d7ccbd386abc9eabfbe4b4e071e44ade5ebfa03b))
+
+### Bug Fixes
+
+* The SDK now identifies itself with `X-Gumnut-*` request headers, such as `X-Gumnut-Lang`, `X-Gumnut-Package-Version` and `X-Gumnut-Retry-Count`. These replace the `X-Stainless-*` headers. If your code sets or reads one of them, switch to the new name. ([e7637ad](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e7637ada37ebc79ba124618ae5907f030958031b))
+* `package.json` now declares `engines.node` `>=22`, the oldest Node.js release still supported upstream, and lists Gumnut Labs as the author. ([f7b1652](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f7b1652d70154f9ddccda653e372d71f575294e6)), ([e7637ad](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e7637ada37ebc79ba124618ae5907f030958031b))
+
+### Documentation
+
+* The README examples now run as written, and CI type-checks them. The first example now calls `users.me()`. ([6058fb4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6058fb486de65024df4a33aac855efd3bd0fb621)), ([2207f6d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2207f6d91cf64e9c85969417c39c441d93b4a465))
+* The README, SECURITY.md and file headers no longer mention Stainless. ([c600bd0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c600bd06bcfd58f209339cd956089dce1bb4475d)), ([cad4218](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cad421856f35a739e8cbb6c7ba92e94b5f07ed0a)), ([3f8bb7b](https://github.com/gumnut-ai/photos-sdk-typescript/commit/3f8bb7b8445b0f7991a883f97b8b653232851e71))
+
+### Chores
+
+* Releases are now built in a separate job without publish credentials, then published to npm with provenance. ([fbb8327](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fbb832743da46937ec349633f59a2ecb645f9bf6))
+
 ## [0.192.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.191.0...v0.192.0) (2026-11-17)
 
 ### Features
