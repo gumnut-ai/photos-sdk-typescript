@@ -29,6 +29,34 @@ const makeClient = (status: number, options: ClientOptions = {}) =>
     ...options,
   });
 
+describe('feedback.submit request defaults', () => {
+  test('retries as configured', async () => {
+    await expect(makeClient(500).feedback.submit({ feedback_type: 'bug', message: 'x' })).rejects.toThrow();
+    expect(sentTimeouts).toHaveLength(1);
+
+    sentTimeouts = [];
+    await expect(
+      makeClient(500, { maxRetries: 1 }).feedback.submit({ feedback_type: 'bug', message: 'x' }),
+    ).rejects.toThrow();
+    expect(sentTimeouts).toHaveLength(2);
+
+    sentTimeouts = [];
+    await expect(
+      makeClient(500).feedback.submit({ feedback_type: 'bug', message: 'x' }, { maxRetries: 1 }),
+    ).rejects.toThrow();
+    expect(sentTimeouts).toHaveLength(2);
+
+    // An unset per-request option keeps the default.
+    sentTimeouts = [];
+    await expect(
+      makeClient(500).feedback.submit({ feedback_type: 'bug', message: 'x' }, {
+        maxRetries: undefined,
+      } as {}),
+    ).rejects.toThrow();
+    expect(sentTimeouts).toHaveLength(1);
+  });
+});
+
 describe('assets.create request defaults', () => {
   test('retries as configured', async () => {
     await expect(
@@ -362,6 +390,72 @@ describe('assets.versions.replace request defaults', () => {
       params: 'params',
     });
     expect(sentTimeouts).toEqual([660000, 660000]);
+  });
+});
+
+describe('faces.create request defaults', () => {
+  test('retries as configured', async () => {
+    await expect(
+      makeClient(500).faces.create({
+        asset_id: 'asset_id',
+        bounding_box: {
+          h: 1,
+          w: 1,
+          x: 0,
+          y: 0,
+        },
+      }),
+    ).rejects.toThrow();
+    expect(sentTimeouts).toHaveLength(1);
+
+    sentTimeouts = [];
+    await expect(
+      makeClient(500, { maxRetries: 1 }).faces.create({
+        asset_id: 'asset_id',
+        bounding_box: {
+          h: 1,
+          w: 1,
+          x: 0,
+          y: 0,
+        },
+      }),
+    ).rejects.toThrow();
+    expect(sentTimeouts).toHaveLength(2);
+
+    sentTimeouts = [];
+    await expect(
+      makeClient(500).faces.create(
+        {
+          asset_id: 'asset_id',
+          bounding_box: {
+            h: 1,
+            w: 1,
+            x: 0,
+            y: 0,
+          },
+        },
+        { maxRetries: 1 },
+      ),
+    ).rejects.toThrow();
+    expect(sentTimeouts).toHaveLength(2);
+
+    // An unset per-request option keeps the default.
+    sentTimeouts = [];
+    await expect(
+      makeClient(500).faces.create(
+        {
+          asset_id: 'asset_id',
+          bounding_box: {
+            h: 1,
+            w: 1,
+            x: 0,
+            y: 0,
+          },
+        },
+        { maxRetries: undefined } as {},
+      ),
+    ).rejects.toThrow();
+    expect(sentTimeouts).toHaveLength(1);
   });
 });
 

@@ -16,7 +16,11 @@ export class Faces extends APIResource {
    * assign it to a brand-new identity, create the person first.
    */
   create(body: FaceCreateParams, options?: RequestOptions): APIPromise<FaceResponse> {
-    return this._client.post('/api/faces', { body, ...options });
+    return this._client.post('/api/faces', {
+      body,
+      ...options,
+      ...(options?.maxRetries == null && this._client.maxRetries === 2 ? { maxRetries: 0 } : {}),
+    });
   }
 
   /**

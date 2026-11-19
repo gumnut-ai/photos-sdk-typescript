@@ -205,9 +205,11 @@ Note that requests which time out will be [retried twice by default](#retries).
 
 These methods use their own retry and timeout defaults:
 
+- `client.feedback.submit()` doesn't retry.
 - `client.assets.create()` doesn't retry, and times out after 10 minutes or its files' upload time at 125,000 bytes per second, whichever is longer.
 - `client.assets.versions.append()` doesn't retry, and times out after 10 minutes or its files' upload time at 125,000 bytes per second, whichever is longer.
 - `client.assets.versions.replace()` doesn't retry, and times out after 10 minutes or its files' upload time at 125,000 bytes per second, whichever is longer.
+- `client.faces.create()` doesn't retry.
 
 To override them, set `maxRetries` or `timeout` on the client or per request. A client setting equal to the SDK default (2 retries, 1 minute) keeps the method's default.
 
