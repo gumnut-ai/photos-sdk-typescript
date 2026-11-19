@@ -1,0 +1,37 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Keeps GitHub Actions and uv pins in workflows current on gumnut-ai/photos-typescript-staging. gumnut-ai/photos-sdk-typescript gets these updates when staging is promoted, so Renovate changes nothing outside gumnut-ai/photos-typescript-staging.",
+  "extends": ["config:best-practices", "helpers:pinGitHubActionDigestsToSemver"],
+  "enabledManagers": ["github-actions"],
+  "includePaths": [".github/workflows/**"],
+  "timezone": "America/Los_Angeles",
+  "minimumReleaseAge": "14 days",
+  "schedule": ["* 0-5 * * 1"],
+  "updateNotScheduled": false,
+  "commitHourlyLimit": 1,
+  "prConcurrentLimit": 2,
+  "internalChecksFilter": "strict",
+  "dependencyDashboard": false,
+  "configMigration": false,
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "vulnerabilityAlerts": {
+    "enabled": false
+  },
+  "semanticCommits": "enabled",
+  "packageRules": [
+    {
+      "description": "Workflow updates change no SDK code, so their commits cut no release",
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions",
+      "commitMessageTopic": "GitHub Actions",
+      "semanticCommitType": "ci"
+    },
+    {
+      "description": "Only gumnut-ai/photos-typescript-staging takes updates; gumnut-ai/photos-sdk-typescript gets them by promotion",
+      "matchRepositories": ["!gumnut-ai/photos-typescript-staging"],
+      "enabled": false
+    }
+  ]
+}
