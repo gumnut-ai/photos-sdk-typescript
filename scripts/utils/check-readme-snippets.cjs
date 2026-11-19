@@ -2,12 +2,16 @@
 //
 // Each block compiles as its own module against the SDK source. A block may use `client` and
 // `Gumnut` without declaring them, as README fragments do. Mark a block that needs a package or
-// runtime this repository doesn't install by putting `<!-- readme-snippet-check: skip -->` before it.
+// runtime this repository doesn't install by putting `<!-- readme-snippet-check: skip -->` before it, or
+// `<!-- readme-snippet-check: installed-package -->` when check-installed-package.cjs type-checks it instead.
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-const SKIP_MARKER = '<!-- readme-snippet-check: skip -->';
+const SKIP_MARKERS = new Set([
+  '<!-- readme-snippet-check: skip -->',
+  '<!-- readme-snippet-check: installed-package -->',
+]);
 const LANGUAGES = new Set(['ts', 'typescript', 'js', 'javascript']);
 
 const root = path.resolve(__dirname, '..', '..');
@@ -30,7 +34,7 @@ for (let i = 0; i < lines.length; i++) {
 // Looks back over the blank lines and HTML comments (such as `<!-- prettier-ignore -->`) above a fence.
 function precededBySkipMarker(fence) {
   for (let j = fence - 1; j >= 0 && /^(<!--.*-->)?\s*$/.test(lines[j]); j--) {
-    if (lines[j].trim() === SKIP_MARKER) return true;
+    if (SKIP_MARKERS.has(lines[j].trim())) return true;
   }
   return false;
 }

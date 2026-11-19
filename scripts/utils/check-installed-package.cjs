@@ -20,9 +20,9 @@ function run(command, args, cwd = consumer, capture = false) {
   });
 }
 
-function typeCheck(tsc, extension, module, moduleResolution) {
+function typeCheck(tsc, extension, module, moduleResolution, directory = consumer) {
   fs.writeFileSync(
-    path.join(consumer, 'tsconfig.json'),
+    path.join(directory, 'tsconfig.json'),
     JSON.stringify({
       compilerOptions: {
         strict: true,
@@ -38,7 +38,7 @@ function typeCheck(tsc, extension, module, moduleResolution) {
       files: [`consumer.${extension}`],
     }),
   );
-  run(process.execPath, [tsc, '--project', 'tsconfig.json']);
+  run(process.execPath, [tsc, '--project', 'tsconfig.json'], directory);
 }
 
 try {
@@ -221,8 +221,48 @@ void mjsAlbums;
   ]) {
     typeCheck(tsc7, extension, module, moduleResolution);
   }
+
+  // Runtime-specific fetchOptions come from optional parent node_modules type imports. Type-check the
+  // README's Node proxy example against the installed package, in a consumer with undici installed.
+  // TypeScript 4.9 can't resolve those `.d.ts` specifiers, so only TypeScript 7 is checked.
+  const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
+  const marked = [
+    ...readme.matchAll(/<!-- readme-snippet-check: installed-package -->\s*```ts\n([^]*?)\n```/g),
+  ];
+  assert.equal(marked.length, 1, 'Expected one README example marked for the installed package check');
+  const proxyExample = marked[0][1];
+  assert.match(proxyExample, /dispatcher:/);
+  const proxyConsumer = path.join(temporary, 'proxy-consumer');
+  fs.mkdirSync(proxyConsumer);
+  fs.writeFileSync(path.join(proxyConsumer, 'package.json'), JSON.stringify({ private: true }));
+  // undici's declarations need Node's; use the version this SDK locks.
+  const nodeTypes = JSON.parse(
+    fs.readFileSync(path.join(root, 'node_modules/@types/node/package.json'), 'utf8'),
+  ).version;
+  run(
+    'npm',
+    [
+      'install',
+      '--ignore-scripts',
+      '--no-audit',
+      '--no-fund',
+      '--save-exact',
+      tarball,
+      'undici@8.12.3',
+      `@types/node@${nodeTypes}`,
+    ],
+    proxyConsumer,
+  );
+  for (const [extension, module, moduleResolution] of [
+    ['cts', 'Node16', 'node16'],
+    ['mts', 'Node16', 'node16'],
+    ['ts', 'ESNext', 'bundler'],
+  ]) {
+    fs.writeFileSync(path.join(proxyConsumer, `consumer.${extension}`), proxyExample + '\n');
+    typeCheck(tsc7, extension, module, moduleResolution, proxyConsumer);
+  }
   console.log(
-    'Installed package passed CommonJS, ESM, Bun, import aliases, source maps, and TypeScript 4.9 and 7 checks.',
+    'Installed package passed CommonJS, ESM, Bun, import aliases, source maps, TypeScript 4.9 and 7, and fetchOptions checks.',
   );
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

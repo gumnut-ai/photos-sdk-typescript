@@ -1,4 +1,7 @@
 const fs = require('fs');
+// The optional imports in internal/types.ts, exactly as written, so a rewritten specifier is still reported.
+const OPTIONAL_TYPE_IMPORT =
+  /^(\.\.\/)+node_modules\/(undici-types\/index\.d\.ts|undici\/index\.d\.ts|@types\/node-fetch\/index\.d\.ts|node-fetch)$/;
 const problems = Object.values(JSON.parse(fs.readFileSync('.attw.json', 'utf-8')).problems)
   .flat()
   .filter(
@@ -11,7 +14,7 @@ const problems = Object.values(JSON.parse(fs.readFileSync('.attw.json', 'utf-8')
           (problem.kind === 'MissingExportEquals' && problem.implementationFileName.endsWith('/index.js')) ||
           // this is intentional, we deliberately attempt to import types that may not exist from parent node_modules
           // folders to better support various runtimes without triggering automatic type acquisition.
-          (problem.kind === 'InternalResolutionError' && problem.moduleSpecifier.includes('node_modules'))
+          (problem.kind === 'InternalResolutionError' && OPTIONAL_TYPE_IMPORT.test(problem.moduleSpecifier))
         )
       ),
   );

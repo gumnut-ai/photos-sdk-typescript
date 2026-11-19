@@ -411,7 +411,7 @@ options to requests:
 
 **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
-<!-- readme-snippet-check: skip -->
+<!-- readme-snippet-check: installed-package -->
 
 ```ts
 import Gumnut from 'gumnut-sdk';

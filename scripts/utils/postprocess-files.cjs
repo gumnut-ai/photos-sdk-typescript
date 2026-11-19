@@ -33,6 +33,13 @@ async function postprocess() {
     // on its own line to properly suppresses errors.
     if (file.endsWith('.d.ts') || file.endsWith('.d.mts') || file.endsWith('.d.cts')) {
       transformed = transformed.replace(/\/\*\* @ts-ignore\b[^*]*\*\/ /gm, '// @ts-ignore\n');
+
+      // tsc-multi appends its output extension to every relative specifier, including the
+      // optional parent `node_modules` type imports in internal/types.ts. Restore them as written.
+      transformed = transformed.replace(
+        /(import\((["'])(?:\.\.\/)+node_modules\/[^"']+?)\.m?js\2/g,
+        (_, specifier, quote) => specifier + quote,
+      );
     }
 
     if (transformed !== code) {
