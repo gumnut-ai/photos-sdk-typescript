@@ -18,6 +18,7 @@ jobs:
   release-please:
     if: github.repository == 'gumnut-ai/photos-sdk-typescript'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: 'Mint release token (Contents + PRs: write on this repo)'

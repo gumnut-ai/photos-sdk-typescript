@@ -1,0 +1,36 @@
+name: zizmor
+
+# Audits this repo's workflows for supply-chain and template-injection
+# patterns, and fails on any finding. zizmor's default policy requires every
+# action to be SHA-pinned. A .github/zizmor.yml would be absorbed as custom
+# code, since only files under .github/workflows/ are SDK-repo owned.
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - '.github/**'
+
+permissions:
+  contents: read
+
+jobs:
+  zizmor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      # No `version:` input: at a pinned SHA the action installs the zizmor
+      # release its own tree hash-locks, so bumping this pin moves zizmor.
+      # Online audits, on by default, check SHA pins against GitHub for
+      # impostor commits, version-comment mismatches and vulnerable actions.
+      - uses: zizmorcore/zizmor-action@45d7276c9ca790aabd705e31ca99c6185c3e76dd # v0.8.1
+        with:
+          inputs: .github
+          # No GitHub Advanced Security here, so the SARIF upload would fail;
+          # findings show as annotations on the PR diff instead.
+          advanced-security: false
+          annotations: true

@@ -30,14 +30,17 @@ jobs:
   back-sync:
     # Fast-forward production main back onto staging so the trunks stay identical.
     runs-on: ubuntu-slim
+    timeout-minutes: 10
     if: github.repository == 'gumnut-ai/photos-typescript-staging'
     # issues: write is for the failure-issue step at the end.
     permissions:
       contents: read
       issues: write
+    # A newer run waits rather than cancelling this one: a cancelled run
+    # reports like a timed-out one and would open the failure issue.
     concurrency:
       group: stlc-back-sync
-      cancel-in-progress: true
+      cancel-in-progress: false
     env:
       PRODUCTION_REPO: gumnut-ai/photos-sdk-typescript
     steps:
@@ -52,7 +55,7 @@ jobs:
           permission-contents: write
 
       - name: Check out staging
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -107,9 +110,11 @@ jobs:
         # While this workflow fails, keep one open issue for it in this repo,
         # marked in its body; its next successful run closes that issue. The
         # label and title match the SDK pipeline's other failure issues.
+        # always(): a job that hits timeout-minutes ends cancelled, and only
+        # always() and cancelled() steps still run.
         # continue-on-error: a reporting hiccup must not turn a successful
         # back-sync red, and a failed run is already red.
-        if: success() || failure()
+        if: always()
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
@@ -123,16 +128,21 @@ jobs:
           # search index, which can lag a just-created issue.
           issues=$(gh api "repos/$REPO/issues?labels=$label&state=open&per_page=100" \
             --jq '.[] | select(.pull_request | not) | select((.body // "") | contains($ENV.MARKER)) | .number')
+          if [ "$JOB_STATUS" = cancelled ]; then
+            outcome="Back-sync from production was cancelled or timed out"
+          else
+            outcome="Back-sync from production failed"
+          fi
           if [ "$JOB_STATUS" = success ]; then
             for issue in $issues; do
               gh issue close "$issue" --repo "$REPO" --reason completed --comment "Back-sync from production passed: ${RUN_URL}"
             done
           elif [ -n "$issues" ]; then
-            gh issue comment "$(printf '%s\n' "$issues" | head -n 1)" --repo "$REPO" --body "Back-sync from production failed: ${RUN_URL}"
+            gh issue comment "$(printf '%s\n' "$issues" | head -n 1)" --repo "$REPO" --body "${outcome}: ${RUN_URL}"
           else
             gh label create "$label" --repo "$REPO" --force --color B60205 \
               --description "An SDK pipeline run failed; closed by the next successful run"
-            gh issue create --repo "$REPO" --title "SDK pipeline is failing" --label "$label" --body "Back-sync from production failed: ${RUN_URL}
+            gh issue create --repo "$REPO" --title "SDK pipeline is failing" --label "$label" --body "${outcome}: ${RUN_URL}
 
           Later failures of this workflow comment here; its next successful run closes this issue.
 
