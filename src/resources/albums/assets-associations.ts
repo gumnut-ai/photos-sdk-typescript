@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as Shared from '../shared';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -36,7 +37,7 @@ export class AssetsAssociations extends APIResource {
     albumID: string,
     body: AssetsAssociationRemoveParams,
     options?: RequestOptions,
-  ): APIPromise<AssetsAssociationRemoveResponse> {
+  ): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/albums/${albumID}/assets`, { body, ...options });
   }
 }
@@ -68,10 +69,7 @@ export interface AssetsAssociationAddResponse {
   not_found_assets: Array<string>;
 }
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface AssetsAssociationRemoveResponse {}
+export type AssetsAssociationRemoveResponse = Shared.DeletionResponse;
 
 export interface AssetsAssociationAddParams {
   /**

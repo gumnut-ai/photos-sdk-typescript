@@ -150,10 +150,12 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const asset = await client.assets.delete('asset_id');
+   * const deletionResponse = await client.assets.delete(
+   *   'asset_id',
+   * );
    * ```
    */
-  delete(assetID: string, options?: RequestOptions): APIPromise<AssetDeleteResponse> {
+  delete(assetID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/assets/${assetID}`, options);
   }
 
@@ -268,12 +270,12 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.assets.deleteList({
+   * const deletionResponse = await client.assets.deleteList({
    *   ids: ['string'],
    * });
    * ```
    */
-  deleteList(params: AssetDeleteListParams, options?: RequestOptions): APIPromise<AssetDeleteListResponse> {
+  deleteList(params: AssetDeleteListParams, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     const { library_id, ...body } = params;
     return this._client.delete('/api/assets', { query: { library_id }, body, ...options });
   }
@@ -284,13 +286,13 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.assets.emptyTrash();
+   * const deletionResponse = await client.assets.emptyTrash();
    * ```
    */
   emptyTrash(
     params: AssetEmptyTrashParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<AssetEmptyTrashResponse> {
+  ): APIPromise<Shared.DeletionResponse> {
     const { library_id } = params ?? {};
     return this._client.post('/api/assets/empty-trash', { query: { library_id }, ...options });
   }
@@ -334,12 +336,12 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.assets.restore({
+   * const deletionResponse = await client.assets.restore({
    *   ids: ['string'],
    * });
    * ```
    */
-  restore(params: AssetRestoreParams, options?: RequestOptions): APIPromise<AssetRestoreResponse> {
+  restore(params: AssetRestoreParams, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     const { library_id, ...body } = params;
     return this._client.post('/api/assets/restore', { query: { library_id }, body, ...options });
   }
@@ -354,12 +356,12 @@ export class Assets extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.assets.trash({
+   * const deletionResponse = await client.assets.trash({
    *   ids: ['string'],
    * });
    * ```
    */
-  trash(params: AssetTrashParams, options?: RequestOptions): APIPromise<AssetTrashResponse> {
+  trash(params: AssetTrashParams, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     const { library_id, ...body } = params;
     return this._client.post('/api/assets/trash', { query: { library_id }, body, ...options });
   }
@@ -866,11 +868,6 @@ export interface MetadataResponse {
 }
 
 /**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface AssetDeleteResponse {}
-
-/**
  * Empty acknowledgment returned by `bulk_update_assets`.
  */
 export interface AssetBulkUpdateAssetsResponse {}
@@ -911,16 +908,6 @@ export namespace AssetClusterByGeoResponse {
   }
 }
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface AssetDeleteListResponse {}
-
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface AssetEmptyTrashResponse {}
-
 export interface AssetMoveResponse {
   /**
    * One result per distinct requested asset ID, in request order.
@@ -960,15 +947,15 @@ export namespace AssetMoveResponse {
   }
 }
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface AssetRestoreResponse {}
+export type AssetDeleteResponse = Shared.DeletionResponse;
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface AssetTrashResponse {}
+export type AssetDeleteListResponse = Shared.DeletionResponse;
+
+export type AssetTrashResponse = Shared.DeletionResponse;
+
+export type AssetRestoreResponse = Shared.DeletionResponse;
+
+export type AssetEmptyTrashResponse = Shared.DeletionResponse;
 
 export interface AssetCreateParams {
   /**
@@ -1659,14 +1646,14 @@ export declare namespace Assets {
     type AssetResponse as AssetResponse,
     type FileDataResponse as FileDataResponse,
     type MetadataResponse as MetadataResponse,
-    type AssetDeleteResponse as AssetDeleteResponse,
     type AssetBulkUpdateAssetsResponse as AssetBulkUpdateAssetsResponse,
     type AssetClusterByGeoResponse as AssetClusterByGeoResponse,
-    type AssetDeleteListResponse as AssetDeleteListResponse,
-    type AssetEmptyTrashResponse as AssetEmptyTrashResponse,
     type AssetMoveResponse as AssetMoveResponse,
-    type AssetRestoreResponse as AssetRestoreResponse,
+    type AssetDeleteResponse as AssetDeleteResponse,
+    type AssetDeleteListResponse as AssetDeleteListResponse,
     type AssetTrashResponse as AssetTrashResponse,
+    type AssetRestoreResponse as AssetRestoreResponse,
+    type AssetEmptyTrashResponse as AssetEmptyTrashResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetRetrieveParams as AssetRetrieveParams,

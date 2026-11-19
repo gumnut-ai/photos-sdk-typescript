@@ -3,6 +3,7 @@
 Types:
 
 - <code><a href="./src/resources/shared.ts">AssetVariant</a></code>
+- <code><a href="./src/resources/shared.ts">DeletionResponse</a></code>
 - <code><a href="./src/resources/shared.ts">UserSummary</a></code>
 
 # Feedback
@@ -29,7 +30,7 @@ Methods:
 - <code title="post /api/api-keys/">client.apiKeys.<a href="./src/resources/api-keys.ts">create</a>({ ...params }) -> APIKeyCreateResponse</code>
 - <code title="patch /api/api-keys/{key_id}">client.apiKeys.<a href="./src/resources/api-keys.ts">update</a>(keyID, { ...params }) -> APIKeyResponse</code>
 - <code title="get /api/api-keys/">client.apiKeys.<a href="./src/resources/api-keys.ts">list</a>() -> APIKeyListResponse</code>
-- <code title="delete /api/api-keys/{key_id}">client.apiKeys.<a href="./src/resources/api-keys.ts">delete</a>(keyID) -> APIKeyDeleteResponse</code>
+- <code title="delete /api/api-keys/{key_id}">client.apiKeys.<a href="./src/resources/api-keys.ts">delete</a>(keyID) -> DeletionResponse</code>
 
 # Assets
 
@@ -41,30 +42,30 @@ Types:
 - <code><a href="./src/resources/assets/assets.ts">AssetResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">FileDataResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">MetadataResponse</a></code>
-- <code><a href="./src/resources/assets/assets.ts">AssetDeleteResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetBulkUpdateAssetsResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetClusterByGeoResponse</a></code>
-- <code><a href="./src/resources/assets/assets.ts">AssetDeleteListResponse</a></code>
-- <code><a href="./src/resources/assets/assets.ts">AssetEmptyTrashResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetMoveResponse</a></code>
-- <code><a href="./src/resources/assets/assets.ts">AssetRestoreResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetDeleteResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetDeleteListResponse</a></code>
 - <code><a href="./src/resources/assets/assets.ts">AssetTrashResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetRestoreResponse</a></code>
+- <code><a href="./src/resources/assets/assets.ts">AssetEmptyTrashResponse</a></code>
 
 Methods:
 
 - <code title="post /api/assets">client.assets.<a href="./src/resources/assets/assets.ts">create</a>({ ...params }) -> AssetResponse</code>
 - <code title="get /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets/assets.ts">retrieve</a>(assetID, { ...params }) -> AssetResponse</code>
 - <code title="get /api/assets">client.assets.<a href="./src/resources/assets/assets.ts">list</a>({ ...params }) -> AssetResponsesCursorPage</code>
-- <code title="delete /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets/assets.ts">delete</a>(assetID) -> AssetDeleteResponse</code>
+- <code title="delete /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets/assets.ts">delete</a>(assetID) -> DeletionResponse</code>
 - <code title="post /api/assets/bulk-update">client.assets.<a href="./src/resources/assets/assets.ts">bulkUpdateAssets</a>({ ...params }) -> AssetBulkUpdateAssetsResponse</code>
 - <code title="post /api/assets/exist">client.assets.<a href="./src/resources/assets/assets.ts">checkExistence</a>({ ...params }) -> AssetExistenceResponse</code>
 - <code title="get /api/assets/geo-clusters">client.assets.<a href="./src/resources/assets/assets.ts">clusterByGeo</a>({ ...params }) -> AssetClusterByGeoResponse</code>
 - <code title="get /api/assets/counts">client.assets.<a href="./src/resources/assets/assets.ts">counts</a>({ ...params }) -> AssetCountResponse</code>
-- <code title="delete /api/assets">client.assets.<a href="./src/resources/assets/assets.ts">deleteList</a>({ ...params }) -> AssetDeleteListResponse</code>
-- <code title="post /api/assets/empty-trash">client.assets.<a href="./src/resources/assets/assets.ts">emptyTrash</a>({ ...params }) -> AssetEmptyTrashResponse</code>
+- <code title="delete /api/assets">client.assets.<a href="./src/resources/assets/assets.ts">deleteList</a>({ ...params }) -> DeletionResponse</code>
+- <code title="post /api/assets/empty-trash">client.assets.<a href="./src/resources/assets/assets.ts">emptyTrash</a>({ ...params }) -> DeletionResponse</code>
 - <code title="post /api/assets/move">client.assets.<a href="./src/resources/assets/assets.ts">move</a>({ ...params }) -> AssetMoveResponse</code>
-- <code title="post /api/assets/restore">client.assets.<a href="./src/resources/assets/assets.ts">restore</a>({ ...params }) -> AssetRestoreResponse</code>
-- <code title="post /api/assets/trash">client.assets.<a href="./src/resources/assets/assets.ts">trash</a>({ ...params }) -> AssetTrashResponse</code>
+- <code title="post /api/assets/restore">client.assets.<a href="./src/resources/assets/assets.ts">restore</a>({ ...params }) -> DeletionResponse</code>
+- <code title="post /api/assets/trash">client.assets.<a href="./src/resources/assets/assets.ts">trash</a>({ ...params }) -> DeletionResponse</code>
 - <code title="patch /api/assets/{asset_id}">client.assets.<a href="./src/resources/assets/assets.ts">updateAsset</a>(assetID, { ...params }) -> AssetResponse</code>
 
 ## Versions
@@ -95,7 +96,7 @@ Methods:
 - <code title="get /api/albums/{album_id}">client.albums.<a href="./src/resources/albums/albums.ts">retrieve</a>(albumID) -> AlbumResponse</code>
 - <code title="patch /api/albums/{album_id}">client.albums.<a href="./src/resources/albums/albums.ts">update</a>(albumID, { ...params }) -> AlbumResponse</code>
 - <code title="get /api/albums">client.albums.<a href="./src/resources/albums/albums.ts">list</a>({ ...params }) -> AlbumResponsesCursorPage</code>
-- <code title="delete /api/albums/{album_id}">client.albums.<a href="./src/resources/albums/albums.ts">delete</a>(albumID) -> AlbumDeleteResponse</code>
+- <code title="delete /api/albums/{album_id}">client.albums.<a href="./src/resources/albums/albums.ts">delete</a>(albumID) -> DeletionResponse</code>
 
 ## AssetsAssociations
 
@@ -108,7 +109,7 @@ Types:
 Methods:
 
 - <code title="post /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">add</a>(albumID, { ...params }) -> AssetsAssociationAddResponse</code>
-- <code title="delete /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">remove</a>(albumID, { ...params }) -> AssetsAssociationRemoveResponse</code>
+- <code title="delete /api/albums/{album_id}/assets">client.albums.assetsAssociations.<a href="./src/resources/albums/assets-associations.ts">remove</a>(albumID, { ...params }) -> DeletionResponse</code>
 
 # AlbumAssets
 
@@ -145,7 +146,7 @@ Methods:
 - <code title="get /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">retrieve</a>(faceID, { ...params }) -> FaceResponse</code>
 - <code title="patch /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">update</a>(faceID, { ...params }) -> FaceResponse</code>
 - <code title="get /api/faces">client.faces.<a href="./src/resources/faces.ts">list</a>({ ...params }) -> FaceResponsesCursorPage</code>
-- <code title="delete /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">delete</a>(faceID, { ...params }) -> FaceDeleteResponse</code>
+- <code title="delete /api/faces/{face_id}">client.faces.<a href="./src/resources/faces.ts">delete</a>(faceID, { ...params }) -> DeletionResponse</code>
 
 # Bodies
 
@@ -159,7 +160,7 @@ Methods:
 - <code title="get /api/bodies/{body_id}">client.bodies.<a href="./src/resources/bodies.ts">retrieve</a>(bodyID, { ...params }) -> BodyResponse</code>
 - <code title="patch /api/bodies/{body_id}">client.bodies.<a href="./src/resources/bodies.ts">update</a>(bodyID, { ...params }) -> BodyResponse</code>
 - <code title="get /api/bodies">client.bodies.<a href="./src/resources/bodies.ts">list</a>({ ...params }) -> BodyResponsesCursorPage</code>
-- <code title="delete /api/bodies/{body_id}">client.bodies.<a href="./src/resources/bodies.ts">delete</a>(bodyID, { ...params }) -> BodyDeleteResponse</code>
+- <code title="delete /api/bodies/{body_id}">client.bodies.<a href="./src/resources/bodies.ts">delete</a>(bodyID, { ...params }) -> DeletionResponse</code>
 
 # Libraries
 
@@ -176,9 +177,9 @@ Methods:
 - <code title="get /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries/libraries.ts">retrieve</a>(libraryID) -> LibraryResponse</code>
 - <code title="patch /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries/libraries.ts">update</a>(libraryID, { ...params }) -> LibraryResponse</code>
 - <code title="get /api/libraries">client.libraries.<a href="./src/resources/libraries/libraries.ts">list</a>({ ...params }) -> LibraryListResponse</code>
-- <code title="delete /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries/libraries.ts">delete</a>(libraryID) -> LibraryDeleteResponse</code>
+- <code title="delete /api/libraries/{library_id}">client.libraries.<a href="./src/resources/libraries/libraries.ts">delete</a>(libraryID) -> DeletionResponse</code>
 - <code title="post /api/libraries/{library_id}/restore">client.libraries.<a href="./src/resources/libraries/libraries.ts">restore</a>(libraryID) -> LibraryResponse</code>
-- <code title="post /api/libraries/{library_id}/trash">client.libraries.<a href="./src/resources/libraries/libraries.ts">trash</a>(libraryID) -> LibraryTrashResponse</code>
+- <code title="post /api/libraries/{library_id}/trash">client.libraries.<a href="./src/resources/libraries/libraries.ts">trash</a>(libraryID) -> DeletionResponse</code>
 
 ## Members
 
@@ -233,8 +234,8 @@ Types:
 
 - <code><a href="./src/resources/people.ts">ClusterMetricsResponse</a></code>
 - <code><a href="./src/resources/people.ts">PersonResponse</a></code>
-- <code><a href="./src/resources/people.ts">PersonDeleteResponse</a></code>
 - <code><a href="./src/resources/people.ts">PersonBulkUpdatePeopleResponse</a></code>
+- <code><a href="./src/resources/people.ts">PersonDeleteResponse</a></code>
 
 Methods:
 
@@ -242,7 +243,7 @@ Methods:
 - <code title="get /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">retrieve</a>(personID, { ...params }) -> PersonResponse</code>
 - <code title="patch /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">update</a>(personID, { ...params }) -> PersonResponse</code>
 - <code title="get /api/people">client.people.<a href="./src/resources/people.ts">list</a>({ ...params }) -> PersonResponsesCursorPage</code>
-- <code title="delete /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">delete</a>(personID) -> PersonDeleteResponse</code>
+- <code title="delete /api/people/{person_id}">client.people.<a href="./src/resources/people.ts">delete</a>(personID) -> DeletionResponse</code>
 - <code title="post /api/people/bulk-update">client.people.<a href="./src/resources/people.ts">bulkUpdatePeople</a>({ ...params }) -> PersonBulkUpdatePeopleResponse</code>
 - <code title="post /api/people/{person_id}/merge">client.people.<a href="./src/resources/people.ts">merge</a>(personID, { ...params }) -> PersonResponse</code>
 
@@ -272,23 +273,24 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/stacks.ts">StackDeleteResponse</a></code>
-- <code><a href="./src/resources/stacks.ts">StackAddAssetsToStackResponse</a></code>
+- <code><a href="./src/resources/stacks.ts">StackResponse</a></code>
 - <code><a href="./src/resources/stacks.ts">StackCreateStackResponse</a></code>
 - <code><a href="./src/resources/stacks.ts">StackListStacksResponse</a></code>
-- <code><a href="./src/resources/stacks.ts">StackRemoveAssetsResponse</a></code>
 - <code><a href="./src/resources/stacks.ts">StackRetrieveStackResponse</a></code>
 - <code><a href="./src/resources/stacks.ts">StackSetCoverResponse</a></code>
+- <code><a href="./src/resources/stacks.ts">StackAddAssetsToStackResponse</a></code>
+- <code><a href="./src/resources/stacks.ts">StackDeleteResponse</a></code>
+- <code><a href="./src/resources/stacks.ts">StackRemoveAssetsResponse</a></code>
 
 Methods:
 
-- <code title="delete /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">delete</a>(stackID) -> StackDeleteResponse</code>
-- <code title="post /api/stacks/{stack_id}/assets">client.stacks.<a href="./src/resources/stacks.ts">addAssetsToStack</a>(stackID, { ...params }) -> StackAddAssetsToStackResponse</code>
-- <code title="post /api/stacks">client.stacks.<a href="./src/resources/stacks.ts">createStack</a>({ ...params }) -> StackCreateStackResponse</code>
-- <code title="get /api/stacks">client.stacks.<a href="./src/resources/stacks.ts">listStacks</a>({ ...params }) -> StackListStacksResponsesCursorPage</code>
-- <code title="delete /api/stacks/{stack_id}/assets">client.stacks.<a href="./src/resources/stacks.ts">removeAssets</a>(stackID, { ...params }) -> StackRemoveAssetsResponse</code>
-- <code title="get /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">retrieveStack</a>(stackID) -> StackRetrieveStackResponse</code>
-- <code title="patch /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">setCover</a>(stackID, { ...params }) -> StackSetCoverResponse</code>
+- <code title="delete /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">delete</a>(stackID) -> DeletionResponse</code>
+- <code title="post /api/stacks/{stack_id}/assets">client.stacks.<a href="./src/resources/stacks.ts">addAssetsToStack</a>(stackID, { ...params }) -> StackResponse</code>
+- <code title="post /api/stacks">client.stacks.<a href="./src/resources/stacks.ts">createStack</a>({ ...params }) -> StackResponse</code>
+- <code title="get /api/stacks">client.stacks.<a href="./src/resources/stacks.ts">listStacks</a>({ ...params }) -> StackResponsesCursorPage</code>
+- <code title="delete /api/stacks/{stack_id}/assets">client.stacks.<a href="./src/resources/stacks.ts">removeAssets</a>(stackID, { ...params }) -> DeletionResponse</code>
+- <code title="get /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">retrieveStack</a>(stackID) -> StackResponse</code>
+- <code title="patch /api/stacks/{stack_id}">client.stacks.<a href="./src/resources/stacks.ts">setCover</a>(stackID, { ...params }) -> StackResponse</code>
 
 # Tasks
 

@@ -82,7 +82,7 @@ export class Faces extends APIResource {
     faceID: string,
     params: FaceDeleteParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<FaceDeleteResponse> {
+  ): APIPromise<Shared.DeletionResponse> {
     const { library_id } = params ?? {};
     return this._client.delete(path`/api/faces/${faceID}`, { query: { library_id }, ...options });
   }
@@ -212,10 +212,7 @@ export interface FaceResponse {
   timestamp_ms?: number | null;
 }
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface FaceDeleteResponse {}
+export type FaceDeleteResponse = Shared.DeletionResponse;
 
 export interface FaceCreateParams {
   /**

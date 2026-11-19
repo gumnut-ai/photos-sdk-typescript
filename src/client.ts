@@ -99,6 +99,8 @@ import {
   StackListStacksResponsesCursorPage,
   StackRemoveAssetsParams,
   StackRemoveAssetsResponse,
+  StackResponse,
+  StackResponsesCursorPage,
   StackRetrieveStackResponse,
   StackSetCoverParams,
   StackSetCoverResponse,
@@ -1019,14 +1021,14 @@ export declare namespace Gumnut {
     type AssetResponse as AssetResponse,
     type FileDataResponse as FileDataResponse,
     type MetadataResponse as MetadataResponse,
-    type AssetDeleteResponse as AssetDeleteResponse,
     type AssetBulkUpdateAssetsResponse as AssetBulkUpdateAssetsResponse,
     type AssetClusterByGeoResponse as AssetClusterByGeoResponse,
-    type AssetDeleteListResponse as AssetDeleteListResponse,
-    type AssetEmptyTrashResponse as AssetEmptyTrashResponse,
     type AssetMoveResponse as AssetMoveResponse,
-    type AssetRestoreResponse as AssetRestoreResponse,
+    type AssetDeleteResponse as AssetDeleteResponse,
+    type AssetDeleteListResponse as AssetDeleteListResponse,
     type AssetTrashResponse as AssetTrashResponse,
+    type AssetRestoreResponse as AssetRestoreResponse,
+    type AssetEmptyTrashResponse as AssetEmptyTrashResponse,
     type AssetResponsesCursorPage as AssetResponsesCursorPage,
     type AssetCreateParams as AssetCreateParams,
     type AssetRetrieveParams as AssetRetrieveParams,
@@ -1110,8 +1112,8 @@ export declare namespace Gumnut {
     People as People,
     type ClusterMetricsResponse as ClusterMetricsResponse,
     type PersonResponse as PersonResponse,
-    type PersonDeleteResponse as PersonDeleteResponse,
     type PersonBulkUpdatePeopleResponse as PersonBulkUpdatePeopleResponse,
+    type PersonDeleteResponse as PersonDeleteResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,
     type PersonRetrieveParams as PersonRetrieveParams,
@@ -1133,13 +1135,15 @@ export declare namespace Gumnut {
 
   export {
     Stacks as Stacks,
-    type StackDeleteResponse as StackDeleteResponse,
-    type StackAddAssetsToStackResponse as StackAddAssetsToStackResponse,
+    type StackResponse as StackResponse,
     type StackCreateStackResponse as StackCreateStackResponse,
     type StackListStacksResponse as StackListStacksResponse,
-    type StackRemoveAssetsResponse as StackRemoveAssetsResponse,
     type StackRetrieveStackResponse as StackRetrieveStackResponse,
     type StackSetCoverResponse as StackSetCoverResponse,
+    type StackAddAssetsToStackResponse as StackAddAssetsToStackResponse,
+    type StackDeleteResponse as StackDeleteResponse,
+    type StackRemoveAssetsResponse as StackRemoveAssetsResponse,
+    type StackResponsesCursorPage as StackResponsesCursorPage,
     type StackListStacksResponsesCursorPage as StackListStacksResponsesCursorPage,
     type StackAddAssetsToStackParams as StackAddAssetsToStackParams,
     type StackCreateStackParams as StackCreateStackParams,
@@ -1159,5 +1163,6 @@ export declare namespace Gumnut {
   export { Users as Users, type UserResponse as UserResponse, type UserUpdateParams as UserUpdateParams };
 
   export type AssetVariant = API.AssetVariant;
+  export type DeletionResponse = API.DeletionResponse;
   export type UserSummary = API.UserSummary;
 }

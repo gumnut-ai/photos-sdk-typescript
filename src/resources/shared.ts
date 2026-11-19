@@ -20,6 +20,11 @@ export interface AssetVariant {
   width?: number | null;
 }
 
+/**
+ * Empty acknowledgment returned when an operation succeeds.
+ */
+export interface DeletionResponse {}
+
 export interface UserSummary {
   /**
    * User identifier

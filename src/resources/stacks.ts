@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
@@ -18,7 +19,7 @@ export class Stacks extends APIResource {
    * underlying assets. If a concurrent mutation adds a frame mid-delete, returns 409
    * and nothing is changed; retry the request.
    */
-  delete(stackID: string, options?: RequestOptions): APIPromise<StackDeleteResponse> {
+  delete(stackID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/stacks/${stackID}`, options);
   }
 
@@ -39,7 +40,7 @@ export class Stacks extends APIResource {
     stackID: string,
     body: StackAddAssetsToStackParams,
     options?: RequestOptions,
-  ): APIPromise<StackAddAssetsToStackResponse> {
+  ): APIPromise<StackResponse> {
     return this._client.post(path`/api/stacks/${stackID}/assets`, { body, ...options });
   }
 
@@ -55,7 +56,7 @@ export class Stacks extends APIResource {
    * If a concurrent stack change invalidates the request mid-flight, it returns 409
    * and nothing is created; retry the request unchanged.
    */
-  createStack(body: StackCreateStackParams, options?: RequestOptions): APIPromise<StackCreateStackResponse> {
+  createStack(body: StackCreateStackParams, options?: RequestOptions): APIPromise<StackResponse> {
     return this._client.post('/api/stacks', { body, ...options });
   }
 
@@ -73,8 +74,8 @@ export class Stacks extends APIResource {
   listStacks(
     query: StackListStacksParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<StackListStacksResponsesCursorPage, StackListStacksResponse> {
-    return this._client.getAPIList('/api/stacks', CursorPage<StackListStacksResponse>, { query, ...options });
+  ): PagePromise<StackResponsesCursorPage, StackResponse> {
+    return this._client.getAPIList('/api/stacks', CursorPage<StackResponse>, { query, ...options });
   }
 
   /**
@@ -95,7 +96,7 @@ export class Stacks extends APIResource {
     stackID: string,
     body: StackRemoveAssetsParams,
     options?: RequestOptions,
-  ): APIPromise<StackRemoveAssetsResponse> {
+  ): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/stacks/${stackID}/assets`, { body, ...options });
   }
 
@@ -104,7 +105,7 @@ export class Stacks extends APIResource {
    * provenance). The response is metadata only and does not include the stack's
    * assets — to get its frames, use `list_assets` with `stack_id`.
    */
-  retrieveStack(stackID: string, options?: RequestOptions): APIPromise<StackRetrieveStackResponse> {
+  retrieveStack(stackID: string, options?: RequestOptions): APIPromise<StackResponse> {
     return this._client.get(path`/api/stacks/${stackID}`, options);
   }
 
@@ -119,26 +120,19 @@ export class Stacks extends APIResource {
    * pin clears automatically when the pinned frame is removed from the stack or
    * permanently deleted.
    */
-  setCover(
-    stackID: string,
-    body: StackSetCoverParams,
-    options?: RequestOptions,
-  ): APIPromise<StackSetCoverResponse> {
+  setCover(stackID: string, body: StackSetCoverParams, options?: RequestOptions): APIPromise<StackResponse> {
     return this._client.patch(path`/api/stacks/${stackID}`, { body, ...options });
   }
 }
 
-export type StackListStacksResponsesCursorPage = CursorPage<StackListStacksResponse>;
+export type StackResponsesCursorPage = CursorPage<StackResponse>;
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface StackDeleteResponse {}
+export type StackListStacksResponsesCursorPage = StackResponsesCursorPage;
 
 /**
  * Represents a group of assets displayed as a single tile.
  */
-export interface StackAddAssetsToStackResponse {
+export interface StackResponse {
   /**
    * Unique stack identifier with 'asset*stack*' prefix
    */
@@ -189,226 +183,19 @@ export interface StackAddAssetsToStackResponse {
   primary_asset_id?: string | null;
 }
 
-/**
- * Represents a group of assets displayed as a single tile.
- */
-export interface StackCreateStackResponse {
-  /**
-   * Unique stack identifier with 'asset*stack*' prefix
-   */
-  id: string;
+export type StackCreateStackResponse = StackResponse;
 
-  /**
-   * Number of live assets in this stack. Excludes trashed members, so it can drop
-   * below the number of frames originally grouped.
-   */
-  asset_count: number;
+export type StackListStacksResponse = StackResponse;
 
-  /**
-   * When this stack was created
-   */
-  created_at: string;
+export type StackRetrieveStackResponse = StackResponse;
 
-  /**
-   * How a stack came to exist.
-   *
-   * `auto_burst` marks a stack the burst detector created from the time +
-   * EXIF-camera signal; `user` marks a stack a user created or edited (manual
-   * create, set-cover, add/remove, unstack). The distinction is what keeps
-   * re-detection from stomping a user's correction — the detection pass skips `user`
-   * stacks.
-   */
-  origin: 'auto_burst' | 'user';
+export type StackSetCoverResponse = StackResponse;
 
-  /**
-   * When this stack was last updated
-   */
-  updated_at: string;
+export type StackAddAssetsToStackResponse = StackResponse;
 
-  /**
-   * IDs of the stack's live members, earliest capture time first — the order
-   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
-   * members, like `asset_count`. Only populated by `list_stacks` with
-   * `include=asset_ids`; null otherwise.
-   */
-  asset_ids?: Array<string> | null;
+export type StackDeleteResponse = Shared.DeletionResponse;
 
-  /**
-   * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
-   * Null for an auto-detected burst unless a user has since pinned a cover — there
-   * is no server-selected default, so a client showing a stack with no pinned cover
-   * picks its own. A pinned cover that has been trashed keeps its ID here; it is
-   * cleared only once the asset is permanently deleted.
-   */
-  primary_asset_id?: string | null;
-}
-
-/**
- * Represents a group of assets displayed as a single tile.
- */
-export interface StackListStacksResponse {
-  /**
-   * Unique stack identifier with 'asset*stack*' prefix
-   */
-  id: string;
-
-  /**
-   * Number of live assets in this stack. Excludes trashed members, so it can drop
-   * below the number of frames originally grouped.
-   */
-  asset_count: number;
-
-  /**
-   * When this stack was created
-   */
-  created_at: string;
-
-  /**
-   * How a stack came to exist.
-   *
-   * `auto_burst` marks a stack the burst detector created from the time +
-   * EXIF-camera signal; `user` marks a stack a user created or edited (manual
-   * create, set-cover, add/remove, unstack). The distinction is what keeps
-   * re-detection from stomping a user's correction — the detection pass skips `user`
-   * stacks.
-   */
-  origin: 'auto_burst' | 'user';
-
-  /**
-   * When this stack was last updated
-   */
-  updated_at: string;
-
-  /**
-   * IDs of the stack's live members, earliest capture time first — the order
-   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
-   * members, like `asset_count`. Only populated by `list_stacks` with
-   * `include=asset_ids`; null otherwise.
-   */
-  asset_ids?: Array<string> | null;
-
-  /**
-   * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
-   * Null for an auto-detected burst unless a user has since pinned a cover — there
-   * is no server-selected default, so a client showing a stack with no pinned cover
-   * picks its own. A pinned cover that has been trashed keeps its ID here; it is
-   * cleared only once the asset is permanently deleted.
-   */
-  primary_asset_id?: string | null;
-}
-
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface StackRemoveAssetsResponse {}
-
-/**
- * Represents a group of assets displayed as a single tile.
- */
-export interface StackRetrieveStackResponse {
-  /**
-   * Unique stack identifier with 'asset*stack*' prefix
-   */
-  id: string;
-
-  /**
-   * Number of live assets in this stack. Excludes trashed members, so it can drop
-   * below the number of frames originally grouped.
-   */
-  asset_count: number;
-
-  /**
-   * When this stack was created
-   */
-  created_at: string;
-
-  /**
-   * How a stack came to exist.
-   *
-   * `auto_burst` marks a stack the burst detector created from the time +
-   * EXIF-camera signal; `user` marks a stack a user created or edited (manual
-   * create, set-cover, add/remove, unstack). The distinction is what keeps
-   * re-detection from stomping a user's correction — the detection pass skips `user`
-   * stacks.
-   */
-  origin: 'auto_burst' | 'user';
-
-  /**
-   * When this stack was last updated
-   */
-  updated_at: string;
-
-  /**
-   * IDs of the stack's live members, earliest capture time first — the order
-   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
-   * members, like `asset_count`. Only populated by `list_stacks` with
-   * `include=asset_ids`; null otherwise.
-   */
-  asset_ids?: Array<string> | null;
-
-  /**
-   * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
-   * Null for an auto-detected burst unless a user has since pinned a cover — there
-   * is no server-selected default, so a client showing a stack with no pinned cover
-   * picks its own. A pinned cover that has been trashed keeps its ID here; it is
-   * cleared only once the asset is permanently deleted.
-   */
-  primary_asset_id?: string | null;
-}
-
-/**
- * Represents a group of assets displayed as a single tile.
- */
-export interface StackSetCoverResponse {
-  /**
-   * Unique stack identifier with 'asset*stack*' prefix
-   */
-  id: string;
-
-  /**
-   * Number of live assets in this stack. Excludes trashed members, so it can drop
-   * below the number of frames originally grouped.
-   */
-  asset_count: number;
-
-  /**
-   * When this stack was created
-   */
-  created_at: string;
-
-  /**
-   * How a stack came to exist.
-   *
-   * `auto_burst` marks a stack the burst detector created from the time +
-   * EXIF-camera signal; `user` marks a stack a user created or edited (manual
-   * create, set-cover, add/remove, unstack). The distinction is what keeps
-   * re-detection from stomping a user's correction — the detection pass skips `user`
-   * stacks.
-   */
-  origin: 'auto_burst' | 'user';
-
-  /**
-   * When this stack was last updated
-   */
-  updated_at: string;
-
-  /**
-   * IDs of the stack's live members, earliest capture time first — the order
-   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
-   * members, like `asset_count`. Only populated by `list_stacks` with
-   * `include=asset_ids`; null otherwise.
-   */
-  asset_ids?: Array<string> | null;
-
-  /**
-   * ID of the asset the user pinned as the stack's cover, or null if none is pinned.
-   * Null for an auto-detected burst unless a user has since pinned a cover — there
-   * is no server-selected default, so a client showing a stack with no pinned cover
-   * picks its own. A pinned cover that has been trashed keeps its ID here; it is
-   * cleared only once the asset is permanently deleted.
-   */
-  primary_asset_id?: string | null;
-}
+export type StackRemoveAssetsResponse = Shared.DeletionResponse;
 
 export interface StackAddAssetsToStackParams {
   /**
@@ -490,13 +277,15 @@ export interface StackSetCoverParams {
 
 export declare namespace Stacks {
   export {
-    type StackDeleteResponse as StackDeleteResponse,
-    type StackAddAssetsToStackResponse as StackAddAssetsToStackResponse,
+    type StackResponse as StackResponse,
     type StackCreateStackResponse as StackCreateStackResponse,
     type StackListStacksResponse as StackListStacksResponse,
-    type StackRemoveAssetsResponse as StackRemoveAssetsResponse,
     type StackRetrieveStackResponse as StackRetrieveStackResponse,
     type StackSetCoverResponse as StackSetCoverResponse,
+    type StackAddAssetsToStackResponse as StackAddAssetsToStackResponse,
+    type StackDeleteResponse as StackDeleteResponse,
+    type StackRemoveAssetsResponse as StackRemoveAssetsResponse,
+    type StackResponsesCursorPage as StackResponsesCursorPage,
     type StackListStacksResponsesCursorPage as StackListStacksResponsesCursorPage,
     type StackAddAssetsToStackParams as StackAddAssetsToStackParams,
     type StackCreateStackParams as StackCreateStackParams,

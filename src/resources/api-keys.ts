@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -34,7 +35,7 @@ export class APIKeys extends APIResource {
    * Revokes an API key so it can no longer authenticate. The key remains visible as
    * inactive.
    */
-  delete(keyID: string, options?: RequestOptions): APIPromise<APIKeyDeleteResponse> {
+  delete(keyID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/api-keys/${keyID}`, options);
   }
 }
@@ -153,10 +154,7 @@ export interface APIKeyCreateResponse {
 
 export type APIKeyListResponse = Array<APIKeyResponse>;
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface APIKeyDeleteResponse {}
+export type APIKeyDeleteResponse = Shared.DeletionResponse;
 
 export interface APIKeyCreateParams {
   /**

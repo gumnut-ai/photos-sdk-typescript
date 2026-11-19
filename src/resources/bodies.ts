@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
 import { CursorPage, type CursorPageParams, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
@@ -68,7 +69,7 @@ export class Bodies extends APIResource {
     bodyID: string,
     params: BodyDeleteParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<BodyDeleteResponse> {
+  ): APIPromise<Shared.DeletionResponse> {
     const { library_id } = params ?? {};
     return this._client.delete(path`/api/bodies/${bodyID}`, { query: { library_id }, ...options });
   }
@@ -144,10 +145,7 @@ export namespace BodyResponse {
   }
 }
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface BodyDeleteResponse {}
+export type BodyDeleteResponse = Shared.DeletionResponse;
 
 export interface BodyRetrieveParams {
   /**

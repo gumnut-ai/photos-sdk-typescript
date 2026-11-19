@@ -104,7 +104,7 @@ export class Libraries extends APIResource {
    * the drain hasn't gotten to yet. Returns 409 if the library has not been trashed
    * yet — call `trash_library` first.
    */
-  delete(libraryID: string, options?: RequestOptions): APIPromise<LibraryDeleteResponse> {
+  delete(libraryID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/libraries/${libraryID}`, options);
   }
 
@@ -136,7 +136,7 @@ export class Libraries extends APIResource {
    * Returns 409 if this is the user's last live library — every user keeps at least
    * one. Retrying does not clear it; create another library first.
    */
-  trash(libraryID: string, options?: RequestOptions): APIPromise<LibraryTrashResponse> {
+  trash(libraryID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.post(path`/api/libraries/${libraryID}/trash`, options);
   }
 }
@@ -197,15 +197,9 @@ export interface LibraryResponse {
 
 export type LibraryListResponse = Array<LibraryResponse>;
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface LibraryDeleteResponse {}
+export type LibraryDeleteResponse = Shared.DeletionResponse;
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface LibraryTrashResponse {}
+export type LibraryTrashResponse = Shared.DeletionResponse;
 
 export interface LibraryCreateParams {
   /**

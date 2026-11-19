@@ -95,7 +95,7 @@ export class People extends APIResource {
    * If a concurrent change to the person's faces collides with the deletion, it
    * returns 409 and nothing is deleted; retry the request unchanged.
    */
-  delete(personID: string, options?: RequestOptions): APIPromise<PersonDeleteResponse> {
+  delete(personID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/people/${personID}`, options);
   }
 
@@ -230,14 +230,11 @@ export interface PersonResponse {
 }
 
 /**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface PersonDeleteResponse {}
-
-/**
  * Empty acknowledgment returned by `bulk_update_people`.
  */
 export interface PersonBulkUpdatePeopleResponse {}
+
+export type PersonDeleteResponse = Shared.DeletionResponse;
 
 export interface PersonCreateParams {
   /**
@@ -460,8 +457,8 @@ export declare namespace People {
   export {
     type ClusterMetricsResponse as ClusterMetricsResponse,
     type PersonResponse as PersonResponse,
-    type PersonDeleteResponse as PersonDeleteResponse,
     type PersonBulkUpdatePeopleResponse as PersonBulkUpdatePeopleResponse,
+    type PersonDeleteResponse as PersonDeleteResponse,
     type PersonResponsesCursorPage as PersonResponsesCursorPage,
     type PersonCreateParams as PersonCreateParams,
     type PersonRetrieveParams as PersonRetrieveParams,

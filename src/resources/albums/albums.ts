@@ -88,7 +88,7 @@ export class Albums extends APIResource {
    * soft-delete the underlying assets, or `remove_assets_from_album` to detach
    * specific assets from an album you want to keep.
    */
-  delete(albumID: string, options?: RequestOptions): APIPromise<AlbumDeleteResponse> {
+  delete(albumID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/albums/${albumID}`, options);
   }
 }
@@ -153,10 +153,7 @@ export interface AlbumResponse {
   start_date?: string | null;
 }
 
-/**
- * Empty acknowledgment returned when an operation succeeds.
- */
-export interface AlbumDeleteResponse {}
+export type AlbumDeleteResponse = Shared.DeletionResponse;
 
 export interface AlbumCreateParams {
   /**
