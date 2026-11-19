@@ -12,16 +12,13 @@ permissions:
   contents: read
 
 jobs:
-  publish:
-    name: publish
+  # Installing dependencies and build tools runs third-party code, so this
+  # job holds no publishing credentials. The publish job uploads what this
+  # job builds, so this job restores no cache.
+  build:
+    name: build
     if: github.repository == 'gumnut-ai/photos-sdk-typescript'
     runs-on: ubuntu-latest
-    # Publishing waits until a reviewer approves the deployment. The protected
-    # `release` environment is configured in this repository's settings.
-    environment: release
-    permissions:
-      contents: read
-      id-token: write
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -29,8 +26,8 @@ jobs:
           persist-credentials: false
 
       - name: Set up Node
-        # v3 caches only when `cache:` is set, and it is not set here.
-        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1 # zizmor: ignore[cache-poisoning]
+        # v4 caches only when `cache:` is set, and it is not set here.
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0 # zizmor: ignore[cache-poisoning]
         with:
           node-version: '24'
 
@@ -42,8 +39,114 @@ jobs:
 
       - name: Install dependencies
         run: |
-          ./scripts/bootstrap
+          bun install --frozen-lockfile
 
-      - name: Publish to NPM
+      - name: Build and pack the package
         run: |
-          bash ./bin/publish-npm
+          bun run build
+          mkdir -p "$RUNNER_TEMP/npm-package"
+          cd dist
+          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/npm-package"
+
+      - name: Upload the package
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/npm-package
+          if-no-files-found: error
+
+  # Publishes only the package the build job uploaded.
+  publish:
+    name: publish
+    needs: build
+    if: github.repository == 'gumnut-ai/photos-sdk-typescript'
+    runs-on: ubuntu-latest
+    # Publishing waits until a reviewer approves the deployment. The protected
+    # `release` environment is configured in this repository's settings.
+    environment: release
+    permissions:
+      contents: read
+      id-token: write # OIDC for trusted publishing
+
+    steps:
+      - name: Download the package
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/npm-package
+
+      - name: Set up Node
+        # v4 caches only when `cache:` is set, and it is not set here.
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0 # zizmor: ignore[cache-poisoning]
+        with:
+          node-version: '24'
+
+      - name: Publish to npm
+        run: |
+          shopt -s nullglob
+          tarballs=("$RUNNER_TEMP"/npm-package/*.tgz)
+          if [ "${#tarballs[@]}" -ne 1 ]; then
+            echo "::error::Expected one package tarball, found ${#tarballs[@]}"
+            exit 1
+          fi
+          TARBALL="${tarballs[0]}"
+
+          # Trusted publishing needs npm 11.5.1 or newer. Use the npm that ships
+          # with Node rather than installing one in this job.
+          NPM_VERSION="$(npm --version)"
+          if ! printf '11.5.1\n%s\n' "$NPM_VERSION" | sort -V -C; then
+            echo "::error::npm $NPM_VERSION predates trusted publishing (11.5.1)"
+            exit 1
+          fi
+
+          PACKAGE_JSON="$(tar -xzOf "$TARBALL" package/package.json)"
+          PACKAGE_NAME="$(echo "$PACKAGE_JSON" | jq -r -e '.name')"
+          VERSION="$(echo "$PACKAGE_JSON" | jq -r -e '.version')"
+
+          # Get latest version from npm
+          #
+          # If the package doesn't exist, npm will return:
+          # {
+          #   "error": {
+          #     "code": "E404",
+          #     "summary": "Unpublished on 2025-06-05T09:54:53.528Z",
+          #     "detail": "'the_package' is not in this registry..."
+          #   }
+          # }
+          NPM_INFO="$(npm view "$PACKAGE_NAME" version --json 2>/dev/null || true)"
+
+          # Check if we got an E404 error
+          if echo "$NPM_INFO" | jq -e '.error.code == "E404"' > /dev/null 2>&1; then
+            # Package doesn't exist yet, no last version
+            LAST_VERSION=""
+          elif echo "$NPM_INFO" | jq -e '.error' > /dev/null 2>&1; then
+            # Report other errors
+            echo "ERROR: npm returned unexpected data:"
+            echo "$NPM_INFO"
+            exit 1
+          else
+            # Success - get the version
+            LAST_VERSION=$(echo "$NPM_INFO" | jq -r '.') # strip quotes
+          fi
+
+          # Check if current version is pre-release (e.g. alpha / beta / rc)
+          CURRENT_IS_PRERELEASE=false
+          if [[ "$VERSION" =~ -([a-zA-Z]+) ]]; then
+            CURRENT_IS_PRERELEASE=true
+            CURRENT_TAG="${BASH_REMATCH[1]}"
+          fi
+
+          # Check if last version is a stable release
+          LAST_IS_STABLE_RELEASE=true
+          if [[ -z "$LAST_VERSION" || "$LAST_VERSION" =~ -([a-zA-Z]+) ]]; then
+            LAST_IS_STABLE_RELEASE=false
+          fi
+
+          # Use a corresponding alpha/beta tag if there already is a stable release and we're publishing a prerelease.
+          if $CURRENT_IS_PRERELEASE && $LAST_IS_STABLE_RELEASE; then
+            TAG="$CURRENT_TAG"
+          else
+            TAG="latest"
+          fi
+
+          npm publish "$TARBALL" --tag "$TAG" --ignore-scripts --provenance
