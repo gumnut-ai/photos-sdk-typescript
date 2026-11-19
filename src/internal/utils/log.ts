@@ -1,4 +1,4 @@
-// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+// File generated from our OpenAPI spec. See CONTRIBUTING.md for details.
 
 import { hasOwn } from './values';
 import { type Gumnut } from '../../client';
