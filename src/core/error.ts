@@ -24,6 +24,11 @@ export class APIError<
   }
 
   private static makeMessage(status: number | undefined, error: any, message: string | undefined) {
+    const detail = APIError.errorDetail(error);
+    if (status && detail !== undefined) {
+      return `${status} ${detail}`;
+    }
+
     const msg = error?.message
       ? typeof error.message === 'string'
         ? error.message
@@ -42,6 +47,25 @@ export class APIError<
       return msg;
     }
     return '(no status code or body)';
+  }
+
+  private static errorDetail(error: any): string | undefined {
+    const detail = error?.detail;
+    if (typeof detail === 'string') {
+      return detail || undefined;
+    }
+    if (!Array.isArray(detail) || !detail.length) {
+      return undefined;
+    }
+    const parts: string[] = [];
+    for (const item of detail) {
+      if (typeof item?.msg !== 'string') {
+        return undefined;
+      }
+      const path = Array.isArray(item.loc) ? item.loc.join('.') : '';
+      parts.push(path ? `${path}: ${item.msg}` : item.msg);
+    }
+    return parts.join('; ');
   }
 
   static generate(
