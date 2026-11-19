@@ -31,20 +31,18 @@ export class Albums extends APIResource {
    * create fields must match; omitted fields leave existing values intact. A
    * different supplied value returns 409 without changing the record; repeating that
    * request does not resolve the conflict. Omitting the name uses the default name
-   * New Album. A new album starts empty; follow up with `add_assets_to_album` to
-   * populate it. A reused album may already contain assets. Does not delete existing
-   * records. To rename an existing album, use `update_album` instead of creating a
-   * new one.
+   * New Album. A new album starts empty; add assets to it to populate it. A reused
+   * album may already contain assets. Does not delete existing records. To rename an
+   * existing album, update it instead of creating a new one.
    */
   create(body: AlbumCreateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.post('/api/albums', { body, ...options });
   }
 
   /**
-   * Fetches one album's metadata by ID (name, description, cover, counts). Use when
-   * you already have an album ID. The JSON response is metadata only and does not
-   * include the album's assets — to get the asset IDs or data, use
-   * `list_album_assets` or `list_assets` with `album_id`.
+   * Fetches one album's metadata by ID (name, description, cover, counts). The
+   * response is metadata only and does not include the album's assets — to get them,
+   * list assets with `album_id`.
    */
   retrieve(albumID: string, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.get(path`/api/albums/${albumID}`, options);
@@ -56,9 +54,8 @@ export class Albums extends APIResource {
    * unchanged; a null description or cover clears that field. Does not delete the
    * album or its assets. Renaming to another record's name in the same library
    * returns 409. Names ignore case and surrounding whitespace; retrying the same
-   * collision does not resolve it. To modify the contents of an album, use
-   * `add_assets_to_album` / `remove_assets_from_album` instead — this tool only
-   * changes album metadata.
+   * collision does not resolve it. Does not change which assets are in the album;
+   * add or remove the album's assets for that.
    */
   update(albumID: string, body: AlbumUpdateParams, options?: RequestOptions): APIPromise<AlbumResponse> {
     return this._client.patch(path`/api/albums/${albumID}`, { body, ...options });
@@ -69,8 +66,8 @@ export class Albums extends APIResource {
    * optionally filtered by name, asset membership or ID. Use this to enumerate a
    * user's albums or to find which albums contain a specific asset (via `asset_id`).
    *
-   * `list_albums` returns album metadata only — to list the assets inside a
-   * particular album, use `list_album_assets` or `list_assets` with `album_id`.
+   * Returns album metadata only — to list the assets inside an album, list assets
+   * with `album_id`.
    *
    * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
    * last album in `data` as `starting_after_id` to fetch the next page.
@@ -84,9 +81,9 @@ export class Albums extends APIResource {
 
   /**
    * Deletes the album itself. Assets that were in the album remain in the library —
-   * only the album and its asset-links are removed. Use `trash_assets` to
-   * soft-delete the underlying assets, or `remove_assets_from_album` to detach
-   * specific assets from an album you want to keep.
+   * only the album and its asset-links are removed. To soft-delete the underlying
+   * assets, move them to trash; to detach specific assets from an album you keep,
+   * remove them from the album.
    */
   delete(albumID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/albums/${albumID}`, options);
@@ -169,7 +166,7 @@ export interface AlbumCreateParams {
 
   /**
    * Display name for the new album. Optional; callers that need to name an album can
-   * set it here or via `update_album` after creation. If supplied, it must not be
+   * set it here or by updating the album after creation. If supplied, it must not be
    * blank; surrounding whitespace is trimmed.
    */
   name?: string | null;
@@ -199,7 +196,7 @@ export interface AlbumUpdateParams {
 export interface AlbumListParams extends CursorPageParams {
   /**
    * Return only albums that contain this asset. Useful for answering 'which albums
-   * is this photo in?' without calling `list_album_assets`.
+   * is this photo in?'.
    */
   asset_id?: string | null;
 

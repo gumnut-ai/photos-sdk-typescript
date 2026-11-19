@@ -13,8 +13,7 @@ import { path } from '../internal/utils/path';
 export class Faces extends APIResource {
   /**
    * Adds a user-drawn face box to an asset, for a face the detector missed. To
-   * remove a face detection instead, use `delete_face`; to introduce a brand-new
-   * identity first, use `create_person`.
+   * assign it to a brand-new identity, create the person first.
    */
   create(body: FaceCreateParams, options?: RequestOptions): APIPromise<FaceResponse> {
     return this._client.post('/api/faces', { body, ...options });
@@ -34,13 +33,11 @@ export class Faces extends APIResource {
 
   /**
    * Assigns a face to a specific person, or detaches it from its current person (set
-   * `person_id` to null). Use this for 'this face is Alice' or to remove an
-   * assignment. Sending the current person ID confirms the assignment as manual
-   * without changing the person.
+   * `person_id` to null). Sending the current person ID confirms the assignment as
+   * manual without changing the person.
    *
-   * Currently only the `person_id` field is mutable. To create a brand-new identity
-   * first, call `create_person`; to delete the face detection entirely, use
-   * `delete_face`.
+   * Currently only the `person_id` field is mutable. To assign a brand-new identity,
+   * create the person first; to remove the face detection entirely, delete the face.
    */
   update(faceID: string, params: FaceUpdateParams, options?: RequestOptions): APIPromise<FaceResponse> {
     const { library_id, ...body } = params;
@@ -53,11 +50,10 @@ export class Faces extends APIResource {
    * or ID. Each row is a single face in a single asset — a person with many photos
    * will have many face rows.
    *
-   * **Use `list_people` instead** when the user wants the grouped identities ('list
-   * everyone in my library') rather than individual face detections, and
-   * `list_bodies` for people in a photo without a face. This tool is useful for
-   * curating clustering results, finding unassigned faces, or picking a thumbnail
-   * face for a person via `update_person.thumbnail_face_id`.
+   * To list grouped identities rather than individual face detections, list people;
+   * for people in a photo without a face, list bodies. Useful for curating
+   * clustering results, finding unassigned faces, or choosing a person's
+   * `thumbnail_face_id`.
    *
    * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
    * last face in `data` as `starting_after_id` to fetch the next page.
@@ -73,10 +69,9 @@ export class Faces extends APIResource {
    * Removes one face detection row; the underlying asset and the person this face
    * was assigned to are both preserved.
    *
-   * **Use `update_face` with `person_id=null` instead** when the user wants to
-   * disassociate the face from a person while retaining the face detection. Use
-   * `delete_person` to remove a person; use `trash_assets` to remove the photo
-   * entirely.
+   * To disassociate the face from a person while retaining the face detection,
+   * update the face with `person_id=null` instead. To remove a person, delete the
+   * person; to remove the photo, move the asset to trash.
    */
   delete(
     faceID: string,
@@ -235,8 +230,8 @@ export interface FaceCreateParams {
 
   /**
    * Optional person ID (with `person_` prefix) to assign this face to at creation.
-   * Omit to leave it unassigned; assign it later via `update_face`. Use
-   * `create_person` first if the identity doesn't exist yet.
+   * Omit to leave it unassigned; assign it later by updating the face. Create the
+   * person first if the identity doesn't exist yet.
    */
   person_id?: string | null;
 }
@@ -271,8 +266,9 @@ export namespace FaceCreateParams {
 
 export interface FaceRetrieveParams {
   /**
-   * Opt-in expansion fields. See `list_faces` for supported values. Accepts multiple
-   * `include=` query params or a single comma-delimited value.
+   * Opt-in expansion fields. Supported values: `cluster_assignment` (adds the nested
+   * `cluster_assignment` object). Accepts multiple `include=` query params or a
+   * single comma-delimited value.
    */
   include?: Array<string> | null;
 
@@ -293,7 +289,7 @@ export interface FaceUpdateParams {
   /**
    * Body param: Target person ID (with `person_` prefix) to assign this face to.
    * Pass `null` to detach the face from its current person without deleting either.
-   * Use `create_person` first if the target identity doesn't exist yet.
+   * Create the person first if the target identity doesn't exist yet.
    */
   person_id?: string | null;
 }

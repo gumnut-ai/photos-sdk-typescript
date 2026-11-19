@@ -14,10 +14,10 @@ export class Stacks extends APIResource {
   /**
    * Dissolves the stack: the grouping is removed and every member frame returns to
    * loose, individual display. The photos themselves are untouched — nothing is
-   * trashed or deleted from the library; like `remove_assets_from_album`, this only
-   * removes an organizational grouping. Use `trash_assets` to soft-delete the
-   * underlying assets. If a concurrent mutation adds a frame mid-delete, returns 409
-   * and nothing is changed; retry the request.
+   * trashed or deleted from the library; like removing assets from an album, this
+   * only removes an organizational grouping. Move the assets to trash to soft-delete
+   * them. If a concurrent mutation adds a frame mid-delete, returns 409 and nothing
+   * is changed; retry the request.
    */
   delete(stackID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/stacks/${stackID}`, options);
@@ -25,7 +25,7 @@ export class Stacks extends APIResource {
 
   /**
    * Adds one or more existing assets to the stack. An asset already in another stack
-   * is reconciled exactly as `create_stack` does. Ids already in this stack are
+   * is reconciled exactly as when creating a stack. Ids already in this stack are
    * silently skipped.
    *
    * An add that changes membership marks the stack user-owned (`origin = user`),
@@ -65,8 +65,8 @@ export class Stacks extends APIResource {
    * whether detected automatically or grouped by the user — ordered by `id`: stable,
    * but arbitrary rather than chronological.
    *
-   * `list_stacks` returns stack metadata only; it does not return the assets inside
-   * a stack. To get a stack's frames, use `list_assets` with `stack_id`.
+   * Returns stack metadata only; it does not return the assets inside a stack. To
+   * get a stack's frames, list assets with `stack_id`.
    *
    * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
    * last stack in `data` as `starting_after_id` to fetch the next page.
@@ -103,7 +103,7 @@ export class Stacks extends APIResource {
   /**
    * Fetches one stack's metadata by ID (pinned cover, live member count,
    * provenance). The response is metadata only and does not include the stack's
-   * assets — to get its frames, use `list_assets` with `stack_id`.
+   * assets — to get its frames, list assets with `stack_id`.
    */
   retrieveStack(stackID: string, options?: RequestOptions): APIPromise<StackResponse> {
     return this._client.get(path`/api/stacks/${stackID}`, options);
@@ -166,9 +166,9 @@ export interface StackResponse {
   updated_at: string;
 
   /**
-   * IDs of the stack's live members, earliest capture time first — the order
-   * `list_assets` returns for this `stack_id` with `order=asc`. Excludes trashed
-   * members, like `asset_count`. Only populated by `list_stacks` with
+   * IDs of the stack's live members, earliest capture time first — the order an
+   * asset list returns for this `stack_id` with `order=asc`. Excludes trashed
+   * members, like `asset_count`. Only populated when stacks are listed with
    * `include=asset_ids`; null otherwise.
    */
   asset_ids?: Array<string> | null;
@@ -260,8 +260,8 @@ export interface StackListStacksParams extends CursorPageParams {
 
 export interface StackRemoveAssetsParams {
   /**
-   * Asset IDs (with `asset_` prefix) to pull out of the stack. Get member IDs from
-   * `list_assets` with `stack_id`. Up to 200 ids per request.
+   * Asset IDs (with `asset_` prefix) to pull out of the stack. List assets with
+   * `stack_id` to get member IDs. Up to 200 ids per request.
    */
   asset_ids: Array<string>;
 }
@@ -269,8 +269,7 @@ export interface StackRemoveAssetsParams {
 export interface StackSetCoverParams {
   /**
    * Asset ID (with `asset_` prefix) to pin as the stack's cover. Must be a live,
-   * current member of this stack — get member IDs from `list_assets` with
-   * `stack_id`.
+   * current member of this stack — list assets with `stack_id` to get member IDs.
    */
   primary_asset_id: string;
 }

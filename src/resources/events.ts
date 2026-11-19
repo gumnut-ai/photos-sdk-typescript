@@ -12,13 +12,12 @@ export class Events extends APIResource {
    * Returns a paginated stream of change events (create/update/delete) for entities
    * in the library. Each event is a lightweight record — `entity_type`, `entity_id`,
    * `event_type`, and timestamps — pointing at a concrete entity that has changed.
-   * Follow up with `list_assets`, `get_album`, `get_person`, `get_face`, or
-   * `get_body` to fetch full entity data when needed.
+   * List the assets, or fetch the album, person, face, or body, to get full entity
+   * data when needed.
    *
-   * **Use this tool** when the user wants to synchronise a local copy of their
-   * library, audit recent activity, or detect deletions. **Don't use it** for
-   * content queries — use `search_assets` or `list_assets` instead. Events cannot be
-   * filtered by content or asset metadata.
+   * Use the feed to synchronise a local copy of a library, audit recent activity, or
+   * detect deletions. Events cannot be filtered by content or asset metadata; search
+   * or list assets for content queries.
    *
    * **Sync pattern:**
    *
@@ -54,20 +53,20 @@ export class Events extends APIResource {
    * too, so remove them along with the album.
    *
    * **Library membership:** an asset can move to another library and keep its ID,
-   * and its faces and bodies move with it and keep theirs. `get_asset` is not scoped
-   * to a library, so it still returns an asset that moved to another library you can
-   * read. Never decide membership with it. Re-read assets with `list_assets`,
-   * passing this feed's `library_id`, the `ids`, and `state=all`, and read every
+   * and its faces and bodies move with it and keep theirs. Fetching an asset by ID
+   * is not scoped to a library, so it still returns an asset that moved to another
+   * library you can read. Never decide membership with it. Re-read assets by listing
+   * them with this feed's `library_id`, the `ids`, and `state=all`, and read every
    * page. Do this for every event whose `entity_id` is an asset ID: every event with
    * `entity_type` `asset` or `metadata`, whatever its `event_type`. Read faces and
-   * bodies with this feed's `library_id` too; `list_faces`, `get_face`,
-   * `list_bodies` and `get_body` all take it. Upsert what the read returns into your
-   * copy of this library. Remove what it omits, and what your copy relates to it,
-   * from your copy of this library only; a permanently deleted asset is omitted too.
-   * The people that your copy of a removed asset's faces and bodies name lose them
-   * with no events of their own, so refetch them by ID; neither a person nor a stack
-   * moves between libraries. A failed or partial read is not an omission: retry it
-   * from the first page, and store no cursor past it.
+   * bodies with this feed's `library_id` too; listing and fetching faces and bodies
+   * all take it. Upsert what the read returns into your copy of this library. Remove
+   * what it omits, and what your copy relates to it, from your copy of this library
+   * only; a permanently deleted asset is omitted too. The people that your copy of a
+   * removed asset's faces and bodies name lose them with no events of their own, so
+   * refetch them by ID; neither a person nor a stack moves between libraries. A
+   * failed or partial read is not an omission: retry it from the first page, and
+   * store no cursor past it.
    *
    * **Moves between libraries:** a move records `asset_moved_out` in the library the
    * asset left and `asset_moved_in` in the library it joined. Neither has a

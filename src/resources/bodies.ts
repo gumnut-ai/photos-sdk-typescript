@@ -28,8 +28,8 @@ export class Bodies extends APIResource {
    * body with no person is still returned. Sending the current person ID marks the
    * link as manual.
    *
-   * To create a new identity first, call `create_person`. Use `delete_body` when the
-   * body is not a person at all.
+   * To link a new identity, create the person first. Delete the body instead when it
+   * is not a person at all.
    */
   update(bodyID: string, params: BodyUpdateParams, options?: RequestOptions): APIPromise<BodyResponse> {
     const { library_id, ...body } = params;
@@ -40,15 +40,14 @@ export class Bodies extends APIResource {
    * Returns a paginated list of bodies, newest first, optionally filtered by asset,
    * person, or ID. A body is a person in a photo without a face record, for example
    * someone facing away from the camera. Its `person_id` is `null` until it is
-   * linked; link it with `update_body`. Pass `include=candidates` for people it may
-   * be.
+   * linked; link it by updating the body. Pass `include=candidates` for people it
+   * may be.
    *
-   * **Use `list_faces` instead** for face detections, and `list_people` for the
-   * people themselves.
+   * Face detections and people are listed separately.
    *
-   * To choose photos of a person, use `list_assets` or `search_assets` with
-   * `person_ids`. A body match may not show their face, so when choosing photos of
-   * someone, prefer `person_link=face`.
+   * To choose photos of a person, list or search assets with `person_ids`. A body
+   * match may not show their face, so when choosing photos of someone, prefer
+   * `person_link=face`.
    *
    * **Pagination** is cursor-based: when `has_more` is true, pass the `id` of the
    * last body in `data` as `starting_after_id` to fetch the next page.
@@ -62,8 +61,8 @@ export class Bodies extends APIResource {
 
   /**
    * Deletes a body that is not a person; the asset and any person it was linked to
-   * are both preserved. **Use `update_body` with `person_id=null` instead** when it
-   * is a person but not this one. Use `trash_assets` to remove the photo.
+   * are both preserved. **Update the body with `person_id=null` instead** when it is
+   * a person but not this one. Move the asset to trash to remove the photo.
    */
   delete(
     bodyID: string,
@@ -120,10 +119,10 @@ export interface BodyResponse {
 
   /**
    * Named people who may be the person in this body, best match first, at most 5;
-   * never its current person. Link one with `update_body`. Populated only when
-   * `list_bodies` or `get_body` is called with `include=candidates`; `null`
-   * otherwise. `[]` when there are none, including while the library owner's
-   * settings do not allow automatic face detection.
+   * never its current person. Link one by updating the body. Populated only when
+   * bodies are listed or fetched with `include=candidates`; `null` otherwise. `[]`
+   * when there are none, including while the library owner's settings do not allow
+   * automatic face detection.
    */
   candidates?: Array<BodyResponse.Candidate> | null;
 }
