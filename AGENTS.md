@@ -19,8 +19,3 @@ regeneration; leave it in place. See [`.agents/daemons/AGENTS.md`](.agents/daemo
 ## Contributing
 
 For information on running tests, linting, and local development, see [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-## Resources
-
-- [Stainless Documentation](https://www.stainless.com/docs/)
-- [Stainless SDK Configuration Guide](https://www.stainless.com/docs/guides/configure/)
