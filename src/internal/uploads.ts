@@ -75,10 +75,13 @@ export const isAsyncIterable = (value: any): value is AsyncIterable<any> =>
 export const maybeMultipartFormRequestOptions = async (
   opts: RequestOptions,
   fetch: Gumnut | Fetch,
+  uploadTimeout?: UploadTimeout | undefined,
 ): Promise<RequestOptions> => {
-  if (!hasUploadableValue(opts.body)) return opts;
+  if (!hasUploadableValue(opts.body)) {
+    return uploadTimeout && opts.timeout == null ? { ...opts, timeout: uploadTimeout.minimum } : opts;
+  }
 
-  return { ...opts, body: await createForm(opts.body, fetch) };
+  return formRequestOptions(opts, await createForm(opts.body, fetch), uploadTimeout);
 };
 
 type MultipartFormRequestOptions = Omit<RequestOptions, 'body'> & { body: unknown };
@@ -86,8 +89,32 @@ type MultipartFormRequestOptions = Omit<RequestOptions, 'body'> & { body: unknow
 export const multipartFormRequestOptions = async (
   opts: MultipartFormRequestOptions,
   fetch: Gumnut | Fetch,
+  uploadTimeout?: UploadTimeout | undefined,
 ): Promise<RequestOptions> => {
-  return { ...opts, body: await createForm(opts.body, fetch) };
+  return formRequestOptions(opts, await createForm(opts.body, fetch), uploadTimeout);
+};
+
+/**
+ * A timeout that grows with the upload: `minimum` milliseconds, or the time the form's files take at
+ * `bytesPerSecond`, whichever is longer.
+ */
+export type UploadTimeout = { minimum: number; bytesPerSecond: number };
+
+const formRequestOptions = (
+  opts: Omit<RequestOptions, 'body'>,
+  form: FormData,
+  uploadTimeout: UploadTimeout | undefined,
+): RequestOptions => {
+  // A timeout the caller set wins. Streams and responses are already read into the form, so every file's
+  // size is known here.
+  if (!uploadTimeout || opts.timeout != null) return { ...opts, body: form };
+
+  let bytes = 0;
+  form.forEach((value) => {
+    if (typeof value !== 'string') bytes += value.size;
+  });
+  const timeout = Math.max(uploadTimeout.minimum, Math.ceil((bytes * 1000) / uploadTimeout.bytesPerSecond));
+  return { ...opts, body: form, timeout };
 };
 
 const supportsFormDataMap = /* @__PURE__ */ new WeakMap<Fetch, Promise<boolean>>();

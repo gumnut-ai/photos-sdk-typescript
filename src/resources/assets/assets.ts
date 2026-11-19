@@ -56,7 +56,18 @@ export class Assets extends APIResource {
    * ```
    */
   create(body: AssetCreateParams, options?: RequestOptions): APIPromise<AssetResponse> {
-    return this._client.post('/api/assets', multipartFormRequestOptions({ body, ...options }, this._client));
+    return this._client.post(
+      '/api/assets',
+      multipartFormRequestOptions(
+        {
+          body,
+          ...options,
+          ...(options?.maxRetries == null && this._client.maxRetries === 2 ? { maxRetries: 0 } : {}),
+        },
+        this._client,
+        this._client.timeout === 60000 ? { minimum: 600000, bytesPerSecond: 125000 } : undefined,
+      ),
+    );
   }
 
   /**
