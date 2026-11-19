@@ -9,6 +9,9 @@
   "repository": "github:gumnut-ai/photos-sdk-typescript",
   "license": "Apache-2.0",
   "packageManager": "bun@1.4.2",
+  "engines": {
+    "node": ">=22"
+  },
   "files": [
     "**/*"
   ],
