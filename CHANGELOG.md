@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.193.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.192.0...v0.193.0) (2026-11-19)
+
+
+### Features
+
+* apply the upload defaults to asset version uploads ([d7ccbd3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d7ccbd386abc9eabfbe4b4e071e44ade5ebfa03b))
+* default SDK uploads to no retries, size-scaled timeout ([042db54](https://github.com/gumnut-ai/photos-sdk-typescript/commit/042db54d46d9386156b034fe8081b02823649b92))
+
+
+### Bug Fixes
+
+* **deps:** update dependency ajv to v8.18.0 [security] ([042db54](https://github.com/gumnut-ai/photos-sdk-typescript/commit/042db54d46d9386156b034fe8081b02823649b92))
+* send X-Gumnut-* headers, list Gumnut Labs as author ([e7637ad](https://github.com/gumnut-ai/photos-sdk-typescript/commit/e7637ada37ebc79ba124618ae5907f030958031b))
+* **stlc:** keep config defaults non-optional under zod 4.6 ([2207f6d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2207f6d91cf64e9c85969417c39c441d93b4a465))
+
+
+### Chores
+
+* **deps:** update dependency js-yaml to v4.3.2 [security] ([042db54](https://github.com/gumnut-ai/photos-sdk-typescript/commit/042db54d46d9386156b034fe8081b02823649b92))
+* **deps:** update dependency turbo to v2.9.14 [security] ([2207f6d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2207f6d91cf64e9c85969417c39c441d93b4a465))
+* **deps:** update dependency vitest to v4.1.11 [security] ([042db54](https://github.com/gumnut-ai/photos-sdk-typescript/commit/042db54d46d9386156b034fe8081b02823649b92))
+* drop Stainless from Python banners and README icons ([c600bd0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c600bd06bcfd58f209339cd956089dce1bb4475d))
+* drop Stainless from the TypeScript banner ([cad4218](https://github.com/gumnut-ai/photos-sdk-typescript/commit/cad421856f35a739e8cbb6c7ba92e94b5f07ed0a))
+* match generated formatting in three files ([#14](https://github.com/gumnut-ai/photos-sdk-typescript/issues/14)) ([1f919cd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/1f919cd568403e46d6f61fe1d5491c7d255c75b1))
+* **stlc:** drop Stainless install hints and Claude plugin ([9787d19](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9787d19b0476fccb2889f589aa01c71c62c54074))
+* **stlc:** remove unread conflict dump and skills module ([6058fb4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6058fb486de65024df4a33aac855efd3bd0fb621))
+* tidy the SDK package metadata ([f7b1652](https://github.com/gumnut-ai/photos-sdk-typescript/commit/f7b1652d70154f9ddccda653e372d71f575294e6))
+
+
+### Documentation
+
+* drop Stainless links from AGENTS.md ([#12](https://github.com/gumnut-ai/photos-sdk-typescript/issues/12)) ([8a2df49](https://github.com/gumnut-ai/photos-sdk-typescript/commit/8a2df49f78814970d4c8fac49ccfeb67acb13c45))
+* fix README examples and type-check them in CI ([6058fb4](https://github.com/gumnut-ai/photos-sdk-typescript/commit/6058fb486de65024df4a33aac855efd3bd0fb621))
+* use users.me for the default README example ([2207f6d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/2207f6d91cf64e9c85969417c39c441d93b4a465))
+
+
+### Build System
+
+* vendor tsc-multi 1.1.11 instead of downloading it ([#13](https://github.com/gumnut-ai/photos-sdk-typescript/issues/13)) ([7cda5e7](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7cda5e763a28e13bc64e4bae6b942a42c3e1897a))
+* vendor tsc-multi in the TypeScript SDK ([9787d19](https://github.com/gumnut-ai/photos-sdk-typescript/commit/9787d19b0476fccb2889f589aa01c71c62c54074))
+
 ## [0.192.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.191.0...v0.192.0) (2026-11-17)
 
 ### Features
