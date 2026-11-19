@@ -41,8 +41,7 @@ const client = new Gumnut({
   apiKey: process.env['GUMNUT_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Gumnut.AlbumCreateParams = {};
-const albumResponse: Gumnut.AlbumResponse = await client.albums.create(params);
+const userResponse: Gumnut.UserResponse = await client.users.me();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -114,7 +113,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const albumResponse = await client.albums.create({}).catch(async (err) => {
+const userResponse = await client.users.me().catch(async (err) => {
   if (err instanceof Gumnut.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -154,7 +153,7 @@ const client = new Gumnut({
 });
 
 // Or, configure per-request:
-await client.albums.create({}, {
+await client.users.me({
   maxRetries: 5,
 });
 ```
@@ -171,7 +170,7 @@ const client = new Gumnut({
 });
 
 // Override per-request:
-await client.albums.create({}, {
+await client.users.me({
   timeout: 5 * 1000,
 });
 ```
@@ -225,13 +224,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Gumnut();
 
-const response = await client.albums.create({}).asResponse();
+const response = await client.users.me().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: albumResponse, response: raw } = await client.albums.create({}).withResponse();
+const { data: userResponse, response: raw } = await client.users.me().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(albumResponse.id);
+console.log(userResponse.id);
 ```
 
 ### Logging
