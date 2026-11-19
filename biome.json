@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!!dist", "!!dist-deno", "!!deno", "!!ecosystem-tests", "!!.agents"]
+    "includes": ["**", "!!dist", "!!ecosystem-tests", "!!.agents"]
   },
   "formatter": {
     "enabled": true,
