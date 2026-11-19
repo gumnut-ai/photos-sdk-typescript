@@ -24,9 +24,9 @@ const client = new Gumnut({
   apiKey: process.env['GUMNUT_API_KEY'], // This is the default and can be omitted
 });
 
-const albumResponse = await client.albums.create();
+const userResponse = await client.users.me();
 
-console.log(albumResponse.id);
+console.log(userResponse.email);
 ```
 
 ### Request & Response types
@@ -41,7 +41,8 @@ const client = new Gumnut({
   apiKey: process.env['GUMNUT_API_KEY'], // This is the default and can be omitted
 });
 
-const albumResponse: Gumnut.AlbumResponse = await client.albums.create();
+const params: Gumnut.AlbumCreateParams = {};
+const albumResponse: Gumnut.AlbumResponse = await client.albums.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -113,7 +114,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const albumResponse = await client.albums.create().catch(async (err) => {
+const albumResponse = await client.albums.create({}).catch(async (err) => {
   if (err instanceof Gumnut.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -153,7 +154,7 @@ const client = new Gumnut({
 });
 
 // Or, configure per-request:
-await client.albums.create({
+await client.albums.create({}, {
   maxRetries: 5,
 });
 ```
@@ -170,7 +171,7 @@ const client = new Gumnut({
 });
 
 // Override per-request:
-await client.albums.create({
+await client.albums.create({}, {
   timeout: 5 * 1000,
 });
 ```
@@ -185,10 +186,10 @@ List methods in the Gumnut API are paginated.
 You can use the `for await … of` syntax to iterate through items across all pages:
 
 ```ts
-async function fetchAllAssetResponses(params) {
+async function fetchAllAssetResponses() {
   const allAssetResponses = [];
   // Automatically fetches more pages as needed.
-  for await (const assetResponse of client.assets.list({ starting_after_id: 'asset_abc123' })) {
+  for await (const assetResponse of client.assets.list()) {
     allAssetResponses.push(assetResponse);
   }
   return allAssetResponses;
@@ -198,7 +199,7 @@ async function fetchAllAssetResponses(params) {
 Alternatively, you can request a single page at a time:
 
 ```ts
-let page = await client.assets.list({ starting_after_id: 'asset_abc123' });
+let page = await client.assets.list();
 for (const assetResponse of page.data) {
   console.log(assetResponse);
 }
@@ -224,11 +225,11 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Gumnut();
 
-const response = await client.albums.create().asResponse();
+const response = await client.albums.create({}).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: albumResponse, response: raw } = await client.albums.create().withResponse();
+const { data: albumResponse, response: raw } = await client.albums.create({}).withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(albumResponse.id);
 ```
@@ -274,6 +275,8 @@ Most logging libraries are supported, including [pino](https://www.npmjs.com/pac
 When providing a custom logger, the `logLevel` option still controls which messages are emitted, messages
 below the configured level will not be sent to your logger.
 
+<!-- readme-snippet-check: skip -->
+
 ```ts
 import Gumnut from 'gumnut-sdk';
 import pino from 'pino';
@@ -310,7 +313,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.albums.create({
+client.assets.list({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
@@ -335,6 +338,8 @@ By default, this library expects a global `fetch` function is defined.
 
 If you want to use a different `fetch` function, you can either polyfill the global:
 
+<!-- readme-snippet-check: skip -->
+
 ```ts
 import fetch from 'my-fetch';
 
@@ -342,6 +347,8 @@ globalThis.fetch = fetch;
 ```
 
 Or pass it to the client:
+
+<!-- readme-snippet-check: skip -->
 
 ```ts
 import Gumnut from 'gumnut-sdk';
@@ -371,6 +378,8 @@ options to requests:
 
 **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
+<!-- readme-snippet-check: skip -->
+
 ```ts
 import Gumnut from 'gumnut-sdk';
 import * as undici from 'undici';
@@ -385,6 +394,8 @@ const client = new Gumnut({
 
 **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
+<!-- readme-snippet-check: skip -->
+
 ```ts
 import Gumnut from 'gumnut-sdk';
 
@@ -396,6 +407,8 @@ const client = new Gumnut({
 ```
 
 **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
+
+<!-- readme-snippet-check: skip -->
 
 ```ts
 import Gumnut from 'npm:gumnut-sdk';

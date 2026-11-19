@@ -12,3 +12,6 @@ echo "==> Checking Markdown and YAML formatting"
 
 echo "==> Checking types"
 ./node_modules/typescript/bin/tsc
+
+echo "==> Checking README examples"
+node scripts/utils/check-readme-snippets.cjs
