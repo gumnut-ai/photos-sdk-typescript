@@ -80,7 +80,16 @@ export class Versions extends APIResource {
     const { include, ...body } = params;
     return this._client.post(
       path`/api/assets/${assetID}/versions`,
-      multipartFormRequestOptions({ query: { include }, body, ...options }, this._client),
+      multipartFormRequestOptions(
+        {
+          query: { include },
+          body,
+          ...options,
+          ...(options?.maxRetries == null && this._client.maxRetries === 2 ? { maxRetries: 0 } : {}),
+        },
+        this._client,
+        this._client.timeout === 60000 ? { minimum: 600000, bytesPerSecond: 125000 } : undefined,
+      ),
     );
   }
 
@@ -109,7 +118,16 @@ export class Versions extends APIResource {
     const { asset_id, include, ...body } = params;
     return this._client.post(
       path`/api/assets/${asset_id}/versions/${versionID}/replace`,
-      multipartFormRequestOptions({ query: { include }, body, ...options }, this._client),
+      multipartFormRequestOptions(
+        {
+          query: { include },
+          body,
+          ...options,
+          ...(options?.maxRetries == null && this._client.maxRetries === 2 ? { maxRetries: 0 } : {}),
+        },
+        this._client,
+        this._client.timeout === 60000 ? { minimum: 600000, bytesPerSecond: 125000 } : undefined,
+      ),
     );
   }
 
