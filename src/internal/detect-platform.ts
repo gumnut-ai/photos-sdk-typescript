@@ -50,68 +50,68 @@ type PlatformName =
   | 'Unknown';
 type Browser = 'ie' | 'edge' | 'chrome' | 'firefox' | 'safari';
 type PlatformProperties = {
-  'X-Stainless-Lang': 'js';
-  'X-Stainless-Package-Version': string;
-  'X-Stainless-OS': PlatformName;
-  'X-Stainless-Arch': Arch;
-  'X-Stainless-Runtime': 'node' | 'deno' | 'edge' | `browser:${Browser}` | 'unknown';
-  'X-Stainless-Runtime-Version': string;
+  'X-Gumnut-Lang': 'js';
+  'X-Gumnut-Package-Version': string;
+  'X-Gumnut-OS': PlatformName;
+  'X-Gumnut-Arch': Arch;
+  'X-Gumnut-Runtime': 'node' | 'deno' | 'edge' | `browser:${Browser}` | 'unknown';
+  'X-Gumnut-Runtime-Version': string;
 };
 const getPlatformProperties = (): PlatformProperties => {
   const detectedPlatform = getDetectedPlatform();
   if (detectedPlatform === 'deno') {
     return {
-      'X-Stainless-Lang': 'js',
-      'X-Stainless-Package-Version': VERSION,
-      'X-Stainless-OS': normalizePlatform(Deno.build.os),
-      'X-Stainless-Arch': normalizeArch(Deno.build.arch),
-      'X-Stainless-Runtime': 'deno',
-      'X-Stainless-Runtime-Version':
+      'X-Gumnut-Lang': 'js',
+      'X-Gumnut-Package-Version': VERSION,
+      'X-Gumnut-OS': normalizePlatform(Deno.build.os),
+      'X-Gumnut-Arch': normalizeArch(Deno.build.arch),
+      'X-Gumnut-Runtime': 'deno',
+      'X-Gumnut-Runtime-Version':
         typeof Deno.version === 'string' ? Deno.version : (Deno.version?.deno ?? 'unknown'),
     };
   }
   if (typeof EdgeRuntime !== 'undefined') {
     return {
-      'X-Stainless-Lang': 'js',
-      'X-Stainless-Package-Version': VERSION,
-      'X-Stainless-OS': 'Unknown',
-      'X-Stainless-Arch': `other:${EdgeRuntime}`,
-      'X-Stainless-Runtime': 'edge',
-      'X-Stainless-Runtime-Version': (globalThis as any).process.version,
+      'X-Gumnut-Lang': 'js',
+      'X-Gumnut-Package-Version': VERSION,
+      'X-Gumnut-OS': 'Unknown',
+      'X-Gumnut-Arch': `other:${EdgeRuntime}`,
+      'X-Gumnut-Runtime': 'edge',
+      'X-Gumnut-Runtime-Version': (globalThis as any).process.version,
     };
   }
   // Check if Node.js
   if (detectedPlatform === 'node') {
     return {
-      'X-Stainless-Lang': 'js',
-      'X-Stainless-Package-Version': VERSION,
-      'X-Stainless-OS': normalizePlatform((globalThis as any).process.platform ?? 'unknown'),
-      'X-Stainless-Arch': normalizeArch((globalThis as any).process.arch ?? 'unknown'),
-      'X-Stainless-Runtime': 'node',
-      'X-Stainless-Runtime-Version': (globalThis as any).process.version ?? 'unknown',
+      'X-Gumnut-Lang': 'js',
+      'X-Gumnut-Package-Version': VERSION,
+      'X-Gumnut-OS': normalizePlatform((globalThis as any).process.platform ?? 'unknown'),
+      'X-Gumnut-Arch': normalizeArch((globalThis as any).process.arch ?? 'unknown'),
+      'X-Gumnut-Runtime': 'node',
+      'X-Gumnut-Runtime-Version': (globalThis as any).process.version ?? 'unknown',
     };
   }
 
   const browserInfo = getBrowserInfo();
   if (browserInfo) {
     return {
-      'X-Stainless-Lang': 'js',
-      'X-Stainless-Package-Version': VERSION,
-      'X-Stainless-OS': 'Unknown',
-      'X-Stainless-Arch': 'unknown',
-      'X-Stainless-Runtime': `browser:${browserInfo.browser}`,
-      'X-Stainless-Runtime-Version': browserInfo.version,
+      'X-Gumnut-Lang': 'js',
+      'X-Gumnut-Package-Version': VERSION,
+      'X-Gumnut-OS': 'Unknown',
+      'X-Gumnut-Arch': 'unknown',
+      'X-Gumnut-Runtime': `browser:${browserInfo.browser}`,
+      'X-Gumnut-Runtime-Version': browserInfo.version,
     };
   }
 
   // TODO add support for Cloudflare workers, etc.
   return {
-    'X-Stainless-Lang': 'js',
-    'X-Stainless-Package-Version': VERSION,
-    'X-Stainless-OS': 'Unknown',
-    'X-Stainless-Arch': 'unknown',
-    'X-Stainless-Runtime': 'unknown',
-    'X-Stainless-Runtime-Version': 'unknown',
+    'X-Gumnut-Lang': 'js',
+    'X-Gumnut-Package-Version': VERSION,
+    'X-Gumnut-OS': 'Unknown',
+    'X-Gumnut-Arch': 'unknown',
+    'X-Gumnut-Runtime': 'unknown',
+    'X-Gumnut-Runtime-Version': 'unknown',
   };
 };
 

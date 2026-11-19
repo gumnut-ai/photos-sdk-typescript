@@ -602,7 +602,7 @@ describe('retries', () => {
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
-    expect((capturedRequest!.headers as Headers).get('x-stainless-retry-count')).toEqual('2');
+    expect((capturedRequest!.headers as Headers).get('x-gumnut-retry-count')).toEqual('2');
     expect(count).toEqual(3);
   });
 
@@ -632,11 +632,11 @@ describe('retries', () => {
       await client.request({
         path: '/foo',
         method: 'get',
-        headers: { 'X-Stainless-Retry-Count': null },
+        headers: { 'X-Gumnut-Retry-Count': null },
       }),
     ).toEqual({ a: 1 });
 
-    expect((capturedRequest!.headers as Headers).has('x-stainless-retry-count')).toBe(false);
+    expect((capturedRequest!.headers as Headers).has('x-gumnut-retry-count')).toBe(false);
   });
 
   test('omit retry count header by default', async () => {
@@ -659,7 +659,7 @@ describe('retries', () => {
       apiKey: 'My API Key',
       fetch: testFetch,
       maxRetries: 4,
-      defaultHeaders: { 'X-Stainless-Retry-Count': null },
+      defaultHeaders: { 'X-Gumnut-Retry-Count': null },
     });
 
     expect(
@@ -669,7 +669,7 @@ describe('retries', () => {
       }),
     ).toEqual({ a: 1 });
 
-    expect(capturedRequest!.headers as Headers).not.toHaveProperty('x-stainless-retry-count');
+    expect(capturedRequest!.headers as Headers).not.toHaveProperty('x-gumnut-retry-count');
   });
 
   test('overwrite retry count header', async () => {
@@ -698,11 +698,11 @@ describe('retries', () => {
       await client.request({
         path: '/foo',
         method: 'get',
-        headers: { 'X-Stainless-Retry-Count': '42' },
+        headers: { 'X-Gumnut-Retry-Count': '42' },
       }),
     ).toEqual({ a: 1 });
 
-    expect((capturedRequest!.headers as Headers).get('x-stainless-retry-count')).toEqual('42');
+    expect((capturedRequest!.headers as Headers).get('x-gumnut-retry-count')).toEqual('42');
   });
 
   test('retry on 429 with retry-after', async () => {
