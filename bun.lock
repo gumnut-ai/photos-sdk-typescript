@@ -11,7 +11,7 @@
         "iconv-lite": "^0.6.3",
         "prettier": "^3.0.0",
         "publint": "^0.2.12",
-        "tsc-multi": "https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz",
+        "tsc-multi": "./vendor/tsc-multi-1.1.11.tgz",
         "tslib": "^2.8.1",
         "typescript": "6.0.3",
         "vitest": "4.1.11",
@@ -364,7 +364,7 @@
 
     "to-regex-range": ["to-regex-range@5.0.1", "", { "dependencies": { "is-number": "^7.0.0" } }, "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ=="],
 
-    "tsc-multi": ["tsc-multi@https://github.com/stainless-api/tsc-multi/releases/download/v1.1.11/tsc-multi.tgz", { "dependencies": { "debug": "^4.3.7", "fast-glob": "^3.3.2", "get-stdin": "^8.0.0", "p-all": "^3.0.0", "picocolors": "^1.1.1", "signal-exit": "^3.0.7", "string-to-stream": "^3.0.1", "superstruct": "^1.0.4", "tslib": "^2.8.1", "yargs": "^17.7.2" }, "peerDependencies": { "typescript": ">=4.3.0" }, "bin": { "tsc-multi": "bin/tsc-multi.js" } }, "sha512-LrjLRdfDnJ6UcZPSsxxY8QDnZmS3ZpPyvzgjUlNMjjRoTAUVqeL+IWrIzEU3Z+CwVrpVI97PePRLenEfCtR/UQ=="],
+    "tsc-multi": ["tsc-multi@./vendor/tsc-multi-1.1.11.tgz", { "dependencies": { "debug": "^4.3.7", "fast-glob": "^3.3.2", "get-stdin": "^8.0.0", "p-all": "^3.0.0", "picocolors": "^1.1.1", "signal-exit": "^3.0.7", "string-to-stream": "^3.0.1", "superstruct": "^1.0.4", "tslib": "^2.8.1", "yargs": "^17.7.2" }, "peerDependencies": { "typescript": ">=4.3.0" }, "bin": { "tsc-multi": "bin/tsc-multi.js" } }, "sha512-LrjLRdfDnJ6UcZPSsxxY8QDnZmS3ZpPyvzgjUlNMjjRoTAUVqeL+IWrIzEU3Z+CwVrpVI97PePRLenEfCtR/UQ=="],
 
     "tslib": ["tslib@2.8.1", "", {}, "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="],
 
