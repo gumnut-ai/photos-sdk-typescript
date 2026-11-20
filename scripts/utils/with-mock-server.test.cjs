@@ -8,6 +8,10 @@ const path = require('node:path');
 const { setTimeout: delay } = require('node:timers/promises');
 const { test } = require('node:test');
 const helper = path.join(__dirname, 'with-mock-server.cjs');
+// Fixture processes write PID files to a temporary name and rename them, so a
+// reader never sees a half-written file.
+const writePids =
+  "((file, pids) => { const fs = require('node:fs'); fs.writeFileSync(file + '.tmp', JSON.stringify(pids)); fs.renameSync(file + '.tmp', file); })";
 
 async function fixture(t, { startupFailure = false, installHang = false } = {}) {
   const cwd = await fs.mkdtemp(path.join(os.tmpdir(), 'sdk-mock-test-'));
@@ -67,10 +71,9 @@ exec node server.cjs
   await fs.writeFile(
     path.join(cwd, 'server.cjs'),
     `
-const fs = require('node:fs');
 const { spawn } = require('node:child_process');
 const grandchild = spawn(process.execPath, ['-e', 'process.on("SIGTERM", () => {}); setInterval(() => {}, 1000)']);
-fs.writeFileSync('pids.json', JSON.stringify([process.pid, grandchild.pid]));
+${writePids}('pids.json', [process.pid, grandchild.pid]);
 ${
   startupFailure
     ? 'setTimeout(() => process.exit(9), 150);'
@@ -119,15 +122,19 @@ function run(cwd, source) {
 }
 
 async function readEventually(file) {
+  let lastError;
   for (let attempt = 0; attempt < 100; attempt++) {
     try {
       return JSON.parse(await fs.readFile(file, 'utf8'));
     } catch (error) {
-      if (error.code !== 'ENOENT') throw error;
+      // Wait for the file to appear. Renamed writes shouldn't leave invalid JSON;
+      // retry it anyway, and report it if it persists.
+      if (error.code !== 'ENOENT' && !(error instanceof SyntaxError)) throw error;
+      lastError = error;
     }
     await delay(25);
   }
-  throw new Error(`Timed out waiting for ${file}`);
+  throw new Error(`Timed out waiting for ${file}`, { cause: lastError });
 }
 
 function isLinuxDeadProcess(stat) {
@@ -216,7 +223,7 @@ for (const [signal, expected] of [
       `
       const { spawn } = require('node:child_process');
       const descendant = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)']);
-      require('node:fs').writeFileSync('test-pids.json', JSON.stringify([process.pid, descendant.pid]));
+      ${writePids}('test-pids.json', [process.pid, descendant.pid]);
       setInterval(() => {}, 1000);
     `,
     );
@@ -245,7 +252,7 @@ test('fixture teardown stops owned processes after a missing PID-file wait', {
   const { cwd, run, stop } = await fixture(t);
   const { child } = run(`
     const descendant = require('node:child_process').spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)']);
-    require('node:fs').writeFileSync('test-pids.json', JSON.stringify([process.pid, descendant.pid]));
+    ${writePids}('test-pids.json', [process.pid, descendant.pid]);
     setInterval(() => {}, 1000);
   `);
   const mockPids = await readEventually(path.join(cwd, 'pids.json'));
