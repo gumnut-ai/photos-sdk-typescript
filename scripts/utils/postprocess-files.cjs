@@ -60,7 +60,7 @@ async function postprocess() {
   };
 
   for (const entry of await fs.promises.readdir(distDir, { withFileTypes: true })) {
-    if (entry.isDirectory() && entry.name !== 'src' && entry.name !== 'internal' && entry.name !== 'bin') {
+    if (entry.isDirectory() && entry.name !== 'src' && entry.name !== 'internal') {
       const subpath = './' + entry.name;
       newExports[subpath + '/*.mjs'] = {
         default: subpath + '/*.mjs',
