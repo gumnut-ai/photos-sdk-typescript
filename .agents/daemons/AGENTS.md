@@ -44,11 +44,9 @@ taken from the lane's filename.
   is where the two drift out of agreement.
 - Prefer the smallest safe change, and state explicit limits (open-PR caps,
   commits-per-activation, one concern per PR) so activations stay bounded.
-- This SDK is Stainless-generated, and the generator preserves only `src/lib/` and
-  `examples/`. This directory sits outside that set and is hand-maintained: it has
-  persisted across regeneration the same way the repo-root `AGENTS.md` has since
-  2025-12-29, but that is observed behavior, not a guarantee. If a generator upgrade
-  removes it, restore it here rather than moving daemons into a preserved path.
+- Most of this SDK is generated. This directory is hand-maintained: the generator
+  re-applies it on every build, as it does the repo-root `AGENTS.md`. If a build
+  ever drops it, restore it here rather than moving daemons elsewhere.
 
 ## Current daemons
 
