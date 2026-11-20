@@ -13,9 +13,12 @@ permissions:
   contents: read
 
 jobs:
-  lint:
-    timeout-minutes: 10
-    name: lint
+  # One job: runners bill each job by the started minute plus its own setup,
+  # so lint, build and the tests on every Node line share one checkout and one
+  # install. Bun installs node_modules independently of the Node version.
+  ci:
+    timeout-minutes: 15
+    name: lint, build and test
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
@@ -23,7 +26,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Set up Node
+      - name: Set up Node 24
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
@@ -34,67 +37,49 @@ jobs:
           bun-version-file: .bun-version
 
       - name: Bootstrap
+        id: bootstrap
         run: ./scripts/bootstrap
 
+      # Each check below runs even when an earlier one failed, so one run
+      # reports every failure. Lint, build and the package check run on Node
+      # 24 only.
       - name: Lint and check types
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         run: ./scripts/lint
 
-  build:
-    timeout-minutes: 5
-    name: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - name: Set up Node
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: '24'
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
-        with:
-          bun-version-file: .bun-version
-
-      - name: Bootstrap
-        run: ./scripts/bootstrap
-
       - name: Check build
+        id: build
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         run: ./scripts/build
 
       - name: Check package exports and installed consumers
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: ./scripts/check-package
 
-  test:
-    timeout-minutes: 10
-    name: test
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
-    strategy:
-      fail-fast: false
-      matrix:
-        # Supported Node release lines; the oldest is the README's minimum.
-        node-version: ['22', '24', '26']
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
+      # Tests run on every supported Node release line; the oldest is the
+      # README's minimum. Each setup-node step puts its version first on PATH.
+      - name: Run tests on Node 24
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
+        run: ./scripts/test
 
-      - name: Set up Node
+      - name: Set up Node 22
+        id: node22
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '22'
 
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - name: Run tests on Node 22
+        if: ${{ !cancelled() && steps.node22.outcome == 'success' }}
+        run: ./scripts/test
+
+      - name: Set up Node 26
+        id: node26
+        if: ${{ !cancelled() && steps.bootstrap.outcome == 'success' }}
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          bun-version-file: .bun-version
+          node-version: '26'
 
-      - name: Bootstrap
-        run: ./scripts/bootstrap
-
-      - name: Run tests
+      - name: Run tests on Node 26
+        if: ${{ !cancelled() && steps.node26.outcome == 'success' }}
         run: ./scripts/test

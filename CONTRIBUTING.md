@@ -74,7 +74,7 @@ $ bun run test
 
 This repository uses [Biome](https://biomejs.dev/) to lint and format TypeScript, JavaScript, and JSON.
 [Prettier](https://prettier.io/) formats Markdown and YAML. `bun run lint` checks source formatting and
-types without building the package. CI builds once in the build job, then runs `bun run check-package`
+types without building the package. CI builds once, then runs `bun run check-package`
 against that output to check package exports and installed consumers.
 
 Development uses TypeScript 6 because the dual CommonJS/ESM package builder requires its compiler API.
