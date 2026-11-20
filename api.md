@@ -130,6 +130,7 @@ Types:
 
 Methods:
 
+- <code title="get /api/events">client.events.<a href="./src/resources/events.ts">list</a>({ ...params }) -> EventsResponseDataEventsPage</code>
 - <code title="get /api/events">client.events.<a href="./src/resources/events.ts">get</a>({ ...params }) -> EventsResponse</code>
 
 # Faces

@@ -167,3 +167,64 @@ export class CursorPage<Item extends { id: string }>
     };
   }
 }
+
+export interface EventsPageResponse<Item> {
+  data: Array<Item>;
+
+  has_more: boolean;
+
+  next_cursor: string | null;
+
+  as_of: string;
+}
+
+export interface EventsPageParams {
+  after_cursor?: string | null;
+}
+
+export class EventsPage<Item> extends AbstractPage<Item> implements EventsPageResponse<Item> {
+  data: Array<Item>;
+
+  has_more: boolean;
+
+  next_cursor: string | null;
+
+  as_of: string;
+
+  constructor(
+    client: Gumnut,
+    response: Response,
+    body: EventsPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.data = body.data;
+    this.has_more = body.has_more;
+    this.next_cursor = body.next_cursor;
+    this.as_of = body.as_of;
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.data;
+  }
+
+  override hasNextPage(): boolean {
+    return this.has_more && super.hasNextPage();
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const cursor = this.next_cursor;
+    if (!cursor) {
+      return null;
+    }
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        after_cursor: cursor,
+      },
+    };
+  }
+}

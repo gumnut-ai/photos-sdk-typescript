@@ -66,7 +66,13 @@ export {
   type BodyDeleteParams,
   type BodyResponsesCursorPage,
 } from './bodies';
-export { Events, type EventsResponse, type EventGetParams } from './events';
+export {
+  Events,
+  type EventsResponse,
+  type EventListParams,
+  type EventGetParams,
+  type EventsResponseDataEventsPage,
+} from './events';
 export {
   Faces,
   type ClusterAssignmentResponse,

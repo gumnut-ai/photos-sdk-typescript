@@ -15,7 +15,12 @@ import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { type CursorPageParams, CursorPageResponse } from './core/pagination';
+import {
+  type CursorPageParams,
+  CursorPageResponse,
+  type EventsPageParams,
+  EventsPageResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -44,7 +49,13 @@ import {
   BodyRetrieveParams,
   BodyUpdateParams,
 } from './resources/bodies';
-import { EventGetParams, Events, EventsResponse } from './resources/events';
+import {
+  EventGetParams,
+  EventListParams,
+  Events,
+  EventsResponse,
+  EventsResponseDataEventsPage,
+} from './resources/events';
 import {
   ClusterAssignmentResponse,
   FaceCreateParams,
@@ -997,6 +1008,9 @@ export declare namespace Gumnut {
   export import CursorPage = Pagination.CursorPage;
   export { type CursorPageParams as CursorPageParams, type CursorPageResponse as CursorPageResponse };
 
+  export import EventsPage = Pagination.EventsPage;
+  export { type EventsPageParams as EventsPageParams, type EventsPageResponse as EventsPageResponse };
+
   export {
     Feedback as Feedback,
     type FeedbackResult as FeedbackResult,
@@ -1062,7 +1076,13 @@ export declare namespace Gumnut {
     type AlbumAssetListParams as AlbumAssetListParams,
   };
 
-  export { Events as Events, type EventsResponse as EventsResponse, type EventGetParams as EventGetParams };
+  export {
+    Events as Events,
+    type EventsResponse as EventsResponse,
+    type EventsResponseDataEventsPage as EventsResponseDataEventsPage,
+    type EventListParams as EventListParams,
+    type EventGetParams as EventGetParams,
+  };
 
   export {
     Faces as Faces,
