@@ -62,7 +62,7 @@ async function fixture(t, { startupFailure = false, installHang = false } = {}) 
     path.join(cwd, 'scripts/mock'),
     `#!/usr/bin/env bash
 if [ "\${1:-}" = --install ]; then
-  node -e 'const { npm_config_yes, STAINLESS_OPENAPI_SPEC_URL } = process.env; require("node:fs").writeFileSync("install.json", JSON.stringify({ npm_config_yes, STAINLESS_OPENAPI_SPEC_URL }))'
+  node -e 'const { npm_config_yes, MOCK_SERVER_SPEC_URL } = process.env; require("node:fs").writeFileSync("install.json", JSON.stringify({ npm_config_yes, MOCK_SERVER_SPEC_URL }))'
   ${installHang ? 'exec node server.cjs' : 'exit 0'}
 fi
 exec node server.cjs
@@ -81,7 +81,7 @@ ${
 require('node:http').createServer((req, res) => {
   res.writeHead(req.url === '/_x-steady/health' ? 200 : 404);
   res.end('ok');
-}).listen(Number(process.env.STAINLESS_MOCK_PORT), '127.0.0.1');`
+}).listen(Number(process.env.MOCK_SERVER_PORT), '127.0.0.1');`
 }
 `,
   );
@@ -102,8 +102,8 @@ function run(cwd, source) {
     env: {
       ...process.env,
       TEST_API_BASE_URL: 'https://should-not-be-used.invalid',
-      STAINLESS_MOCK_PORT: '1',
-      STAINLESS_OPENAPI_SPEC_URL: 'https://should-not-be-used.invalid/spec',
+      MOCK_SERVER_PORT: '1',
+      MOCK_SERVER_SPEC_URL: 'https://should-not-be-used.invalid/spec',
     },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
@@ -183,12 +183,12 @@ test('uses an installed, healthy loopback mock and removes remote overrides', {
     `
     const assert = require('node:assert/strict');
     const fs = require('node:fs');
-    assert.equal(process.env.STAINLESS_OPENAPI_SPEC_URL, undefined);
-    assert.equal(process.env.TEST_API_BASE_URL, 'http://127.0.0.1:' + process.env.STAINLESS_MOCK_PORT);
-    assert.notEqual(process.env.STAINLESS_MOCK_PORT, '1');
+    assert.equal(process.env.MOCK_SERVER_SPEC_URL, undefined);
+    assert.equal(process.env.TEST_API_BASE_URL, 'http://127.0.0.1:' + process.env.MOCK_SERVER_PORT);
+    assert.notEqual(process.env.MOCK_SERVER_PORT, '1');
     const installed = JSON.parse(fs.readFileSync('install.json'));
     assert.equal(installed.npm_config_yes, 'true');
-    assert.equal(installed.STAINLESS_OPENAPI_SPEC_URL, undefined);
+    assert.equal(installed.MOCK_SERVER_SPEC_URL, undefined);
     fetch(process.env.TEST_API_BASE_URL + '/_x-steady/health').then(r => assert.equal(r.status, 200));
   `,
   );

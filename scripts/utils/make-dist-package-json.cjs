@@ -13,8 +13,11 @@ for (const key of ['types', 'main', 'module']) {
   if (typeof pkgJson[key] === 'string') pkgJson[key] = pkgJson[key].replace(/^(\.\/)?dist\//, './');
 }
 
-// The published package needs none of the development scripts.
+// The published package needs none of the development tooling. `overrides`
+// and `packageManager` only steer this repo's own installs.
 delete pkgJson.devDependencies;
 delete pkgJson.scripts;
+delete pkgJson.overrides;
+delete pkgJson.packageManager;
 
 console.log(JSON.stringify(pkgJson, null, 2));

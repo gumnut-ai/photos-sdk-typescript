@@ -15,25 +15,7 @@ resolutions have a 14-day minimum release age, configured in `bunfig.toml`.
 ## Modifying/Adding code
 
 Most of the SDK is generated code. Modifications to code will be persisted between generations, but may
-result in merge conflicts between manual patches and changes from the generator. The generator will never
-modify the contents of the `src/lib/` and `examples/` directories.
-
-## Adding and running examples
-
-All files in the `examples/` directory are not modified by the generator and can be freely edited or added to.
-
-```ts
-// add an example to examples/<your-example>.ts
-
-#!/usr/bin/env bun
-…
-```
-
-```sh
-$ chmod +x examples/<your-example>.ts
-# run the example against your api
-$ bun run examples/<your-example>.ts
-```
+result in merge conflicts between manual patches and changes from the generator.
 
 ## Using the repository from source
 
@@ -114,14 +96,8 @@ $ bun run fix
 
 ## Publishing and releases
 
-Changes made to this repository via the automated release PR pipeline should publish to npm automatically. If
-the changes aren't made through the automated pipeline, you may want to make releases manually.
+Merging the automated release PR creates a GitHub release, which runs [the `Publish NPM` workflow](https://www.github.com/gumnut-ai/photos-sdk-typescript/actions/workflows/publish-npm.yml) to publish to npm.
+It publishes with trusted publishing (OIDC), so no registry token is stored.
+The publish job runs in the protected `release` environment and waits until a maintainer approves the deployment.
 
-### Publish with a GitHub workflow
-
-You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/gumnut-ai/photos-sdk-typescript/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
-
-### Publish manually
-
-If you need to manually release a package, you can run the `bin/publish-npm` script with an `NPM_TOKEN` set on
-the environment.
+If publishing fails, fix the cause and re-run the failed workflow run, which waits for approval again. There is no manual publish script.

@@ -95,10 +95,10 @@ async function main() {
   const env = {
     ...process.env,
     npm_config_yes: 'true',
-    STAINLESS_MOCK_PORT: String(port),
+    MOCK_SERVER_PORT: String(port),
     TEST_API_BASE_URL: `http://127.0.0.1:${port}`,
   };
-  delete env.STAINLESS_OPENAPI_SPEC_URL;
+  delete env.MOCK_SERVER_SPEC_URL;
   const install = launch('bash', ['scripts/mock', '--install'], env);
   const installed = await bounded(install.done, 120_000, 'Mock installation timed out after 120 seconds');
   if (installed.code !== 0)

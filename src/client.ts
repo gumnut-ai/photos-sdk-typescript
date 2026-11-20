@@ -395,7 +395,7 @@ export class Gumnut {
   }
 
   protected defaultIdempotencyKey(): string {
-    return `stainless-node-retry-${uuid4()}`;
+    return `gumnut-node-retry-${uuid4()}`;
   }
 
   protected makeStatusError(
