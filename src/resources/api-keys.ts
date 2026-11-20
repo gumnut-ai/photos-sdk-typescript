@@ -12,6 +12,9 @@ import { path } from '../internal/utils/path';
 export class APIKeys extends APIResource {
   /**
    * Creates a new API key for the current user
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   create(body: APIKeyCreateParams, options?: RequestOptions): APIPromise<APIKeyCreateResponse> {
     return this._client.post('/api/api-keys/', { body, ...options });
@@ -19,6 +22,9 @@ export class APIKeys extends APIResource {
 
   /**
    * Updates the name of a specific API key
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   update(keyID: string, body: APIKeyUpdateParams, options?: RequestOptions): APIPromise<APIKeyResponse> {
     return this._client.patch(path`/api/api-keys/${keyID}`, { body, ...options });
@@ -26,6 +32,9 @@ export class APIKeys extends APIResource {
 
   /**
    * Retrieves a list of all API keys for the current user
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   list(options?: RequestOptions): APIPromise<APIKeyListResponse> {
     return this._client.get('/api/api-keys/', options);
@@ -34,6 +43,9 @@ export class APIKeys extends APIResource {
   /**
    * Revokes an API key so it can no longer authenticate. The key remains visible as
    * inactive.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   delete(keyID: string, options?: RequestOptions): APIPromise<Shared.DeletionResponse> {
     return this._client.delete(path`/api/api-keys/${keyID}`, options);

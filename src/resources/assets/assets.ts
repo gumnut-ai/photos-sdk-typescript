@@ -1235,8 +1235,6 @@ export namespace AssetBulkUpdateAssetsParams {
        * over imported values.
        */
       source?: 'user' | 'import';
-
-      [k: string]: unknown;
     }
   }
 }
@@ -1609,8 +1607,6 @@ export interface AssetUpdateAssetParams {
    * over imported values.
    */
   source?: 'user' | 'import';
-
-  [k: string]: unknown;
 }
 
 Assets.Versions = Versions;

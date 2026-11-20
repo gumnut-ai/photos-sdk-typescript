@@ -15,6 +15,9 @@ export class Members extends APIResource {
    * Change an active non-owner member's role. Repeating the same role is unchanged.
    * An inactive membership or attempt to change the owner returns 409; retrying
    * unchanged will not clear it.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   update(
     userID: string,
@@ -28,6 +31,9 @@ export class Members extends APIResource {
   /**
    * List non-owner membership records for a library owned by the caller, newest
    * first. Inactive records remain available through the state filter.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   list(
     libraryID: string,
@@ -46,6 +52,9 @@ export class Members extends APIResource {
    * unavailable. Repeating departure returns the existing inactive state without
    * changing an owner-removal cutoff. An owner cannot leave; retrying unchanged
    * returns 409.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   leave(libraryID: string, options?: RequestOptions): APIPromise<MembershipResponse> {
     return this._client.post(path`/api/libraries/${libraryID}/leave`, options);
@@ -55,6 +64,9 @@ export class Members extends APIResource {
    * End a non-owner membership while retaining its owner-removal cutoff. Repeating
    * removal returns the same record without advancing the cutoff. The owner cannot
    * be removed; retrying that request unchanged returns 409.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   remove(
     userID: string,

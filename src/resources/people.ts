@@ -123,6 +123,9 @@ export class People extends APIResource {
    * In the degenerate case where the primary and all sources are unnamed and have
    * zero faces, the primary is deleted too, its bodies are left with no person, and
    * the response is `204 No Content`.
+   *
+   * If a concurrent change to the people's faces collides with the merge, it returns
+   * 409 and nothing is merged; retry the request unchanged.
    */
   merge(personID: string, body: PersonMergeParams, options?: RequestOptions): APIPromise<PersonResponse> {
     return this._client.post(path`/api/people/${personID}/merge`, { body, ...options });

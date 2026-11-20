@@ -18,6 +18,9 @@ export class Invitations extends APIResource {
    * link with 200; a new policy returns 201. A matching inactive invitation returns
    * 409 without a link; retry with a new policy. Authentication provider outages
    * return 503; retry sign-in later.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   create(body: InvitationCreateParams, options?: RequestOptions): APIPromise<InvitationLinkResponse> {
     return this._client.post('/api/libraries/invitations', { body, ...options });
@@ -26,6 +29,9 @@ export class Invitations extends APIResource {
   /**
    * List invitation metadata across libraries owned by the caller, newest first.
    * Secrets are never included.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   list(
     query: InvitationListParams | null | undefined = {},
@@ -40,6 +46,9 @@ export class Invitations extends APIResource {
   /**
    * Prevent future admissions through this invitation without removing existing
    * members. Repeating disablement returns the same inactive record.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   disable(invitationID: string, options?: RequestOptions): APIPromise<InvitationResponse> {
     return this._client.post(path`/api/libraries/invitations/${invitationID}/disable`, options);
@@ -52,6 +61,9 @@ export class Invitations extends APIResource {
    * Expired, disabled, exhausted, or removal-cutoff invitations return 409; request
    * a new invitation. Authentication provider outages return 503; retry sign-in
    * later.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   join(
     invitationID: string,
@@ -65,6 +77,9 @@ export class Invitations extends APIResource {
    * Return an active invitation's existing link without changing its policy or
    * usage. Inactive invitations return 409 without a link; retrying unchanged cannot
    * reactivate one.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   link(invitationID: string, options?: RequestOptions): APIPromise<InvitationLinkResponse> {
     return this._client.get(path`/api/libraries/invitations/${invitationID}/link`, options);
@@ -74,6 +89,9 @@ export class Invitations extends APIResource {
    * Return library attribution and the caller's current eligibility without
    * admitting them or reserving a place. Invalid secrets and unavailable libraries
    * return the same generic 404; retry with a valid, available invitation link.
+   *
+   * Requires a first-party Gumnut app session: API keys and OAuth access tokens are
+   * rejected with 403.
    */
   preview(
     invitationID: string,
