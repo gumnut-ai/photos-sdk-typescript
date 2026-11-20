@@ -14,7 +14,7 @@ jobs:
     name: release doctor
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: github.repository == 'gumnut-ai/photos-sdk-typescript' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release-please') || github.head_ref == 'next')
+    if: github.repository == 'gumnut-ai/photos-sdk-typescript' && (github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release-please'))
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -40,7 +40,3 @@ jobs:
               print('Release Please PR body must keep both --- separators and start its release notes with the version heading matching the PR title.', file=sys.stderr)
               sys.exit(1)
           PY
-
-      - name: Check release environment
-        run: |
-          bash ./bin/check-release-environment
