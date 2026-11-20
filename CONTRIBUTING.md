@@ -63,7 +63,7 @@ Tests use [Vitest](https://vitest.dev/) in Node.js 24. `bun run test` starts an
 isolated [Steady](https://github.com/dgellow/steady) mock server using the embedded
 OpenAPI specification, then stops it when testing finishes. The first run downloads
 the pinned mock CLI through npm. The runner overrides `TEST_API_BASE_URL` and
-`STAINLESS_OPENAPI_SPEC_URL` so the suite uses only its owned loopback server.
+`MOCK_SERVER_SPEC_URL` so the suite uses only its owned loopback server.
 Run once with the command below; use `bun run test --watch` for watch mode.
 
 ```sh
