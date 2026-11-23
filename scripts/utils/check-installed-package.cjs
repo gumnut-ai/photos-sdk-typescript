@@ -153,16 +153,16 @@ assert(client.albums instanceof Albums);
   );
   console.log('Installed source maps reference shipped sources and preserve the CommonJS root mapping.');
 
-  // Plain imports still type-check on TypeScript 4.9. Keep each compiler separate: runtime consumers
-  // cannot resolve tooling devDependencies.
+  // TypeScript 5.0 is the stated minimum. Keep each compiler separate: runtime consumers cannot
+  // resolve tooling devDependencies.
   fs.writeFileSync(path.join(compiler, 'package.json'), JSON.stringify({ private: true }));
   run(
     'npm',
-    ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'typescript@4.9.5'],
+    ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'typescript@5.0.4'],
     compiler,
   );
-  const tsc = path.join(compiler, 'node_modules/typescript/bin/tsc');
-  assert.equal(run(process.execPath, [tsc, '--version'], consumer, true).trim(), 'Version 4.9.5');
+  const tsc5 = path.join(compiler, 'node_modules/typescript/bin/tsc');
+  assert.equal(run(process.execPath, [tsc5, '--version'], consumer, true).trim(), 'Version 5.0.4');
   const source = `import Gumnut, { Gumnut as NamedGumnut, type ClientOptions } from 'gumnut-sdk';
 import { Albums, type AlbumResponse } from 'gumnut-sdk/resources/albums';
 import IndexGumnut from 'gumnut-sdk/index';
@@ -184,12 +184,7 @@ void jsAlbums;
 void indexClient;
 void response;
 `;
-  // Node's legacy resolver and conditional CJS/ESM exports all remain supported.
-  for (const [extension, module, moduleResolution] of [
-    ['ts', 'commonjs', 'node'],
-    ['cts', 'Node16', 'node16'],
-    ['mts', 'Node16', 'node16'],
-  ]) {
+  for (const extension of ['ts', 'cts', 'mts']) {
     fs.writeFileSync(
       path.join(consumer, `consumer.${extension}`),
       source +
@@ -201,20 +196,8 @@ void mjsAlbums;
 `
           : ''),
     );
-    typeCheck(tsc, extension, module, moduleResolution);
   }
-
-  // TypeScript 5.0 is the stated minimum. Reuse the consumers above to check its resolvers, adding bundler.
-  const compiler5 = path.join(temporary, 'compiler-5');
-  fs.mkdirSync(compiler5);
-  fs.writeFileSync(path.join(compiler5, 'package.json'), JSON.stringify({ private: true }));
-  run(
-    'npm',
-    ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'typescript@5.0.4'],
-    compiler5,
-  );
-  const tsc5 = path.join(compiler5, 'node_modules/typescript/bin/tsc');
-  assert.equal(run(process.execPath, [tsc5, '--version'], consumer, true).trim(), 'Version 5.0.4');
+  // Node's legacy resolver and conditional CJS/ESM exports all remain supported, as does bundler.
   const minimumModes = [
     ['ts', 'commonjs', 'node'],
     ['cts', 'Node16', 'node16'],
@@ -246,7 +229,7 @@ void mjsAlbums;
 
   // Runtime-specific fetchOptions come from optional parent node_modules type imports. Type-check the
   // README's Node proxy example against the installed package, in a consumer with undici installed.
-  // TypeScript 4.9 can't resolve those `.d.ts` specifiers, so check the 5.0 minimum and TypeScript 7.
+  // Check them on the 5.0 minimum and TypeScript 7.
   const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
   assert.match(
     readme,
@@ -295,7 +278,7 @@ void mjsAlbums;
     typeCheck(tsc5, extension, module, moduleResolution, proxyConsumer, true);
   }
   console.log(
-    'Installed package passed CommonJS, ESM, Bun, import aliases, source maps, TypeScript 4.9, 5.0 and 7, and fetchOptions checks.',
+    'Installed package passed CommonJS, ESM, Bun, import aliases, source maps, TypeScript 5.0 and 7, and fetchOptions checks.',
   );
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

@@ -60,7 +60,7 @@ types without building the package. CI builds once, then runs `bun run check-pac
 against that output to check package exports and installed consumers.
 
 Development uses TypeScript 6 because the dual CommonJS/ESM package builder requires its compiler API.
-The published library continues to support TypeScript 4.9 and later.
+The published library supports TypeScript 5.0 and later.
 The build retains `tsc-multi`: the evaluated `tsdown` replacement produced circular namespace aliases
 in declarations.
 
@@ -83,8 +83,8 @@ to pack `dist`, install the tarball outside the checkout without development dep
 scripts, and construct clients through CommonJS and ESM root and resource imports, including explicit
 `.js` and `.mjs` aliases. They verify shipped JavaScript and declaration maps reference packaged sources
 and preserve the CommonJS root's mapping to its original source. A separate temporary
-installation of the pinned TypeScript 4.9.5 compiler checks root, resource, promise, and client namespace type imports
-with legacy Node, Node16 CommonJS, and Node16 ESM resolution. The compiler download needs npm registry
+installation of the pinned TypeScript 5.0.4 compiler checks root, resource, promise, and client namespace type imports
+with legacy Node, Node16 CommonJS, Node16 ESM, and bundler resolution. The compiler download needs npm registry
 access; its pinned release predates the dependency cooldown. These checks make no API requests.
 Temporary packages are removed after success or failure.
 
