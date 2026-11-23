@@ -340,7 +340,7 @@ export class Gumnut {
    * Create a new client instance re-using the same options given to the current client with optional overriding.
    */
   withOptions(options: Partial<ClientOptions>): this {
-    const client = new (this.constructor as any as new (props: ClientOptions) => typeof this)({
+    const props: ClientOptions = {
       ...this._options,
       baseURL: this.baseURL,
       maxRetries: this.maxRetries,
@@ -351,7 +351,10 @@ export class Gumnut {
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
       ...options,
-    });
+    };
+    const client = new (this.constructor as any as new (props: ClientOptions) => typeof this)(props);
+    // The constructor merges GUMNUT_CUSTOM_HEADERS into the headers; keep the copy's own.
+    client._options.defaultHeaders = props.defaultHeaders;
     return client;
   }
 

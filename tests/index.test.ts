@@ -409,6 +409,35 @@ describe('instantiate client', () => {
       expect(req.headers.get('x-test-header')).toEqual('test-value');
     });
 
+    test('keeps its headers instead of reading the environment again', async () => {
+      process.env['GUMNUT_CUSTOM_HEADERS'] = 'X-Env: original';
+      const client = new Gumnut({ baseURL: 'http://localhost:5000/', apiKey: 'My API Key' });
+
+      process.env['GUMNUT_CUSTOM_HEADERS'] = 'X-Env: changed\nX-New: new';
+
+      // a client created directly reads the environment
+      const fresh = await new Gumnut({
+        baseURL: 'http://localhost:5000/',
+        apiKey: 'My API Key',
+      }).buildRequest({ path: '/foo', method: 'get' });
+      expect(fresh.req.headers.get('x-new')).toEqual('new');
+
+      // a copy keeps its headers instead
+      for (const copied of [client.withOptions({}), client.withOptions({ maxRetries: 1 })]) {
+        const { req } = await copied.buildRequest({ path: '/foo', method: 'get' });
+        expect(req.headers.get('x-env')).toEqual('original');
+        expect(req.headers.has('x-new')).toBe(false);
+      }
+
+      // explicit defaultHeaders replace all of them, the environment's included
+      const { req } = await client
+        .withOptions({ defaultHeaders: { 'X-Bar': 'bar' } })
+        .buildRequest({ path: '/foo', method: 'get' });
+      expect(req.headers.get('x-bar')).toEqual('bar');
+      expect(req.headers.has('x-env')).toBe(false);
+      expect(req.headers.has('x-new')).toBe(false);
+    });
+
     test('respects runtime property changes when creating new client', () => {
       const client = new Gumnut({
         baseURL: 'http://localhost:5000/',
