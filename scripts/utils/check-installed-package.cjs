@@ -20,7 +20,7 @@ function run(command, args, cwd = consumer, capture = false) {
   });
 }
 
-function typeCheck(tsc, extension, module, moduleResolution, directory = consumer) {
+function typeCheck(tsc, extension, module, moduleResolution, directory = consumer, skipLibCheck = false) {
   fs.writeFileSync(
     path.join(directory, 'tsconfig.json'),
     JSON.stringify({
@@ -33,7 +33,7 @@ function typeCheck(tsc, extension, module, moduleResolution, directory = consume
         moduleResolution,
         esModuleInterop: true,
         types: [],
-        skipLibCheck: false,
+        skipLibCheck,
       },
       files: [`consumer.${extension}`],
     }),
@@ -153,7 +153,8 @@ assert(client.albums instanceof Albums);
   );
   console.log('Installed source maps reference shipped sources and preserve the CommonJS root mapping.');
 
-  // Keep the minimum compiler separate: runtime consumers cannot resolve tooling devDependencies.
+  // Plain imports still type-check on TypeScript 4.9. Keep each compiler separate: runtime consumers
+  // cannot resolve tooling devDependencies.
   fs.writeFileSync(path.join(compiler, 'package.json'), JSON.stringify({ private: true }));
   run(
     'npm',
@@ -203,6 +204,27 @@ void mjsAlbums;
     typeCheck(tsc, extension, module, moduleResolution);
   }
 
+  // TypeScript 5.0 is the stated minimum. Reuse the consumers above to check its resolvers, adding bundler.
+  const compiler5 = path.join(temporary, 'compiler-5');
+  fs.mkdirSync(compiler5);
+  fs.writeFileSync(path.join(compiler5, 'package.json'), JSON.stringify({ private: true }));
+  run(
+    'npm',
+    ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--save-exact', 'typescript@5.0.4'],
+    compiler5,
+  );
+  const tsc5 = path.join(compiler5, 'node_modules/typescript/bin/tsc');
+  assert.equal(run(process.execPath, [tsc5, '--version'], consumer, true).trim(), 'Version 5.0.4');
+  const minimumModes = [
+    ['ts', 'commonjs', 'node'],
+    ['cts', 'Node16', 'node16'],
+    ['mts', 'Node16', 'node16'],
+    ['ts', 'ESNext', 'bundler'],
+  ];
+  for (const [extension, module, moduleResolution] of minimumModes) {
+    typeCheck(tsc5, extension, module, moduleResolution);
+  }
+
   // TypeScript 7 removed the legacy `node` resolver; check the Node and bundler resolvers it keeps.
   const compiler7 = path.join(temporary, 'compiler-7');
   fs.mkdirSync(compiler7);
@@ -224,8 +246,13 @@ void mjsAlbums;
 
   // Runtime-specific fetchOptions come from optional parent node_modules type imports. Type-check the
   // README's Node proxy example against the installed package, in a consumer with undici installed.
-  // TypeScript 4.9 can't resolve those `.d.ts` specifiers, so only TypeScript 7 is checked.
+  // TypeScript 4.9 can't resolve those `.d.ts` specifiers, so check the 5.0 minimum and TypeScript 7.
   const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
+  assert.match(
+    readme,
+    /^TypeScript >= 5\.0 is supported/m,
+    'README minimum must match the 5.0 compiler checked above',
+  );
   const marked = [
     ...readme.matchAll(/<!-- readme-snippet-check: installed-package -->\s*```ts\n([^]*?)\n```/g),
   ];
@@ -261,8 +288,14 @@ void mjsAlbums;
     fs.writeFileSync(path.join(proxyConsumer, `consumer.${extension}`), proxyExample + '\n');
     typeCheck(tsc7, extension, module, moduleResolution, proxyConsumer);
   }
+  // Current @types/node needs a newer compiler than 5.0, so skip library checks there; the 5.0 checks
+  // above cover the SDK's own declarations.
+  for (const [extension, module, moduleResolution] of minimumModes) {
+    fs.writeFileSync(path.join(proxyConsumer, `consumer.${extension}`), proxyExample + '\n');
+    typeCheck(tsc5, extension, module, moduleResolution, proxyConsumer, true);
+  }
   console.log(
-    'Installed package passed CommonJS, ESM, Bun, import aliases, source maps, TypeScript 4.9 and 7, and fetchOptions checks.',
+    'Installed package passed CommonJS, ESM, Bun, import aliases, source maps, TypeScript 4.9, 5.0 and 7, and fetchOptions checks.',
   );
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });

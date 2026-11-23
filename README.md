@@ -456,7 +456,7 @@ We are keen for your feedback; please open an [issue](https://www.github.com/gum
 
 ## Requirements
 
-TypeScript >= 4.9 is supported, including TypeScript 7.
+TypeScript >= 5.0 is supported, including TypeScript 7.
 
 The following runtimes are supported:
 
