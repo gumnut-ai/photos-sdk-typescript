@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - '**'
-      # Generated previews; the pipeline that pushes them runs these checks.
-      - '!stlc-preview/**'
   pull_request:
 
 permissions:

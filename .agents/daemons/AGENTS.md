@@ -11,25 +11,15 @@ Each daemon is one subdirectory with a `DAEMON.md`, plus any reference files it 
 .agents/daemons/<daemon-id>/references/...
 ```
 
-The format of `DAEMON.md` — frontmatter fields, activation, and body conventions — is
-defined by the spec. Follow it as the source of truth rather than relying on the
-fields used by daemons already in this directory, since the spec may change over time:
-
-**https://docs.charlielabs.ai/daemons**
-
-The spec covers `DAEMON.md` itself. It documents `references/` only as material a daemon
-may read, so the `references/lanes/` layout below is this repo's convention and this file
-is its only source of truth. To confirm lanes still load the way it assumes, read a recent
-`pr-review` review on GitHub: each inline finding carries a `` `§ <lane-name>` `` badge
-taken from the lane's filename.
+These files are role policies only. No workflow in this repo activates a daemon, so a
+policy file here does not enable its role. The `references/lanes/` layout below is this
+repo's convention, and this file is its only source of truth.
 
 ## Repo conventions
 
 - Keep `<daemon-id>` and the frontmatter `id` in sync with each other.
-- No CI validates these files — a malformed daemon, or a lane at the wrong path, fails
-  silently by producing no findings rather than an error. Verify changes by hand, and
-  maintain the daemon list below yourself: a bot PR that installs a daemon adds its
-  directory without touching this file.
+- No CI validates these files. Verify changes by hand, and keep the daemon list below
+  current in the same change.
 - Keep each daemon to a single, well-bounded role. Split unrelated concerns into
   separate daemons rather than overloading one. Several review dimensions of one
   role are not separate concerns — express them as lanes of that daemon (below)

@@ -131,7 +131,7 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           REPO: ${{ github.repository }}
         run: |
-          msg="stlc promote failed in ${REPO}. A stalled promote or back-sync lets custom-code tracking drift, which later builds refuse on — investigate before the next build. Run: ${RUN_URL}"
+          msg="stlc promote failed in ${REPO}. Until a promote succeeds, production main and its releases miss what staging has gained — investigate before the next release. Run: ${RUN_URL}"
           echo "::error title=stlc workflow failed::$msg"
           { echo "### ⚠️ stlc workflow failed"; echo ""; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
 

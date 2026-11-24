@@ -17,8 +17,8 @@ name: Sync SDK repos
 # force), push, then let the poll confirm. Never force-push either trunk.
 on:
   schedule:
-    # Background convergence between the six-hour main generation runs.
-    # Main generation also reconciles staging before building.
+    # Background convergence. Main generation also reconciles staging before
+    # building.
     # Manual dispatch remains available when immediate alignment is needed.
     - cron: '37 3,9,15,21 * * *'
   workflow_dispatch: {}
@@ -102,7 +102,7 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           REPO: ${{ github.repository }}
         run: |
-          msg="stlc back-sync (sync from production) failed in ${REPO}. A stalled back-sync lets custom-code tracking drift, which later builds refuse on — investigate before the next build. Run: ${RUN_URL}"
+          msg="stlc back-sync (sync from production) failed in ${REPO}. Main generation syncs the trunks again before it builds, but refuses if they have forked — investigate before the next build. Run: ${RUN_URL}"
           echo "::error title=stlc workflow failed::$msg"
           { echo "### ⚠️ stlc workflow failed"; echo ""; echo "$msg"; } >> "$GITHUB_STEP_SUMMARY"
 
