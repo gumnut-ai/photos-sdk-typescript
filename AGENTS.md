@@ -11,11 +11,6 @@ source, including the workflows and these agent files. A change made only here
 is lost on the next generation, so make it in the pipeline's source instead.
 Release tooling maintains `CHANGELOG.md` and the release-please files here.
 
-## Agent Daemons
-
-`.agents/daemons/` holds agent daemon definitions. See
-[`.agents/daemons/AGENTS.md`](.agents/daemons/AGENTS.md).
-
 ## Contributing
 
 For information on running tests, linting, and local development, see

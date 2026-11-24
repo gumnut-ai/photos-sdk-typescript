@@ -4,7 +4,3 @@ CHANGELOG.md
 
 # don't format tsc output, will break source maps
 /dist
-
-# Daemon policy, kept identical to the Python SDK's copy. This repo pins prettier 3.1.1,
-# which would reformat its nested lists, so this repo does not reformat these files.
-/.agents
