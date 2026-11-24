@@ -2,8 +2,7 @@ name: zizmor
 
 # Audits this repo's workflows for supply-chain and template-injection
 # patterns, and fails on any finding. zizmor's default policy requires every
-# action to be SHA-pinned. A .github/zizmor.yml would be absorbed as custom
-# code, since only files under .github/workflows/ are SDK-repo owned.
+# action to be SHA-pinned.
 on:
   pull_request:
   push:

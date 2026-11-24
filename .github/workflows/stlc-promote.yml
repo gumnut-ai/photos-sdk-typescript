@@ -5,9 +5,9 @@ name: Promote SDK
 # next stlc build). Manual dispatch by design: a maintainer promotes the accumulated
 # batch to cut a release; release-please then opens its version PR on production.
 #
-# This file lives in both the staging and production repo (stlc preserves
-# .github/workflows/ across regeneration); the job self-routes so it only runs
-# on staging. Adapted from the stlc sdk-repo example; the PAT is replaced by a
+# This file lives in both the staging and production repo (every build copies
+# it in as a verbatim file); the job self-routes so it only runs on staging.
+# Adapted from the stlc sdk-repo example; the PAT is replaced by a
 # short-lived gumnut-sdk-pipeline app token minted per run.
 #
 # If the promote refuses with "production/main is not an ancestor": production

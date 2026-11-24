@@ -8,9 +8,9 @@ $ ./scripts/bootstrap
 $ bun run build
 ```
 
-Bootstrap installs the committed `bun.lock` without changing it. To intentionally change dependencies,
-use `bun add --dev <package>` or `bun install` and commit the updated lockfile. New dependency
-resolutions have a 14-day minimum release age, configured in `bunfig.toml`.
+Bootstrap installs the committed `bun.lock` without changing it. The lockfile is updated where the
+SDK is generated, so dependency changes made directly here are not kept. New dependency resolutions
+have a 14-day minimum release age, configured in `bunfig.toml`.
 
 ## Modifying/Adding code
 

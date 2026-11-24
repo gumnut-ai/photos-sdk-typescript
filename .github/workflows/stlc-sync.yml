@@ -4,9 +4,9 @@ name: Sync SDK repos
 # back onto staging after a release (or any other production-side commit) so the
 # trunks converge after a release. Main generation also reconciles before building.
 #
-# This file lives in both the staging and production repo (stlc preserves
-# .github/workflows/ across regeneration); the job self-routes so it only runs
-# on staging. Adapted from the stlc sdk-repo example, with the PAT replaced by a
+# This file lives in both the staging and production repo (every build copies
+# it in as a verbatim file); the job self-routes so it only runs on staging.
+# Adapted from the stlc sdk-repo example, with the PAT replaced by a
 # short-lived gumnut-sdk-pipeline app token. The example's eager
 # notify-back-sync and seal-dispatch jobs are deliberately omitted (no dispatch
 # tokens in our setup — the six-hour poll is the background sync).
