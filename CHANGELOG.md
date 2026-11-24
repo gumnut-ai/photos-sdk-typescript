@@ -1,5 +1,57 @@
 # Changelog
 
+## [0.194.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.193.0...v0.194.0) (2026-11-24)
+
+
+### Features
+
+* add events.list to auto-page the events feed ([728ef3f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/728ef3fba649c165254f9c9d461a364f18625980))
+* **api:** api update ([08a8448](https://github.com/gumnut-ai/photos-sdk-typescript/commit/08a844864555ecba4cd4b63586deb2813627c0fb))
+* **api:** api update ([6378471](https://github.com/gumnut-ai/photos-sdk-typescript/commit/63784716a08b5b4563a1501fb9c4ca0aa5c11a92))
+* **api:** api update ([ad5e9d6](https://github.com/gumnut-ai/photos-sdk-typescript/commit/ad5e9d614d38d7da401fb969e5f6135ed3522862))
+* expose the sharing error code on SDK errors ([30d6d5e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/30d6d5e6a5fed3ad5c5ccc66654c6a126d8cb6ed))
+* show the API's error detail in error messages ([d78bb85](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d78bb854ff4390bcb34ad6cea8516bc31942162d))
+
+
+### Bug Fixes
+
+* **deps:** update dependency esbuild to ^0.28.0 [security] ([07e4db9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/07e4db955dca247571aeb2ec850c2452ecb540c2))
+* **deps:** update dependency glob to v14 [security] ([07e4db9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/07e4db955dca247571aeb2ec850c2452ecb540c2))
+* **deps:** update dependency uuid to v11 [security] ([07e4db9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/07e4db955dca247571aeb2ec850c2452ecb540c2))
+* don't auto-retry faces.create or feedback.submit ([fb4c7b0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fb4c7b0a37cfffd4adac2975db97bf27eeb5a9c1))
+* let the SDKs call no-auth operations without a key ([64fd4cd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/64fd4cd33e9d6c7f12648c0620a3441ab5b463ae))
+* restore runtime-specific fetchOptions types ([dad6b28](https://github.com/gumnut-ai/photos-sdk-typescript/commit/dad6b28f2b3aad3fb3d61cab07d73219adab3cee))
+* **typescript:** don't drop Headers-form defaultHeaders ([006e4c3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/006e4c323100587166319d31dd414109fe409f02))
+* **typescript:** keep a copied client's custom headers ([5908ba2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5908ba2c02e8a6d58bd160887ef5880ee7012441))
+
+
+### Chores
+
+* **deps:** update dependency yaml to v2.8.3 [security] ([07e4db9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/07e4db955dca247571aeb2ec850c2452ecb540c2))
+* **deps:** update dependency zod to v4.6.6 [security] ([07e4db9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/07e4db955dca247571aeb2ec850c2452ecb540c2))
+* drop the unused bin exclusion from the TypeScript exports scan ([fe86f04](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fe86f04741a18382e4ae19e9c7614524552ef2c0))
+* tidy the SDK packages, READMEs, CONTRIBUTING and LICENSE ([dd6ef3a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/dd6ef3a2e6478e2f00483df4ecd088112203acc2))
+* **types:** share duplicate response models ([d13d40d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d13d40da740871f615de720b0079a494d96ce22e))
+
+
+### Documentation
+
+* describe events.list auto-paging and checkpoints ([d589227](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d5892272f6f99ff3d5ab2431ad5758d20ca35279))
+* fix changelog links and stale generator notes ([b78ce4a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b78ce4a6d53dd3537f75d9b458e4443ce26ee7da))
+* fix changelog links and stale generator notes ([7b47a64](https://github.com/gumnut-ai/photos-sdk-typescript/commit/7b47a64429f93d0e89a10917b08024689adee56b))
+* raise the minimum TypeScript version to 5.0 ([b589c7a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b589c7a7ab11f9d84f23164218094113972e97f9))
+
+
+### Refactors
+
+* remove generator code for languages we don't generate ([07e4db9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/07e4db955dca247571aeb2ec850c2452ecb540c2))
+* **stlc:** remove dead sealing code ([095c143](https://github.com/gumnut-ai/photos-sdk-typescript/commit/095c1438cd3ed5f0cf5f3d2dcc610a7b95e090b3))
+
+
+### Build System
+
+* replace ESLint and Prettier with Biome in stlc ([07e4db9](https://github.com/gumnut-ai/photos-sdk-typescript/commit/07e4db955dca247571aeb2ec850c2452ecb540c2))
+
 ## [0.193.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.192.0...v0.193.0) (2026-11-19)
 
 ### Features
