@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.194.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.193.0...v0.194.0) (2026-11-24)
+
+### ⚠ BREAKING CHANGES
+
+* **typescript:** the SDK now supports TypeScript 5.0 or later, up from 4.9. Runtime-specific `fetchOptions` types, such as undici's `dispatcher` in the README's proxy example, import declarations through `.d.ts` paths that TypeScript 4.9 can't resolve, so they never type-checked there. CI now checks the published package with TypeScript 5.0 and 7, and no longer with 4.9. Upgrade to TypeScript 5.0 or later. ([b589c7a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/b589c7a7ab11f9d84f23164218094113972e97f9)), ([c74363a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/c74363a1cca257367d6cad10319e4b48267b9446))
+* **assets:** the params of `assets.updateAsset()`, and each update's `change` in `assets.bulkUpdateAssets()`, no longer accept arbitrary extra keys. A misspelled field such as `{ ratng: 5 }` now fails to compile; the API already rejected it with 422. Remove any fields the API doesn't define. ([08a8448](https://github.com/gumnut-ai/photos-sdk-typescript/commit/08a844864555ecba4cd4b63586deb2813627c0fb))
+
+### Features
+
+* **events:** add `client.events.list()`, which fetches later pages of the events feed as you iterate with `for await`. It takes the same parameters as `events.get()`, starting after `after_cursor`, and returns `EventsPage` pages. To sync a local copy, iterate pages rather than events: apply each page, then store its `next_cursor` as the checkpoint to pass as `after_cursor` next time. ([728ef3f](https://github.com/gumnut-ai/photos-sdk-typescript/commit/728ef3fba649c165254f9c9d461a364f18625980)), ([d589227](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d5892272f6f99ff3d5ab2431ad5758d20ca35279))
+* **errors:** error messages now show the API's `detail`, such as `404 Asset not found`, instead of the raw response body. Validation errors are summarized as `body.name: Field required; ...`. A body without a usable `detail` keeps the previous message. The error class, `status` and `error` are unchanged; if your code matches on `message`, branch on those instead. ([d78bb85](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d78bb854ff4390bcb34ad6cea8516bc31942162d))
+* **errors:** add `APIError.code`, the stable machine-readable code that library-sharing errors return beside `detail`. It is `undefined` for other errors. ([30d6d5e](https://github.com/gumnut-ai/photos-sdk-typescript/commit/30d6d5e6a5fed3ad5c5ccc66654c6a126d8cb6ed))
+
+### Bug Fixes
+
+* **oauth:** `client.oauth.authURL()`, `client.oauth.exchange()`, `client.oauth.logoutEndpoint()` and `client.ping.get()` now work on a client without an API key, and never send an `Authorization` header. Before, a keyless client threw "Could not resolve authentication method". See "OAuth tokens" in the README to sign people in and call the API with the `access_token` that `exchange()` returns. ([64fd4cd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/64fd4cd33e9d6c7f12648c0620a3441ab5b463ae))
+* **faces, feedback:** `client.faces.create()` and `client.feedback.submit()` no longer retry by default. Neither endpoint is idempotent, so a retry after a timeout or 5xx could create a duplicate face or send duplicate feedback. To retry anyway, pass `maxRetries` on the request, or set a client `maxRetries` other than the default 2. See "Method defaults" in the README. ([fb4c7b0](https://github.com/gumnut-ai/photos-sdk-typescript/commit/fb4c7b0a37cfffd4adac2975db97bf27eeb5a9c1))
+* **fetchOptions:** runtime-specific `fetchOptions` types work again in the published package. The build had rewritten the optional type imports for undici, `@types/node` and node-fetch, so options such as undici's `dispatcher` weren't typed. ([dad6b28](https://github.com/gumnut-ai/photos-sdk-typescript/commit/dad6b28f2b3aad3fb3d61cab07d73219adab3cee))
+* **client:** a client copied with `withOptions()` keeps exactly its custom headers: the original's, or the `defaultHeaders` you pass. Before, the copy merged `GUMNUT_CUSTOM_HEADERS` from the environment in again, picking up values set after the original was created. ([5908ba2](https://github.com/gumnut-ai/photos-sdk-typescript/commit/5908ba2c02e8a6d58bd160887ef5880ee7012441))
+* **client:** `defaultHeaders` given as a `Headers` instance or an array of pairs are no longer dropped when `GUMNUT_CUSTOM_HEADERS` is set. ([006e4c3](https://github.com/gumnut-ai/photos-sdk-typescript/commit/006e4c323100587166319d31dd414109fe409f02))
+
+### Documentation
+
+* **api keys, sharing:** the methods of `client.apiKeys`, `client.libraries.members` and `client.libraries.invitations` document that they need a first-party Gumnut app session; API keys and OAuth access tokens get 403. ([08a8448](https://github.com/gumnut-ai/photos-sdk-typescript/commit/08a844864555ecba4cd4b63586deb2813627c0fb))
+* **people:** `people.merge()` documents that a merge colliding with a concurrent change to the people's faces returns 409 and merges nothing; retry it unchanged. ([08a8448](https://github.com/gumnut-ai/photos-sdk-typescript/commit/08a844864555ecba4cd4b63586deb2813627c0fb))
+* Method docs no longer name MCP tools such as `list_assets` or `update_face`; they describe the operation instead, such as "list assets with `album_id`". ([6378471](https://github.com/gumnut-ai/photos-sdk-typescript/commit/63784716a08b5b4563a1501fb9c4ca0aa5c11a92))
+* The README adds "OAuth tokens" and "Versioning" sections, lists `ConflictError` for 409, and warns against putting a secret API key in browser code. It drops the Deno proxy example; Deno isn't a tested runtime. The LICENSE names Gumnut Labs LLC. ([64fd4cd](https://github.com/gumnut-ai/photos-sdk-typescript/commit/64fd4cd33e9d6c7f12648c0620a3441ab5b463ae)), ([dd6ef3a](https://github.com/gumnut-ai/photos-sdk-typescript/commit/dd6ef3a2e6478e2f00483df4ecd088112203acc2))
+
+### Chores
+
+* **types:** the `client.stacks` methods that return a stack now share one `StackResponse` type, and methods that return an empty acknowledgment, such as `albums.delete()` and `assets.trash()`, share `DeletionResponse`. The old per-method names, such as `StackCreateStackResponse`, `AlbumDeleteResponse` and `StackListStacksResponsesCursorPage`, remain as aliases, so no code changes are needed. ([d13d40d](https://github.com/gumnut-ai/photos-sdk-typescript/commit/d13d40da740871f615de720b0079a494d96ce22e))
+
 ## [0.193.0](https://github.com/gumnut-ai/photos-sdk-typescript/compare/v0.192.0...v0.193.0) (2026-11-19)
 
 ### Features
