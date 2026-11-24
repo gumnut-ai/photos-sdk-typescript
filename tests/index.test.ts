@@ -49,6 +49,44 @@ describe('instantiate client', () => {
       });
       expect(req.headers.has('x-my-default-header')).toBe(false);
     });
+
+    test('keeps headers given in any form when the environment sets some', async () => {
+      const envVar = 'GUMNUT_CUSTOM_HEADERS';
+      for (const given of [
+        new Headers({ 'X-Given': 'given', 'X-Shared': 'given' }),
+        [
+          ['X-Given', 'given'],
+          ['X-Shared', 'given'],
+        ],
+        { 'X-Given': 'given', 'X-Shared': 'given' },
+      ]) {
+        process.env[envVar] = 'X-Env: env\nX-Shared: env';
+        const client = new Gumnut({
+          baseURL: 'http://localhost:5000/',
+          defaultHeaders: given,
+          apiKey: 'My API Key',
+        });
+        process.env[envVar] = 'X-Env: changed';
+
+        // the given headers win, and a copy keeps the merged headers
+        for (const c of [client, client.withOptions({})]) {
+          const { req } = await c.buildRequest({ path: '/foo', method: 'get' });
+          expect(req.headers.get('x-given')).toEqual('given');
+          expect(req.headers.get('x-shared')).toEqual('given');
+          expect(req.headers.get('x-env')).toEqual('env');
+        }
+      }
+
+      // null removes a header the environment sets
+      process.env[envVar] = 'X-Env: env\nX-Removed: env';
+      const { req } = await new Gumnut({
+        baseURL: 'http://localhost:5000/',
+        defaultHeaders: { 'X-Removed': null },
+        apiKey: 'My API Key',
+      }).buildRequest({ path: '/foo', method: 'get' });
+      expect(req.headers.has('x-removed')).toBe(false);
+      expect(req.headers.get('x-env')).toEqual('env');
+    });
   });
   describe('logging', () => {
     const env = process.env;

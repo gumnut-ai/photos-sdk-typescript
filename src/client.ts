@@ -328,7 +328,8 @@ export class Gumnut {
           parsed[line.substring(0, colon).trim()] = line.substring(colon + 1).trim();
         }
       }
-      options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
+      // A spread would drop headers given as a Headers instance or an array.
+      options.defaultHeaders = buildHeaders([parsed, options.defaultHeaders]);
     }
 
     this._options = options;
