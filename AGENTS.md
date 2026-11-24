@@ -1,21 +1,22 @@
 # AI Agent Instructions
 
-## Generated SDK and Custom Changes
+## Generated SDK
 
-This SDK is generated from an OpenAPI specification. Make endpoint and request/response
-schema changes in the specification or generator configuration.
+This SDK is generated from an OpenAPI specification. Make endpoint and
+request/response schema changes in the specification or generator
+configuration.
 
-Development-tooling fixes and other intentional custom changes are persisted and replayed
-between generations, as described in [CONTRIBUTING.md](./CONTRIBUTING.md). They may conflict
-with future generator changes; verify regeneration preserves them. `src/lib/` and
-`examples/` are never modified by the generator.
+Each generation rebuilds every file in this repository from the SDK pipeline's
+source, including the workflows and these agent files. A change made only here
+is lost on the next generation, so make it in the pipeline's source instead.
+Release tooling maintains `CHANGELOG.md` and the release-please files here.
 
-## Hand-Maintained Tooling
+## Agent Daemons
 
-`.agents/daemons/` holds Charlie daemon definitions — repo-authored operating roles, not
-generated output. It is outside the generator's preserved set but has persisted across
-regeneration; leave it in place. See [`.agents/daemons/AGENTS.md`](.agents/daemons/AGENTS.md).
+`.agents/daemons/` holds agent daemon definitions. See
+[`.agents/daemons/AGENTS.md`](.agents/daemons/AGENTS.md).
 
 ## Contributing
 
-For information on running tests, linting, and local development, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+For information on running tests, linting, and local development, see
+[CONTRIBUTING.md](./CONTRIBUTING.md).

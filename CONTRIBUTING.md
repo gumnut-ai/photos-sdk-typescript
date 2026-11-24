@@ -14,8 +14,8 @@ resolutions have a 14-day minimum release age, configured in `bunfig.toml`.
 
 ## Modifying/Adding code
 
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may
-result in merge conflicts between manual patches and changes from the generator.
+Most of the SDK is generated code, and each generation rebuilds this repository, so changes made
+directly here are not kept.
 
 ## Using the repository from source
 
