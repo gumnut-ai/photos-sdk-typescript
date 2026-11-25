@@ -1,6 +1,6 @@
 {
   "name": "gumnut-sdk",
-  "version": "0.194.0",
+  "version": "0.195.0",
   "description": "The official TypeScript library for the Gumnut API",
   "author": "Gumnut Labs <hello@gumnut.ai>",
   "types": "dist/index.d.ts",
