@@ -16,14 +16,16 @@ jobs:
     if: github.repository == 'gumnut-ai/photos-sdk-typescript'
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    # Holds the App key, readable only by runs on main.
+    environment: sdk-push
 
     steps:
       - name: 'Mint release token (Contents + PRs: write on this repo)'
         id: token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         with:
-          app-id: ${{ secrets.GUMNUT_SDK_PIPELINE_APP_ID }}
-          private-key: ${{ secrets.GUMNUT_SDK_PIPELINE_PRIVATE_KEY }}
+          client-id: ${{ vars.SDK_PUSHER_CLIENT_ID }}
+          private-key: ${{ secrets.SDK_PUSHER_PRIVATE_KEY }}
           owner: gumnut-ai
           repositories: photos-sdk-typescript
           permission-contents: write
